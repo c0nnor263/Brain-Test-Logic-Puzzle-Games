@@ -1,5 +1,14 @@
 @file:Suppress("UnstableApiUsage")
 
+include(":feature:settings")
+
+
+
+
+
+
+
+
 pluginManagement {
     repositories {
         google()
@@ -16,6 +25,14 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Wordefull"
 include(":app")
+include(":core:database")
+include(":core:data")
+include(":core:domain")
 include(":core:ui")
 include(":core:navigation")
 include(":feature:home")
+include(":feature:menu")
+include(":feature:level")
+
+
+

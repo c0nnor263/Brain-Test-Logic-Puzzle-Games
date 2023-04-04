@@ -3,7 +3,6 @@
 plugins {
     PluginType.LIBRARY.get(this)
 }
-
 android {
     namespace = "com.conboi.core.ui"
     compileSdk = Versions.Config.compileSdk
@@ -50,6 +49,8 @@ android {
 }
 
 dependencies {
-
+    implementation(project(":core:domain"))
+    implementation(project(":core:data"))
+    coreData()
     composeCore()
 }
