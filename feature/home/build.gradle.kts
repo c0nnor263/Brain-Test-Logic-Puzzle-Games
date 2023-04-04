@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.conboi.home"
+    namespace = "com.conboi.feature.home"
     compileSdk = Versions.Config.compileSdk
 
     defaultConfig {
@@ -49,5 +49,9 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:data"))
+    implementation(project(":core:database"))
+    implementation(project(":core:domain"))
+    implementation(project(":core:ui"))
     composeCore()
 }

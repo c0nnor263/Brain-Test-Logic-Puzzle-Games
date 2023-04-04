@@ -4,7 +4,7 @@ apply(plugin = "com.github.ben-manes.versions")
 
 buildscript {
     dependencies {
-        classpath("com.android.tools.build:gradle:${Versions.gradle}")
+        classpath("com.android.tools.build:gradle:7.4.2")
         classpath("com.google.dagger:hilt-android-gradle-plugin:${Versions.hilt}")
         classpath("com.google.firebase:firebase-crashlytics-gradle:${Versions.Firebase.firebaseCrashlyticsPlugin}")
         classpath("com.google.gms:google-services:${Versions.Firebase.googleServicesPlugin}")
@@ -22,7 +22,7 @@ plugins {
 
 
 fun isNonStable(version: String): Boolean {
-    val stableKeyword = listOf("RELEASE", "FINAL", "GA").any { version.uppercase().contains(it) }
+    val stableKeyword = listOf("RELEASE", "FINAL", "GA").any { version.toUpperCase().contains(it) }
     val regex = "^[0-9,.v-]+(-r)?$".toRegex()
     val isStable = stableKeyword || regex.matches(version)
     return isStable.not()

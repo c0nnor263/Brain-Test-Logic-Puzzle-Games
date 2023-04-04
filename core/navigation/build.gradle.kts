@@ -31,9 +31,9 @@ android {
         sourceCompatibility = Versions.Config.sourceCompatibility
         targetCompatibility = Versions.Config.targetCompatibility
     }
-        kotlinOptions {
-            jvmTarget = Versions.Config.jvmTarget
-        }
+    kotlinOptions {
+        jvmTarget = Versions.Config.jvmTarget
+    }
     buildFeatures {
         compose = true
     }

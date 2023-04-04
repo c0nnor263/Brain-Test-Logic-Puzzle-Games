@@ -13,3 +13,4 @@ local.properties
 /buildSrc/build/classes/kotlin/main/
 /keystore.properties
 /gradle.properties
+/white app/

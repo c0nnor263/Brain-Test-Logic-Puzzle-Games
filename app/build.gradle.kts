@@ -40,6 +40,9 @@ android {
     }
 
     buildTypes {
+        debug {
+            applicationIdSuffix = ".debug"
+        }
         release {
             isMinifyEnabled = true
             isShrinkResources = true
@@ -47,6 +50,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("release")
         }
     }
     compileOptions {
@@ -75,10 +79,15 @@ kapt {
 }
 
 dependencies {
+    implementation(project(":core:data"))
+    implementation(project(":core:database"))
+    implementation(project(":core:domain"))
     implementation(project(":core:ui"))
     implementation(project(":core:navigation"))
     implementation(project(":feature:home"))
-
+    implementation(project(":feature:menu"))
+    implementation(project(":feature:level"))
+    implementation(project(":feature:settings"))
     composeCore()
 
 
@@ -92,11 +101,6 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}")
 
 
-    // Room
-    ksp("androidx.room:room-compiler:${Versions.Storage.room}")
-    implementation("androidx.room:room-runtime:${Versions.Storage.room}")
-    implementation("androidx.room:room-ktx:${Versions.Storage.room}")
-
     // Navigation Compose
     implementation("androidx.navigation:navigation-compose:${Versions.Compose.navigation}")
     implementation("androidx.hilt:hilt-navigation-compose:${Versions.Compose.hiltNavigation}")
@@ -105,5 +109,6 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:${Versions.Firebase.firebaseBom}"))
     implementation("com.google.firebase:firebase-crashlytics")
     implementation("com.google.firebase:firebase-analytics")
+
 
 }
