@@ -17,7 +17,7 @@ internal fun AnswersBlock(
     onAnswer: (String) -> Unit
 ) {
     Column(
-        modifier = modifier.padding(horizontal = Dimensions.Padding.Small.value),
+        modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(Dimensions.Padding.Small.value)
     ) {

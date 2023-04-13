@@ -38,6 +38,7 @@ object Versions {
         const val compiler = "1.4.4"
         const val hiltNavigation = "1.0.0"
         const val navigation = "2.5.3"
+        const val navigationAnimation = "0.31.0-alpha"
         val constraintLayout = "1.0.1"
     }
 

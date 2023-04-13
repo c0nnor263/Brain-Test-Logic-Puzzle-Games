@@ -1,8 +1,13 @@
 package com.conboi.wordefull.presentation.composables.header_bar
 
-import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.SizeTransform
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
+import androidx.compose.animation.with
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
@@ -26,59 +31,75 @@ import com.conboi.core.ui.defaultSpringAnimation
 import com.conboi.wordefull.presentation.composables.header_bar.options.HeaderBarHomeOption
 import com.conboi.wordefull.presentation.composables.header_bar.options.HeaderBarLevelOption
 import com.conboi.wordefull.presentation.composables.header_bar.options.HeaderBarMenuOption
+import com.conboi.wordefull.presentation.composables.header_bar.options.HeaderBarSettingsOption
 
 @Composable
 fun HeaderBar(navController: NavHostController) {
     // TODO AnimatedVisibility
-
+// TODO Fullscreen
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = currentBackStackEntry?.destination
 
     Row(
-        modifier = Modifier
-            .animateContentSize(defaultSpringAnimation())
-            .padding(Dimensions.Padding.ExtraSmall.value),
-        horizontalArrangement = Arrangement.Start,
+        modifier = Modifier.padding(
+            vertical = Dimensions.Padding.Small.value,
+            horizontal = Dimensions.Padding.Medium.value
+        ),
         verticalAlignment = Alignment.CenterVertically
     ) {
 
-        when (currentDestination?.route) {
-            Screens.Home.route -> {
-                HeaderBarHomeOption(
-                    onNavigateToSettings = {
-                        navController.navigate(Screens.Settings.route)
-                    },
-                    onNavigateToMenu = {
-                        navController.navigate(Screens.Menu.route)
-                    },
-                )
+        AnimatedContent(
+            targetState = currentDestination?.route ?: "",
+            label = "",
+            transitionSpec = {
+                (scaleIn(animationSpec = defaultSpringAnimation()) + fadeIn() with
+                        scaleOut(animationSpec = defaultSpringAnimation()) + fadeOut()
+                        )
+                    .using(
+                        SizeTransform(clip = false)
+                    )
             }
-
-            Screens.Level().route -> {
-                HeaderBarLevelOption(
-                    onNavigateToHome = {
-                        navController.navigate(Screens.Home.route)
-                    },
-                    onNavigateToMenu = {
-                        navController.navigate(Screens.Menu.route)
-                    },
-                )
-            }
-
-            Screens.Menu.route -> {
-                HeaderBarMenuOption(
-                    onNavigateBack = {
-                        navController.popBackStack()
+        ) {
+            Row {
+                when (it) {
+                    Screens.Home.route -> {
+                        HeaderBarHomeOption(
+                            onNavigateToSettings = {
+                                navController.navigate(Screens.Settings.route)
+                            },
+                            onNavigateToMenu = {
+                                navController.navigate(Screens.Menu.route)
+                            },
+                        )
                     }
-                )
-            }
 
-            Screens.Settings.route -> {
-                HeaderBarMenuOption(
-                    onNavigateBack = {
-                        navController.popBackStack()
+                    Screens.Level().route -> {
+                        HeaderBarLevelOption(
+                            onNavigateToHome = {
+                                navController.navigate(Screens.Home.route)
+                            },
+                            onNavigateToMenu = {
+                                navController.navigate(Screens.Menu.route)
+                            },
+                        )
                     }
-                )
+
+                    Screens.Menu.route -> {
+                        HeaderBarMenuOption(
+                            onNavigateBack = {
+                                navController.popBackStack()
+                            }
+                        )
+                    }
+
+                    Screens.Settings.route -> {
+                        HeaderBarSettingsOption(
+                            onNavigateBack = {
+                                navController.popBackStack()
+                            }
+                        )
+                    }
+                }
             }
         }
         Spacer(modifier = Modifier.weight(1F))
@@ -90,7 +111,7 @@ fun HeaderBar(navController: NavHostController) {
                 // TODO Navigate to Currency
             }) {
                 Text(
-                    text = "100", style = MaterialTheme.typography.headlineLarge
+                    text = "100", style = MaterialTheme.typography.headlineMedium
                 )
                 Image(
                     modifier = Modifier.size(36.dp),

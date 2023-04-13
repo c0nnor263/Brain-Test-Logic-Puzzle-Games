@@ -1,41 +1,56 @@
 package com.conboi.wordefull.presentation.composables.header_bar.options
 
-import androidx.compose.foundation.Image
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.Crossfade
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import com.conboi.core.ui.Durations
 import com.conboi.core.ui.R
+import com.conboi.wordefull.presentation.composables.header_bar.common.HeaderBarButton
 
 @Composable
 fun RowScope.HeaderBarLevelOption(
     onNavigateToHome: () -> Unit,
     onNavigateToMenu: () -> Unit,
 ) {
-    IconButton(onClick = onNavigateToHome) {
-        Image(
-            modifier = Modifier.fillMaxSize(),
-            painter = painterResource(id = R.drawable.button_icon_bg),
-            contentDescription = null
-        )
-        Icon(
-            painter = painterResource(id = R.drawable.home_icon),
-            contentDescription = null
-        )
+    var expandRow by remember { mutableStateOf(false) }
+
+    Crossfade(
+        targetState = expandRow,
+        label = "",
+        animationSpec = tween(Durations.ShortMedium.time)
+    ) {
+        HeaderBarButton(iconRes = if (it) R.drawable.baseline_arrow_left_24 else R.drawable.baseline_arrow_right_24) {
+            expandRow = !expandRow
+        }
     }
 
-    IconButton(onClick = onNavigateToMenu) {
-        Image(
-            modifier = Modifier.fillMaxSize(),
-            painter = painterResource(id = R.drawable.button_icon_bg),
-            contentDescription = null
-        )
-        Icon(
-            painter = painterResource(id = R.drawable.baseline_more_horiz_24),
-            contentDescription = null
-        )
+    AnimatedVisibility(
+        visible = expandRow,
+        enter = fadeIn(tween(Durations.Short.time)) +
+                slideInHorizontally(tween(Durations.Short.time)) { -it },
+        exit = slideOutHorizontally(tween(Durations.Short.time)) { -it } +
+                fadeOut(tween(Durations.Short.time)),
+    ) {
+        HeaderBarButton(iconRes = R.drawable.baseline_home_24, onClick = onNavigateToHome)
+    }
+
+    AnimatedVisibility(
+        visible = expandRow,
+        enter = fadeIn(tween(Durations.Short.time)) +
+                slideInHorizontally(tween(Durations.Short.time)) { -it },
+        exit = slideOutHorizontally(tween(Durations.Short.time)) { -it * 2 } +
+                fadeOut(tween(Durations.Short.time)),
+    ) {
+        HeaderBarButton(iconRes = R.drawable.baseline_more_horiz_24, onClick = onNavigateToMenu)
     }
 }

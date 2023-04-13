@@ -26,13 +26,18 @@ class LevelScreenViewModel @Inject constructor(
     val levelActionState: StateFlow<LevelActionState?> = _levelActionState
 
     fun updateLevelUIState(state: LevelUIState) = viewModelScope.launch(Dispatchers.Main) {
-        if (levelUIState.value != LevelUIState.PROCESSING) return@launch
         _levelUIState.emit(state)
-        delay(DEFAULT_LEVEL_UI_COUNTDOWN_DURATION)
-        _levelUIState.emit(LevelUIState.PROCESSING)
+        if (state != LevelUIState.FINISHED) delay(DEFAULT_LEVEL_UI_COUNTDOWN_DURATION)
+
+        val newState = if (state != LevelUIState.COMPLETED) {
+            LevelUIState.PROCESSING
+        } else LevelUIState.WAITING
+        _levelUIState.emit(newState)
+
     }
 
     fun updateLevelActionState(state: LevelActionState?) = viewModelScope.launch(Dispatchers.Main) {
+        if (levelUIState.value != LevelUIState.PROCESSING) return@launch
         _levelActionState.emit(state)
     }
 }
