@@ -4,4 +4,6 @@ enum class LevelUIState {
     FAILED,
     PROCESSING,
     COMPLETED,
+    WAITING,
+    FINISHED
 }

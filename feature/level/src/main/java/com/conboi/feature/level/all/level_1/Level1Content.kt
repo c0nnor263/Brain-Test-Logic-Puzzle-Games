@@ -1,10 +1,8 @@
 package com.conboi.feature.level.all.level_1
 
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.absoluteOffset
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -15,69 +13,116 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.ConstraintLayout
 import com.conboi.core.domain.ui.LevelUIState
 import com.conboi.core.ui.Dimensions
 import com.conboi.feature.level.common.AnswersBlock
-import com.conboi.feature.level.common.Title
+import com.conboi.feature.level.common.LocalLevelUIState
 
 
 @Composable
 internal fun Level1Content(
+    modifier: Modifier = Modifier,
     onLevelAction: (LevelUIState) -> Unit
 ) {
+    val levelUIState = LocalLevelUIState.current
     val listOfAnswers by remember { mutableStateOf(listOf(4, 8, 7, 6).shuffled()) }
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(Dimensions.Padding.Small.value),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Top
     ) {
-        Title(
-            title = "How many ducks?"
-        )
+        ConstraintLayout(modifier = Modifier.fillMaxWidth()) {
+            val (
+                firstDuck,
+                secondDuck,
+                thirdDuck,
+                fourthDuck,
+                fifthDuck,
+                sixthDuck,
+                seventhDuck,
+                eighthDuck,
+            ) = createRefs()
 
-        Spacer(modifier = Modifier.height(64.dp))
 
-        Box(contentAlignment = Alignment.Center) {
-            Row {
-                repeat(2) { indexColumn ->
-                    Level0Image(
-                        modifier = Modifier
-                            .weight(0.5F, false)
-                            .absoluteOffset(x = indexColumn.dp),
-                        indexColumn = indexColumn
-                    )
+            Level1Image(
+                modifier = Modifier.constrainAs(firstDuck) {
+                    top.linkTo(parent.top)
+                    start.linkTo(parent.start, margin = -Dimensions.Padding.ExtraLarge2X.value)
                 }
-            }
-            Row {
-                repeat(3) { indexColumn ->
-                    Level0Image(
-                        modifier = Modifier
-                            .weight(0.33F, false)
-                            .absoluteOffset(x = indexColumn.dp),
-                        indexRow = 1,
-                        indexColumn = indexColumn + 1
-                    )
-                }
-            }
-            Row {
-                repeat(3) { indexColumn ->
-                    Level0Image(
-                        modifier = Modifier
-                            .weight(0.33F, false)
-                            .absoluteOffset(x = indexColumn.dp),
-                        indexRow = 1,
-                        indexColumn = indexColumn + 2
-                    )
-                }
-            }
+            )
+
+            Level1Image(
+                modifier = Modifier.constrainAs(secondDuck) {
+                    top.linkTo(firstDuck.top, margin = Dimensions.Padding.ExtraLarge2X.value)
+                    start.linkTo(firstDuck.end, margin = -Dimensions.Padding.ExtraLarge2X.value)
+                },
+                index = 1
+            )
+
+
+            Level1Image(
+                modifier = Modifier.constrainAs(thirdDuck) {
+                    top.linkTo(secondDuck.top)
+                    start.linkTo(secondDuck.end, margin = -Dimensions.Padding.ExtraLarge2X.value)
+                },
+                index = 2
+            )
+
+            Level1Image(
+                modifier = Modifier.constrainAs(fourthDuck) {
+                    top.linkTo(parent.top)
+                    start.linkTo(secondDuck.end, margin = -Dimensions.Padding.ExtraLarge2X.value)
+                    bottom.linkTo(secondDuck.top, margin = Dimensions.Padding.Medium.value)
+                }, index = 3
+            )
+
+
+
+            Level1Image(
+                modifier = Modifier.constrainAs(fifthDuck) {
+                    top.linkTo(parent.top)
+                    start.linkTo(fourthDuck.end, margin = -Dimensions.Padding.ExtraLarge2X.value)
+                },
+                index = 4
+            )
+
+
+
+            Level1Image(
+                modifier = Modifier.constrainAs(sixthDuck) {
+                    top.linkTo(parent.top)
+                    start.linkTo(fifthDuck.end, margin = -Dimensions.Padding.ExtraLarge2X.value)
+                    bottom.linkTo(fifthDuck.bottom)
+                }, index = 5
+            )
+
+
+
+            Level1Image(
+                modifier = Modifier.constrainAs(seventhDuck) {
+                    top.linkTo(parent.top)
+                    start.linkTo(sixthDuck.end, margin = -Dimensions.Padding.ExtraLarge2X.value)
+                    bottom.linkTo(thirdDuck.bottom)
+                }, index = 6
+            )
+
+
+            Level1Image(
+                modifier = Modifier.constrainAs(eighthDuck) {
+                    start.linkTo(sixthDuck.end, margin = -Dimensions.Padding.ExtraLarge.value)
+                    bottom.linkTo(parent.bottom)
+                },
+                index = 7
+            )
+
         }
-
-        Spacer(modifier = Modifier.height(32.dp))
-
+        Spacer(modifier = Modifier.height(Dimensions.Padding.Medium.value))
         AnswersBlock(listOfAnswers = listOfAnswers) { answerText ->
+            if (levelUIState != LevelUIState.PROCESSING) return@AnswersBlock
             val duckCount = 8.toString()
             val state = if (answerText == duckCount) {
                 LevelUIState.COMPLETED

@@ -2,6 +2,12 @@ package com.conboi.core.ui
 
 sealed class Durations(val time: Int) {
     /**
+     * 100
+     */
+    object ShortLight : Durations(100)
+
+
+    /**
      * 200
      */
     object Short : Durations(200)
@@ -25,7 +31,10 @@ sealed class Durations(val time: Int) {
      * 800
      */
     object Long : Durations(800)
-}
 
-const val DEFAULT_DRAW_ANIMATION_DURATION = 200
+    /**
+     * 1000
+     */
+    object Second : Durations(1000)
+}
 

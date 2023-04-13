@@ -5,5 +5,5 @@ import androidx.compose.animation.core.spring
 
 fun <T> defaultSpringAnimation() = spring<T>(
     dampingRatio = Spring.DampingRatioLowBouncy,
-    stiffness = Spring.StiffnessVeryLow
+    stiffness = Spring.StiffnessLow
 )

@@ -2,6 +2,8 @@ package com.conboi.core.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
+val boardBorderColor = Color(0xFF8f542c)
+val boardBackgroundColor = Color(0xFF1e2622)
 val md_theme_light_primary = Color(0xFF0055D5)
 val md_theme_light_onPrimary = Color(0xFFFFFFFF)
 val md_theme_light_primaryContainer = Color(0xFFDAE1FF)

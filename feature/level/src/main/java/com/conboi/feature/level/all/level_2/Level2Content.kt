@@ -1,13 +1,9 @@
 package com.conboi.feature.level.all.level_2
 
-import androidx.annotation.DrawableRes
-import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
@@ -17,7 +13,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -26,71 +24,70 @@ import com.conboi.core.domain.ui.LevelUIState
 import com.conboi.core.ui.Dimensions
 import com.conboi.core.ui.R
 import com.conboi.feature.level.common.SunDraggable
-import com.conboi.feature.level.common.Title
 
 @Composable
-internal fun Level2Content(onLevelAction: (LevelUIState) -> Unit) {
+internal fun Level2Content(
+    modifier: Modifier = Modifier,
+    onLevelAction: (LevelUIState) -> Unit
+) {
 
-    @DrawableRes var owlImageRes by remember { mutableStateOf(R.drawable.owl_sleep) }
+    val density = LocalDensity.current
+    var isOwlWakeUp by remember {
+        mutableStateOf(false)
+    }
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(Dimensions.Padding.Small.value),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Title(
-            title = "Wake up the owl"
-        )
-        Spacer(modifier = Modifier.height(32.dp))
-
         BoxWithConstraints(contentAlignment = Alignment.Center) {
 
+
             SunDraggable(
-                modifier = Modifier.align(Alignment.TopEnd),
+                modifier = Modifier.then(Modifier.align(Alignment.TopEnd)),
+                initialOffset = Offset(0f, -128f),
+                isEnabled = !isOwlWakeUp
             ) { sunOffset ->
-                if (sunOffset.y >= maxHeight.value) {
-                    owlImageRes = R.drawable.owl_wake
+                if (sunOffset.y >= with(density) { maxHeight.roundToPx() }) {
+                    isOwlWakeUp = true
                     onLevelAction(LevelUIState.COMPLETED)
                 }
             }
-            ConstraintLayout(modifier = Modifier) {
-                val (treeImage, owlImage) = createRefs()
 
+            ConstraintLayout(modifier = Modifier.align(Alignment.Center)) {
+                val (treeImage, owlImage) = createRefs()
 
                 Image(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = Dimensions.Padding.Small.value)
                         .constrainAs(treeImage) {
                             top.linkTo(parent.top)
                             start.linkTo(parent.start)
+                            end.linkTo(parent.end)
+                            bottom.linkTo(parent.bottom)
+
                         },
                     painter = painterResource(id = R.drawable.tree),
                     contentDescription = null,
                     contentScale = ContentScale.FillWidth
                 )
-                Crossfade(targetState = owlImageRes,
-                    label = "",
+
+                Level2Owl(
                     modifier = Modifier
-                        .size(128.dp)
+                        .size(82.dp)
                         .constrainAs(owlImage) {
-                            top.linkTo(treeImage.top)
-                            start.linkTo(treeImage.start, margin = 96.dp)
+                            top.linkTo(treeImage.top, margin = 64.dp)
+                            start.linkTo(treeImage.start, margin = 128.dp)
                             bottom.linkTo(treeImage.bottom)
-                        }
-                ) {
-                    Image(
-                        painter = painterResource(id = it),
-                        contentDescription = null,
-                        contentScale = ContentScale.Fit
-                    )
-                }
+                        },
+                    isWakeUp = isOwlWakeUp
+                )
             }
         }
     }
 }
-
 
 @Preview
 @Composable

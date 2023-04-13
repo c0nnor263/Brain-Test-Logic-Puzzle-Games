@@ -3,7 +3,7 @@ package com.conboi.feature.home
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -25,18 +25,17 @@ fun HomeScreen(
 
     val lastUncompletedLevel = viewModel.getFirstUncompletedLevelId().collectAsState(initial = null)
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(Dimensions.Padding.Medium.value),
-        verticalArrangement = Arrangement.SpaceBetween,
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Spacer(modifier = Modifier.padding(Dimensions.Padding.ExtraLarge.value))
         Text(
             text = "Are you ready to show your intelligence?",
             style = MaterialTheme.typography.displaySmall,
             textAlign = TextAlign.Center
         )
-        Spacer(modifier = Modifier.padding(Dimensions.Padding.ExtraLarge.value))
+
         TextButton(onClick = {
             val id = lastUncompletedLevel.value?.id ?: 1
             onNavigateToLevel(id)
