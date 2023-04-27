@@ -1,8 +1,6 @@
 package com.conboi.feature.level.all.level_5
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Column
@@ -10,8 +8,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.requiredHeight
-import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -22,17 +18,21 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
-import com.conboi.core.domain.ui.LevelUIState
+import com.conboi.core.domain.level.LevelScreenState
 import com.conboi.core.ui.Dimensions
 import com.conboi.core.ui.Durations
 import com.conboi.core.ui.R
 import com.conboi.core.ui.animation.DrawAnimation
-import com.conboi.feature.level.common.LocalLevelUIState
+import com.conboi.core.ui.state.LocalLevelScreenState
 
 @Composable
-internal fun Level5Content(modifier: Modifier = Modifier, onLevelAction: (LevelUIState) -> Unit) {
-    val levelUIState = LocalLevelUIState.current
+internal fun Level5Content(
+    modifier: Modifier = Modifier,
+    onLevelAction: (LevelScreenState) -> Unit
+) {
+    val levelUIState = LocalLevelScreenState.current
     val firstMarkInteractionSource = remember { MutableInteractionSource() }
     val secondMarkInteractionSource = remember { MutableInteractionSource() }
 
@@ -40,11 +40,14 @@ internal fun Level5Content(modifier: Modifier = Modifier, onLevelAction: (LevelU
     val isSecondMarkPressed by secondMarkInteractionSource.collectIsPressedAsState()
 
     LaunchedEffect(isFirstMarkPressed, isSecondMarkPressed) {
-        if (levelUIState != LevelUIState.PROCESSING) return@LaunchedEffect
-        val event = if (isFirstMarkPressed && isSecondMarkPressed) {
-            LevelUIState.COMPLETED
+        if (levelUIState != LevelScreenState.IS_PLAYING) return@LaunchedEffect
+
+        val event = if (isFirstMarkPressed
+//            && isSecondMarkPressed TODO Test
+        ) {
+            LevelScreenState.CORRECT_CHOICE
         } else if (isFirstMarkPressed || isSecondMarkPressed) {
-            LevelUIState.FAILED
+            LevelScreenState.WRONG_CHOICE
         } else {
             return@LaunchedEffect
         }
@@ -59,9 +62,9 @@ internal fun Level5Content(modifier: Modifier = Modifier, onLevelAction: (LevelU
         Level5Title()
 
         Spacer(modifier = Modifier.height(8.dp))
-        ConstraintLayout(modifier = Modifier
-            .fillMaxWidth()
-            .requiredHeight(300.dp)) {
+        ConstraintLayout(
+            modifier = Modifier.fillMaxWidth()
+        ) {
             val (backgroundImage, firstMark, secondMark, thirdMark, fourthMark,
                 fifthNark, sixthMark) = createRefs()
 
@@ -72,137 +75,126 @@ internal fun Level5Content(modifier: Modifier = Modifier, onLevelAction: (LevelU
                     start.linkTo(firstMark.start)
                     end.linkTo(thirdMark.end)
                     bottom.linkTo(parent.bottom)
-                }, delay = Durations.Medium.time.toLong() * 7) {
+                }, delay = Durations.Medium.time.toLong() * 6
+            ) {
                 Image(
-                    modifier = Modifier.size(300.dp),
                     painter = painterResource(id = R.drawable.tic_tac_toe_board),
                     contentDescription = null,
-                    contentScale = ContentScale.Crop
+                    contentScale = ContentScale.FillWidth
                 )
             }
 
+            // First Row
+
+            createHorizontalChain(
+                firstMark,
+                secondMark,
+                thirdMark,
+                chainStyle = ChainStyle.SpreadInside
+            )
+
+
             Level5TicTacToeCell(
                 modifier = Modifier
-                    .padding(Dimensions.Padding.Small.value)
                     .constrainAs(
                         firstMark
                     ) {
                         top.linkTo(parent.top)
-                        end.linkTo(secondMark.start)
-                    },
+                    }
+                    .padding(Dimensions.Padding.Small.value)
+                    .fillMaxWidth(0.3F),
                 drawableRes = R.drawable.o_mark,
                 delay = 0L
             )
 
             Level5TicTacToeCell(
                 modifier = Modifier
-                    .padding(Dimensions.Padding.Small.value)
+
                     .constrainAs(
                         secondMark
                     ) {
-
-                        top.linkTo(parent.top)
-                        start.linkTo(parent.start)
-                        end.linkTo(parent.end)
-                    },
+                        top.linkTo(firstMark.top)
+                        bottom.linkTo(firstMark.bottom)
+                    }
+                    .padding(Dimensions.Padding.Small.value)
+                    .fillMaxWidth(0.3F),
                 drawableRes = R.drawable.o_mark,
                 delay = Durations.Medium.time.toLong()
             )
             Level5TicTacToeCell(
                 modifier = Modifier
-                    .padding(Dimensions.Padding.Small.value)
+
                     .constrainAs(
                         thirdMark
                     ) {
-                        top.linkTo(parent.top)
-                        start.linkTo(secondMark.end)
-                    },
+                        top.linkTo(secondMark.top)
+                        bottom.linkTo(secondMark.bottom)
+                    }
+                    .padding(Dimensions.Padding.Small.value)
+                    .fillMaxWidth(0.3F),
                 interactionSource = firstMarkInteractionSource,
                 alpha = if (isFirstMarkPressed) 1f else 0f,
                 drawableRes = R.drawable.x_mark,
-                delay = Durations.Medium.time.toLong() * 2
             )
+
+            // Second Row
 
             Level5TicTacToeCell(
                 modifier = Modifier
-                    .padding(Dimensions.Padding.Small.value)
                     .constrainAs(
                         fourthMark
                     ) {
                         top.linkTo(thirdMark.bottom)
-                        end.linkTo(thirdMark.end)
                         start.linkTo(thirdMark.start)
+                        end.linkTo(thirdMark.end)
                         bottom.linkTo(sixthMark.top)
 
-                    },
+                    }
+                    .padding(Dimensions.Padding.Small.value)
+                    .fillMaxWidth(0.3F),
                 drawableRes = R.drawable.x_mark,
-                delay = Durations.Medium.time.toLong() * 3
+                delay = Durations.Medium.time.toLong() * 2
             )
+
+
+            // Third Row
+
+            createHorizontalChain(fifthNark, sixthMark, chainStyle = ChainStyle.SpreadInside)
 
             Level5TicTacToeCell(
                 modifier = Modifier
-                    .padding(Dimensions.Padding.Small.value)
+
                     .constrainAs(
                         fifthNark
                     ) {
+
                         bottom.linkTo(parent.bottom)
-                        start.linkTo(firstMark.start)
-                        end.linkTo(firstMark.end)
-                    },
+                    }
+                    .padding(Dimensions.Padding.Small.value)
+                    .fillMaxWidth(0.3F),
                 drawableRes = R.drawable.o_mark,
-                delay = Durations.Medium.time.toLong() * 4
+                delay = Durations.Medium.time.toLong() * 3
             )
 
 
             Level5TicTacToeCell(
                 modifier = Modifier
-                    .padding(Dimensions.Padding.Small.value)
                     .constrainAs(
                         sixthMark
                     ) {
                         bottom.linkTo(parent.bottom)
-                        start.linkTo(fourthMark.start)
-                        end.linkTo(fourthMark.end)
-                    },
+                    }
+                    .padding(Dimensions.Padding.Small.value)
+                    .fillMaxWidth(0.3F),
                 drawableRes = R.drawable.x_mark,
                 interactionSource = secondMarkInteractionSource,
                 alpha = if (isSecondMarkPressed) 1f else 0f,
-                delay = Durations.Medium.time.toLong() * 5
             )
 
         }
-
-
     }
 }
 
-
-@Composable
-fun Level5TicTacToeCell(
-    modifier: Modifier = Modifier,
-    @DrawableRes drawableRes: Int,
-    interactionSource: MutableInteractionSource? = null,
-    alpha: Float = 1F,
-    delay: Long
-) {
-    val modifierWithInteractionSource = if (interactionSource != null) {
-        Modifier.clickable(
-            interactionSource = interactionSource,
-            indication = null
-        ) {}
-    } else Modifier
-
-    DrawAnimation(modifier = modifier, delay = delay) {
-        Image(
-            modifier = Modifier
-                .size(86.dp)
-                .then(modifierWithInteractionSource),
-            painter = painterResource(id = drawableRes),
-            contentDescription = null,
-            alpha = alpha
-        )
-    }
-}
 
 @Preview
 @Composable

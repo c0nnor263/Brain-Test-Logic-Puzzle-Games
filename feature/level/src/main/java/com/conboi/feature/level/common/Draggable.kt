@@ -1,5 +1,6 @@
 package com.conboi.feature.level.common
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.BoxWithConstraintsScope
@@ -18,15 +19,15 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
-import com.conboi.core.ui.R
 import com.conboi.core.ui.animation.DrawAnimation
 import kotlin.math.roundToInt
 
 @Composable
-fun BoxWithConstraintsScope.SunDraggable(
+fun BoxWithConstraintsScope.Draggable(
     modifier: Modifier = Modifier,
     initialOffset: Offset = Offset.Zero,
     isEnabled: Boolean = true,
+    @DrawableRes drawableRes: Int,
     onDrag: (Offset) -> Unit
 ) {
     val screenWidthDp = with(LocalDensity.current) { maxWidth.roundToPx() }
@@ -43,7 +44,10 @@ fun BoxWithConstraintsScope.SunDraggable(
                     currentPosition = it
                         .localToWindow(Offset.Zero)
                         .run {
-                            Offset(x.coerceAtLeast(97F), y.coerceAtLeast(97F))
+                            Offset(
+                                x.coerceAtLeast(97F),
+                                y.coerceAtLeast(97F)
+                            )
                         }
                 }
                 .offset { IntOffset(offsetX.roundToInt(), offsetY.roundToInt()) }
@@ -52,14 +56,13 @@ fun BoxWithConstraintsScope.SunDraggable(
                     detectDragGestures { change, dragAmount ->
                         change.consume()
                         if (isEnabled) {
-
                             offsetX = (offsetX + dragAmount.x).coerceIn(
                                 -currentPosition.x,
-                                screenWidthDp - currentPosition.x
+                                (screenWidthDp.toFloat() - currentPosition.x)
                             )
                             offsetY = (offsetY + dragAmount.y).coerceIn(
                                 initialOffset.y,
-                                screenHeightDp - currentPosition.y
+                                (screenHeightDp.toFloat())
                             )
                             onDrag(Offset(offsetX, offsetY) + currentPosition)
                         }
@@ -67,7 +70,7 @@ fun BoxWithConstraintsScope.SunDraggable(
 
                     }
                 },
-            painter = painterResource(id = R.drawable.sun),
+            painter = painterResource(id = drawableRes),
             contentDescription = null
         )
     }

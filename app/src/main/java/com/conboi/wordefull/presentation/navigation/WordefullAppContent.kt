@@ -4,6 +4,7 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.displayCutoutPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -25,9 +26,14 @@ import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 @Composable
 fun WordefullAppContent() {
     val navController = rememberAnimatedNavController()
-    Scaffold(bottomBar = {
-        BottomBarContent()
-    }) { innerPadding ->
+
+
+
+    Scaffold(
+        bottomBar = {
+            BottomBarContent()
+        }
+    ) { innerPadding ->
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -44,6 +50,7 @@ fun WordefullAppContent() {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .displayCutoutPadding()
                     .padding(Dimensions.Padding.Medium.value)
             ) {
                 Image(
@@ -69,6 +76,5 @@ fun WordefullAppContent() {
 @Preview
 @Composable
 fun WordefullAppContentPreview() {
-
     WordefullAppContent()
 }

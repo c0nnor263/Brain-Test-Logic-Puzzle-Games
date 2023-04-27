@@ -79,6 +79,7 @@ fun DependencyHandler.coreData() {
 
 
     add(LibType.DEFAULT.value, "com.google.android.gms:play-services-ads:${Versions.ads}")
+    add(LibType.DEFAULT.value, "androidx.datastore:datastore-preferences:1.0.0")
 }
 
 

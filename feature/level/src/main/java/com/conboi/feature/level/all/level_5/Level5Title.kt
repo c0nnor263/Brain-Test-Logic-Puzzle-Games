@@ -25,7 +25,7 @@ fun Level5Title(modifier: Modifier = Modifier) {
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        DrawAnimation(delay = Durations.Medium.time.toLong() * 7) {
+        DrawAnimation(delay = Durations.Medium.time.toLong() * 4) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
                     text = "John:", style = MaterialTheme.typography.bodyLarge
@@ -38,7 +38,7 @@ fun Level5Title(modifier: Modifier = Modifier) {
                 )
             }
         }
-        DrawAnimation(delay = Durations.Medium.time.toLong() * 8) {
+        DrawAnimation(delay = Durations.Medium.time.toLong() * 5) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
                     text = "You:", style = MaterialTheme.typography.bodyLarge

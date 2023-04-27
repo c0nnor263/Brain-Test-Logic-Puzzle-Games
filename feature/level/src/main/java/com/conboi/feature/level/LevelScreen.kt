@@ -5,49 +5,51 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.conboi.core.domain.ui.LevelActionState
-import com.conboi.core.domain.ui.LevelUIState
-import com.conboi.feature.level.common.LevelActionsBar
+import com.conboi.core.database.model.LevelData
+import com.conboi.core.domain.level.ActionResult
+import com.conboi.core.domain.level.LevelActionState
+import com.conboi.core.domain.level.LevelScreenState
+import com.conboi.core.ui.state.LocalLevelActionState
+import com.conboi.core.ui.state.LocalLevelScreenState
+import com.conboi.core.ui.theme.WordefullTheme
+import com.conboi.feature.level.action_bar.LevelActionsBar
+import com.conboi.feature.level.advice.GetAdviceDialog
 import com.conboi.feature.level.common.LevelContents
-import com.conboi.feature.level.common.LocalLevelUIState
-import com.conboi.feature.level.common.ResultLevelAlert
+import com.conboi.feature.level.common.answers.ResultLevelAlert
 import kotlinx.coroutines.launch
 
 @Composable
 fun LevelScreen(
-    viewModel: LevelScreenViewModel = hiltViewModel(),
-    entryLevelId: Int,
+    levelData: LevelData?,
+    onForward: () -> Unit,
+    onBack: () -> Unit,
+    onUpdateLevelActionState: (LevelActionState) -> Unit,
+    onUpdateLevelScreenState: (LevelScreenState) -> Unit,
+    onAdviceResult: (ActionResult) -> Unit,
 ) {
-    var currentLevelId by rememberSaveable { mutableStateOf(entryLevelId) }
-    val levelUIState = viewModel.levelUIState.collectAsStateWithLifecycle()
-    val levelActionState = viewModel.levelActionState.collectAsStateWithLifecycle()
+    val levelScreenState = LocalLevelScreenState.current
+    val levelActionState = LocalLevelActionState.current
     val scope = rememberCoroutineScope()
 
-    LaunchedEffect(levelUIState.value) {
+    LaunchedEffect(levelScreenState) {
         scope.launch {
-            val nextLevelId = currentLevelId + 1
-            if (levelUIState.value == LevelUIState.WAITING) {
-                currentLevelId = nextLevelId
+            if (levelScreenState == LevelScreenState.COMPLETED) {
+                onForward()
             }
         }
     }
 
 
 
-    CompositionLocalProvider(LocalLevelUIState provides levelUIState.value) {
-        Box(
+
+
+
+    Box(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
@@ -55,14 +57,10 @@ fun LevelScreen(
 
                 LevelContents(
                     modifier = Modifier.weight(1F),
-                    currentLevelId = currentLevelId,
-                    isRestarting = levelActionState.value == LevelActionState.RESTART,
-                    onLevelAction = {
-                        viewModel.updateLevelActionState(it)
-                    },
-                    onLevelUIAction = {
-                        viewModel.updateLevelUIState(it)
-                    },
+                    level = levelData ?: LevelData(),
+                    isRestarting = levelActionState == LevelActionState.RESTART,
+                    onLevelAction = onUpdateLevelActionState,
+                    onLevelUIAction = onUpdateLevelScreenState
                 )
 
                 Box(
@@ -71,33 +69,34 @@ fun LevelScreen(
                 ) {
                     LevelActionsBar(
                         modifier = Modifier.fillMaxSize(),
-                        onRestart = { viewModel.updateLevelActionState(LevelActionState.RESTART) },
-                        onGetAdvice = { viewModel.updateLevelActionState(LevelActionState.ADVICE) },
-                        onSkip = { viewModel.updateLevelActionState(LevelActionState.SKIP) }
+                        onRestart = { onUpdateLevelActionState(LevelActionState.RESTART) },
+                        onGetAdvice = { onUpdateLevelActionState(LevelActionState.ADVICE) },
+                        onSkip = { onUpdateLevelActionState(LevelActionState.SKIP) }
                     )
                 }
-
-
             }
 
 
+        GetAdviceDialog(
+            levelActionState = levelActionState,
+            levelData = levelData ?: LevelData(),
+            onActionResult = onAdviceResult
+        )
 
-            ResultLevelAlert(
-                currentState = levelUIState.value,
-                checkState = LevelUIState.COMPLETED
-            )
-            ResultLevelAlert(
-                currentState = levelUIState.value,
-                checkState = LevelUIState.FAILED
-            )
+        ResultLevelAlert(
+            currentState = levelScreenState,
+            checkState = LevelScreenState.CORRECT_CHOICE
+        )
+        ResultLevelAlert(
+            currentState = levelScreenState,
+            checkState = LevelScreenState.WRONG_CHOICE
+        )
         }
-
-    }
 
 
     BackHandler {
-        if (levelUIState.value == LevelUIState.PROCESSING) {
-            currentLevelId = (currentLevelId - 1).coerceAtLeast(1)
+        if (levelScreenState == LevelScreenState.IS_PLAYING) {
+            onBack()
         }
     }
 }
@@ -106,5 +105,14 @@ fun LevelScreen(
 @Preview
 @Composable
 fun LevelScreenPreview() {
-    LevelScreen(entryLevelId = 0, viewModel = hiltViewModel())
+    WordefullTheme {
+        LevelScreen(
+            levelData = LevelData(),
+            onForward = {},
+            onBack = {},
+            onUpdateLevelActionState = {},
+            onUpdateLevelScreenState = {},
+            onAdviceResult = {}
+        )
+    }
 }

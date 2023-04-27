@@ -14,6 +14,10 @@ class OfflineLevelDataRepository @Inject constructor(
         levelDataDao.upsertLevelData(levelData)
     }
 
+    override suspend fun insertLevelsData(list: List<LevelData>) {
+        levelDataDao.insertLevelsData(list)
+    }
+
     override fun getLevelDataById(id: Int): Flow<LevelData> {
         return levelDataDao.getLevelDataById(id)
     }
@@ -22,8 +26,12 @@ class OfflineLevelDataRepository @Inject constructor(
         return levelDataDao.getAllLevelData()
     }
 
-    override fun getFirstUncompletedLevelId(): Flow<LevelData> {
-        return levelDataDao.getFirstUncompletedLevelId()
+    override fun getLastUncompletedLevel(): Flow<LevelData> {
+        return levelDataDao.getLastUncompletedLevel()
+    }
+
+    override fun getLevelDataListByIndex(index: Int): Flow<List<LevelData>> {
+        return levelDataDao.getLevelDataListByIndex(index)
     }
 
 }

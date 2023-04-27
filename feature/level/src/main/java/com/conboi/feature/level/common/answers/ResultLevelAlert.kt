@@ -1,4 +1,4 @@
-package com.conboi.feature.level.common
+package com.conboi.feature.level.common.answers
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
@@ -17,23 +17,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import com.conboi.core.domain.ui.LevelUIState
+import com.conboi.core.domain.level.LevelScreenState
 import com.conboi.core.ui.Dimensions
 import com.conboi.core.ui.Durations
 import com.conboi.core.ui.R
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun BoxScope.ResultLevelAlert(currentState: LevelUIState, checkState: LevelUIState) {
+fun BoxScope.ResultLevelAlert(currentState: LevelScreenState, checkState: LevelScreenState) {
     @DrawableRes val drawableRes = when (checkState) {
-        LevelUIState.FAILED -> R.drawable.failure
-        LevelUIState.COMPLETED -> R.drawable.success
+        LevelScreenState.WRONG_CHOICE -> R.drawable.failure
+        LevelScreenState.CORRECT_CHOICE -> R.drawable.success
         else -> R.drawable.failure
     }
 
     @StringRes val contentDescription = when (checkState) {
-        LevelUIState.FAILED -> R.string.failure_image_content_description
-        LevelUIState.COMPLETED -> R.string.success_image_content_description
+        LevelScreenState.WRONG_CHOICE -> R.string.failure_image_content_description
+        LevelScreenState.CORRECT_CHOICE -> R.string.success_image_content_description
         else -> R.string.failure_image_content_description
     }
 

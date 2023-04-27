@@ -6,12 +6,17 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
+import com.conboi.core.domain.level.MAX_LEVEL_ID
 import com.conboi.core.ui.Dimensions
 import com.conboi.core.ui.R
 
@@ -19,44 +24,56 @@ import com.conboi.core.ui.R
 fun NavigationArrows(
     modifier: Modifier = Modifier,
     currentIndex: Int,
-    maxIndex: Int,
     onIndexUpdate: (Int) -> Unit,
-    content: @Composable (() -> Unit)? = null
 ) {
     Row(
         modifier = modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceEvenly,
+        horizontalArrangement = Arrangement.SpaceAround,
         verticalAlignment = Alignment.CenterVertically
     ) {
         Card(
-            shape = Dimensions.RoundedShape.ExtraLarge.value
+            shape = Dimensions.RoundedShape.ExtraLarge.value,
+            colors = CardDefaults.cardColors(Color.Transparent)
         ) {
             Icon(
                 modifier = Modifier
                     .clickable {
-                        val newId = currentIndex - 1
-                        onIndexUpdate(newId.coerceAtLeast(1))
+                        val newId = currentIndex - 5
+                        onIndexUpdate(newId.coerceAtLeast(0))
                     }
-                    .padding(Dimensions.Padding.ExtraSmall.value),
+                    .padding(Dimensions.Padding.Medium.value)
+                    .scale(2F),
                 painter = painterResource(id = R.drawable.baseline_arrow_left_24),
                 contentDescription = stringResource(id = R.string.previous_level_button_content_description)
             )
         }
-        content?.invoke()
         Card(
-            shape = Dimensions.RoundedShape.ExtraLarge.value
+            modifier = Modifier.scale(1.1F),
+            shape = Dimensions.RoundedShape.ExtraLarge.value,
+            colors = CardDefaults.cardColors(Color.Transparent)
         ) {
             Icon(
                 modifier = Modifier
                     .clickable {
-                        val newId = currentIndex + 1
-                        onIndexUpdate(newId.coerceAtMost(maxIndex))
+                        val newId = currentIndex + 5
+                        onIndexUpdate(newId.coerceAtMost(MAX_LEVEL_ID * 5))
                     }
-                    .padding(Dimensions.Padding.ExtraSmall.value),
+                    .padding(Dimensions.Padding.Medium.value)
+                    .scale(2F),
                 painter = painterResource(id = R.drawable.baseline_arrow_right_24),
-                contentDescription = stringResource(id = R.string.next_level_button_content_description)
+                contentDescription = stringResource(id = R.string.next_level_button_content_description),
             )
         }
     }
 
+}
+
+
+@Preview
+@Composable
+fun NavigationArrowsPreview() {
+    NavigationArrows(
+        currentIndex = 1,
+        onIndexUpdate = {}
+    )
 }

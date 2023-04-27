@@ -8,18 +8,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.conboi.core.domain.ui.LevelUIState
-import com.conboi.feature.level.common.LocalLevelUIState
+import com.conboi.core.domain.level.LevelScreenState
+import com.conboi.core.ui.Dimensions
+import com.conboi.core.ui.state.LocalLevelScreenState
 
 @Composable
-internal fun Level4Content(modifier: Modifier = Modifier, onLevelAction: (LevelUIState) -> Unit) {
-    val levelUIState = LocalLevelUIState.current
+internal fun Level4Content(
+    modifier: Modifier = Modifier,
+    onLevelAction: (LevelScreenState) -> Unit
+) {
+    val levelUIState = LocalLevelScreenState.current
     val bulbLambda = bulbLambda@{ isCorrectBulb: Boolean ->
-        if (levelUIState != LevelUIState.PROCESSING) return@bulbLambda null
+        if (levelUIState != LevelScreenState.IS_PLAYING) return@bulbLambda null
         val newState = if (isCorrectBulb) {
-            LevelUIState.COMPLETED
+            LevelScreenState.CORRECT_CHOICE
         } else {
-            LevelUIState.FAILED
+            LevelScreenState.WRONG_CHOICE
         }
         onLevelAction(newState)
         isCorrectBulb
@@ -31,12 +35,12 @@ internal fun Level4Content(modifier: Modifier = Modifier, onLevelAction: (LevelU
 
         Row(
             modifier = Modifier.weight(0.5F),
-            horizontalArrangement = Arrangement.Center,
+            horizontalArrangement = Arrangement.spacedBy(Dimensions.Padding.Small.value),
             verticalAlignment = Alignment.CenterVertically
         ) {
             repeat(3) { index ->
                 Level4Bulb(
-                    modifier = Modifier.weight(0.33F),
+                    modifier = Modifier.weight(0.3F),
                     index = index + 1,
                     onClick = bulbLambda
                 )
@@ -45,7 +49,7 @@ internal fun Level4Content(modifier: Modifier = Modifier, onLevelAction: (LevelU
 
         Row(
             modifier = Modifier.weight(0.5F),
-            horizontalArrangement = Arrangement.Center,
+            horizontalArrangement = Arrangement.spacedBy(Dimensions.Padding.Small.value),
             verticalAlignment = Alignment.CenterVertically
         ) {
             repeat(2) { index ->

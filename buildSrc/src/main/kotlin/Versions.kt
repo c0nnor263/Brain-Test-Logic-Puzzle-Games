@@ -6,20 +6,20 @@ object Versions {
     const val coreKtx = "1.9.0"
     const val gradle = "7.4.1"
     const val hilt = "2.45"
-    const val kotlin = "1.8.10"
+    const val kotlin = "1.8.20"
     const val coroutines = "1.6.4"
     const val lifecycle = "2.6.1"
     const val excludeFiles = "/META-INF/{AL2.0,LGPL2.1}"
-    const val ksp = "1.8.10-1.0.9"
+    const val ksp = "1.8.20-1.0.11"
 
 
     object Config {
         const val compileSdk = 33
-        const val jvmTarget = "11"
+        const val jvmTarget = "17"
         const val minSdk = 26
         const val targetSdk = 33
-        val sourceCompatibility = JavaVersion.VERSION_11
-        val targetCompatibility = JavaVersion.VERSION_11
+        val sourceCompatibility = JavaVersion.VERSION_17
+        val targetCompatibility = JavaVersion.VERSION_17
     }
 
     object Storage {
@@ -27,15 +27,15 @@ object Versions {
     }
 
     object Firebase {
-        const val firebaseBom = "31.2.3"
-        const val firebaseCrashlyticsPlugin = "2.9.4"
+        const val firebaseBom = "31.5.0"
+        const val firebaseCrashlyticsPlugin = "2.9.5"
         const val googleServicesPlugin = "4.3.15"
     }
 
     object Compose {
-        const val version = "1.4.0"
-        const val bom = "2023.03.00"
-        const val compiler = "1.4.4"
+        const val version = "1.4.2"
+        const val bom = "2023.04.01"
+        const val compiler = "1.4.6"
         const val hiltNavigation = "1.0.0"
         const val navigation = "2.5.3"
         const val navigationAnimation = "0.31.0-alpha"

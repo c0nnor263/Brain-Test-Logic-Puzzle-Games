@@ -41,7 +41,7 @@ fun RowScope.HeaderBarLevelOption(
         exit = slideOutHorizontally(tween(Durations.Short.time)) { -it } +
                 fadeOut(tween(Durations.Short.time)),
     ) {
-        HeaderBarButton(iconRes = R.drawable.baseline_home_24, onClick = onNavigateToHome)
+        HeaderBarButton(iconRes = R.drawable.home_icon, onClick = onNavigateToHome)
     }
 
     AnimatedVisibility(

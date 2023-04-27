@@ -21,11 +21,11 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.res.painterResource
+import com.conboi.core.domain.level.DEFAULT_LEVEL_UI_COUNTDOWN_DURATION
 import com.conboi.core.ui.Dimensions
 import com.conboi.core.ui.Durations
 import com.conboi.core.ui.R
 import com.conboi.core.ui.animation.DrawAnimation
-import com.conboi.feature.level.DEFAULT_LEVEL_UI_COUNTDOWN_DURATION
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 

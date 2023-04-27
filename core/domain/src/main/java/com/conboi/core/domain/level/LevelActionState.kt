@@ -1,4 +1,4 @@
-package com.conboi.core.domain.ui
+package com.conboi.core.domain.level
 
 enum class LevelActionState {
     IDLE,

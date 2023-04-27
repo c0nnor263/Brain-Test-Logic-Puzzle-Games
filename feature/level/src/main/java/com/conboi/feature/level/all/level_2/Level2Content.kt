@@ -20,15 +20,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
-import com.conboi.core.domain.ui.LevelUIState
+import com.conboi.core.domain.level.LevelScreenState
 import com.conboi.core.ui.Dimensions
 import com.conboi.core.ui.R
-import com.conboi.feature.level.common.SunDraggable
+import com.conboi.feature.level.common.Draggable
 
 @Composable
 internal fun Level2Content(
     modifier: Modifier = Modifier,
-    onLevelAction: (LevelUIState) -> Unit
+    onLevelAction: (LevelScreenState) -> Unit
 ) {
 
     val density = LocalDensity.current
@@ -45,14 +45,15 @@ internal fun Level2Content(
         BoxWithConstraints(contentAlignment = Alignment.Center) {
 
 
-            SunDraggable(
+            Draggable(
                 modifier = Modifier.then(Modifier.align(Alignment.TopEnd)),
                 initialOffset = Offset(0f, -128f),
-                isEnabled = !isOwlWakeUp
+                isEnabled = !isOwlWakeUp,
+                drawableRes = R.drawable.sun,
             ) { sunOffset ->
                 if (sunOffset.y >= with(density) { maxHeight.roundToPx() }) {
                     isOwlWakeUp = true
-                    onLevelAction(LevelUIState.COMPLETED)
+                    onLevelAction(LevelScreenState.CORRECT_CHOICE)
                 }
             }
 
