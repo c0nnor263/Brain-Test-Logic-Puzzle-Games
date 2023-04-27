@@ -16,14 +16,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.tooling.preview.Preview
-import com.conboi.core.domain.ui.LevelUIState
+import com.conboi.core.domain.level.LevelScreenState
 import com.conboi.core.ui.Dimensions
-import com.conboi.feature.level.common.LocalLevelUIState
-import com.conboi.feature.level.common.SunDraggable
+import com.conboi.core.ui.R
+import com.conboi.core.ui.state.LocalLevelScreenState
+import com.conboi.feature.level.common.Draggable
 
 @Composable
-internal fun Level3Content(modifier: Modifier = Modifier, onLevelAction: (LevelUIState) -> Unit) {
-    val levelUIState = LocalLevelUIState.current
+internal fun Level3Content(
+    modifier: Modifier = Modifier,
+    onLevelAction: (LevelScreenState) -> Unit
+) {
+    val levelUIState = LocalLevelScreenState.current
     var isMelting by rememberSaveable { mutableStateOf(false) }
     val meltingTransition = updateTransition(targetState = isMelting, label = "")
 
@@ -52,11 +56,11 @@ internal fun Level3Content(modifier: Modifier = Modifier, onLevelAction: (LevelU
                             transition = meltingTransition,
                             isNotIceCream = repeatItemIndex == 1 && repeatRowIndex == 1
                         ) {
-                            if (levelUIState != LevelUIState.PROCESSING) return@Level3IceCream
+                            if (levelUIState != LevelScreenState.IS_PLAYING) return@Level3IceCream
                             val newState =
                                 if (meltingTransition.currentState && repeatItemIndex == 1 && repeatRowIndex == 1) {
-                                    LevelUIState.COMPLETED
-                                } else LevelUIState.FAILED
+                                    LevelScreenState.CORRECT_CHOICE
+                                } else LevelScreenState.WRONG_CHOICE
                             onLevelAction(newState)
                         }
                     }
@@ -64,15 +68,16 @@ internal fun Level3Content(modifier: Modifier = Modifier, onLevelAction: (LevelU
                 }
             }
 
-            SunDraggable(
-                modifier = Modifier.align(Alignment.TopStart),
-                initialOffset = Offset(0F, -128F),
-                isEnabled = !meltingTransition.currentState
-            ) { sunOffset ->
-                if (sunOffset.x >= maxWidth.value) {
-                    isMelting = true
-                }
+        Draggable(
+            modifier = Modifier.align(Alignment.TopStart),
+            initialOffset = Offset(0F, -128F),
+            isEnabled = !meltingTransition.currentState,
+            drawableRes = R.drawable.sun,
+        ) { sunOffset ->
+            if (sunOffset.x >= maxWidth.value) {
+                isMelting = true
             }
+        }
     }
 }
 

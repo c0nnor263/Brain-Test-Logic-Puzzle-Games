@@ -5,7 +5,10 @@ import kotlinx.coroutines.flow.Flow
 
 interface LevelDataRepository {
     suspend fun upsertLevelData(levelData: LevelData)
+    suspend fun insertLevelsData(list: List<LevelData>)
     fun getLevelDataById(id: Int): Flow<LevelData>
     fun getAllLevelData(): Flow<List<LevelData>>
-    fun getFirstUncompletedLevelId(): Flow<LevelData>
+    fun getLastUncompletedLevel(): Flow<LevelData>
+    fun getLevelDataListByIndex(id: Int): Flow<List<LevelData>>
+
 }

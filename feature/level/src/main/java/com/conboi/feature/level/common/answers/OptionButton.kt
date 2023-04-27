@@ -1,4 +1,4 @@
-package com.conboi.feature.level.common
+package com.conboi.feature.level.common.answers
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable

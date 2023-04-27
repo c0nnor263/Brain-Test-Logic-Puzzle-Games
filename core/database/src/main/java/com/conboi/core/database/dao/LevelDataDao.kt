@@ -1,6 +1,7 @@
 package com.conboi.core.database.dao
 
 import androidx.room.Dao
+import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Upsert
 import com.conboi.core.database.model.LevelData
@@ -11,6 +12,9 @@ interface LevelDataDao {
     @Upsert
     suspend fun upsertLevelData(levelData: LevelData)
 
+    @Insert
+    suspend fun insertLevelsData(list: List<LevelData>)
+
     @Query("SELECT * FROM leveldata WHERE id = :id")
     fun getLevelDataById(id: Int): Flow<LevelData>
 
@@ -19,5 +23,8 @@ interface LevelDataDao {
 
 
     @Query("SELECT * FROM leveldata WHERE isCompleted = 0 ORDER BY id ASC LIMIT 1")
-    fun getFirstUncompletedLevelId(): Flow<LevelData>
+    fun getLastUncompletedLevel(): Flow<LevelData>
+
+    @Query("SELECT * FROM leveldata ORDER BY id LIMIT 5 OFFSET :id")
+    fun getLevelDataListByIndex(id: Int): Flow<List<LevelData>>
 }

@@ -10,5 +10,5 @@ class HomeScreenViewModel @Inject constructor(
     private val levelDataRepositoryImpl: OfflineLevelDataRepository
 ) : ViewModel() {
 
-    fun getFirstUncompletedLevelId() = levelDataRepositoryImpl.getFirstUncompletedLevelId()
+    fun getLastUncompletedLevel() = levelDataRepositoryImpl.getLastUncompletedLevel()
 }

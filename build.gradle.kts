@@ -4,7 +4,7 @@ apply(plugin = "com.github.ben-manes.versions")
 
 buildscript {
     dependencies {
-        classpath("com.android.tools.build:gradle:7.4.2")
+        classpath("com.android.tools.build:gradle:8.0.0")
         classpath("com.google.dagger:hilt-android-gradle-plugin:${Versions.hilt}")
         classpath("com.google.firebase:firebase-crashlytics-gradle:${Versions.Firebase.firebaseCrashlyticsPlugin}")
         classpath("com.google.gms:google-services:${Versions.Firebase.googleServicesPlugin}")

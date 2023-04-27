@@ -28,6 +28,7 @@ import com.conboi.core.navigation.Screens
 import com.conboi.core.ui.Dimensions
 import com.conboi.core.ui.R
 import com.conboi.core.ui.defaultSpringAnimation
+import com.conboi.core.ui.state.LocalCurrency
 import com.conboi.wordefull.presentation.composables.header_bar.options.HeaderBarHomeOption
 import com.conboi.wordefull.presentation.composables.header_bar.options.HeaderBarLevelOption
 import com.conboi.wordefull.presentation.composables.header_bar.options.HeaderBarMenuOption
@@ -35,10 +36,11 @@ import com.conboi.wordefull.presentation.composables.header_bar.options.HeaderBa
 
 @Composable
 fun HeaderBar(navController: NavHostController) {
-    // TODO AnimatedVisibility
-// TODO Fullscreen
+
+    val currency = LocalCurrency.current
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = currentBackStackEntry?.destination
+
 
     Row(
         modifier = Modifier.padding(
@@ -111,7 +113,7 @@ fun HeaderBar(navController: NavHostController) {
                 // TODO Navigate to Currency
             }) {
                 Text(
-                    text = "100", style = MaterialTheme.typography.headlineMedium
+                    text = currency.toString(), style = MaterialTheme.typography.headlineMedium
                 )
                 Image(
                     modifier = Modifier.size(36.dp),
