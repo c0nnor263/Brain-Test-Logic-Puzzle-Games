@@ -21,7 +21,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.res.painterResource
-import com.conboi.core.domain.level.DEFAULT_LEVEL_UI_COUNTDOWN_DURATION
+import com.conboi.core.domain.level.DEFAULT_LEVEL_SCREEN_COUNTDOWN_DURATION
 import com.conboi.core.ui.Dimensions
 import com.conboi.core.ui.Durations
 import com.conboi.core.ui.R
@@ -67,7 +67,7 @@ fun Level4Bulb(
                             if (!result) {
                                 scope.launch {
                                     repeat(
-                                        DEFAULT_LEVEL_UI_COUNTDOWN_DURATION.toInt() /
+                                        DEFAULT_LEVEL_SCREEN_COUNTDOWN_DURATION.toInt() /
                                                 Durations.Short.time.times(2)
                                     ) {
                                         bulbDrawableRes = R.drawable.lamp_off

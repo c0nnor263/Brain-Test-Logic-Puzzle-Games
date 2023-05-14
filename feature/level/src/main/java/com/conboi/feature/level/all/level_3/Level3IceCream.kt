@@ -42,6 +42,8 @@ fun Level3IceCream(
     ) { state ->
         if (state) 1F else 0F
     }
+
+
     DrawAnimation(
         modifier = modifier
             .clickable(
@@ -51,7 +53,7 @@ fun Level3IceCream(
                 onClick = onClick
             )
             .scale(scaleX = 1F, scaleY = iceCreamScaleAnimation),
-        delay = Durations.Medium.time.toLong() * index,
+        delay = Durations.Medium.time.toLong() * (1 + index),
     ) {
         Image(
             painter = painterResource(id = R.drawable.ice_cream),

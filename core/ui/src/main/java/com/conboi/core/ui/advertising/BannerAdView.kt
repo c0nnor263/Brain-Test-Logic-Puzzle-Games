@@ -16,6 +16,7 @@ fun BannerAdView(modifier: Modifier = Modifier, adUnitId: String = TEST_AD_UNIT_
     val deviceCurrentWidth = LocalConfiguration.current.screenWidthDp
 
     AndroidView(modifier = modifier, factory = { context: Context ->
+        val adRequest = AdRequestBuilder().createDefault()
         AdView(context).apply {
             setAdSize(
                 AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(
@@ -24,10 +25,11 @@ fun BannerAdView(modifier: Modifier = Modifier, adUnitId: String = TEST_AD_UNIT_
                 )
             )
             setAdUnitId(adUnitId)
-            loadAd(AdRequestBuilder().createDefault())
+            loadAd(adRequest)
         }
-    }, update = {
-        it.loadAd(AdRequestBuilder().createDefault())
+    }, update = { adView ->
+        val adRequest = AdRequestBuilder().createDefault()
+        adView.loadAd(adRequest)
     })
 
 }

@@ -19,7 +19,7 @@ import com.conboi.core.ui.Durations
 import com.conboi.core.ui.theme.boardBackgroundColor
 
 @Composable
-fun LevelRestarting(modifier: Modifier = Modifier, visible: Boolean) {
+fun Restarting(modifier: Modifier = Modifier, visible: Boolean) {
     AnimatedVisibility(
         visible,
         modifier = modifier,

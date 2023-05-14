@@ -67,7 +67,7 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = Versions.Compose.compiler
     }
-    packagingOptions {
+    packaging {
         resources {
             resources.excludes.add(Versions.excludeFiles)
         }

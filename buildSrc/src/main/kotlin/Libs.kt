@@ -51,14 +51,26 @@ fun DependencyHandler.composeCore() {
     add(LibType.ANDROID_TEST.value, "androidx.compose.ui:ui-test-junit4")
     add(LibType.DEBUG.value, "androidx.compose.ui:ui-tooling")
     add(LibType.DEBUG.value, "androidx.compose.ui:ui-test-manifest")
-    add(LibType.DEFAULT.value, "com.google.accompanist:accompanist-navigation-animation:${Versions.Compose.navigationAnimation}")
+    add(
+        LibType.DEFAULT.value,
+        "com.google.accompanist:accompanist-navigation-animation:${Versions.Compose.navigationAnimation}"
+    )
     add(LibType.DEFAULT.value, "androidx.lifecycle:lifecycle-runtime-compose:${Versions.lifecycle}")
 
 
-    add(LibType.DEFAULT.value, "androidx.navigation:navigation-compose:${Versions.Compose.navigation}")
-    add(LibType.DEFAULT.value, "androidx.hilt:hilt-navigation-compose:${Versions.Compose.hiltNavigation}")
+    add(
+        LibType.DEFAULT.value,
+        "androidx.navigation:navigation-compose:${Versions.Compose.navigation}"
+    )
+    add(
+        LibType.DEFAULT.value,
+        "androidx.hilt:hilt-navigation-compose:${Versions.Compose.hiltNavigation}"
+    )
 
-    add(LibType.DEFAULT.value, "androidx.constraintlayout:constraintlayout-compose:${Versions.Compose.constraintLayout}")
+    add(
+        LibType.DEFAULT.value,
+        "androidx.constraintlayout:constraintlayout-compose:${Versions.Compose.constraintLayout}"
+    )
 
 
 
@@ -69,7 +81,7 @@ fun DependencyHandler.composeCore() {
 fun DependencyHandler.coreData() {
     // Room
     add(LibType.DEFAULT.value, "androidx.room:room-runtime:${Versions.Storage.room}")
-    add(LibType.ANNOTATION_PROCESSOR.value, "androidx.room:room-compiler:${Versions.Storage.room}")
+//    add(LibType.ANNOTATION_PROCESSOR.value, "androidx.room:room-compiler:${Versions.Storage.room}")
     add(LibType.KSP.value, "androidx.room:room-compiler:${Versions.Storage.room}")
     add(LibType.DEFAULT.value, "androidx.room:room-ktx:${Versions.Storage.room}")
 

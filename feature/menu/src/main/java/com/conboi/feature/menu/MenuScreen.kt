@@ -40,7 +40,11 @@ fun MenuScreen(
     CompositionLocalProvider(
         LocalOverscrollConfiguration provides null
     ) {
-        Column(modifier = Modifier.fillMaxWidth()) {
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.SpaceAround,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             LazyColumn(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(Dimensions.Padding.Small.value),

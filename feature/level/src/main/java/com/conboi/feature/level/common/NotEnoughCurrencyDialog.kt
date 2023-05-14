@@ -37,7 +37,7 @@ import com.conboi.core.ui.common.ChalkBoardCard
 fun NotEnoughCurrencyDialog(
     modifier: Modifier = Modifier,
     visible: Boolean,
-    onLevelActionResult: (ActionResult) -> Unit
+    onActionResult: (ActionResult) -> Unit
 ) {
     AnimatedVisibility(
         visible = visible,
@@ -100,7 +100,7 @@ fun NotEnoughCurrencyDialog(
 
                     DrawAnimation(delay = Durations.Medium.time.toLong()) {
                         Text(text = "Get more!", modifier = Modifier.clickable {
-                            onLevelActionResult(ActionResult.BUY_MORE)
+                            onActionResult(ActionResult(ActionResult.Type.BUY_MORE))
                         }, style = MaterialTheme.typography.displaySmall)
 
                     }

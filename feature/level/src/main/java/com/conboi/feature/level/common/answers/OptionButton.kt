@@ -13,12 +13,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import com.conboi.core.ui.Dimensions
 import com.conboi.core.ui.R
 
 @Composable
 internal fun OptionButton(
-    modifier: Modifier = Modifier, index: Int, text: String, onClick: () -> Unit
+    modifier: Modifier = Modifier,
+    index: Int,
+    text: String,
+    style: TextStyle = MaterialTheme.typography.titleLarge,
+    onClick: () -> Unit
 ) {
     Card(
         modifier = modifier.clickable { onClick() },
@@ -36,7 +41,7 @@ internal fun OptionButton(
 
             Text(
                 text = text,
-                style = MaterialTheme.typography.titleLarge.copy(color = MaterialTheme.colorScheme.onPrimary),
+                style = style.copy(color = MaterialTheme.colorScheme.onPrimary),
             )
         }
 

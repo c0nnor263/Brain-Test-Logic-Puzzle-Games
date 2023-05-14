@@ -3,7 +3,6 @@ package com.conboi.feature.level.common.answers
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -22,7 +21,6 @@ import com.conboi.core.ui.Dimensions
 import com.conboi.core.ui.Durations
 import com.conboi.core.ui.R
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun BoxScope.ResultLevelAlert(currentState: LevelScreenState, checkState: LevelScreenState) {
     @DrawableRes val drawableRes = when (checkState) {

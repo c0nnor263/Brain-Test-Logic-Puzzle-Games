@@ -40,7 +40,7 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = Versions.Compose.compiler
     }
-    packagingOptions {
+    packaging {
         resources {
             resources.excludes.add(Versions.excludeFiles)
         }
@@ -54,5 +54,6 @@ dependencies {
     implementation(project(":core:domain"))
     implementation(project(":core:ui"))
     composeCore()
+    implementation("com.squareup:seismic:1.0.3")
 }
 

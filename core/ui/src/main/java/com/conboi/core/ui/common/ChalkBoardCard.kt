@@ -1,5 +1,6 @@
 package com.conboi.core.ui.common
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
@@ -19,7 +20,9 @@ import com.conboi.core.ui.theme.boardBorderColor
 @Composable
 fun ChalkBoardCard(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
     Card(
-        modifier = modifier.wrapContentSize(),
+        modifier = modifier
+            .wrapContentSize()
+            .animateContentSize(),
         shape = RectangleShape,
         border = BorderStroke(Dimensions.Padding.Small.value, boardBorderColor),
         colors = CardDefaults.cardColors(boardBackgroundColor)

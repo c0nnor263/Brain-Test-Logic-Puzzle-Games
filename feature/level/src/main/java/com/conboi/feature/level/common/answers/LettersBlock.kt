@@ -1,20 +1,18 @@
 package com.conboi.feature.level.common.answers
 
-import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -25,12 +23,12 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.conboi.core.ui.Dimensions
 import com.conboi.core.ui.R
+import com.conboi.core.ui.theme.WordefullTheme
 import kotlin.math.roundToInt
 
 
@@ -68,25 +66,31 @@ fun LettersBlock(
                     onClick = {
                         currentAnswer =
                             if (currentAnswer.length > 1) currentAnswer.dropLast(1) else ""
-                    }) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.baseline_clear_24),
+                    }
+                ) {
+                    Image(
+                        modifier = Modifier.fillMaxSize(),
+                        painter = painterResource(id = R.drawable.no_icon),
                         contentDescription = null
                     )
                 }
 
 
-                Card(
-                    modifier = Modifier.widthIn(min = 50.dp),
-                    border = BorderStroke(4.dp, Color.White),
-                    shape = Dimensions.RoundedShape.Large.value,
-                    colors = CardDefaults.cardColors(Color.LightGray.copy(alpha = 0.3F))
+                Box(
+                    modifier = Modifier
+                        .widthIn(min = 50.dp)
+                        .weight(1F),
+                    contentAlignment = Alignment.Center
                 ) {
+                    Image(
+                        modifier = Modifier.matchParentSize(),
+                        painter = painterResource(id = R.drawable.answer_frame),
+                        contentDescription = null
+                    )
                     Text(
-                        text = currentAnswer, modifier = Modifier.padding(
-                            horizontal = Dimensions.Padding.Large.value,
-                            vertical = Dimensions.Padding.Medium.value
-                        ), style = MaterialTheme.typography.headlineSmall
+                        text = currentAnswer,
+                        modifier = Modifier.padding(Dimensions.Padding.Medium.value),
+                        style = MaterialTheme.typography.headlineSmall
                     )
                 }
 
@@ -99,8 +103,9 @@ fun LettersBlock(
                             onAnswer(currentAnswer)
                         }
                     }) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.baseline_check_24),
+                    Image(
+                        modifier = Modifier.fillMaxSize(),
+                        painter = painterResource(id = R.drawable.yes_icon),
                         contentDescription = null
                     )
                 }
@@ -117,17 +122,22 @@ fun LettersBlock(
                         val text = currentAlphabet.getOrNull(rowIndex * 8 + itemIndex)
 
                         text?.let {
-                            Card(
-                                modifier = Modifier
-                                    .padding(vertical = Dimensions.Padding.Small.value),
-                                shape = Dimensions.RoundedShape.Large.value,
-                                colors = CardDefaults.cardColors(Color.Transparent)
+                            Box(
+                                contentAlignment = Alignment.Center
                             ) {
+                                Image(
+                                    modifier = Modifier.matchParentSize(),
+                                    painter = painterResource(id = R.drawable.answer_unit),
+                                    contentDescription = null
+                                )
 
-                                Text(text = text, modifier = Modifier
-                                    .clickable {
-                                        currentAnswer += if (currentAnswer.length < numberMaxLength) text else ""
-                                    }, style = MaterialTheme.typography.titleMedium
+                                Text(
+                                    text = text, modifier = Modifier
+                                        .padding(Dimensions.Padding.Medium.value)
+                                        .clickable {
+                                            currentAnswer += if (currentAnswer.length < numberMaxLength) text else ""
+                                        },
+                                    style = MaterialTheme.typography.titleMedium
                                 )
                             }
                         }
@@ -142,18 +152,22 @@ fun LettersBlock(
 @Preview
 @Composable
 fun LettersBlockCyrillicPreview() {
-    LettersBlock(alphabetType = AlphabetType.Cyrillic) {
+    WordefullTheme {
+        LettersBlock(alphabetType = AlphabetType.Cyrillic) {
+
+        }
 
     }
-
 
 }
 
 @Preview
 @Composable
 fun LettersBlockLatinPreview() {
-    LettersBlock(alphabetType = AlphabetType.Latin) {
+    WordefullTheme {
+        LettersBlock(alphabetType = AlphabetType.Latin) {
 
+        }
     }
 
 

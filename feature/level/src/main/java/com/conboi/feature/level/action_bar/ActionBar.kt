@@ -29,7 +29,7 @@ import com.conboi.core.ui.R
 import com.conboi.core.ui.state.LocalLevelScreenState
 
 @Composable
-fun LevelActionsBar(
+fun ActionBar(
     modifier: Modifier = Modifier,
     onRestart: () -> Unit,
     onGetAdvice: () -> Unit,

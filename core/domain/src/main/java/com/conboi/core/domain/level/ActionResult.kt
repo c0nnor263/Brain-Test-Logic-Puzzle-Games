@@ -1,5 +1,8 @@
 package com.conboi.core.domain.level
 
-enum class ActionResult {
-    SUCCESS, BUY_MORE, CANCELLED
+data class ActionResult(val type: Type, val cost: Int = 0) {
+    enum class Type {
+        SUCCESS, BUY_MORE, CANCELLED
+    }
 }
+
