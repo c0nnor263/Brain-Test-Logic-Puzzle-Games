@@ -7,10 +7,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import com.conboi.core.domain.level.LevelScreenState
 import com.conboi.core.ui.R
-import com.conboi.feature.level.common.Draggable
 import com.conboi.feature.level.common.answers.NumbersBlock
+import com.conboi.feature.level.common.interactions.DraggableImage
 
 @Composable
 fun Level7Content(modifier: Modifier = Modifier, onLevelAction: (LevelScreenState) -> Unit) {
@@ -22,7 +23,10 @@ fun Level7Content(modifier: Modifier = Modifier, onLevelAction: (LevelScreenStat
 
         BoxWithConstraints(modifier = Modifier.weight(0.2F), contentAlignment = Alignment.Center) {
             Text("15")
-            Draggable(drawableRes = R.drawable.lamp) {
+            DraggableImage(
+                drawableRes = R.drawable.lamp,
+                maxSize = Offset(maxWidth.value, maxHeight.value)
+            ) {
 
             }
         }

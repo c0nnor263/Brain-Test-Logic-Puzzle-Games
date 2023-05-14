@@ -1,10 +1,13 @@
 package com.conboi.wordefull.presentation.navigation
 
+import android.util.Log
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -96,17 +99,14 @@ fun WordefullNavHost(navController: NavHostController) {
         composable(
             Screens.Menu.route,
             enterTransition = {
-                slideIntoContainer(
-                    AnimatedContentTransitionScope.SlideDirection.Up,
+                scaleIn(
                     animationSpec = tween(Durations.Medium.time)
                 )
             },
             exitTransition = {
-                slideOutOfContainer(
-                    AnimatedContentTransitionScope.SlideDirection.Down,
-                    animationSpec = tween(Durations.Medium.time)
-                )
-            }) {
+                scaleOut(animationSpec = tween(Durations.Medium.time))
+            }
+        ) {
             val viewModel: MenuViewModel = hiltViewModel()
 
             val levelData =
@@ -161,7 +161,7 @@ fun WordefullNavHost(navController: NavHostController) {
 
 
             LaunchedEffect(idArg) {
-                viewModel.updateLevelId(idArg)
+                viewModel.updateLevelIndex(idArg)
             }
 
             CompositionLocalProvider(
@@ -169,23 +169,23 @@ fun WordefullNavHost(navController: NavHostController) {
                 LocalLevelActionState provides levelActionState.value
             ) {
                 LevelScreen(
-                    levelData = levelData.value,
+                    level = levelData.value,
                     onForward = viewModel::onForward,
                     onBack = viewModel::onBack,
                     onUpdateLevelActionState = viewModel::updateLevelActionState,
                     onUpdateLevelScreenState = viewModel::updateLevelScreenState,
-                    onAdviceResult = {
-                        when (it) {
-                            ActionResult.SUCCESS -> {
-                                viewModel.buyAdvice()
+                    onActionResult = { actionResult ->
+                        Log.i(
+                            "TAG",
+                            "WordefullNavHost: $actionResult ${levelScreenState.value} ${levelActionState.value}"
+                        )
+                        when (actionResult.type) {
+                            ActionResult.Type.SUCCESS -> {
+                                viewModel.buyAction(cost = actionResult.cost)
                             }
 
-                            ActionResult.CANCELLED -> {
-                                viewModel.updateLevelActionState(LevelActionState.IDLE)
-                            }
-
-                            ActionResult.BUY_MORE -> {
-//                navController.navigate(Screens..route)
+                            ActionResult.Type.BUY_MORE -> {
+                                //                navController.navigate(Screens..route)
                                 // TODO navigate to currency
                             }
 

@@ -23,7 +23,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import com.conboi.core.domain.level.LevelScreenState
 import com.conboi.core.ui.Dimensions
 import com.conboi.core.ui.R
-import com.conboi.feature.level.common.Draggable
+import com.conboi.feature.level.common.interactions.DraggableImage
 
 @Composable
 internal fun Level2Content(
@@ -45,9 +45,9 @@ internal fun Level2Content(
         BoxWithConstraints(contentAlignment = Alignment.Center) {
 
 
-            Draggable(
+            DraggableImage(
                 modifier = Modifier.then(Modifier.align(Alignment.TopEnd)),
-                initialOffset = Offset(0f, -128f),
+                maxSize = Offset(maxWidth.value, maxHeight.value),
                 isEnabled = !isOwlWakeUp,
                 drawableRes = R.drawable.sun,
             ) { sunOffset ->

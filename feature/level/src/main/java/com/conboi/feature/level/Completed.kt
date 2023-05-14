@@ -1,5 +1,6 @@
-package com.conboi.feature.level.completed
+package com.conboi.feature.level
 
+import androidx.activity.ComponentActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -13,46 +14,35 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import com.conboi.core.domain.level.DEFAULT_LEVEL_UI_COUNTDOWN_DURATION
+import androidx.compose.ui.tooling.preview.Preview
 import com.conboi.core.domain.level.LevelScreenState
 import com.conboi.core.ui.Dimensions
 import com.conboi.core.ui.Durations
 import com.conboi.core.ui.R
-import kotlinx.coroutines.delay
+import com.conboi.core.ui.state.rememberInterstitialAdViewState
+import com.conboi.core.ui.theme.WordefullTheme
 
 @Composable
-fun LevelCompleted(
+fun Completed(
     modifier: Modifier = Modifier,
-    levelId: Int,
+    id: Int,
     onLevelUIAction: (LevelScreenState) -> Unit
 ) {
+    val activity = LocalContext.current as ComponentActivity
+    val interstitialAdView = rememberInterstitialAdViewState(activity = activity)
 
-    var showAd by remember { mutableStateOf(false) }
 
-    LaunchedEffect(key1 = showAd) {
-        // TODO Test ad
-        if (showAd) {
-            delay(DEFAULT_LEVEL_UI_COUNTDOWN_DURATION)
-            onLevelUIAction(LevelScreenState.NEXT_LEVEL)
-        }
-    }
     AnimatedVisibility(
-        !showAd,
+        true,
         modifier = modifier.padding(Dimensions.Padding.Medium.value),
         enter = fadeIn(tween(Durations.Medium.time)) + scaleIn(tween(Durations.Medium.time)),
         exit = scaleOut(tween(Durations.Medium.time)) + fadeOut(tween(Durations.Medium.time)),
@@ -74,7 +64,7 @@ fun LevelCompleted(
                 verticalArrangement = Arrangement.Center
             ) {
                 Text(
-                    text = "Level $levelId completed",
+                    text = "Level $id completed",
                     style = MaterialTheme.typography.displaySmall
                 )
                 Text(
@@ -90,37 +80,31 @@ fun LevelCompleted(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                TextButton(onClick = { onLevelUIAction(LevelScreenState.NEXT_LEVEL) }) {
+                TextButton(onClick = {
+                    interstitialAdView.showAd(activity) {
+                        onLevelUIAction(LevelScreenState.NEXT_LEVEL)
+                    }
+                }) {
                     Text("Next Level", style = MaterialTheme.typography.headlineMedium)
                 }
 
-                TextButton(onClick = { showAd = true }) {
-                    Text("Watch ad", style = MaterialTheme.typography.headlineMedium)
-                }
+                TextButton(onClick = {
+                    // TODO : Add subscription
 
-                TextButton(onClick = { showAd = true }) {
+                }) {
                     Text("Buy subscription", style = MaterialTheme.typography.headlineMedium)
                 }
             }
         }
 
     }
+}
 
 
-    // TODO AD
-    AnimatedVisibility(
-        showAd,
-        modifier = modifier.padding(Dimensions.Padding.Medium.value),
-        enter = fadeIn(tween(Durations.Medium.time)) + scaleIn(tween(Durations.Medium.time)),
-        exit = scaleOut(tween(Durations.Medium.time)) + fadeOut(tween(Durations.Medium.time)),
-    ) {
-        Card(
-            colors = CardDefaults.cardColors(Color.Transparent),
-            shape = Dimensions.RoundedShape.Medium.value
-        ) {
-            Text(text = "Ad", style = MaterialTheme.typography.displayLarge)
-
-        }
-
+@Preview
+@Composable
+fun CompletedPreview() {
+    WordefullTheme {
+        Completed(id = 1, onLevelUIAction = {})
     }
 }

@@ -34,10 +34,11 @@ abstract class WordefullDatabase : RoomDatabase() {
             CoroutineScope(SupervisorJob()).launch(Dispatchers.IO) {
                 val list = MutableList(MAX_LEVEL_ID - 1) { index ->
                     LevelData(
-                        isLocked = index != 0,
+                        isLocked = if (BuildConfig.DEBUG) false else index != 0,
                         title = listOfLevelTitles[index],
                         advise = listOfLevelAdvises[index],
-                    )
+
+                        )
                 }
                 database.levelDataDao().insertLevelsData(list)
             }

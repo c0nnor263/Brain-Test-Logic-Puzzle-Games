@@ -18,6 +18,8 @@ fun Level12Content(modifier: Modifier = Modifier, onLevelAction: (LevelScreenSta
         LettersBlock {
             if (it == "Е") {
                 onLevelAction(LevelScreenState.CORRECT_CHOICE)
+            } else {
+                onLevelAction(LevelScreenState.WRONG_CHOICE)
             }
         }
 

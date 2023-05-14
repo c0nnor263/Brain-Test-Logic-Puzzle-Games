@@ -10,7 +10,7 @@ import androidx.compose.ui.text.style.TextAlign
 @Composable
 internal fun Title(
     text: String,
-    style: TextStyle = MaterialTheme.typography.headlineMedium
+    style: TextStyle = MaterialTheme.typography.headlineSmall
 ) {
     Text(
         text = text,
