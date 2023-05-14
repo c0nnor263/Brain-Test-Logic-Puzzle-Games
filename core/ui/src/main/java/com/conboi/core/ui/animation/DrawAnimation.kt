@@ -7,6 +7,7 @@ import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.snap
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -36,10 +37,11 @@ import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
+
 @Composable
 fun DrawAnimation(
     modifier: Modifier = Modifier,
-    delay: Long = 0L,
+    delayOrder: Int? = 0,
     content: @Composable () -> Unit
 ) {
     var offset by remember { mutableStateOf(Offset.Zero) }
@@ -59,12 +61,21 @@ fun DrawAnimation(
     val alphaAnimation by animateFloatAsState(
         targetValue = if (isStarted) 1F else 0F,
         label = "",
-        animationSpec = tween(Durations.Medium.time)
+        animationSpec = if (delayOrder == null) snap() else tween(Durations.Medium.time)
     )
     LaunchedEffect(Unit) {
         launch {
-            delay(delay)
+
+
+            if (delayOrder != null) {
+                delay(delayOrder * Durations.Medium.time.toLong())
+            } else {
+                isStarted = true
+                isFinished = true
+                return@launch
+            }
             isStarted = true
+
 
             val offsetXJob = launch {
                 repeat(5) { index ->
@@ -134,7 +145,7 @@ fun DrawAnimation(
 @Composable
 fun DrawAnimationPreview() {
     BoxWithConstraints {
-        DrawAnimation(delay = 1000) {
+        DrawAnimation(delayOrder = 1000) {
             Image(
                 modifier = Modifier.size(128.dp),
                 painter = painterResource(id = R.drawable.x_mark),

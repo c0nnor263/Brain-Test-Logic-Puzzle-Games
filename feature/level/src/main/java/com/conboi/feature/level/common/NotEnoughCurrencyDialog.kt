@@ -98,7 +98,7 @@ fun NotEnoughCurrencyDialog(
                     }
                     Spacer(modifier = Modifier.height(Dimensions.Padding.Medium.value))
 
-                    DrawAnimation(delay = Durations.Medium.time.toLong()) {
+                    DrawAnimation(delayOrder = 1) {
                         Text(text = "Get more!", modifier = Modifier.clickable {
                             onActionResult(ActionResult(ActionResult.Type.BUY_MORE))
                         }, style = MaterialTheme.typography.displaySmall)

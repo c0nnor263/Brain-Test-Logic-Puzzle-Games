@@ -3,6 +3,10 @@ package com.conboi.feature.level.all.level_4
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -10,25 +14,15 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.conboi.core.domain.level.LevelScreenState
 import com.conboi.core.ui.Dimensions
-import com.conboi.core.ui.state.LocalLevelScreenState
 
 @Composable
 internal fun Level4Content(
     modifier: Modifier = Modifier,
     onLevelAction: (LevelScreenState) -> Unit
 ) {
-    val levelUIState = LocalLevelScreenState.current
-    val bulbLambda = bulbLambda@{ isCorrectBulb: Boolean ->
-        if (levelUIState != LevelScreenState.IS_PLAYING) return@bulbLambda null
-        val newState = if (isCorrectBulb) {
-            LevelScreenState.CORRECT_CHOICE
-        } else {
-            LevelScreenState.WRONG_CHOICE
-        }
-        onLevelAction(newState)
-        isCorrectBulb
+    var bulbAnimationStarted by remember {
+        mutableStateOf(false)
     }
-
     ConstraintLayout(modifier = modifier.fillMaxWidth()) {
         val (bulb1, bulb2, bulb3, bulb4, bulb5) = createRefs()
 
@@ -65,8 +59,21 @@ internal fun Level4Content(
                         }
                     }
                     .padding(Dimensions.Padding.Small.value),
-                index = index + 1,
-                onClick = bulbLambda
+                index = index,
+                onClick = {
+                    if (bulbAnimationStarted) return@Level4Bulb null
+
+                    val isCorrectBulb = index == 3
+                    val newState = if (isCorrectBulb) {
+                        LevelScreenState.CORRECT_CHOICE
+                    } else LevelScreenState.WRONG_CHOICE
+                    onLevelAction(newState)
+                    bulbAnimationStarted = true
+                    isCorrectBulb
+                },
+                onAnimationEnd = {
+                    bulbAnimationStarted = false
+                }
             )
         }
 

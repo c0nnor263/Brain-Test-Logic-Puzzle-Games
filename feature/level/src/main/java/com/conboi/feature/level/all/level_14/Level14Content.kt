@@ -47,13 +47,13 @@ fun Level14Content(modifier: Modifier = Modifier, onLevelAction: (LevelScreenSta
             ) {
                 Text(text = "Где ", style = MaterialTheme.typography.headlineSmall)
                 Spacer(modifier = Modifier.width(Dimensions.Padding.ExtraSmall.value))
-                this@BoxWithConstraints.apply {
-                    DraggableText(text = "черная",
-                        style = MaterialTheme.typography.headlineSmall,
-                        isEnabled = levelScreenState != LevelScreenState.CORRECT_CHOICE,
-                        onDrag = {
-                            positionOfText = it
-                        })
+                DraggableText(
+                    text = "черная",
+                    style = MaterialTheme.typography.headlineSmall,
+                    delayOrder = null,
+                    isEnabled = levelScreenState != LevelScreenState.CORRECT_CHOICE,
+                ) { offset, _ ->
+                    positionOfText = offset
                 }
                 Spacer(modifier = Modifier.width(Dimensions.Padding.ExtraSmall.value))
                 Text(

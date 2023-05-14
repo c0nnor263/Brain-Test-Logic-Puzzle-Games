@@ -81,16 +81,12 @@ fun WordefullNavHost(navController: NavHostController) {
         composable(
             Screens.Settings.route,
             enterTransition = {
-                slideIntoContainer(
-                    AnimatedContentTransitionScope.SlideDirection.Down,
+                scaleIn(
                     animationSpec = tween(Durations.Medium.time)
                 )
             },
             exitTransition = {
-                slideOutOfContainer(
-                    AnimatedContentTransitionScope.SlideDirection.Up,
-                    animationSpec = tween(Durations.Medium.time)
-                )
+                scaleOut(animationSpec = tween(Durations.Medium.time))
             }
         ) {
             SettingsScreen()

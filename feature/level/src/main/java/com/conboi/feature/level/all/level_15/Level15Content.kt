@@ -1,6 +1,7 @@
 package com.conboi.feature.level.all.level_15
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -9,7 +10,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -27,7 +27,7 @@ fun Level15Content(modifier: Modifier = Modifier, onLevelAction: (LevelScreenSta
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            BoxWithConstraints(contentAlignment = Alignment.Center) {
+            Box(contentAlignment = Alignment.Center) {
                 Image(
                     painter = painterResource(id = R.drawable.pizza),
                     contentDescription = null,
@@ -35,16 +35,10 @@ fun Level15Content(modifier: Modifier = Modifier, onLevelAction: (LevelScreenSta
                 )
                 DraggableImage(
                     drawableRes = R.drawable.pizza,
-                    maxSize = Offset(maxWidth.value, maxHeight.value)
-                ) {
-
-                }
+                )
                 DraggableImage(
                     drawableRes = R.drawable.pizza,
-                    maxSize = Offset(maxWidth.value, maxHeight.value)
-                ) {
-
-                }
+                )
             }
             Spacer(modifier = Modifier.height(Dimensions.Padding.Medium.value))
             CounterBlock {

@@ -1,6 +1,5 @@
 package com.conboi.feature.level
 
-import androidx.activity.ComponentActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -21,14 +20,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.conboi.core.domain.level.LevelScreenState
 import com.conboi.core.ui.Dimensions
 import com.conboi.core.ui.Durations
 import com.conboi.core.ui.R
-import com.conboi.core.ui.state.rememberInterstitialAdViewState
 import com.conboi.core.ui.theme.WordefullTheme
 
 @Composable
@@ -37,9 +34,6 @@ fun Completed(
     id: Int,
     onLevelUIAction: (LevelScreenState) -> Unit
 ) {
-    val activity = LocalContext.current as ComponentActivity
-    val interstitialAdView = rememberInterstitialAdViewState(activity = activity)
-
 
     AnimatedVisibility(
         true,
@@ -81,9 +75,7 @@ fun Completed(
                 verticalArrangement = Arrangement.Center
             ) {
                 TextButton(onClick = {
-                    interstitialAdView.showAd(activity) {
-                        onLevelUIAction(LevelScreenState.NEXT_LEVEL)
-                    }
+                    onLevelUIAction(LevelScreenState.NEXT_LEVEL)
                 }) {
                     Text("Next Level", style = MaterialTheme.typography.headlineMedium)
                 }

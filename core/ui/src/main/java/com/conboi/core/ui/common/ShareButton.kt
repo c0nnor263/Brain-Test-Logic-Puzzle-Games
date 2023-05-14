@@ -12,7 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import com.conboi.core.domain.ui.DEFAULT_SHARE_COST
+import com.conboi.core.domain.advertising.DEFAULT_SHARE_COST
 import com.conboi.core.ui.Dimensions
 import com.conboi.core.ui.R
 

@@ -2,8 +2,6 @@ package com.conboi.feature.level.all.level_4
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -26,6 +24,7 @@ import com.conboi.core.ui.Dimensions
 import com.conboi.core.ui.Durations
 import com.conboi.core.ui.R
 import com.conboi.core.ui.animation.DrawAnimation
+import com.conboi.core.ui.extensions.clickableNoRipple
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -33,10 +32,9 @@ import kotlinx.coroutines.launch
 fun Level4Bulb(
     modifier: Modifier = Modifier,
     index: Int,
-    onClick: (Boolean) -> Boolean?
+    onClick: () -> Boolean?,
+    onAnimationEnd: () -> Unit
 ) {
-    val interactionSource = remember { MutableInteractionSource() }
-
     @DrawableRes
     var bulbDrawableRes by remember { mutableStateOf(R.drawable.lamp_off) }
     val painter = painterResource(id = bulbDrawableRes)
@@ -44,10 +42,10 @@ fun Level4Bulb(
     val scope = rememberCoroutineScope()
 
 
-    DrawAnimation(modifier = modifier, delay = Durations.Medium.time.toLong() * index) {
+    DrawAnimation(modifier = modifier, delayOrder = index) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(
-                text = index.toString(),
+                text = (index + 1).toString(),
                 style = MaterialTheme.typography.headlineLarge.copy(
                     color = Color.Yellow, shadow = Shadow(
                         color = Color.Black,
@@ -59,33 +57,28 @@ fun Level4Bulb(
             Spacer(modifier = Modifier.height(Dimensions.Padding.Small.value))
             Image(
                 modifier = Modifier
-                    .clickable(
-                        interactionSource = interactionSource,
-                        indication = null,
-                        onClick = {
-                            val result = onClick(index == 4) ?: return@clickable
-                            if (!result) {
-                                scope.launch {
-                                    repeat(
-                                        DEFAULT_LEVEL_SCREEN_COUNTDOWN_DURATION.toInt() /
-                                                Durations.Short.time.times(2)
-                                    ) {
-                                        bulbDrawableRes = R.drawable.lamp_off
-                                        delay(Durations.Short.time.toLong())
-                                        bulbDrawableRes = R.drawable.lamp_on
-                                        delay(Durations.Short.time.toLong())
-                                    }
+                    .clickableNoRipple {
+                        if (onClick() == true) {
+                            bulbDrawableRes = R.drawable.lamp_on
+                        } else {
+                            scope.launch {
+                                repeat(
+                                    DEFAULT_LEVEL_SCREEN_COUNTDOWN_DURATION.toInt() /
+                                            Durations.Short.time.times(2)
+                                ) {
                                     bulbDrawableRes = R.drawable.lamp_off
+                                    delay(Durations.Short.time.toLong())
+                                    bulbDrawableRes = R.drawable.lamp_on
+                                    delay(Durations.Short.time.toLong())
                                 }
-                            } else {
-                                bulbDrawableRes = R.drawable.lamp_on
+                                bulbDrawableRes = R.drawable.lamp_off
+                                onAnimationEnd()
                             }
                         }
-                    ),
+                    },
                 painter = painter,
                 contentDescription = null,
             )
-
         }
     }
 }

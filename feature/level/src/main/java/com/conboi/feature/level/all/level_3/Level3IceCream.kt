@@ -4,17 +4,15 @@ import androidx.compose.animation.core.Transition
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.res.painterResource
 import com.conboi.core.ui.Durations
 import com.conboi.core.ui.R
 import com.conboi.core.ui.animation.DrawAnimation
+import com.conboi.core.ui.extensions.clickableNoRipple
 
 @Composable
 fun Level3IceCream(
@@ -24,8 +22,6 @@ fun Level3IceCream(
     isNotIceCream: Boolean,
     onClick: () -> Unit
 ) {
-    val interactionSource = remember { MutableInteractionSource() }
-
     val iceCreamScaleAnimation by transition.animateFloat(
         transitionSpec = {
             tween(Durations.Long.time)
@@ -46,14 +42,12 @@ fun Level3IceCream(
 
     DrawAnimation(
         modifier = modifier
-            .clickable(
-                interactionSource = interactionSource,
-                indication = null,
+            .clickableNoRipple(
                 enabled = transition.currentState,
                 onClick = onClick
             )
             .scale(scaleX = 1F, scaleY = iceCreamScaleAnimation),
-        delay = Durations.Medium.time.toLong() * (1 + index),
+        delayOrder = 1 + index,
     ) {
         Image(
             painter = painterResource(id = R.drawable.ice_cream),

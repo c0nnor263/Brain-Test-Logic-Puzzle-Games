@@ -1,7 +1,6 @@
 package com.conboi.feature.level.all.level_20
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -11,6 +10,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.conboi.core.domain.level.LevelScreenState
 import com.conboi.core.ui.R
+import com.conboi.core.ui.extensions.clickableNoRipple
 import com.conboi.core.ui.theme.WordefullTheme
 
 @Composable
@@ -42,7 +42,7 @@ fun Level20Content(modifier: Modifier = Modifier, onLevelAction: (LevelScreenSta
                     top.linkTo(parent.top)
                     bottom.linkTo(bottomGuideline)
                 }
-                .clickable {
+                .clickableNoRipple {
                     onLevelAction(LevelScreenState.WRONG_CHOICE)
                 }
         )
@@ -59,7 +59,7 @@ fun Level20Content(modifier: Modifier = Modifier, onLevelAction: (LevelScreenSta
                     top.linkTo(parent.top)
                     bottom.linkTo(bottomGuideline)
                 }
-                .clickable {
+                .clickableNoRipple {
                     onLevelAction(LevelScreenState.CORRECT_CHOICE)
                 }
         )
@@ -75,7 +75,7 @@ fun Level20Content(modifier: Modifier = Modifier, onLevelAction: (LevelScreenSta
                     top.linkTo(parent.top)
                     bottom.linkTo(bottomGuideline)
                 }
-                .clickable {
+                .clickableNoRipple {
                     onLevelAction(LevelScreenState.WRONG_CHOICE)
                 }
         )

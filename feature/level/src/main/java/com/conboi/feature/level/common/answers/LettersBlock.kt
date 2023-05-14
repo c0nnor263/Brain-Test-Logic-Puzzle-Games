@@ -1,7 +1,6 @@
 package com.conboi.feature.level.common.answers
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -28,6 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.conboi.core.ui.Dimensions
 import com.conboi.core.ui.R
+import com.conboi.core.ui.extensions.clickableNoRipple
 import com.conboi.core.ui.theme.WordefullTheme
 import kotlin.math.roundToInt
 
@@ -51,6 +51,7 @@ fun LettersBlock(
 
     Box(modifier = modifier, contentAlignment = Alignment.Center) {
         Column(
+            modifier = Modifier.padding(Dimensions.Padding.Small.value),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(Dimensions.Padding.Small.value)
         ) {
@@ -116,7 +117,7 @@ fun LettersBlock(
             repeat((currentAlphabet.size / 7F).roundToInt()) { rowIndex ->
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(Dimensions.Padding.Medium.value)
+                    horizontalArrangement = Arrangement.spacedBy(Dimensions.Padding.Small.value)
                 ) {
                     repeat(8) { itemIndex ->
                         val text = currentAlphabet.getOrNull(rowIndex * 8 + itemIndex)
@@ -133,8 +134,8 @@ fun LettersBlock(
 
                                 Text(
                                     text = text, modifier = Modifier
-                                        .padding(Dimensions.Padding.Medium.value)
-                                        .clickable {
+                                        .padding(Dimensions.Padding.Small.value)
+                                        .clickableNoRipple {
                                             currentAnswer += if (currentAnswer.length < numberMaxLength) text else ""
                                         },
                                     style = MaterialTheme.typography.titleMedium

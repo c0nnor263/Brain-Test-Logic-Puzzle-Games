@@ -52,7 +52,7 @@ fun LevelScreen(
                 modifier = Modifier.weight(1F),
                 level = level ?: LevelData(),
                 onLevelAction = onUpdateLevelActionState,
-                onLevelUIAction = onUpdateLevelScreenState
+                onLevelScreenAction = onUpdateLevelScreenState
             )
 
             ActionBar(

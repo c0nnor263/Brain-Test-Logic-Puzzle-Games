@@ -14,7 +14,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.conboi.core.ui.Durations
 import com.conboi.core.ui.R
 import com.conboi.core.ui.animation.DrawAnimation
 
@@ -25,7 +24,7 @@ fun Level5Title(modifier: Modifier = Modifier) {
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        DrawAnimation(delay = Durations.Medium.time.toLong() * 4) {
+        DrawAnimation(delayOrder = 4) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
                     text = "John:", style = MaterialTheme.typography.bodyLarge
@@ -38,7 +37,7 @@ fun Level5Title(modifier: Modifier = Modifier) {
                 )
             }
         }
-        DrawAnimation(delay = Durations.Medium.time.toLong() * 5) {
+        DrawAnimation(delayOrder = 5) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
                     text = "You:", style = MaterialTheme.typography.bodyLarge

@@ -1,7 +1,6 @@
 package com.conboi.feature.level.common.answers
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -29,6 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.conboi.core.ui.Dimensions
 import com.conboi.core.ui.R
+import com.conboi.core.ui.extensions.clickableNoRipple
 import com.conboi.core.ui.theme.WordefullTheme
 
 @Composable
@@ -127,7 +127,7 @@ fun NumbersBlock(
                             text = listOfAnswers[it].toString(),
                             modifier = Modifier
                                 .padding(Dimensions.Padding.Medium.value)
-                                .clickable {
+                                .clickableNoRipple {
                                     currentAnswer += if (currentAnswer.length < numberMaxLength) listOfAnswers[it].toString() else ""
                                 },
                             style = MaterialTheme.typography.titleLarge
@@ -155,7 +155,7 @@ fun NumbersBlock(
                             text = listOfAnswers[it + 5].toString(),
                             modifier = Modifier
                                 .padding(Dimensions.Padding.Medium.value)
-                                .clickable {
+                                .clickableNoRipple {
                                     currentAnswer += if (currentAnswer.length < numberMaxLength) listOfAnswers[it + 5].toString() else ""
                                 },
                             style = MaterialTheme.typography.titleLarge

@@ -16,7 +16,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.conboi.core.domain.level.LevelScreenState
 import com.conboi.core.ui.Dimensions
-import com.conboi.core.ui.state.LocalLevelScreenState
 import com.conboi.feature.level.common.answers.AnswersBlock
 
 
@@ -25,7 +24,6 @@ internal fun Level1Content(
     modifier: Modifier = Modifier,
     onLevelAction: (LevelScreenState) -> Unit
 ) {
-    val levelUIState = LocalLevelScreenState.current
     val listOfAnswers by remember { mutableStateOf(listOf(4, 8, 7, 6).shuffled()) }
 
     Column(
@@ -122,7 +120,6 @@ internal fun Level1Content(
         }
         Spacer(modifier = Modifier.height(Dimensions.Padding.Medium.value))
         AnswersBlock(listOfAnswers = listOfAnswers) { answerText ->
-            if (levelUIState != LevelScreenState.IS_PLAYING) return@AnswersBlock
             val duckCount = 8.toString()
             val state = if (answerText == duckCount) {
                 LevelScreenState.CORRECT_CHOICE

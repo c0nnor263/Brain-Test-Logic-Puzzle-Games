@@ -11,60 +11,70 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.dp
 import com.conboi.core.ui.animation.DrawAnimation
 import kotlin.math.roundToInt
 
 @Composable
 fun DraggableImage(
     modifier: Modifier = Modifier,
-    maxSize: Offset,
     isEnabled: Boolean = true,
     @DrawableRes drawableRes: Int,
-    onDrag: (Offset) -> Unit
+    delayOrder: Int? = 0,
+    onDrag: (Offset, Offset) -> Unit = { _, _ -> }
 ) {
-    val screenWidthDp = with(LocalDensity.current) { maxSize.x.toDp().roundToPx() }
-    val screenHeightDp = with(LocalDensity.current) { maxSize.y.toDp().roundToPx() }
+    val density = LocalDensity.current
+    val configuration = LocalConfiguration.current
+    val screenWidth = with(density) { configuration.screenWidthDp.dp.roundToPx() }
+    val screenHeight = with(density) { configuration.screenHeightDp.dp.roundToPx() }
 
     var offsetX by remember { mutableStateOf(0F) }
     var offsetY by remember { mutableStateOf(0F) }
     var currentPosition by remember { mutableStateOf(Offset.Zero) }
+    var rectOfDraggable by remember { mutableStateOf<Rect?>(null) }
 
-    DrawAnimation(modifier = modifier) {
+    DrawAnimation(modifier = modifier, delayOrder = delayOrder) {
         Image(
             modifier = Modifier
-                .onGloballyPositioned {
-                    currentPosition = it
+                .onGloballyPositioned { coordinates ->
+                    rectOfDraggable = coordinates.boundsInWindow()
+                    currentPosition = coordinates
                         .localToWindow(Offset.Zero)
-                        .run {
-                            Offset(
-                                x.coerceAtLeast(97F),
-                                y.coerceAtLeast(97F)
-                            )
-                        }
+                        .run { Offset(x, y) }
                 }
                 .offset { IntOffset(offsetX.roundToInt(), offsetY.roundToInt()) }
                 .pointerInput(isEnabled) {
                     detectDragGestures { change, dragAmount ->
                         change.consume()
                         if (isEnabled) {
+                            val width = rectOfDraggable?.width ?: return@detectDragGestures
+                            val height = rectOfDraggable?.height ?: return@detectDragGestures
 
-                            // TO DO - fix this
                             offsetX = (offsetX + dragAmount.x)
-//                                .coerceIn(
-//                                -currentPosition.x,
-//                                (screenWidthDp.toFloat() - currentPosition.x)
-//                            )
+                                .coerceIn(
+                                    -currentPosition.x,
+                                    screenWidth - currentPosition.x - width
+                                )
                             offsetY = (offsetY + dragAmount.y)
-//                                .coerceIn(
-//                                0F,
-//                                (screenHeightDp.toFloat())
-//                            )
-                            onDrag(Offset(offsetX, offsetY) + currentPosition)
+                                .coerceIn(
+                                    -currentPosition.y + height * 2,
+                                    screenHeight - currentPosition.y - height
+                                )
+
+                            val draggableOffset = Offset(offsetX, offsetY) + currentPosition
+                            val screenSize = Offset(screenWidth.toFloat(), screenHeight.toFloat())
+                            onDrag(
+                                draggableOffset,
+                                screenSize
+                            )
                         }
 
 
