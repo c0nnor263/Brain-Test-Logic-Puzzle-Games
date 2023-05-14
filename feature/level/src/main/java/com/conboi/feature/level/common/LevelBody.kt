@@ -33,7 +33,7 @@ import com.conboi.feature.level.all.level_8.Level8Content
 import com.conboi.feature.level.all.level_9.Level9Content
 
 @Composable
-fun LevelBody(level: LevelData, onLevelUIAction: (LevelScreenState) -> Unit) {
+fun LevelBody(level: LevelData, onLevelScreenAction: (LevelScreenState) -> Unit) {
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -46,26 +46,26 @@ fun LevelBody(level: LevelData, onLevelUIAction: (LevelScreenState) -> Unit) {
 
 
         when (level.id) {
-            1 -> Level1Content(onLevelAction = onLevelUIAction)
-            2 -> Level2Content(onLevelAction = onLevelUIAction)
-            3 -> Level3Content(onLevelAction = onLevelUIAction)
-            4 -> Level4Content(onLevelAction = onLevelUIAction)
-            5 -> Level5Content(onLevelAction = onLevelUIAction)
-            6 -> Level6Content(onLevelAction = onLevelUIAction)
-            7 -> Level7Content(onLevelAction = onLevelUIAction)
-            8 -> Level8Content(onLevelAction = onLevelUIAction)
-            9 -> Level9Content(onLevelAction = onLevelUIAction)
-            10 -> Level10Content(onLevelAction = onLevelUIAction)
-            11 -> Level11Content(onLevelAction = onLevelUIAction)
-            12 -> Level12Content(onLevelAction = onLevelUIAction)
-            13 -> Level13Content(onLevelAction = onLevelUIAction)
-            14 -> Level14Content(onLevelAction = onLevelUIAction)
-            15 -> Level15Content(onLevelAction = onLevelUIAction)
-            16 -> Level16Content(onLevelAction = onLevelUIAction)
-            17 -> Level17Content(onLevelAction = onLevelUIAction)
-            18 -> Level18Content(onLevelAction = onLevelUIAction)
-            19 -> Level19Content(onLevelAction = onLevelUIAction)
-            20 -> Level20Content(onLevelAction = onLevelUIAction)
+            1 -> Level1Content(onLevelAction = onLevelScreenAction)
+            2 -> Level2Content(onLevelAction = onLevelScreenAction)
+            3 -> Level3Content(onLevelAction = onLevelScreenAction)
+            4 -> Level4Content(onLevelAction = onLevelScreenAction)
+            5 -> Level5Content(onLevelAction = onLevelScreenAction)
+            6 -> Level6Content(onLevelAction = onLevelScreenAction)
+            7 -> Level7Content(onLevelAction = onLevelScreenAction)
+            8 -> Level8Content(onLevelAction = onLevelScreenAction)
+            9 -> Level9Content(onLevelAction = onLevelScreenAction)
+            10 -> Level10Content(onLevelAction = onLevelScreenAction)
+            11 -> Level11Content(onLevelAction = onLevelScreenAction)
+            12 -> Level12Content(onLevelAction = onLevelScreenAction)
+            13 -> Level13Content(onLevelAction = onLevelScreenAction)
+            14 -> Level14Content(onLevelAction = onLevelScreenAction)
+            15 -> Level15Content(onLevelAction = onLevelScreenAction)
+            16 -> Level16Content(onLevelAction = onLevelScreenAction)
+            17 -> Level17Content(onLevelAction = onLevelScreenAction)
+            18 -> Level18Content(onLevelAction = onLevelScreenAction)
+            19 -> Level19Content(onLevelAction = onLevelScreenAction)
+            20 -> Level20Content(onLevelAction = onLevelScreenAction)
             //                        21 -> Level21Content(modifier = modifier, onLevelAction = onLevelUIAction)
             //                        22 -> Level22Content(modifier = modifier, onLevelAction = onLevelUIAction)
             //                        23 -> Level23Content(modifier = modifier, onLevelAction = onLevelUIAction)

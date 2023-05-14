@@ -15,13 +15,15 @@ fun Level5TicTacToeCell(
     @DrawableRes drawableRes: Int,
     interactionSource: MutableInteractionSource? = null,
     alpha: Float = 1F,
-    delay: Long? = null
+    delayOrder: Int? = 0
 ) {
     val modifierWithInteractionSource = if (interactionSource != null) {
         modifier.clickable(
             interactionSource = interactionSource,
-            indication = null
-        ) {}
+            indication = null,
+            onClick = {
+
+            })
     } else modifier
 
 
@@ -35,8 +37,8 @@ fun Level5TicTacToeCell(
     }
 
 
-    delay?.let { delay ->
-        DrawAnimation(modifier = modifierWithInteractionSource, delay = delay) {
+    delayOrder?.let { delay ->
+        DrawAnimation(modifier = modifierWithInteractionSource, delayOrder = delay) {
             imageContent(Modifier)
         }
     } ?: imageContent(modifierWithInteractionSource)

@@ -1,7 +1,6 @@
 package com.conboi.feature.level.all.level_3
 
 import androidx.compose.animation.core.updateTransition
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
@@ -16,7 +15,6 @@ import androidx.constraintlayout.compose.Dimension
 import com.conboi.core.domain.level.LevelScreenState
 import com.conboi.core.ui.Dimensions
 import com.conboi.core.ui.R
-import com.conboi.core.ui.state.LocalLevelScreenState
 import com.conboi.feature.level.common.interactions.DraggableImage
 
 @Composable
@@ -24,7 +22,6 @@ internal fun Level3Content(
     modifier: Modifier = Modifier,
     onLevelAction: (LevelScreenState) -> Unit
 ) {
-    val levelUIState = LocalLevelScreenState.current
     var isMelting by rememberSaveable { mutableStateOf(false) }
     val meltingTransition = updateTransition(targetState = isMelting, label = "")
     ConstraintLayout(
@@ -85,7 +82,6 @@ internal fun Level3Content(
                 transition = meltingTransition,
                 isNotIceCream = index == 4,
             ) {
-                if (levelUIState != LevelScreenState.IS_PLAYING) return@Level3IceCream
                 val newState =
                     if (meltingTransition.currentState && index == 4) {
                         LevelScreenState.CORRECT_CHOICE
@@ -97,17 +93,16 @@ internal fun Level3Content(
 
         DraggableImage(
             modifier = Modifier
-                .fillMaxSize()
                 .constrainAs(sun) {
                     top.linkTo(parent.top, margin = -Dimensions.Padding.Large.value)
                     start.linkTo(parent.start, margin = -Dimensions.Padding.ExtraLarge2X.value)
                 },
             isEnabled = !meltingTransition.currentState,
             drawableRes = R.drawable.sun,
-        ) { sunOffset ->
-//                if (sunOffset.x >= maxWidth.value) {
-//                    isMelting = true
-//                }
+        ) { sunOffset, screenSize ->
+            if (sunOffset.x >= screenSize.x / 2) {
+                isMelting = true
+            }
         }
     }
 }

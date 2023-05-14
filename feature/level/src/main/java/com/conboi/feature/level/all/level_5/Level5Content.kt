@@ -22,17 +22,14 @@ import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.conboi.core.domain.level.LevelScreenState
 import com.conboi.core.ui.Dimensions
-import com.conboi.core.ui.Durations
 import com.conboi.core.ui.R
 import com.conboi.core.ui.animation.DrawAnimation
-import com.conboi.core.ui.state.LocalLevelScreenState
 
 @Composable
 internal fun Level5Content(
     modifier: Modifier = Modifier,
     onLevelAction: (LevelScreenState) -> Unit
 ) {
-    val levelUIState = LocalLevelScreenState.current
     val firstMarkInteractionSource = remember { MutableInteractionSource() }
     val secondMarkInteractionSource = remember { MutableInteractionSource() }
 
@@ -40,8 +37,6 @@ internal fun Level5Content(
     val isSecondMarkPressed by secondMarkInteractionSource.collectIsPressedAsState()
 
     LaunchedEffect(isFirstMarkPressed, isSecondMarkPressed) {
-        if (levelUIState != LevelScreenState.IS_PLAYING) return@LaunchedEffect
-
         val event = if (isFirstMarkPressed
 //            && isSecondMarkPressed TODO Test
         ) {
@@ -75,7 +70,7 @@ internal fun Level5Content(
                     start.linkTo(firstMark.start)
                     end.linkTo(thirdMark.end)
                     bottom.linkTo(parent.bottom)
-                }, delay = Durations.Medium.time.toLong() * 6
+                }, delayOrder = 6
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.tic_tac_toe_board),
@@ -103,8 +98,7 @@ internal fun Level5Content(
                     }
                     .padding(Dimensions.Padding.Small.value)
                     .fillMaxWidth(0.3F),
-                drawableRes = R.drawable.o_mark,
-                delay = 0L
+                drawableRes = R.drawable.o_mark
             )
 
             Level5TicTacToeCell(
@@ -119,7 +113,7 @@ internal fun Level5Content(
                     .padding(Dimensions.Padding.Small.value)
                     .fillMaxWidth(0.3F),
                 drawableRes = R.drawable.o_mark,
-                delay = Durations.Medium.time.toLong()
+                delayOrder = 1
             )
             Level5TicTacToeCell(
                 modifier = Modifier
@@ -135,6 +129,7 @@ internal fun Level5Content(
                 interactionSource = firstMarkInteractionSource,
                 alpha = if (isFirstMarkPressed) 1f else 0f,
                 drawableRes = R.drawable.x_mark,
+                delayOrder = null
             )
 
             // Second Row
@@ -153,7 +148,7 @@ internal fun Level5Content(
                     .padding(Dimensions.Padding.Small.value)
                     .fillMaxWidth(0.3F),
                 drawableRes = R.drawable.x_mark,
-                delay = Durations.Medium.time.toLong() * 2
+                delayOrder = 2
             )
 
 
@@ -173,7 +168,7 @@ internal fun Level5Content(
                     .padding(Dimensions.Padding.Small.value)
                     .fillMaxWidth(0.3F),
                 drawableRes = R.drawable.o_mark,
-                delay = Durations.Medium.time.toLong() * 3
+                delayOrder = 3
             )
 
 
@@ -189,6 +184,7 @@ internal fun Level5Content(
                 drawableRes = R.drawable.x_mark,
                 interactionSource = secondMarkInteractionSource,
                 alpha = if (isSecondMarkPressed) 1f else 0f,
+                delayOrder = null
             )
 
         }

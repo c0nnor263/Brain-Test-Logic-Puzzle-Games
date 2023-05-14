@@ -69,7 +69,7 @@ fun AdviceDialog(
                     }
                     Spacer(modifier = Modifier.height(Dimensions.Padding.Medium.value))
 
-                    DrawAnimation(delay = Durations.Medium.time.toLong()) {
+                    DrawAnimation(delayOrder = 1) {
                         Text(text = "Thanks", modifier = Modifier.clickable {
                             onDismiss()
                         }, style = MaterialTheme.typography.displaySmall)

@@ -10,7 +10,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import com.conboi.core.ui.Dimensions
-import com.conboi.core.ui.Durations
 import com.conboi.core.ui.animation.DrawAnimation
 
 @Composable
@@ -22,7 +21,7 @@ fun ActionBarDialogSkipOption(onClick: () -> Unit) {
             textAlign = TextAlign.Center
         )
     }
-    DrawAnimation(delay = Durations.Medium.time.toLong()) {
+    DrawAnimation(delayOrder = 1) {
         Text(
             text = "This level will let you do this",
             style = MaterialTheme.typography.headlineLarge.copy(color = Color.Yellow),
@@ -31,7 +30,7 @@ fun ActionBarDialogSkipOption(onClick: () -> Unit) {
     }
     Spacer(modifier = Modifier.height(Dimensions.Padding.Large.value))
 
-    DrawAnimation(delay = Durations.Medium.time.toLong() * 2) {
+    DrawAnimation(delayOrder = 2) {
         Text(
             text = "Skip!",
             modifier = Modifier.clickable(onClick = onClick),

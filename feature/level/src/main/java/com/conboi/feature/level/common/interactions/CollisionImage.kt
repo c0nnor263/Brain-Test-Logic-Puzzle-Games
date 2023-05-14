@@ -15,6 +15,7 @@ import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.res.painterResource
+import com.conboi.core.ui.animation.DrawAnimation
 
 @Composable
 fun CollisionImage(
@@ -23,6 +24,7 @@ fun CollisionImage(
     @DrawableRes matchedDrawableRes: Int? = null,
     @DrawableRes notMatchedDrawableRes: Int? = null,
     outerOffset: Offset,
+    delayOrder: Int? = 0,
     onMatch: () -> Unit
 ) {
     var rectOfImage by remember { mutableStateOf<Rect?>(null) }
@@ -42,12 +44,14 @@ fun CollisionImage(
         }
     } ?: return
 
-    Image(
-        painter = painterResource(id = drawableRes),
-        modifier = modifier.onGloballyPositioned { coordinates ->
-            rectOfImage = coordinates.boundsInWindow()
-        },
-        contentDescription = null,
-    )
+    DrawAnimation(modifier = modifier, delayOrder = delayOrder) {
+        Image(
+            painter = painterResource(id = drawableRes),
+            modifier = Modifier.onGloballyPositioned { coordinates ->
+                rectOfImage = coordinates.boundsInWindow()
+            },
+            contentDescription = null,
+        )
+    }
 
 }

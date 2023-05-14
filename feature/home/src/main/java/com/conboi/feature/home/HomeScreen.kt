@@ -14,7 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.conboi.core.ui.Dimensions
-import com.conboi.core.ui.Durations
 import com.conboi.core.ui.animation.DrawAnimation
 import com.conboi.core.ui.theme.WordefullTheme
 
@@ -36,7 +35,7 @@ fun HomeScreen(
             )
         }
 
-        DrawAnimation(delay = Durations.Medium.time.toLong()) {
+        DrawAnimation(delayOrder = 1) {
             TextButton(onClick = {
                 onNavigateToLevel()
             }) {

@@ -11,7 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.conboi.core.ui.Durations
 import com.conboi.core.ui.R
 import com.conboi.core.ui.animation.DrawAnimation
 import kotlin.random.Random
@@ -27,7 +26,7 @@ internal fun Level1Image(modifier: Modifier = Modifier, index: Int = 0) {
             }
         )
     }
-    DrawAnimation(modifier = modifier, delay = index * Durations.Medium.time.toLong()) {
+    DrawAnimation(modifier = modifier, delayOrder = index) {
         Image(
             modifier = Modifier.size(128.dp),
             painter = painterResource(id = randomDuckImage),

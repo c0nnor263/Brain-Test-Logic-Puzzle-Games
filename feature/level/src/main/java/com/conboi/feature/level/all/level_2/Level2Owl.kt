@@ -10,7 +10,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import com.conboi.core.ui.Durations
 import com.conboi.core.ui.R
 import com.conboi.core.ui.animation.DrawAnimation
 
@@ -26,7 +25,7 @@ fun Level2Owl(
 
     DrawAnimation(
         modifier = modifier,
-        delay = Durations.Medium.time.toLong()
+        delayOrder = 1
     ) {
         Crossfade(
             targetState = owlImageRes,

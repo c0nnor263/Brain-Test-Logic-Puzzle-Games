@@ -1,8 +1,6 @@
 package com.conboi.feature.level.common.answers
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -25,6 +23,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.conboi.core.ui.Dimensions
 import com.conboi.core.ui.R
+import com.conboi.core.ui.extensions.clickableNoRipple
 import com.conboi.core.ui.theme.WordefullTheme
 
 
@@ -54,10 +53,7 @@ fun CounterBlock(
                     modifier = Modifier
                         .weight(1F)
                         .wrapContentWidth(Alignment.End)
-                        .clickable(
-                            indication = null,
-                            interactionSource = MutableInteractionSource()
-                        ) {
+                        .clickableNoRipple {
                             val newCount = count + 1
                             count = newCount.coerceAtMost(100)
                         },
@@ -91,10 +87,7 @@ fun CounterBlock(
                     modifier = Modifier
                         .weight(1F)
                         .wrapContentWidth(Alignment.Start)
-                        .clickable(
-                            indication = null,
-                            interactionSource = MutableInteractionSource()
-                        ) {
+                        .clickableNoRipple {
                             val newCount = count - 1
                             count = newCount.coerceAtLeast(0)
                         },
