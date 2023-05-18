@@ -53,12 +53,12 @@ internal fun Level4Content(
                             in 3..4 -> {
                                 top.linkTo(
                                     bulb2.bottom,
-                                    margin = Dimensions.Padding.Medium.value
+                                    margin = Dimensions.Padding.Small.value
                                 )
                             }
                         }
                     }
-                    .padding(Dimensions.Padding.Small.value),
+                    .padding(Dimensions.Padding.ExtraSmall.value),
                 index = index,
                 onClick = {
                     if (bulbAnimationStarted) return@Level4Bulb null

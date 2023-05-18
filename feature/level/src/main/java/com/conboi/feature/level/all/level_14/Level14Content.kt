@@ -73,14 +73,14 @@ fun Level14Content(modifier: Modifier = Modifier, onLevelAction: (LevelScreenSta
                     modifier = Modifier
                         .constrainAs(sheep1) {
                             width = Dimension.fillToConstraints
-                            height = Dimension.ratio("4:3")
+                            height = Dimension.ratio("1:1")
                             top.linkTo(parent.top)
                             start.linkTo(parent.start)
                             end.linkTo(verticalGuideLine)
                             bottom.linkTo(sheep2.top)
                         },
-                    matchedDrawableRes = R.drawable.black_sheep,
-                    notMatchedDrawableRes = R.drawable.white_sheep,
+                    matchedDrawableRes = R.drawable.l14_black_sheep,
+                    notMatchedDrawableRes = R.drawable.l14_white_sheep,
                     outerOffset = positionOfText,
 
                     ) {
@@ -90,14 +90,14 @@ fun Level14Content(modifier: Modifier = Modifier, onLevelAction: (LevelScreenSta
                     modifier = Modifier
                         .constrainAs(sheep2) {
                             width = Dimension.fillToConstraints
-                            height = Dimension.ratio("4:3")
+                            height = Dimension.ratio("1:1")
                             top.linkTo(parent.top)
                             start.linkTo(verticalGuideLine)
                             end.linkTo(parent.end)
                             bottom.linkTo(parent.bottom)
                         },
-                    matchedDrawableRes = R.drawable.black_sheep,
-                    notMatchedDrawableRes = R.drawable.white_sheep,
+                    matchedDrawableRes = R.drawable.l14_black_sheep,
+                    notMatchedDrawableRes = R.drawable.l14_white_sheep,
                     outerOffset = positionOfText,
 
                     ) {
@@ -107,14 +107,14 @@ fun Level14Content(modifier: Modifier = Modifier, onLevelAction: (LevelScreenSta
                     modifier = Modifier
                         .constrainAs(sheep3) {
                             width = Dimension.fillToConstraints
-                            height = Dimension.ratio("4:3")
+                            height = Dimension.ratio("1:1")
                             top.linkTo(sheep2.bottom)
                             start.linkTo(parent.start)
                             end.linkTo(verticalGuideLine)
                             bottom.linkTo(parent.bottom)
                         },
-                    matchedDrawableRes = R.drawable.black_sheep,
-                    notMatchedDrawableRes = R.drawable.white_sheep,
+                    matchedDrawableRes = R.drawable.l14_black_sheep,
+                    notMatchedDrawableRes = R.drawable.l14_white_sheep,
                     outerOffset = positionOfText,
 
                     ) {

@@ -9,6 +9,6 @@ import javax.inject.Inject
 class MenuViewModel @Inject constructor(
     private val levelDataRepositoryImpl: OfflineLevelDataRepository
 ) : ViewModel() {
-    fun getLastUncompletedLevel() = levelDataRepositoryImpl.getLastUncompletedLevel()
+    fun getAllLevels() = levelDataRepositoryImpl.getAllLevelData()
     fun getLevelDataListByIndex(page: Int) = levelDataRepositoryImpl.getLevelDataListByIndex(page)
 }

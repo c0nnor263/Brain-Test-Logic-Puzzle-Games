@@ -29,7 +29,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.net.toUri
 import com.conboi.core.ui.Dimensions
 import com.conboi.core.ui.R
-import com.conboi.core.ui.common.ShareButton
 import com.conboi.core.ui.theme.WordefullTheme
 
 @Composable
@@ -47,7 +46,7 @@ fun SettingsScreen() {
             Box(contentAlignment = Alignment.Center) {
                 Image(
                     modifier = Modifier.matchParentSize(),
-                    painter = painterResource(id = R.drawable.o_mark),
+                    painter = painterResource(id = R.drawable.l5_o_mark),
                     contentDescription = null
                 )
                 IconButton(
@@ -78,7 +77,7 @@ fun SettingsScreen() {
                 Text("English", style = MaterialTheme.typography.headlineSmall)
                 IconButton(onClick = { }) {
                     Icon(
-                        painter = painterResource(id = R.drawable.x_mark),
+                        painter = painterResource(id = R.drawable.l5_x_mark),
                         contentDescription = null
                     )
                 }
@@ -124,27 +123,27 @@ fun SettingsScreen() {
         }
         Spacer(modifier = Modifier.height(Dimensions.Padding.Medium.value))
 
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(
-                Dimensions.Padding.Small.value,
-                alignment = Alignment.CenterHorizontally
-            ),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            ShareButton(drawableRes = R.drawable.lamp) {
-
-            }
-            ShareButton(drawableRes = R.drawable.lamp) {
-
-            }
-            ShareButton(drawableRes = R.drawable.lamp) {
-
-            }
-            ShareButton(drawableRes = R.drawable.lamp) {
-
-            }
-        }
+//        Row(
+//            modifier = Modifier.fillMaxWidth(),
+//            horizontalArrangement = Arrangement.spacedBy(
+//                Dimensions.Padding.Small.value,
+//                alignment = Alignment.CenterHorizontally
+//            ),
+//            verticalAlignment = Alignment.CenterVertically
+//        ) {
+//            ShareButton(drawableRes = R.drawable.lamp) {
+//
+//            }
+//            ShareButton(drawableRes = R.drawable.lamp) {
+//
+//            }
+//            ShareButton(drawableRes = R.drawable.lamp) {
+//
+//            }
+//            ShareButton(drawableRes = R.drawable.lamp) {
+//
+//            }
+//        }
 
         Spacer(modifier = Modifier.height(Dimensions.Padding.Medium.value))
 

@@ -8,11 +8,11 @@ plugins {
 }
 
 
-val keystorePropertiesFile = rootProject.file("keystore.properties")
+val keystorePropertiesFile: File = rootProject.file("keystore.properties")
 val keystoreProperties = Properties().apply {
     load(FileInputStream(keystorePropertiesFile))
 }
-
+// TODO add Google Services Rate API
 android {
     namespace = "com.conboi.wordefull"
     compileSdk = Versions.Config.compileSdk
@@ -21,8 +21,8 @@ android {
         applicationId = namespace
         minSdk = Versions.Config.minSdk
         targetSdk = Versions.Config.targetSdk
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 5
+        versionName = "5.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -44,8 +44,8 @@ android {
             applicationIdSuffix = ".debug"
         }
         release {
-            isMinifyEnabled = true
-            isShrinkResources = true
+            isMinifyEnabled = false
+            isShrinkResources = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -86,6 +86,7 @@ dependencies {
     implementation(project(":core:navigation"))
     implementation(project(":feature:home"))
     implementation(project(":feature:menu"))
+    implementation(project(":feature:store"))
     implementation(project(":feature:level"))
     implementation(project(":feature:settings"))
     composeCore()

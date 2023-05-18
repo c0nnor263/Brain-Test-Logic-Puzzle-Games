@@ -40,7 +40,7 @@ fun Level8Content(modifier: Modifier = Modifier, onLevelAction: (LevelScreenStat
                     modifier = Modifier.alpha(if (isNumberVisible) 1F else 0F)
                 )
                 DraggableImage(
-                    drawableRes = R.drawable.stone,
+                    drawableRes = R.drawable.l8_stone,
                 ) { _, _ ->
                     isNumberVisible = true
                 }

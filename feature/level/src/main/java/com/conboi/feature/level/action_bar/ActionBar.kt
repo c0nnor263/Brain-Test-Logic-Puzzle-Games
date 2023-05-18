@@ -20,12 +20,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import com.conboi.core.domain.currency.DEFAULT_ADVICE_COST
-import com.conboi.core.domain.currency.DEFAULT_SKIP_COST
 import com.conboi.core.domain.level.LevelScreenState
 import com.conboi.core.ui.Dimensions
 import com.conboi.core.ui.Durations
 import com.conboi.core.ui.R
+import com.conboi.core.ui.state.LocalCosts
 import com.conboi.core.ui.state.LocalLevelScreenState
 
 @Composable
@@ -36,6 +35,7 @@ fun ActionBar(
     onSkip: () -> Unit,
 ) {
     val levelUIState = LocalLevelScreenState.current
+    val costsInfo = LocalCosts.current
     AnimatedVisibility(
         modifier = modifier,
         visible = levelUIState == LevelScreenState.IS_PLAYING,
@@ -65,7 +65,7 @@ fun ActionBar(
                     )
                 }
                 Text(
-                    "$DEFAULT_ADVICE_COST",
+                    "${costsInfo.adviceCost}",
                     modifier = Modifier.align(Alignment.BottomEnd),
                     style = MaterialTheme.typography.titleLarge
                 )
@@ -82,7 +82,7 @@ fun ActionBar(
                     )
                 }
                 Text(
-                    "$DEFAULT_SKIP_COST",
+                    "${costsInfo.skipCost}",
                     modifier = Modifier.align(Alignment.BottomEnd),
                     style = MaterialTheme.typography.titleLarge
                 )

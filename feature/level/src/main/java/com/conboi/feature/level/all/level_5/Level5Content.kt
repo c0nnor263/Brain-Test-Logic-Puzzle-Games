@@ -73,7 +73,7 @@ internal fun Level5Content(
                 }, delayOrder = 6
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.tic_tac_toe_board),
+                    painter = painterResource(id = R.drawable.l5_tic_tac_toe_board),
                     contentDescription = null,
                     contentScale = ContentScale.FillWidth
                 )
@@ -98,7 +98,7 @@ internal fun Level5Content(
                     }
                     .padding(Dimensions.Padding.Small.value)
                     .fillMaxWidth(0.3F),
-                drawableRes = R.drawable.o_mark
+                drawableRes = R.drawable.l5_o_mark
             )
 
             Level5TicTacToeCell(
@@ -112,7 +112,7 @@ internal fun Level5Content(
                     }
                     .padding(Dimensions.Padding.Small.value)
                     .fillMaxWidth(0.3F),
-                drawableRes = R.drawable.o_mark,
+                drawableRes = R.drawable.l5_o_mark,
                 delayOrder = 1
             )
             Level5TicTacToeCell(
@@ -128,7 +128,7 @@ internal fun Level5Content(
                     .fillMaxWidth(0.3F),
                 interactionSource = firstMarkInteractionSource,
                 alpha = if (isFirstMarkPressed) 1f else 0f,
-                drawableRes = R.drawable.x_mark,
+                drawableRes = R.drawable.l5_x_mark,
                 delayOrder = null
             )
 
@@ -147,7 +147,7 @@ internal fun Level5Content(
                     }
                     .padding(Dimensions.Padding.Small.value)
                     .fillMaxWidth(0.3F),
-                drawableRes = R.drawable.x_mark,
+                drawableRes = R.drawable.l5_x_mark,
                 delayOrder = 2
             )
 
@@ -167,7 +167,7 @@ internal fun Level5Content(
                     }
                     .padding(Dimensions.Padding.Small.value)
                     .fillMaxWidth(0.3F),
-                drawableRes = R.drawable.o_mark,
+                drawableRes = R.drawable.l5_o_mark,
                 delayOrder = 3
             )
 
@@ -181,7 +181,7 @@ internal fun Level5Content(
                     }
                     .padding(Dimensions.Padding.Small.value)
                     .fillMaxWidth(0.3F),
-                drawableRes = R.drawable.x_mark,
+                drawableRes = R.drawable.l5_x_mark,
                 interactionSource = secondMarkInteractionSource,
                 alpha = if (isSecondMarkPressed) 1f else 0f,
                 delayOrder = null

@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -22,11 +23,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.conboi.core.domain.level.LevelScreenState
 import com.conboi.core.ui.Dimensions
 import com.conboi.core.ui.Durations
 import com.conboi.core.ui.R
 import com.conboi.core.ui.theme.WordefullTheme
+import com.conboi.feature.level.common.Title
 
 @Composable
 fun Completed(
@@ -37,7 +40,7 @@ fun Completed(
 
     AnimatedVisibility(
         true,
-        modifier = modifier.padding(Dimensions.Padding.Medium.value),
+        modifier = modifier.padding(Dimensions.Padding.Small.value),
         enter = fadeIn(tween(Durations.Medium.time)) + scaleIn(tween(Durations.Medium.time)),
         exit = scaleOut(tween(Durations.Medium.time)) + fadeOut(tween(Durations.Medium.time)),
     ) {
@@ -48,24 +51,18 @@ fun Completed(
         ) {
             Image(
                 painter = painterResource(id = R.drawable.lamp),
-                modifier = Modifier.weight(0.25F),
-                contentDescription = null
+                modifier = Modifier.size(64.dp),
+                contentDescription = null,
             )
             Spacer(modifier = Modifier.height(Dimensions.Padding.Medium.value))
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Text(
-                    text = "Level $id completed",
-                    style = MaterialTheme.typography.displaySmall
-                )
-                Text(
-                    text = "You awesome!",
-                    style = MaterialTheme.typography.displaySmall.copy(color = Color.Yellow)
-                )
-            }
+            Title(
+                text = "Level $id completed",
+                style = MaterialTheme.typography.displaySmall
+            )
+            Title(
+                text = "You awesome!",
+                style = MaterialTheme.typography.displaySmall.copy(color = Color.Yellow)
+            )
             Spacer(modifier = Modifier.height(Dimensions.Padding.Large.value))
             Column(
                 modifier = Modifier

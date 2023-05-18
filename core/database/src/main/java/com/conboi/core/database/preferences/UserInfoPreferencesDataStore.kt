@@ -3,7 +3,9 @@ package com.conboi.core.database.preferences
 import android.content.Context
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import com.conboi.core.domain.billing.UserVipType
 import com.conboi.core.domain.currency.DEFAULT_USER_CURRENCY
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
@@ -22,7 +24,7 @@ class UserInfoPreferencesDataStore @Inject constructor(@ApplicationContext val c
 
     object UserInfoPreferencesKeys {
         val USER_CURRENCY = intPreferencesKey("user_currency")
-
+        val USER_VIP = stringPreferencesKey("user_vip")
     }
 
 
@@ -52,6 +54,20 @@ class UserInfoPreferencesDataStore @Inject constructor(@ApplicationContext val c
         dataStore.edit { preferences ->
             val currency = getUserCurrency().first()
             preferences[UserInfoPreferencesKeys.USER_CURRENCY] = currency + amount
+        }
+    }
+
+
+    fun getUserVip(): Flow<UserVipType> {
+        return combine(dataStore.data) {
+            val rawType = it.first()[UserInfoPreferencesKeys.USER_VIP]
+            UserVipType.valueOf(rawType ?: UserVipType.BASE.name)
+        }
+    }
+
+    suspend fun setUserVip(type: UserVipType) {
+        dataStore.edit { preferences ->
+            preferences[UserInfoPreferencesKeys.USER_VIP] = type.name
         }
     }
 

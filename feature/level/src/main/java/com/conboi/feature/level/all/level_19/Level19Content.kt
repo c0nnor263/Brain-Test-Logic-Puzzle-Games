@@ -91,15 +91,7 @@ fun Level19Content(
         )
 
 
-        DraggableImage(
-            modifier = Modifier.constrainAs(opener) {
-                width = Dimension.fillToConstraints
-                centerVerticallyTo(parent)
-            },
-            drawableRes = R.drawable.opener,
-        ) { offset, _ ->
-            positionOfOpener = offset
-        }
+
 
 
         CollisionImage(
@@ -112,10 +104,20 @@ fun Level19Content(
                     centerVerticallyTo(parent)
                 },
             outerOffset = positionOfOpener,
-            defaultDrawableRes = R.drawable.bottle,
+            defaultDrawableRes = R.drawable.l19_bottle,
             delayOrder = 1
         ) {
             onLevelAction(LevelScreenState.WRONG_CHOICE)
+        }
+
+        DraggableImage(
+            modifier = Modifier.constrainAs(opener) {
+                width = Dimension.fillToConstraints
+                centerVerticallyTo(parent)
+            },
+            drawableRes = R.drawable.l19_opener,
+        ) { offset, _ ->
+            positionOfOpener = offset
         }
     }
 

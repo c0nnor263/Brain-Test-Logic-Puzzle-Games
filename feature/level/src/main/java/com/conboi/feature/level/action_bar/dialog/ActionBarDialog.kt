@@ -21,13 +21,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.conboi.core.database.model.LevelData
-import com.conboi.core.domain.currency.DEFAULT_ADVICE_COST
-import com.conboi.core.domain.currency.DEFAULT_SKIP_COST
 import com.conboi.core.domain.level.ActionResult
 import com.conboi.core.domain.level.LevelActionState
 import com.conboi.core.ui.Dimensions
 import com.conboi.core.ui.R
 import com.conboi.core.ui.common.ChalkBoardCard
+import com.conboi.core.ui.state.LocalCosts
 import com.conboi.core.ui.state.LocalCurrency
 import com.conboi.core.ui.state.LocalLevelActionState
 import com.conboi.feature.level.action_bar.dialog.options.ActionBarDialogAdviceOption
@@ -39,6 +38,7 @@ fun ActionBarDialog(
     levelData: LevelData,
     onActionResult: (ActionResult) -> Unit
 ) {
+    val costsInfo = LocalCosts.current
     val levelActionState = LocalLevelActionState.current
     val currency = LocalCurrency.current
     var showNotEnoughCurrency by rememberSaveable {
@@ -84,11 +84,12 @@ fun ActionBarDialog(
                                 if (levelData.isHasAdvise) {
                                     return@ActionBarDialogAdviceOption
                                 }
-                                val leftCurrency = currency - DEFAULT_ADVICE_COST
+                                val cost = costsInfo.adviceCost
+                                val leftCurrency = currency - cost
                                 if (leftCurrency >= 0) {
                                     onActionResult(
                                         ActionResult(
-                                            cost = DEFAULT_ADVICE_COST,
+                                            cost = cost,
                                             type = ActionResult.Type.SUCCESS
                                         )
                                     )
@@ -101,11 +102,12 @@ fun ActionBarDialog(
 
                         LevelActionState.SKIP -> {
                             ActionBarDialogSkipOption {
-                                val leftCurrency = currency - DEFAULT_SKIP_COST
+                                val cost = costsInfo.skipCost
+                                val leftCurrency = currency - cost
                                 if (leftCurrency >= 0) {
                                     onActionResult(
                                         ActionResult(
-                                            cost = DEFAULT_SKIP_COST,
+                                            cost = cost,
                                             type = ActionResult.Type.SUCCESS
                                         )
                                     )

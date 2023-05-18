@@ -32,7 +32,7 @@ fun Level5Title(modifier: Modifier = Modifier) {
                 Spacer(modifier = Modifier.width(8.dp))
                 Image(
                     modifier = Modifier.size(64.dp),
-                    painter = painterResource(id = R.drawable.o_mark),
+                    painter = painterResource(id = R.drawable.l5_o_mark),
                     contentDescription = null
                 )
             }
@@ -45,7 +45,7 @@ fun Level5Title(modifier: Modifier = Modifier) {
                 Spacer(modifier = Modifier.width(8.dp))
                 Image(
                     modifier = Modifier.size(64.dp),
-                    painter = painterResource(id = R.drawable.x_mark),
+                    painter = painterResource(id = R.drawable.l5_x_mark),
                     contentDescription = null
                 )
             }

@@ -8,6 +8,8 @@ class MobileAdsInitializer {
     companion object {
         private val configuration = RequestConfiguration.Builder()
             .setTestDeviceIds(listOf("DEVICE ID"))
+
+            // TODO: Add your test device ID here
             .build()
 
         fun init(context: Context) {

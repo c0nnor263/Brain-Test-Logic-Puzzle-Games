@@ -5,9 +5,9 @@ object Versions {
     const val activity = "1.7.1"
     const val coreKtx = "1.10.0"
     const val gradle = "8.0.1"
-    const val hilt = "2.46"
+    const val hilt = "2.46.1"
     const val kotlin = "1.8.21"
-    const val coroutines = "1.7.0"
+    const val coroutines = "1.7.1"
     const val lifecycle = "2.6.1"
     const val excludeFiles = "/META-INF/{AL2.0,LGPL2.1}"
     const val ksp = "1.8.21-1.0.11"
@@ -34,7 +34,7 @@ object Versions {
 
     object Compose {
         const val version = "1.4.2"
-        const val bom = "2023.05.00"
+        const val bom = "2023.05.01"
         const val compiler = "1.4.7"
         const val hiltNavigation = "1.0.0"
         const val navigation = "2.5.3"

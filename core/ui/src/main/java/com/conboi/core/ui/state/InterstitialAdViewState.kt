@@ -8,6 +8,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.conboi.core.data.advertising.AdRequestBuilder
+import com.conboi.core.domain.billing.UserVipType
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
@@ -18,19 +19,24 @@ import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 @Composable
 fun rememberInterstitialAdViewState(
     activity: ComponentActivity,
+    userVipType: UserVipType = UserVipType.BASE
 ): InterstitialAdViewState =
     remember {
-        InterstitialAdViewState().also { state ->
+        InterstitialAdViewState(userVipType).also { state ->
             state.loadAd(activity)
         }
     }
 
 
-class InterstitialAdViewState(interstitialAd: InterstitialAd? = null) {
+class InterstitialAdViewState(
+    private val userVipType: UserVipType,
+    interstitialAd: InterstitialAd? = null
+) {
     var interstitialAd by mutableStateOf(interstitialAd)
         private set
 
     fun loadAd(context: ComponentActivity) {
+        if (userVipType != UserVipType.BASE) return
         Log.i("TAG", "loadAd: $context")
         // TODO TEST AD UNIT ID
         val adRequest = AdRequestBuilder().createDefault()

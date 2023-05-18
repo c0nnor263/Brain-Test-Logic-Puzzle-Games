@@ -1,6 +1,5 @@
 package com.conboi.wordefull.presentation.navigation
 
-import android.util.Log
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
@@ -39,6 +38,8 @@ import com.conboi.feature.level.LevelScreenViewModel
 import com.conboi.feature.menu.MenuScreen
 import com.conboi.feature.menu.MenuViewModel
 import com.conboi.feature.settings.SettingsScreen
+import com.conboi.feature.store.StoreScreen
+import com.conboi.feature.store.StoreScreenViewModel
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 
@@ -55,27 +56,50 @@ fun WordefullNavHost(navController: NavHostController) {
         composable(
             Screens.Home.route,
             enterTransition = {
-                slideIntoContainer(
-                    AnimatedContentTransitionScope.SlideDirection.Down,
+                scaleIn(
                     animationSpec = tween(Durations.Medium.time)
                 )
             },
             exitTransition = {
-                slideOutOfContainer(
-                    AnimatedContentTransitionScope.SlideDirection.Up,
-                    animationSpec = tween(Durations.Medium.time)
-                )
-            },
+                scaleOut(animationSpec = tween(Durations.Medium.time))
+            }
         ) {
             val viewModel: HomeScreenViewModel = hiltViewModel()
             val levelData =
                 viewModel.getLastUncompletedLevel()
                     .collectAsStateWithLifecycle(initialValue = null).value ?: LevelData()
+
             HomeScreen(
                 onNavigateToLevel = {
                     navController.navigate(Screens.Level(levelData.id.toString()).route)
                 }
             )
+        }
+
+        composable(
+            Screens.Store.route,
+            enterTransition = {
+                slideIntoContainer(
+                    AnimatedContentTransitionScope.SlideDirection.Down, animationSpec = tween(
+                        Durations.Medium.time
+                    )
+                )
+            },
+            exitTransition = {
+                slideOutOfContainer(
+                    AnimatedContentTransitionScope.SlideDirection.Up, animationSpec = tween(
+                        Durations.Medium.time
+                    )
+                )
+            }
+        ) {
+            val viewModel: StoreScreenViewModel = hiltViewModel()
+            val productDetailsInfo = viewModel.getInAppProductsDetails()
+                .collectAsStateWithLifecycle()
+
+            StoreScreen(productDetailsInfo = productDetailsInfo.value) {
+                navController.navigateUp()
+            }
         }
 
         composable(
@@ -104,22 +128,24 @@ fun WordefullNavHost(navController: NavHostController) {
             }
         ) {
             val viewModel: MenuViewModel = hiltViewModel()
+            val levelDataList =
+                viewModel.getAllLevels().collectAsStateWithLifecycle(emptyList())
 
-            val levelData =
-                viewModel.getLastUncompletedLevel().collectAsStateWithLifecycle(null)
 
-            var pageIndex by remember(levelData) {
-                val id = (levelData.value?.id ?: 0) / 5
-                mutableStateOf(id * 5)
+            var pageIndex by remember {
+                mutableStateOf(0)
             }
-            val levelDataListByIndex = viewModel.getLevelDataListByIndex(pageIndex)
-                .collectAsStateWithLifecycle(
-                    initialValue = emptyList()
-                )
 
+            val list =
+                levelDataList.value.takeIf { it.isNotEmpty() }?.subList(
+                    pageIndex, (pageIndex + 5).coerceAtMost(
+                        MAX_LEVEL_ID
+                    )
+                )
+                    ?: listOf()
             MenuScreen(
                 index = pageIndex,
-                levelList = levelDataListByIndex.value,
+                levelList = list,
                 onNavigateToLevel = { levelId: Int ->
                     navController.navigate(Screens.Level(levelId.toString()).route)
                 },
@@ -171,18 +197,13 @@ fun WordefullNavHost(navController: NavHostController) {
                     onUpdateLevelActionState = viewModel::updateLevelActionState,
                     onUpdateLevelScreenState = viewModel::updateLevelScreenState,
                     onActionResult = { actionResult ->
-                        Log.i(
-                            "TAG",
-                            "WordefullNavHost: $actionResult ${levelScreenState.value} ${levelActionState.value}"
-                        )
                         when (actionResult.type) {
                             ActionResult.Type.SUCCESS -> {
                                 viewModel.buyAction(cost = actionResult.cost)
                             }
 
                             ActionResult.Type.BUY_MORE -> {
-                                //                navController.navigate(Screens..route)
-                                // TODO navigate to currency
+                                navController.navigate(Screens.Store.route)
                             }
 
                             else -> {}
@@ -194,5 +215,7 @@ fun WordefullNavHost(navController: NavHostController) {
 
 
         }
+
+
     }
 }

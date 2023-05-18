@@ -20,9 +20,9 @@ internal fun Level1Image(modifier: Modifier = Modifier, index: Int = 0) {
     @DrawableRes val randomDuckImage by remember {
         mutableStateOf(
             when (Random.nextInt(0, 3)) {
-                0 -> R.drawable.duck
-                1 -> R.drawable.duck_1
-                else -> R.drawable.duck
+                0 -> R.drawable.l1_duck
+                1 -> R.drawable.l1_duck_1
+                else -> R.drawable.l1_duck
             }
         )
     }

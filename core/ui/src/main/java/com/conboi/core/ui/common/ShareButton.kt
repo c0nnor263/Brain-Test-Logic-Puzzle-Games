@@ -21,7 +21,7 @@ fun ShareButton(modifier: Modifier = Modifier, @DrawableRes drawableRes: Int, on
     Box(modifier = modifier, contentAlignment = Alignment.Center) {
         Image(
             modifier = Modifier.matchParentSize(),
-            painter = painterResource(id = R.drawable.o_mark),
+            painter = painterResource(id = R.drawable.l5_o_mark),
             contentDescription = null
         )
         IconButton(

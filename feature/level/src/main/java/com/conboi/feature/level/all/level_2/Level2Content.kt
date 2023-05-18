@@ -41,20 +41,21 @@ internal fun Level2Content(
         Box(contentAlignment = Alignment.Center) {
 
 
-            DraggableImage(
-                modifier = Modifier.then(Modifier.align(Alignment.TopEnd)),
-                isEnabled = !isOwlWakeUp,
-                drawableRes = R.drawable.sun,
-            ) { sunOffset, screenSize ->
-                if (sunOffset.y >= screenSize.y / 1.2F) {
-                    isOwlWakeUp = true
-                    onLevelAction(LevelScreenState.CORRECT_CHOICE)
-                }
-            }
-
             ConstraintLayout(modifier = Modifier.align(Alignment.Center)) {
-                val (treeImage, owlImage) = createRefs()
-
+                val (treeImage, sun, owlImage) = createRefs()
+                DraggableImage(
+                    modifier = Modifier.constrainAs(sun) {
+                        top.linkTo(parent.top)
+                        end.linkTo(parent.end)
+                    },
+                    isEnabled = !isOwlWakeUp,
+                    drawableRes = R.drawable.sun,
+                ) { sunOffset, screenSize ->
+                    if (sunOffset.y >= screenSize.y / 1.5F) {
+                        isOwlWakeUp = true
+                        onLevelAction(LevelScreenState.CORRECT_CHOICE)
+                    }
+                }
                 Image(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -65,7 +66,7 @@ internal fun Level2Content(
                             bottom.linkTo(parent.bottom)
 
                         },
-                    painter = painterResource(id = R.drawable.tree),
+                    painter = painterResource(id = R.drawable.l2_tree),
                     contentDescription = null,
                     contentScale = ContentScale.FillWidth
                 )

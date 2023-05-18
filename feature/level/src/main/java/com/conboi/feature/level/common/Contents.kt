@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import com.conboi.core.database.model.LevelData
+import com.conboi.core.domain.level.DEFAULT_LEVEL_SCREEN_RESTART_DURATION
 import com.conboi.core.domain.level.LevelActionState
 import com.conboi.core.domain.level.LevelScreenState
 import com.conboi.core.ui.state.LocalLevelActionState
@@ -34,7 +35,7 @@ fun Contents(
 
     LaunchedEffect(actionState) {
         if (actionState == LevelActionState.RESTART) {
-            delay(300)
+            delay(DEFAULT_LEVEL_SCREEN_RESTART_DURATION)
             onLevelAction(LevelActionState.IDLE)
         }
     }

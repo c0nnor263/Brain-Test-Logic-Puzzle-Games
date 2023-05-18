@@ -65,7 +65,7 @@ fun Level17Content(modifier: Modifier = Modifier, onLevelAction: (LevelScreenSta
             },
         ) {
             Image(
-                painter = painterResource(id = R.drawable.boy),
+                painter = painterResource(id = R.drawable.l17_boy),
                 contentDescription = null,
                 contentScale = ContentScale.FillWidth
             )
@@ -96,8 +96,7 @@ fun Level17Content(modifier: Modifier = Modifier, onLevelAction: (LevelScreenSta
         }, delayOrder = 2) {
 
             Image(
-                painter = painterResource(id = R.drawable.girl),
-
+                painter = painterResource(id = R.drawable.l17_girl),
                 contentDescription = null,
                 contentScale = ContentScale.FillWidth
             )
@@ -111,15 +110,15 @@ fun Level17Content(modifier: Modifier = Modifier, onLevelAction: (LevelScreenSta
             present
         )
 
-
+        val horizontalGuideline = createGuidelineFromTop(0.5F)
 
         DraggableImage(
             isEnabled = isBalloonPoppedOut.not(),
-            drawableRes = R.drawable.rings,
+            drawableRes = R.drawable.l17_rings,
             modifier = Modifier.constrainAs(rings) {
                 width = Dimension.fillToConstraints
                 height = Dimension.ratio("1:1")
-                centerVerticallyTo(balloon)
+                top.linkTo(horizontalGuideline)
             },
             delayOrder = 3
         ) { offset, _ ->
@@ -131,13 +130,13 @@ fun Level17Content(modifier: Modifier = Modifier, onLevelAction: (LevelScreenSta
             modifier = Modifier.constrainAs(balloon) {
                 width = Dimension.fillToConstraints
                 height = Dimension.ratio("1:1")
-                top.linkTo(boy.bottom, margin = Dimensions.Padding.Medium.value)
+                top.linkTo(horizontalGuideline)
             },
             exit = scaleOut(tween(Durations.Medium.time))
         ) {
             CollisionImage(
                 modifier = Modifier.scale(balloonScaleAnimation),
-                defaultDrawableRes = R.drawable.balloon,
+                defaultDrawableRes = R.drawable.l17_balloon,
                 outerOffset = ringsOffset,
                 delayOrder = 4
             ) {
@@ -149,11 +148,11 @@ fun Level17Content(modifier: Modifier = Modifier, onLevelAction: (LevelScreenSta
 
         DraggableImage(
             isEnabled = isBalloonPoppedOut.not(),
-            drawableRes = R.drawable.present,
+            drawableRes = R.drawable.l17_present,
             modifier = Modifier.constrainAs(present) {
                 width = Dimension.fillToConstraints
                 height = Dimension.ratio("1:1")
-                centerVerticallyTo(balloon)
+                top.linkTo(horizontalGuideline)
             },
             delayOrder = 5
         )

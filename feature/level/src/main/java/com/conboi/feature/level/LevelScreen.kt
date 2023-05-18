@@ -2,7 +2,6 @@ package com.conboi.feature.level
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -10,10 +9,13 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import com.conboi.core.database.model.LevelData
 import com.conboi.core.domain.level.ActionResult
 import com.conboi.core.domain.level.LevelActionState
 import com.conboi.core.domain.level.LevelScreenState
+import com.conboi.core.ui.Dimensions
 import com.conboi.core.ui.state.LocalLevelScreenState
 import com.conboi.core.ui.theme.WordefullTheme
 import com.conboi.feature.level.action_bar.ActionBar
@@ -46,10 +48,19 @@ fun LevelScreen(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        Column(modifier = Modifier.fillMaxSize()) {
+        ConstraintLayout(modifier = Modifier.fillMaxSize()) {
+            val (contents, actionBar) = createRefs()
 
+            val bottomGuideLine = createGuidelineFromBottom(0.1f)
             Contents(
-                modifier = Modifier.weight(1F),
+                modifier = Modifier.constrainAs(contents) {
+                    width = Dimension.matchParent
+                    height = Dimension.fillToConstraints
+                    top.linkTo(parent.top)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                    bottom.linkTo(bottomGuideLine)
+                },
                 level = level ?: LevelData(),
                 onLevelAction = onUpdateLevelActionState,
                 onLevelScreenAction = onUpdateLevelScreenState
@@ -57,8 +68,13 @@ fun LevelScreen(
 
             ActionBar(
                 modifier = Modifier
-                    .weight(0.15F)
-                    .fillMaxSize(),
+                    .constrainAs(actionBar) {
+                        width = Dimension.matchParent
+                        top.linkTo(bottomGuideLine)
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                        bottom.linkTo(parent.bottom, margin = Dimensions.Padding.Medium.value)
+                    },
                 onRestart = { onUpdateLevelActionState(LevelActionState.RESTART) },
                 onGetAdvice = { onUpdateLevelActionState(LevelActionState.ADVICE) },
                 onSkip = { onUpdateLevelActionState(LevelActionState.SKIP) }

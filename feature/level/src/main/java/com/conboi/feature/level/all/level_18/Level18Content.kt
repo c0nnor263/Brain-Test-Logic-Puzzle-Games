@@ -30,7 +30,7 @@ fun Level18Content(modifier: Modifier = Modifier, onLevelAction: (LevelScreenSta
 
 
         Image(
-            painter = painterResource(id = R.drawable.t_shirt),
+            painter = painterResource(id = R.drawable.l18_t_shirt),
             modifier = Modifier.constrainAs(tShirt) {
                 top.linkTo(parent.top)
                 start.linkTo(parent.start)
@@ -42,7 +42,7 @@ fun Level18Content(modifier: Modifier = Modifier, onLevelAction: (LevelScreenSta
 
 
         Image(
-            painter = painterResource(id = R.drawable.spot),
+            painter = painterResource(id = R.drawable.l18_spot),
             modifier = Modifier.constrainAs(spot1) {
                 rotationZ = 120f
                 scaleY = 0.5F
@@ -54,7 +54,7 @@ fun Level18Content(modifier: Modifier = Modifier, onLevelAction: (LevelScreenSta
         )
 
         Image(
-            painter = painterResource(id = R.drawable.spot),
+            painter = painterResource(id = R.drawable.l18_spot),
             modifier = Modifier.constrainAs(spot2) {
                 rotationZ = 40f
                 scaleX = 0.6F
@@ -65,7 +65,7 @@ fun Level18Content(modifier: Modifier = Modifier, onLevelAction: (LevelScreenSta
             contentDescription = null
         )
         Image(
-            painter = painterResource(id = R.drawable.spot),
+            painter = painterResource(id = R.drawable.l18_spot),
             modifier = Modifier.constrainAs(spot3) {
                 rotationZ = 220f
                 scaleX = 0.3F
@@ -78,7 +78,7 @@ fun Level18Content(modifier: Modifier = Modifier, onLevelAction: (LevelScreenSta
         )
 
         Image(
-            painter = painterResource(id = R.drawable.spot),
+            painter = painterResource(id = R.drawable.l18_spot),
             modifier = Modifier.constrainAs(spot4) {
                 rotationZ = 170f
                 scaleX = 0.8F
@@ -91,7 +91,7 @@ fun Level18Content(modifier: Modifier = Modifier, onLevelAction: (LevelScreenSta
         )
 
         Image(
-            painter = painterResource(id = R.drawable.spot),
+            painter = painterResource(id = R.drawable.l18_spot),
             modifier = Modifier.constrainAs(spot5) {
                 scaleX = 0.4F
                 scaleY = 0.4F

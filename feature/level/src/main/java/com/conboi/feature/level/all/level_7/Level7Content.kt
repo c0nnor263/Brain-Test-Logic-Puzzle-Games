@@ -33,7 +33,7 @@ fun Level7Content(modifier: Modifier = Modifier, onLevelAction: (LevelScreenStat
                 )
             )
             DraggableImage(
-                drawableRes = R.drawable.dice
+                drawableRes = R.drawable.l7_dice
             ) { _, _ ->
                 isNumberVisible = true
             }

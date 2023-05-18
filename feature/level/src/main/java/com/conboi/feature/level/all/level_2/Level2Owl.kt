@@ -20,7 +20,7 @@ fun Level2Owl(
 ) {
     @DrawableRes
     val owlImageRes by remember(isWakeUp) {
-        mutableStateOf(if (isWakeUp) R.drawable.owl_wake else R.drawable.owl_sleep)
+        mutableStateOf(if (isWakeUp) R.drawable.l2_owl_wake else R.drawable.l2_owl_sleep)
     }
 
     DrawAnimation(

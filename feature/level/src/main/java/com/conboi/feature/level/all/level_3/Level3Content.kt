@@ -2,7 +2,6 @@ package com.conboi.feature.level.all.level_3
 
 import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -27,7 +26,7 @@ internal fun Level3Content(
     ConstraintLayout(
         modifier = modifier
             .fillMaxWidth()
-            .padding(top = Dimensions.Padding.ExtraLarge.value)
+
     ) {
 
         val (iceCream1,

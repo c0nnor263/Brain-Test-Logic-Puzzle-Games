@@ -33,6 +33,7 @@ import com.conboi.wordefull.presentation.composables.header_bar.options.HeaderBa
 import com.conboi.wordefull.presentation.composables.header_bar.options.HeaderBarLevelOption
 import com.conboi.wordefull.presentation.composables.header_bar.options.HeaderBarMenuOption
 import com.conboi.wordefull.presentation.composables.header_bar.options.HeaderBarSettingsOption
+import com.conboi.wordefull.presentation.composables.header_bar.options.HeaderBarStoreOption
 
 @Composable
 fun HeaderBar(navController: NavHostController) {
@@ -101,6 +102,14 @@ fun HeaderBar(navController: NavHostController) {
                             }
                         )
                     }
+
+                    Screens.Store.route -> {
+                        HeaderBarStoreOption(
+                            onNavigateBack = {
+                                navController.popBackStack()
+                            }
+                        )
+                    }
                 }
             }
         }
@@ -110,7 +119,7 @@ fun HeaderBar(navController: NavHostController) {
             shape = Dimensions.RoundedShape.Large.value
         ) {
             TextButton(onClick = {
-                // TODO Navigate to Currency
+                navController.navigate(Screens.Store.route)
             }) {
                 Text(
                     text = currency.toString(), style = MaterialTheme.typography.headlineMedium

@@ -50,13 +50,13 @@ fun Level3IceCream(
         delayOrder = 1 + index,
     ) {
         Image(
-            painter = painterResource(id = R.drawable.ice_cream),
+            painter = painterResource(id = R.drawable.l3_ice_cream),
             contentDescription = null
         )
         if (isNotIceCream) {
             Image(
                 modifier = Modifier.scale(flyScaleAnimation),
-                painter = painterResource(id = R.drawable.fly),
+                painter = painterResource(id = R.drawable.l3_fly),
                 contentDescription = null
             )
         }

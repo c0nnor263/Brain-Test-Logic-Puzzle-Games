@@ -148,7 +148,7 @@ fun DrawAnimationPreview() {
         DrawAnimation(delayOrder = 1000) {
             Image(
                 modifier = Modifier.size(128.dp),
-                painter = painterResource(id = R.drawable.x_mark),
+                painter = painterResource(id = R.drawable.l5_x_mark),
                 contentDescription = null,
                 contentScale = ContentScale.Fit
             )

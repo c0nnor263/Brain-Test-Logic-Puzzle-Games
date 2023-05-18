@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -27,9 +26,7 @@ internal fun Level1Content(
     val listOfAnswers by remember { mutableStateOf(listOf(4, 8, 7, 6).shuffled()) }
 
     Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(Dimensions.Padding.Small.value),
+        modifier = modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
@@ -46,76 +43,68 @@ internal fun Level1Content(
             ) = createRefs()
 
 
+            createHorizontalChain(firstDuck, secondDuck, thirdDuck)
             Level1Image(
                 modifier = Modifier.constrainAs(firstDuck) {
                     top.linkTo(parent.top)
-                    start.linkTo(parent.start, margin = -Dimensions.Padding.ExtraLarge2X.value)
+                    start.linkTo(parent.start, margin = -Dimensions.Padding.Small.value)
                 }
             )
 
             Level1Image(
                 modifier = Modifier.constrainAs(secondDuck) {
-                    top.linkTo(firstDuck.top, margin = Dimensions.Padding.ExtraLarge2X.value)
-                    start.linkTo(firstDuck.end, margin = -Dimensions.Padding.ExtraLarge2X.value)
                 },
                 index = 1
             )
 
-
             Level1Image(
                 modifier = Modifier.constrainAs(thirdDuck) {
-                    top.linkTo(secondDuck.top)
-                    start.linkTo(secondDuck.end, margin = -Dimensions.Padding.ExtraLarge2X.value)
                 },
                 index = 2
             )
 
+            createVerticalChain(fourthDuck, fifthDuck)
             Level1Image(
                 modifier = Modifier.constrainAs(fourthDuck) {
-                    top.linkTo(parent.top)
-                    start.linkTo(secondDuck.end, margin = -Dimensions.Padding.ExtraLarge2X.value)
-                    bottom.linkTo(secondDuck.top, margin = Dimensions.Padding.Medium.value)
-                }, index = 3
+                    top.linkTo(firstDuck.bottom)
+                    start.linkTo(firstDuck.end, margin = Dimensions.Padding.ExtraLarge.value)
+                },
+                index = 3
             )
-
-
 
             Level1Image(
                 modifier = Modifier.constrainAs(fifthDuck) {
-                    top.linkTo(parent.top)
-                    start.linkTo(fourthDuck.end, margin = -Dimensions.Padding.ExtraLarge2X.value)
+                    start.linkTo(secondDuck.end, margin = Dimensions.Padding.ExtraLarge.value)
                 },
                 index = 4
             )
 
 
 
+
+
+            createVerticalChain(sixthDuck, seventhDuck)
             Level1Image(
                 modifier = Modifier.constrainAs(sixthDuck) {
-                    top.linkTo(parent.top)
-                    start.linkTo(fifthDuck.end, margin = -Dimensions.Padding.ExtraLarge2X.value)
-                    bottom.linkTo(fifthDuck.bottom)
-                }, index = 5
+                    bottom.linkTo(eighthDuck.top)
+                    start.linkTo(secondDuck.end, margin = Dimensions.Padding.ExtraLarge.value)
+                },
+                index = 5
             )
-
-
-
             Level1Image(
                 modifier = Modifier.constrainAs(seventhDuck) {
-                    top.linkTo(parent.top)
-                    start.linkTo(sixthDuck.end, margin = -Dimensions.Padding.ExtraLarge2X.value)
-                    bottom.linkTo(thirdDuck.bottom)
-                }, index = 6
+                },
+                index = 6
             )
-
 
             Level1Image(
                 modifier = Modifier.constrainAs(eighthDuck) {
-                    start.linkTo(sixthDuck.end, margin = -Dimensions.Padding.ExtraLarge.value)
-                    bottom.linkTo(parent.bottom)
+                    top.linkTo(secondDuck.bottom)
+                    start.linkTo(firstDuck.end, margin = Dimensions.Padding.ExtraLarge.value)
                 },
                 index = 7
             )
+
 
         }
         Spacer(modifier = Modifier.height(Dimensions.Padding.Medium.value))

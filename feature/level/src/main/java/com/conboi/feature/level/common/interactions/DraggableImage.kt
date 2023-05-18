@@ -1,5 +1,6 @@
 package com.conboi.feature.level.common.interactions
 
+import android.util.Log
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.gestures.detectDragGestures
@@ -65,12 +66,13 @@ fun DraggableImage(
                                 )
                             offsetY = (offsetY + dragAmount.y)
                                 .coerceIn(
-                                    -currentPosition.y + height * 2,
+                                    -currentPosition.y + height,
                                     screenHeight - currentPosition.y - height
                                 )
 
                             val draggableOffset = Offset(offsetX, offsetY) + currentPosition
                             val screenSize = Offset(screenWidth.toFloat(), screenHeight.toFloat())
+                            Log.i("TAG", "Level2Content: $draggableOffset $screenSize")
                             onDrag(
                                 draggableOffset,
                                 screenSize

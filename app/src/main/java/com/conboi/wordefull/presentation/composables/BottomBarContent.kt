@@ -11,17 +11,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.conboi.core.domain.billing.UserVipType
 import com.conboi.core.ui.Dimensions
 import com.conboi.core.ui.Durations
 import com.conboi.core.ui.advertising.BannerAdView
+import com.conboi.core.ui.state.LocalVipType
 import com.conboi.core.ui.theme.boardBorderColor
 
 @Composable
 fun BottomBarContent(modifier: Modifier = Modifier) {
+    val vipType = LocalVipType.current
     AnimatedVisibility(
-        modifier = modifier
-            .fillMaxWidth(),
-        visible = true,
+        modifier = modifier.fillMaxWidth(),
+        visible = vipType == UserVipType.BASE,
         enter = fadeIn(
             animationSpec = tween(Durations.Medium.time)
         ) + slideInVertically(

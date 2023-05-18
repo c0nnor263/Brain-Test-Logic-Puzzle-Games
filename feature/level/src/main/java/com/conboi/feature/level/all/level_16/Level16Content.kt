@@ -37,7 +37,7 @@ fun Level16Content(modifier: Modifier = Modifier, onLevelAction: (LevelScreenSta
         )
 
         Image(
-            painter = painterResource(id = R.drawable.cat),
+            painter = painterResource(id = R.drawable.l16_cat),
             modifier = Modifier.constrainAs(cat) {
                 width = Dimension.fillToConstraints
                 height = Dimension.ratio("1:1")
@@ -47,7 +47,7 @@ fun Level16Content(modifier: Modifier = Modifier, onLevelAction: (LevelScreenSta
         )
 
         Image(
-            painter = painterResource(id = R.drawable.food),
+            painter = painterResource(id = R.drawable.l16_food),
             modifier = Modifier
                 .constrainAs(food) {
                     width = Dimension.fillToConstraints
@@ -59,7 +59,7 @@ fun Level16Content(modifier: Modifier = Modifier, onLevelAction: (LevelScreenSta
             contentDescription = null,
         )
         CollisionImage(
-            defaultDrawableRes = R.drawable.plate,
+            defaultDrawableRes = R.drawable.l16_plate,
             modifier = Modifier.constrainAs(plate) {
                 width = Dimension.fillToConstraints
                 height = Dimension.ratio("4:3")
@@ -80,7 +80,7 @@ fun Level16Content(modifier: Modifier = Modifier, onLevelAction: (LevelScreenSta
         }, targetState = isBowlShown, label = "") {
             if (it) {
                 DraggableImage(
-                    drawableRes = R.drawable.bowl
+                    drawableRes = R.drawable.l16_bowl
                 ) { bowlOffset, _ ->
                     positionOfBowl = bowlOffset
                 }

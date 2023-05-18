@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import com.conboi.core.domain.level.DEFAULT_LEVEL_SCREEN_COUNTDOWN_DURATION
 import com.conboi.core.ui.Dimensions
@@ -36,7 +37,7 @@ fun Level4Bulb(
     onAnimationEnd: () -> Unit
 ) {
     @DrawableRes
-    var bulbDrawableRes by remember { mutableStateOf(R.drawable.lamp_off) }
+    var bulbDrawableRes by remember { mutableStateOf(R.drawable.l4_lamp_off) }
     val painter = painterResource(id = bulbDrawableRes)
 
     val scope = rememberCoroutineScope()
@@ -46,7 +47,7 @@ fun Level4Bulb(
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(
                 text = (index + 1).toString(),
-                style = MaterialTheme.typography.headlineLarge.copy(
+                style = MaterialTheme.typography.headlineSmall.copy(
                     color = Color.Yellow, shadow = Shadow(
                         color = Color.Black,
                         blurRadius = 32f,
@@ -54,30 +55,31 @@ fun Level4Bulb(
                     )
                 )
             )
-            Spacer(modifier = Modifier.height(Dimensions.Padding.Small.value))
+            Spacer(modifier = Modifier.height(Dimensions.Padding.ExtraSmall.value))
             Image(
                 modifier = Modifier
                     .clickableNoRipple {
                         if (onClick() == true) {
-                            bulbDrawableRes = R.drawable.lamp_on
+                            bulbDrawableRes = R.drawable.l4_lamp_on
                         } else {
                             scope.launch {
                                 repeat(
                                     DEFAULT_LEVEL_SCREEN_COUNTDOWN_DURATION.toInt() /
                                             Durations.Short.time.times(2)
                                 ) {
-                                    bulbDrawableRes = R.drawable.lamp_off
+                                    bulbDrawableRes = R.drawable.l4_lamp_off
                                     delay(Durations.Short.time.toLong())
-                                    bulbDrawableRes = R.drawable.lamp_on
+                                    bulbDrawableRes = R.drawable.l4_lamp_on
                                     delay(Durations.Short.time.toLong())
                                 }
-                                bulbDrawableRes = R.drawable.lamp_off
+                                bulbDrawableRes = R.drawable.l4_lamp_off
                                 onAnimationEnd()
                             }
                         }
                     },
                 painter = painter,
                 contentDescription = null,
+                contentScale = ContentScale.Fit
             )
         }
     }

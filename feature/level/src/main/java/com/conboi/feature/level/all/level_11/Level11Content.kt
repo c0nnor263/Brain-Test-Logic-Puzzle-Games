@@ -4,7 +4,6 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -38,18 +37,18 @@ fun Level11Content(modifier: Modifier = Modifier, onLevelAction: (LevelScreenSta
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
-        Row(
+        Column(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.SpaceAround
         ) {
-            Text(text = "Как зовут детенышей", style = MaterialTheme.typography.headlineSmall)
+            Text(text = "Как зовут детенышей", style = MaterialTheme.typography.titleLarge)
             Spacer(modifier = Modifier.width(Dimensions.Padding.ExtraSmall.value))
             Text(
                 text = "кошки?", modifier = Modifier.clickable {
                     isCorrect = true
                     onLevelAction(LevelScreenState.CORRECT_CHOICE)
-                }, style = MaterialTheme.typography.headlineSmall,
+                }, style = MaterialTheme.typography.titleLarge,
                 textDecoration = if (isCorrect) TextDecoration.Underline else TextDecoration.None
             )
         }
