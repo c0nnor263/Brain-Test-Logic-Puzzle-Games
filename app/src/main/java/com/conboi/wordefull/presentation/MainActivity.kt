@@ -35,6 +35,7 @@ class MainActivity : ComponentActivity() {
                     viewModel.getUserCurrency().collectAsStateWithLifecycle(initialValue = 0)
                 val userVipType =
                     viewModel.getUserVipType().collectAsStateWithLifecycle(UserVipType.BASE)
+
                 CompositionLocalProvider(
                     LocalCurrency provides currency.value,
                     LocalVipType provides userVipType.value,

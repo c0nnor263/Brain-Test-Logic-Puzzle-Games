@@ -32,7 +32,7 @@ import com.conboi.core.ui.R
 import com.conboi.core.ui.theme.WordefullTheme
 
 @Composable
-fun SettingsScreen() {
+fun SettingsScreen(onRestorePurchases: () -> Unit) {
     val context = LocalContext.current
     Column(
         modifier = Modifier.fillMaxWidth(),
@@ -123,28 +123,6 @@ fun SettingsScreen() {
         }
         Spacer(modifier = Modifier.height(Dimensions.Padding.Medium.value))
 
-//        Row(
-//            modifier = Modifier.fillMaxWidth(),
-//            horizontalArrangement = Arrangement.spacedBy(
-//                Dimensions.Padding.Small.value,
-//                alignment = Alignment.CenterHorizontally
-//            ),
-//            verticalAlignment = Alignment.CenterVertically
-//        ) {
-//            ShareButton(drawableRes = R.drawable.lamp) {
-//
-//            }
-//            ShareButton(drawableRes = R.drawable.lamp) {
-//
-//            }
-//            ShareButton(drawableRes = R.drawable.lamp) {
-//
-//            }
-//            ShareButton(drawableRes = R.drawable.lamp) {
-//
-//            }
-//        }
-
         Spacer(modifier = Modifier.height(Dimensions.Padding.Medium.value))
 
         Row {
@@ -164,6 +142,12 @@ fun SettingsScreen() {
             }
         }
 
+        TextButton(onClick = {
+            onRestorePurchases()
+        }) {
+            Text(text = "Restore Purchases")
+        }
+
     }
 }
 
@@ -172,7 +156,9 @@ fun SettingsScreen() {
 fun SettingsScreenPreview() {
     WordefullTheme {
         Surface {
-            SettingsScreen()
+            SettingsScreen {
+
+            }
         }
     }
 }

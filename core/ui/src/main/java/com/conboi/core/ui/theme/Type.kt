@@ -116,17 +116,27 @@ val sw440PangolinTypography = Typography(
 )
 
 
-val sw412DefaultPangolinTypography = Typography(
-    displayLarge = standardTypography.displayLarge.copy(
-        fontFamily = PangolinFont, fontSize = 57.sp, lineHeight = 64.0.sp, letterSpacing = (-0.2).sp
-    ),
-    displayMedium = standardTypography.displayMedium.copy(
-        fontFamily = PangolinFont, fontSize = 45.sp, lineHeight = 62.0.sp, letterSpacing = 0.0.sp
-    ),
-    displaySmall = standardTypography.displaySmall.copy(
-        fontFamily = PangolinFont, fontSize = 36.sp, lineHeight = 44.0.sp, letterSpacing = 0.0.sp
-    ),
-    headlineLarge = standardTypography.headlineLarge.copy(
+val sw412DefaultPangolinTypography =
+    Typography(
+        displayLarge = standardTypography.displayLarge.copy(
+            fontFamily = PangolinFont,
+            fontSize = 57.sp,
+            lineHeight = 64.0.sp,
+            letterSpacing = (-0.2).sp
+        ),
+        displayMedium = standardTypography.displayMedium.copy(
+            fontFamily = PangolinFont,
+            fontSize = 45.sp,
+            lineHeight = 62.0.sp,
+            letterSpacing = 0.0.sp
+        ),
+        displaySmall = standardTypography.displaySmall.copy(
+            fontFamily = PangolinFont,
+            fontSize = 36.sp,
+            lineHeight = 44.0.sp,
+            letterSpacing = 0.0.sp
+        ),
+        headlineLarge = standardTypography.headlineLarge.copy(
         fontFamily = PangolinFont, fontSize = 32.sp, lineHeight = 40.0.sp, letterSpacing = 0.0.sp
     ),
     headlineMedium = standardTypography.headlineMedium.copy(

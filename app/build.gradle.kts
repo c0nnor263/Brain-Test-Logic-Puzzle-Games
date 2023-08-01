@@ -12,6 +12,8 @@ val keystorePropertiesFile: File = rootProject.file("keystore.properties")
 val keystoreProperties = Properties().apply {
     load(FileInputStream(keystorePropertiesFile))
 }
+
+
 // TODO add Google Services Rate API
 android {
     namespace = "com.conboi.wordefull"
@@ -111,5 +113,8 @@ dependencies {
     implementation("com.google.firebase:firebase-crashlytics")
     implementation("com.google.firebase:firebase-analytics")
 
+
+
+    implementation("com.android.billingclient:billing-ktx:${Versions.billing}")
 
 }

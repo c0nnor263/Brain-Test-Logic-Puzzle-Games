@@ -16,6 +16,7 @@ import com.conboi.core.domain.level.ActionResult
 import com.conboi.core.domain.level.LevelActionState
 import com.conboi.core.domain.level.LevelScreenState
 import com.conboi.core.ui.Dimensions
+import com.conboi.core.ui.level.UserInteractionState
 import com.conboi.core.ui.state.LocalLevelScreenState
 import com.conboi.core.ui.theme.WordefullTheme
 import com.conboi.feature.level.action_bar.ActionBar
@@ -27,10 +28,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun LevelScreen(
     level: LevelData?,
-    onForward: () -> Unit,
-    onBack: () -> Unit,
-    onUpdateLevelActionState: (LevelActionState) -> Unit,
-    onUpdateLevelScreenState: (LevelScreenState) -> Unit,
+    userInteractionState: UserInteractionState?,
     onActionResult: (ActionResult) -> Unit,
 ) {
     val screenState = LocalLevelScreenState.current
@@ -38,8 +36,10 @@ fun LevelScreen(
 
     LaunchedEffect(screenState) {
         scope.launch {
-            if (screenState == LevelScreenState.COMPLETED) {
-                onForward()
+            when (screenState) {
+                LevelScreenState.COMPLETED -> userInteractionState?.onForward()
+                LevelScreenState.WATCH_AD -> userInteractionState?.onWatchAd()
+                else -> {}
             }
         }
     }
@@ -62,8 +62,12 @@ fun LevelScreen(
                     bottom.linkTo(bottomGuideLine)
                 },
                 level = level ?: LevelData(),
-                onLevelAction = onUpdateLevelActionState,
-                onLevelScreenAction = onUpdateLevelScreenState
+                onLevelAction = {
+                    userInteractionState?.onUpdateLevelActionState(it)
+                },
+                onLevelScreenAction = {
+                    userInteractionState?.onUpdateLevelScreenState(it)
+                }
             )
 
             ActionBar(
@@ -75,9 +79,9 @@ fun LevelScreen(
                         end.linkTo(parent.end)
                         bottom.linkTo(parent.bottom, margin = Dimensions.Padding.Medium.value)
                     },
-                onRestart = { onUpdateLevelActionState(LevelActionState.RESTART) },
-                onGetAdvice = { onUpdateLevelActionState(LevelActionState.ADVICE) },
-                onSkip = { onUpdateLevelActionState(LevelActionState.SKIP) }
+                onRestart = { userInteractionState?.onUpdateLevelActionState(LevelActionState.RESTART) },
+                onGetAdvice = { userInteractionState?.onUpdateLevelActionState(LevelActionState.ADVICE) },
+                onSkip = { userInteractionState?.onUpdateLevelActionState(LevelActionState.SKIP) }
             )
         }
 
@@ -100,7 +104,7 @@ fun LevelScreen(
 
     BackHandler {
         if (screenState == LevelScreenState.IS_PLAYING) {
-            onBack()
+            userInteractionState?.onBack()
         }
     }
 }
@@ -112,11 +116,9 @@ fun LevelScreenPreview() {
     WordefullTheme {
         LevelScreen(
             level = LevelData(),
-            onForward = {},
-            onBack = {},
-            onUpdateLevelActionState = {},
-            onUpdateLevelScreenState = {},
-            onActionResult = {}
-        )
+            null,
+        ) {
+
+        }
     }
 }

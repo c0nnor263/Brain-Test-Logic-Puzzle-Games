@@ -6,5 +6,6 @@ enum class LevelScreenState {
     IS_PLAYING,
 
     COMPLETED,
-    NEXT_LEVEL
+    NEXT_LEVEL,
+    WATCH_AD
 }

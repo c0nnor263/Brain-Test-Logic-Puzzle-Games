@@ -1,11 +1,11 @@
-package com.conboi.feature.store
+package com.conboi.core.ui.store
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -14,17 +14,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.conboi.core.ui.Dimensions
 import com.conboi.core.ui.R
-import com.conboi.core.ui.theme.WordefullTheme
+import com.conboi.core.ui.billing.BuyButton
+
 
 @Composable
-fun StoreItem(
+fun WatchStoreItem(
     modifier: Modifier = Modifier,
-    @DrawableRes drawableRes: Int = R.drawable.lamp,
     value: String,
-    buttonText: String,
+    text: String,
     onClick: () -> Unit
 ) {
     Row(
@@ -33,9 +33,10 @@ fun StoreItem(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Row(modifier = Modifier.weight(1F), verticalAlignment = Alignment.CenterVertically) {
+
             Image(
-                painter = painterResource(id = drawableRes),
-                modifier = Modifier.weight(0.2F),
+                painter = painterResource(id = R.drawable.present),
+                modifier = Modifier.size(64.dp),
                 contentDescription = null,
                 contentScale = ContentScale.Fit
             )
@@ -47,16 +48,6 @@ fun StoreItem(
             )
         }
 
-        BuyButton(modifier = Modifier.weight(1F, false), price = buttonText, onClick = onClick)
-    }
-}
-
-@Preview
-@Composable
-fun StoreItemPreview() {
-    WordefullTheme {
-        StoreItem(value = "10", buttonText = "Buy") {
-
-        }
+        BuyButton(modifier = Modifier.weight(1F, false), text = text, onClick = onClick)
     }
 }

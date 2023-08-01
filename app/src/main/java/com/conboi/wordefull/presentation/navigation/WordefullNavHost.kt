@@ -1,5 +1,6 @@
 package com.conboi.wordefull.presentation.navigation
 
+import androidx.activity.ComponentActivity
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
@@ -17,11 +18,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
+import com.conboi.core.data.billing.store.StoreScreenDetails
 import com.conboi.core.database.model.LevelData
 import com.conboi.core.domain.level.ActionResult
 import com.conboi.core.domain.level.LevelActionState
@@ -29,6 +32,8 @@ import com.conboi.core.domain.level.MAX_LEVEL_ID
 import com.conboi.core.navigation.Screens
 import com.conboi.core.navigation.toArg
 import com.conboi.core.ui.Durations
+import com.conboi.core.ui.extensions.cleanNavigate
+import com.conboi.core.ui.level.rememberUserInteraction
 import com.conboi.core.ui.state.LocalLevelActionState
 import com.conboi.core.ui.state.LocalLevelScreenState
 import com.conboi.feature.home.HomeScreen
@@ -38,6 +43,7 @@ import com.conboi.feature.level.LevelScreenViewModel
 import com.conboi.feature.menu.MenuScreen
 import com.conboi.feature.menu.MenuViewModel
 import com.conboi.feature.settings.SettingsScreen
+import com.conboi.feature.settings.SettingsScreenViewModel
 import com.conboi.feature.store.StoreScreen
 import com.conboi.feature.store.StoreScreenViewModel
 import com.google.accompanist.navigation.animation.AnimatedNavHost
@@ -71,7 +77,7 @@ fun WordefullNavHost(navController: NavHostController) {
 
             HomeScreen(
                 onNavigateToLevel = {
-                    navController.navigate(Screens.Level(levelData.id.toString()).route)
+                    navController.cleanNavigate(Screens.Level(levelData.id.toString()).route)
                 }
             )
         }
@@ -93,13 +99,21 @@ fun WordefullNavHost(navController: NavHostController) {
                 )
             }
         ) {
+            val activity = LocalContext.current as ComponentActivity
             val viewModel: StoreScreenViewModel = hiltViewModel()
             val productDetailsInfo = viewModel.getInAppProductsDetails()
                 .collectAsStateWithLifecycle()
 
-            StoreScreen(productDetailsInfo = productDetailsInfo.value) {
-                navController.navigateUp()
+            val storeScreenDetails = remember(productDetailsInfo) {
+                StoreScreenDetails.create(productDetailsInfo.value)
             }
+            StoreScreen(
+                storeDetails = storeScreenDetails,
+                onWatchAd = { result -> if (result == true) viewModel.watchAdReward() },
+                onBuy = { details, type ->
+                    viewModel.purchaseProduct(details, type) { activity }
+                }
+            )
         }
 
         composable(
@@ -113,7 +127,10 @@ fun WordefullNavHost(navController: NavHostController) {
                 scaleOut(animationSpec = tween(Durations.Medium.time))
             }
         ) {
-            SettingsScreen()
+            val viewModel: SettingsScreenViewModel = hiltViewModel()
+            SettingsScreen {
+                viewModel.restorePurchases()
+            }
         }
 
         composable(
@@ -147,7 +164,7 @@ fun WordefullNavHost(navController: NavHostController) {
                 index = pageIndex,
                 levelList = list,
                 onNavigateToLevel = { levelId: Int ->
-                    navController.navigate(Screens.Level(levelId.toString()).route)
+                    navController.cleanNavigate(Screens.Level(levelId.toString()).route)
                 },
                 onIndexUpdate = {
                     pageIndex = it.coerceAtMost(MAX_LEVEL_ID)
@@ -182,8 +199,16 @@ fun WordefullNavHost(navController: NavHostController) {
             val levelActionState = viewModel.levelActionState.collectAsStateWithLifecycle()
 
 
+            val userInteractionState = rememberUserInteraction()
+            val interaction = userInteractionState.interactionFlow.collectAsStateWithLifecycle()
+
+
             LaunchedEffect(idArg) {
                 viewModel.updateLevelIndex(idArg)
+            }
+
+            LaunchedEffect(interaction.value) {
+                viewModel.processInteraction(interaction.value)
             }
 
             CompositionLocalProvider(
@@ -192,10 +217,7 @@ fun WordefullNavHost(navController: NavHostController) {
             ) {
                 LevelScreen(
                     level = levelData.value,
-                    onForward = viewModel::onForward,
-                    onBack = viewModel::onBack,
-                    onUpdateLevelActionState = viewModel::updateLevelActionState,
-                    onUpdateLevelScreenState = viewModel::updateLevelScreenState,
+                    userInteractionState = userInteractionState,
                     onActionResult = { actionResult ->
                         when (actionResult.type) {
                             ActionResult.Type.SUCCESS -> {
@@ -203,14 +225,15 @@ fun WordefullNavHost(navController: NavHostController) {
                             }
 
                             ActionResult.Type.BUY_MORE -> {
-                                navController.navigate(Screens.Store.route)
+                                navController.cleanNavigate(Screens.Store.route)
                             }
 
                             else -> {}
                         }
                         viewModel.updateLevelActionState(LevelActionState.IDLE)
-                    }
-                )
+                    },
+
+                    )
             }
 
 

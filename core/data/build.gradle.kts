@@ -1,9 +1,15 @@
 @file:Suppress("UnstableApiUsage")
 
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     PluginType.LIBRARY.get(this)
 }
-// TODO free value for watch dialog
+
+
+val localProperties = Properties()
+localProperties.load(FileInputStream(rootProject.file("local.properties")))
 android {
     namespace = "com.conboi.core.data"
     compileSdk = Versions.Config.compileSdk
@@ -12,6 +18,13 @@ android {
         minSdk = Versions.Config.minSdk
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+
+        buildConfigField(
+            "String",
+            "verifyPurchases",
+            "\"${localProperties.getProperty("verifyPurchases")}\""
+        )
+        buildConfigField("String", "authKey", "\"${localProperties.getProperty("authKey")}\"")
     }
 
     buildTypes {
@@ -32,6 +45,10 @@ android {
     kotlinOptions {
         jvmTarget = Versions.Config.jvmTarget
     }
+
+    buildFeatures {
+        buildConfig = true
+    }
 }
 
 dependencies {
@@ -40,10 +57,11 @@ dependencies {
 
     implementation("androidx.core:core-ktx:1.10.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.9.0")
+    implementation("com.google.android.material:material:${Versions.material}")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    implementation("com.android.billingclient:billing-ktx:6.0.0")
+    implementation("com.android.billingclient:billing-ktx:${Versions.billing}")
+    implementation("com.android.volley:volley:1.2.1")
     coreData()
 }

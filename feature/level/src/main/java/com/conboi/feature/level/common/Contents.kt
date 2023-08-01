@@ -47,8 +47,7 @@ fun Contents(
     }
 
     Box(
-        modifier = modifier,
-        contentAlignment = Alignment.TopCenter
+        modifier = modifier, contentAlignment = Alignment.TopCenter
     ) {
 
         if (actionState == LevelActionState.RESTART) {

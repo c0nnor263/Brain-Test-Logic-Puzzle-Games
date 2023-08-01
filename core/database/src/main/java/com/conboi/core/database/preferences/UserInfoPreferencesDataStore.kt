@@ -67,8 +67,14 @@ class UserInfoPreferencesDataStore @Inject constructor(@ApplicationContext val c
 
     suspend fun setUserVip(type: UserVipType) {
         dataStore.edit { preferences ->
-            preferences[UserInfoPreferencesKeys.USER_VIP] = type.name
+
+            val newType = when (getUserVip().first()) {
+                UserVipType.ADS_FREE -> if (type == UserVipType.PREMIUM) type else UserVipType.ADS_FREE
+                else -> type
+            }
+            preferences[UserInfoPreferencesKeys.USER_VIP] = newType.name
         }
     }
+
 
 }

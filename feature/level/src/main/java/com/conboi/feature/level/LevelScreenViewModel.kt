@@ -9,6 +9,7 @@ import com.conboi.core.domain.level.DEFAULT_LEVEL_SCREEN_COUNTDOWN_DURATION
 import com.conboi.core.domain.level.LevelActionState
 import com.conboi.core.domain.level.LevelScreenState
 import com.conboi.core.domain.level.MAX_LEVEL_ID
+import com.conboi.core.ui.level.UserInteraction
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -21,7 +22,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LevelScreenViewModel @Inject constructor(
     private val levelRepositoryImpl: OfflineLevelDataRepository,
-    private val offlineUserInfoPreferencesRepository: OfflineUserInfoPreferencesRepository
+    private val userInfoPreferencesRepository: OfflineUserInfoPreferencesRepository
 ) : ViewModel() {
     private var levelIndex = 1
 
@@ -66,7 +67,7 @@ class LevelScreenViewModel @Inject constructor(
         }
 
 
-    fun onForward() = viewModelScope.launch(Dispatchers.IO) {
+    fun onForwardLevel() = viewModelScope.launch(Dispatchers.IO) {
         val nextLevelIndex = (levelIndex + 1).coerceAtMost(MAX_LEVEL_ID)
 
         // Completing current level and unlocking next level
@@ -85,7 +86,7 @@ class LevelScreenViewModel @Inject constructor(
         updateLevelIndex(nextLevelIndex, nextData)
     }
 
-    fun onBack() {
+    fun onBackLevel() {
         val previousLevelIndex = (levelIndex - 1).coerceAtLeast(1)
         updateLevelIndex(previousLevelIndex)
     }
@@ -107,7 +108,30 @@ class LevelScreenViewModel @Inject constructor(
             LevelActionState.SKIP -> updateLevelScreenState(LevelScreenState.COMPLETED)
             else -> {}
         }
-        offlineUserInfoPreferencesRepository.spendCurrency(cost)
+        userInfoPreferencesRepository.spendCurrency(cost)
+    }
+
+
+    fun watchAdReward() = viewModelScope.launch(Dispatchers.IO) {
+        userInfoPreferencesRepository.buyCurrency(25)
+        updateLevelScreenState(LevelScreenState.NEXT_LEVEL)
+    }
+
+    fun processInteraction(interaction: UserInteraction?) {
+        when (interaction) {
+            UserInteraction.OnBack -> onBackLevel()
+            UserInteraction.OnForward -> onForwardLevel()
+            UserInteraction.OnWatchAd -> watchAdReward()
+            is UserInteraction.OnUpdateLevelActionState -> {
+                updateLevelActionState(interaction.levelActionState)
+            }
+
+            is UserInteraction.OnUpdateLevelScreenState -> {
+                updateLevelScreenState(interaction.levelScreenState)
+            }
+
+            null -> {}
+        }
     }
 
 

@@ -1,6 +1,5 @@
 package com.conboi.feature.store
 
-import android.util.Log
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
@@ -13,32 +12,33 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.conboi.core.data.billing.InAppProductsIDs
-import com.conboi.core.data.billing.ProductDetailsInfo
+import com.android.billingclient.api.ProductDetails
+import com.conboi.core.data.billing.BillingProductType
+import com.conboi.core.data.billing.store.StoreScreenDetails
 import com.conboi.core.ui.Dimensions
+import com.conboi.core.ui.R
+import com.conboi.core.ui.store.WatchAdDialog
+import com.conboi.core.ui.store.WatchStoreItem
 import com.conboi.core.ui.theme.WordefullTheme
+import com.conboi.feature.store.items.BestChoiceContent
+import com.conboi.feature.store.items.CoolestOfferContent
+import com.conboi.feature.store.items.StoreItem
+import com.conboi.feature.store.items.VipContent
 
 @Composable
-fun StoreScreen(productDetailsInfo: ProductDetailsInfo?, onClick: () -> Unit) {
+fun StoreScreen(
+    storeDetails: StoreScreenDetails?,
+    onBuy: (ProductDetails, BillingProductType) -> Unit,
+    onWatchAd: (Boolean?) -> Unit
+) {
     val scrollState = rememberScrollState()
-    val coolestOfferDetails =
-        productDetailsInfo?.inAppDetails?.also { Log.i("TAG", "StoreScreen: $it") }
-            ?.find { it.productId == InAppProductsIDs.coolestOffer }
-    val bestChoiceDetails =
-        productDetailsInfo?.inAppDetails?.find { it.productId == InAppProductsIDs.bestOffer }
-
-    val currencyPriceList = productDetailsInfo?.inAppDetails
-        ?.filter {
-
-            it.productId == InAppProductsIDs.currency250 ||
-                    it.productId == InAppProductsIDs.currency500 ||
-                    it.productId == InAppProductsIDs.currency1000 ||
-                    it.productId == InAppProductsIDs.removeAds
-        }
-        ?.sortedBy { it.productId }
-        ?.map { it.oneTimePurchaseOfferDetails?.formattedPrice }
+    var showWatchAdDialog by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -50,7 +50,9 @@ fun StoreScreen(productDetailsInfo: ProductDetailsInfo?, onClick: () -> Unit) {
             verticalArrangement = Arrangement.spacedBy(Dimensions.Padding.Medium.value)
         ) {
             item {
-                VipContent()
+                VipContent(onBuy = {
+                    storeDetails?.vipDetails?.let { onBuy(it, BillingProductType.VIP) }
+                })
             }
 
             item {
@@ -58,68 +60,63 @@ fun StoreScreen(productDetailsInfo: ProductDetailsInfo?, onClick: () -> Unit) {
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceAround
                 ) {
-                    CoolestOfferContent(modifier = Modifier.weight(0.5F), coolestOfferDetails) {
-
-                    }
+                    CoolestOfferContent(
+                        modifier = Modifier.weight(0.5F),
+                        storeDetails?.coolestOfferDetails,
+                        onClick = onBuy
+                    )
                     Spacer(modifier = Modifier.width(Dimensions.Padding.Medium.value))
-                    BestChoiceContent(modifier = Modifier.weight(0.5F), bestChoiceDetails) {
-
-                    }
+                    BestChoiceContent(
+                        modifier = Modifier.weight(0.5F),
+                        storeDetails?.bestChoiceDetails,
+                        onClick = onBuy
+                    )
                 }
             }
 
             item {
-                StoreItem(
-                    value = "remove ads",
-                    buttonText = currencyPriceList?.getOrNull(3) ?: ""
-                ) {
-
-                }
+                StoreItem(value = "remove ads",
+                    drawableRes = R.drawable.remove_ads,
+                    details = storeDetails?.removeAdsDetails,
+                    onClick = {
+                        onBuy(it, BillingProductType.REMOVE_ADS)
+                    })
             }
             item {
-                StoreItem(
-                    value = "x25",
-                    buttonText = "watch"
-                ) {
-
-                }
+                WatchStoreItem(value = "x25", text = "watch", onClick = {
+                    showWatchAdDialog = true
+                })
             }
             item {
-                StoreItem(value = "x250", buttonText = currencyPriceList?.getOrNull(0) ?: "") {
-
-                }
+                StoreItem(value = "x250", details = storeDetails?.currency250Details, onClick = {
+                    onBuy(it, BillingProductType.CURRENCY_250)
+                })
             }
             item {
-                StoreItem(value = "x500", buttonText = currencyPriceList?.getOrNull(1) ?: "") {
-
-                }
+                StoreItem(value = "x500", details = storeDetails?.currency500Details, onClick = {
+                    onBuy(it, BillingProductType.CURRENCY_500)
+                })
             }
             item {
-                StoreItem(value = "x1000", buttonText = currencyPriceList?.getOrNull(2) ?: "") {
-
-                }
+                StoreItem(value = "x1000", details = storeDetails?.currency1000Details, onClick = {
+                    onBuy(it, BillingProductType.CURRENCY_1000)
+                })
             }
         }
-
-
-        // Share options
-
-
-        // Ad for reward
     }
 
-
+    WatchAdDialog(visible = showWatchAdDialog, onDismissed = {
+        showWatchAdDialog = false
+        onWatchAd(it)
+    })
 }
-
-// TODO free item every day
-
 
 @Preview
 @Composable
 fun StoreScreenPreview() {
     WordefullTheme {
-        StoreScreen(null) {
+        StoreScreen(null, onWatchAd = {}, onBuy = { _, _ ->
 
-        }
+        })
     }
 }

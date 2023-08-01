@@ -1,4 +1,4 @@
-package com.conboi.feature.store
+package com.conboi.core.ui.billing
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -13,8 +13,10 @@ import com.conboi.core.ui.R
 import com.conboi.core.ui.extensions.clickableNoRipple
 
 @Composable
-fun BuyButton(modifier: Modifier = Modifier, price: String, onClick: () -> Unit) {
-    Box(modifier = modifier, contentAlignment = Alignment.Center) {
+fun BuyButton(modifier: Modifier = Modifier, text: String, onClick: () -> Unit) {
+    Box(modifier = modifier.clickableNoRipple {
+        onClick()
+    }, contentAlignment = Alignment.Center) {
         Image(
             painter = painterResource(id = R.drawable.orange_button),
             contentDescription = null,
@@ -22,10 +24,7 @@ fun BuyButton(modifier: Modifier = Modifier, price: String, onClick: () -> Unit)
         )
 
         Text(
-            text = price,
-            modifier = Modifier.clickableNoRipple {
-                onClick()
-            },
+            text = text,
             style = MaterialTheme.typography.titleSmall
         )
     }

@@ -11,19 +11,24 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AppContentViewModel @Inject constructor(
-    private val offlineUserInfoPreferencesRepository: OfflineUserInfoPreferencesRepository,
+    private val userInfoPreferencesRepository: OfflineUserInfoPreferencesRepository,
     private val billingDataSource: BillingDataSource
 ) : ViewModel() {
+
+    override fun onCleared() {
+        super.onCleared()
+        billingDataSource.endConnection()
+    }
 
     init {
         billingDataSource.initClient()
     }
 
-    fun getUserCurrency() = offlineUserInfoPreferencesRepository.getUserCurrency()
+    fun getUserCurrency() = userInfoPreferencesRepository.getUserCurrency()
 
-    fun getUserVipType() = offlineUserInfoPreferencesRepository.getUserVipType()
+    fun getUserVipType() = userInfoPreferencesRepository.getUserVipType()
     fun queryProducts() = viewModelScope.launch(Dispatchers.IO) {
-        billingDataSource.querySkuDetails()
+        billingDataSource.queryProductDetails()
     }
 
 }

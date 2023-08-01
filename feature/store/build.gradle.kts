@@ -53,6 +53,6 @@ dependencies {
     implementation(project(":core:database"))
     implementation(project(":core:domain"))
     implementation(project(":core:ui"))
-    implementation("com.android.billingclient:billing-ktx:6.0.0")
+    implementation("com.android.billingclient:billing-ktx:${Versions.billing}")
     composeCore()
 }

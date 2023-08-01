@@ -18,6 +18,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -28,6 +32,8 @@ import com.conboi.core.domain.level.LevelScreenState
 import com.conboi.core.ui.Dimensions
 import com.conboi.core.ui.Durations
 import com.conboi.core.ui.R
+import com.conboi.core.ui.store.WatchAdDialog
+import com.conboi.core.ui.store.WatchStoreItem
 import com.conboi.core.ui.theme.WordefullTheme
 import com.conboi.feature.level.common.Title
 
@@ -37,7 +43,7 @@ fun Completed(
     id: Int,
     onLevelUIAction: (LevelScreenState) -> Unit
 ) {
-
+    var showWatchAdDialog by remember { mutableStateOf(false) }
     AnimatedVisibility(
         true,
         modifier = modifier.padding(Dimensions.Padding.Small.value),
@@ -76,17 +82,19 @@ fun Completed(
                 }) {
                     Text("Next Level", style = MaterialTheme.typography.headlineMedium)
                 }
-
-                TextButton(onClick = {
-                    // TODO : Add subscription
-
-                }) {
-                    Text("Buy subscription", style = MaterialTheme.typography.headlineMedium)
+                Spacer(modifier = Modifier.height(Dimensions.Padding.Medium.value))
+                WatchStoreItem(value = "x25", text = "Watch Ad") {
+                    showWatchAdDialog = true
                 }
             }
         }
 
     }
+
+    WatchAdDialog(visible = showWatchAdDialog, onDismissed = { result ->
+        showWatchAdDialog = false
+        if (result == true) onLevelUIAction(LevelScreenState.WATCH_AD)
+    })
 }
 
 
