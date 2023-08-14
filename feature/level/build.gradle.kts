@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.conboi.feature.level"
+    namespace = "com.gamovation.feature.level"
     compileSdk = Versions.Config.compileSdk
 
     defaultConfig {

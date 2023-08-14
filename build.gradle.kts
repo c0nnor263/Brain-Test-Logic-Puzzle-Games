@@ -5,19 +5,20 @@ apply(plugin = "com.github.ben-manes.versions")
 
 buildscript {
     dependencies {
-        classpath("com.android.tools.build:gradle:8.0.2")
-        classpath("com.google.dagger:hilt-android-gradle-plugin:${Versions.hilt}")
-        classpath("com.google.firebase:firebase-crashlytics-gradle:${Versions.Firebase.firebaseCrashlyticsPlugin}")
-        classpath("com.google.gms:google-services:${Versions.Firebase.googleServicesPlugin}")
+        classpath("com.android.tools.build:gradle:${Versions.gradle}")
         classpath("com.github.ben-manes:gradle-versions-plugin:0.47.0")
     }
 }
 
 plugins {
-    id("com.android.application") version Versions.gradle apply false
-    id("com.android.library") version Versions.gradle apply false
-    kotlin("android") version Versions.kotlin apply false
     kotlin("jvm") version Versions.kotlin apply false
+    kotlin("android") version Versions.kotlin apply false
+    id("com.android.library") version Versions.gradle apply false
+    id("com.android.application") version Versions.gradle apply false
+    id("com.google.gms.google-services") version Versions.Firebase.servicesPlugin apply false
+    id("com.google.firebase.crashlytics") version Versions.Firebase.crashlyticsPlugin apply false
+    id("com.google.firebase.firebase-perf") version Versions.Firebase.performancePlugin apply false
+    id("com.google.dagger.hilt.android") version Versions.hilt apply false
 }
 
 

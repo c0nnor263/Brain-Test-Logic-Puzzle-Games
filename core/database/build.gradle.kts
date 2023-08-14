@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.conboi.core.database"
+    namespace = "com.gamovation.core.database"
     compileSdk = Versions.Config.compileSdk
 
     defaultConfig {

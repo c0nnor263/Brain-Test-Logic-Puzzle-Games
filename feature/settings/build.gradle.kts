@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.conboi.feature.settings"
+    namespace = "com.gamovation.feature.settings"
     compileSdk = Versions.Config.compileSdk
 
     defaultConfig {
