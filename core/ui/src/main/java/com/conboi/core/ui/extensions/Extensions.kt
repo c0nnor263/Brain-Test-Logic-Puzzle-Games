@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
+import com.conboi.core.navigation.Screens
 
 fun Modifier.clickableNoRipple(enabled: Boolean = true, onClick: () -> Unit): Modifier {
     val interactionSource = MutableInteractionSource()
@@ -16,7 +17,8 @@ fun Modifier.clickableNoRipple(enabled: Boolean = true, onClick: () -> Unit): Mo
 }
 
 
-fun NavController.cleanNavigate(route: String) {
+fun NavController.navigate(screen: Screens) {
+    val route = screen.route
     if (currentDestination?.route != route) {
         navigate(route) {
             popUpTo(route) {

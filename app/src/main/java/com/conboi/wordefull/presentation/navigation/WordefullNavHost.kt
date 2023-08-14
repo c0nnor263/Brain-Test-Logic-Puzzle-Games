@@ -32,7 +32,7 @@ import com.conboi.core.domain.level.MAX_LEVEL_ID
 import com.conboi.core.navigation.Screens
 import com.conboi.core.navigation.toArg
 import com.conboi.core.ui.Durations
-import com.conboi.core.ui.extensions.cleanNavigate
+import com.conboi.core.ui.extensions.navigate
 import com.conboi.core.ui.level.rememberUserInteraction
 import com.conboi.core.ui.state.LocalLevelActionState
 import com.conboi.core.ui.state.LocalLevelScreenState
@@ -77,7 +77,7 @@ fun WordefullNavHost(navController: NavHostController) {
 
             HomeScreen(
                 onNavigateToLevel = {
-                    navController.cleanNavigate(Screens.Level(levelData.id.toString()).route)
+                    navController.navigate(Screens.Level(levelData.id.toString()))
                 }
             )
         }
@@ -164,7 +164,7 @@ fun WordefullNavHost(navController: NavHostController) {
                 index = pageIndex,
                 levelList = list,
                 onNavigateToLevel = { levelId: Int ->
-                    navController.cleanNavigate(Screens.Level(levelId.toString()).route)
+                    navController.navigate(Screens.Level(levelId.toString()))
                 },
                 onIndexUpdate = {
                     pageIndex = it.coerceAtMost(MAX_LEVEL_ID)
@@ -225,7 +225,7 @@ fun WordefullNavHost(navController: NavHostController) {
                             }
 
                             ActionResult.Type.BUY_MORE -> {
-                                navController.cleanNavigate(Screens.Store.route)
+                                navController.navigate(Screens.Store)
                             }
 
                             else -> {}

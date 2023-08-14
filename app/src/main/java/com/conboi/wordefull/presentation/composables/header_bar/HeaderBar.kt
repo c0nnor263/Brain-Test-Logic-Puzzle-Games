@@ -28,7 +28,7 @@ import com.conboi.core.navigation.Screens
 import com.conboi.core.ui.Dimensions
 import com.conboi.core.ui.R
 import com.conboi.core.ui.defaultSpringAnimation
-import com.conboi.core.ui.extensions.cleanNavigate
+import com.conboi.core.ui.extensions.navigate
 import com.conboi.core.ui.state.LocalCurrency
 import com.conboi.wordefull.presentation.composables.header_bar.options.HeaderBarHomeOption
 import com.conboi.wordefull.presentation.composables.header_bar.options.HeaderBarLevelOption
@@ -69,10 +69,10 @@ fun HeaderBar(navController: NavHostController) {
                     Screens.Home.route -> {
                         HeaderBarHomeOption(
                             onNavigateToSettings = {
-                                navController.cleanNavigate(Screens.Settings.route)
+                                navController.navigate(Screens.Settings)
                             },
                             onNavigateToMenu = {
-                                navController.cleanNavigate(Screens.Menu.route)
+                                navController.navigate(Screens.Menu)
                             },
                         )
                     }
@@ -80,10 +80,10 @@ fun HeaderBar(navController: NavHostController) {
                     Screens.Level().route -> {
                         HeaderBarLevelOption(
                             onNavigateToHome = {
-                                navController.cleanNavigate(Screens.Home.route)
+                                navController.navigate(Screens.Home)
                             },
                             onNavigateToMenu = {
-                                navController.cleanNavigate(Screens.Menu.route)
+                                navController.navigate(Screens.Menu)
                             },
                         )
                     }
@@ -120,7 +120,7 @@ fun HeaderBar(navController: NavHostController) {
             shape = Dimensions.RoundedShape.Large.value
         ) {
             TextButton(onClick = {
-                navController.cleanNavigate(Screens.Store.route)
+                navController.navigate(Screens.Store)
             }) {
                 Text(
                     text = currency.toString(), style = MaterialTheme.typography.headlineMedium
