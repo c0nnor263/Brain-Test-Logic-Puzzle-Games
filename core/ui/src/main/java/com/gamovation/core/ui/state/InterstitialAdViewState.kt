@@ -19,10 +19,11 @@ import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 @Composable
 fun rememberInterstitialAdViewState(
     activity: ComponentActivity,
+    adUnitID:String,
     userVipType: UserVipType = UserVipType.BASE
 ): InterstitialAdViewState =
     remember {
-        InterstitialAdViewState(userVipType).also { state ->
+        InterstitialAdViewState(userVipType,adUnitID).also { state ->
             state.loadAd(activity)
         }
     }
@@ -30,6 +31,7 @@ fun rememberInterstitialAdViewState(
 
 class InterstitialAdViewState(
     private val userVipType: UserVipType,
+    private val adUnitID: String,
     interstitialAd: InterstitialAd? = null
 ) {
     var interstitialAd by mutableStateOf(interstitialAd)
@@ -37,12 +39,11 @@ class InterstitialAdViewState(
 
     fun loadAd(context: ComponentActivity) {
         if (userVipType != UserVipType.BASE) return
-        Log.i("TAG", "loadAd: $context")
-        // TODO TEST AD UNIT ID
+
         val adRequest = AdRequestBuilder().createDefault()
         InterstitialAd.load(
             context,
-            "ca-app-pub-3940256099942544/1033173712",
+            adUnitID,
             adRequest,
             object : InterstitialAdLoadCallback() {
                 override fun onAdLoaded(ad: InterstitialAd) {

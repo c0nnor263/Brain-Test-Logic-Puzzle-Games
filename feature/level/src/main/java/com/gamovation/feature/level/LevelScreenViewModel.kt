@@ -1,5 +1,6 @@
 package com.gamovation.feature.level
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gamovation.core.data.repository.OfflineLevelDataRepository
@@ -17,6 +18,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -44,9 +46,17 @@ class LevelScreenViewModel @Inject constructor(
 
         // If user completed level with correct choice, update state to completed, otherwise update state to is playing
         val newState = when (state) {
+            LevelScreenState.FINAL -> {
+                withContext(Dispatchers.IO) {
+                    completeLevel()
+                }
+                LevelScreenState.FINAL
+            }
+
             LevelScreenState.CORRECT_CHOICE -> LevelScreenState.COMPLETED
             else -> LevelScreenState.IS_PLAYING
         }
+        Log.i("TAG", "updateLevelScreenState: NEW $newState")
         _levelScreenState.emit(newState)
     }
 
@@ -68,20 +78,28 @@ class LevelScreenViewModel @Inject constructor(
 
 
     fun onForwardLevel() = viewModelScope.launch(Dispatchers.IO) {
-        val nextLevelIndex = (levelIndex + 1).coerceAtMost(MAX_LEVEL_ID)
-
         // Completing current level and unlocking next level
+        completeLevel()
+        setNextLevel()
+    }
+
+
+    suspend fun completeLevel() {
         val levelData = levelRepositoryImpl.getLevelDataById(levelIndex).first().copy(
             isCompleted = true, isHasAdvise = false
         )
+        levelRepositoryImpl.upsertLevelData(levelData)
+    }
+
+    suspend fun setNextLevel() {
+        val nextLevelIndex = (levelIndex + 1).coerceAtMost(MAX_LEVEL_ID)
         val nextData = levelRepositoryImpl.getLevelDataById(nextLevelIndex).first().copy(
             isLocked = false,
         )
 
         // Update current and next level data
-        levelRepositoryImpl.upsertLevelData(levelData)
-        levelRepositoryImpl.upsertLevelData(nextData)
 
+        levelRepositoryImpl.upsertLevelData(nextData)
         // Move to next level
         updateLevelIndex(nextLevelIndex, nextData)
     }

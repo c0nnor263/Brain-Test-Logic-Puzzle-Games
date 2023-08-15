@@ -17,29 +17,28 @@ import com.google.android.gms.ads.rewardedinterstitial.RewardedInterstitialAdLoa
 
 @Composable
 fun rememberRewardedInterstitialAdViewState(
-    activity: ComponentActivity,
+    activity: ComponentActivity, adUnitID: String
 ): RewardedInterstitialAdViewState =
     remember {
-        RewardedInterstitialAdViewState().also { state ->
+        RewardedInterstitialAdViewState(adUnitID = adUnitID).also { state ->
             state.loadAd(activity)
         }
     }
 
 
 class RewardedInterstitialAdViewState(
-    rewardedInterstitialAd: RewardedInterstitialAd? = null
+    rewardedInterstitialAd: RewardedInterstitialAd? = null,
+    private val adUnitID: String
 ) {
     var rewardedInterstitialAd by mutableStateOf(rewardedInterstitialAd)
         private set
 
     fun loadAd(context: ComponentActivity) {
-
         Log.i("TAG", "loadAd reward: $context")
-        // TODO TEST AD UNIT ID
         val adRequest = AdRequestBuilder().createDefault()
         RewardedInterstitialAd.load(
             context,
-            "ca-app-pub-3940256099942544/5354046379",
+            adUnitID,
             adRequest,
             object : RewardedInterstitialAdLoadCallback() {
                 override fun onAdLoaded(ad: RewardedInterstitialAd) {
@@ -60,7 +59,6 @@ class RewardedInterstitialAdViewState(
     fun showAd(activity: ComponentActivity, onDismissed: (result: Boolean?) -> Unit = {}) {
 
         rewardedInterstitialAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
-
             override fun onAdDismissedFullScreenContent() {
                 super.onAdDismissedFullScreenContent()
                 rewardedInterstitialAd = null
@@ -73,6 +71,7 @@ class RewardedInterstitialAdViewState(
                 loadAd(activity)
                 onDismissed(false)
             }
+
         }
 
         rewardedInterstitialAd?.show(activity) {

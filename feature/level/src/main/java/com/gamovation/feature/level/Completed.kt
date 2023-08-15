@@ -26,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.gamovation.core.domain.level.LevelScreenState
@@ -91,10 +92,12 @@ fun Completed(
 
     }
 
-    WatchAdDialog(visible = showWatchAdDialog, onDismissed = { result ->
-        showWatchAdDialog = false
-        if (result == true) onLevelUIAction(LevelScreenState.WATCH_AD)
-    })
+    WatchAdDialog(visible = showWatchAdDialog,
+        adUnitID = stringResource(id = com.gamovation.core.data.R.string.admob_rewarded_id_level_completed_get_extra),
+        onDismissed = { result ->
+            showWatchAdDialog = false
+            if (result == true) onLevelUIAction(LevelScreenState.WATCH_AD)
+        })
 }
 
 

@@ -28,7 +28,7 @@ import com.gamovation.core.ui.Dimensions
 
 @Composable
 fun Level11Content(modifier: Modifier = Modifier, onLevelAction: (LevelScreenState) -> Unit) {
-    val listOfOptions = listOf("Собака", "Мявка", "Мурка", "Коленок", "Масленок")
+    val listOfOptions = listOf("Dog", "Mewka", "Murka", "Kilen", "Cow")
     var isCorrect by remember {
         mutableStateOf(false)
     }
@@ -42,10 +42,10 @@ fun Level11Content(modifier: Modifier = Modifier, onLevelAction: (LevelScreenSta
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceAround
         ) {
-            Text(text = "Как зовут детенышей", style = MaterialTheme.typography.titleLarge)
+            Text(text = "What are the names of baby", style = MaterialTheme.typography.titleLarge)
             Spacer(modifier = Modifier.width(Dimensions.Padding.ExtraSmall.value))
             Text(
-                text = "кошки?", modifier = Modifier.clickable {
+                text = "cats?", modifier = Modifier.clickable {
                     isCorrect = true
                     onLevelAction(LevelScreenState.CORRECT_CHOICE)
                 }, style = MaterialTheme.typography.titleLarge,

@@ -16,7 +16,7 @@ fun Level13Content(modifier: Modifier = Modifier, onLevelAction: (LevelScreenSta
     ) {
 
         NumbersBlock {
-            if (it == "5") {
+            if (it == "6") {
                 onLevelAction(LevelScreenState.CORRECT_CHOICE)
             } else {
                 onLevelAction(LevelScreenState.WRONG_CHOICE)

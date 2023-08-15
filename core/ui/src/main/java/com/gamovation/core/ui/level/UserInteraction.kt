@@ -21,6 +21,7 @@ class UserInteractionState {
     val interactionFlow = _interactionFlow.asStateFlow()
 
     private fun updateInteraction(interaction: UserInteraction?) {
+
         _interactionFlow.value = interaction
     }
 
