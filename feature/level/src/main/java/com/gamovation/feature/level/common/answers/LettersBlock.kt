@@ -35,7 +35,7 @@ import kotlin.math.roundToInt
 @Composable
 fun LettersBlock(
     modifier: Modifier = Modifier,
-    alphabetType: AlphabetType = AlphabetType.Cyrillic,
+    alphabetType: AlphabetType = AlphabetType.Latin,
     numberMaxLength: Int = 1,
     onAnswer: (String) -> Unit
 ) {
@@ -45,7 +45,6 @@ fun LettersBlock(
     }
 
     val currentAlphabet = when (alphabetType) {
-        AlphabetType.Cyrillic -> defaultCyrillicAlphabet
         AlphabetType.Latin -> defaultLatinAlphabet
     }
 
@@ -149,19 +148,6 @@ fun LettersBlock(
     }
 }
 
-
-@Preview
-@Composable
-fun LettersBlockCyrillicPreview() {
-    WordefullTheme {
-        LettersBlock(alphabetType = AlphabetType.Cyrillic) {
-
-        }
-
-    }
-
-}
-
 @Preview
 @Composable
 fun LettersBlockLatinPreview() {
@@ -173,42 +159,6 @@ fun LettersBlockLatinPreview() {
 
 
 }
-
-val defaultCyrillicAlphabet = listOf(
-    "А",
-    "Б",
-    "В",
-    "Г",
-    "Д",
-    "Е",
-    "Ё",
-    "Ж",
-    "З",
-    "И",
-    "Й",
-    "К",
-    "Л",
-    "М",
-    "Н",
-    "О",
-    "П",
-    "Р",
-    "С",
-    "Т",
-    "У",
-    "Ф",
-    "Х",
-    "Ц",
-    "Ч",
-    "Ш",
-    "Щ",
-    "Ъ",
-    "Ы",
-    "Ь",
-    "Э",
-    "Ю",
-    "Я"
-)
 
 val defaultLatinAlphabet = listOf(
     "A",

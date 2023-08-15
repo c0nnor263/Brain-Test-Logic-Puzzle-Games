@@ -37,8 +37,7 @@ internal fun Level5Content(
     val isSecondMarkPressed by secondMarkInteractionSource.collectIsPressedAsState()
 
     LaunchedEffect(isFirstMarkPressed, isSecondMarkPressed) {
-        val event = if (isFirstMarkPressed
-//            && isSecondMarkPressed TODO Test
+        val event = if (isFirstMarkPressed && isSecondMarkPressed
         ) {
             LevelScreenState.CORRECT_CHOICE
         } else if (isFirstMarkPressed || isSecondMarkPressed) {

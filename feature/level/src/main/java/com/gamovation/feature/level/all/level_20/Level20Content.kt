@@ -60,7 +60,7 @@ fun Level20Content(modifier: Modifier = Modifier, onLevelAction: (LevelScreenSta
                     bottom.linkTo(bottomGuideline)
                 }
                 .clickableNoRipple {
-                    onLevelAction(LevelScreenState.CORRECT_CHOICE)
+                    onLevelAction(LevelScreenState.FINAL)
                 }
         )
         Image(

@@ -31,4 +31,9 @@ class AppContentViewModel @Inject constructor(
         billingDataSource.queryProductDetails()
     }
 
+
+    fun onResumeBilling(){
+        billingDataSource.onResumeBilling()
+    }
+
 }

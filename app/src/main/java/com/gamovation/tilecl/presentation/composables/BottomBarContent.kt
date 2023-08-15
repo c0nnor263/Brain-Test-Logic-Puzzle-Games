@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.gamovation.core.domain.billing.UserVipType
 import com.gamovation.core.ui.Dimensions
@@ -39,7 +40,8 @@ fun BottomBarContent(modifier: Modifier = Modifier) {
             contentAlignment = Alignment.Center
         ) {
             BannerAdView(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
+                stringResource(id = com.gamovation.core.data.R.string.admob_application_id)
             )
         }
     }

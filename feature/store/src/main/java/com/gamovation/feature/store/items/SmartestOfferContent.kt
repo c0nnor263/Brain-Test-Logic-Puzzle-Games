@@ -1,6 +1,7 @@
 package com.gamovation.feature.store.items
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -34,7 +35,7 @@ import com.gamovation.core.ui.theme.boardBorderColor
 import kotlin.math.roundToInt
 
 @Composable
-fun CoolestOfferContent(
+fun SmartestOfferContent(
     modifier: Modifier = Modifier,
     details: ProductDetails?,
     onClick: (ProductDetails, BillingProductType) -> Unit
@@ -66,12 +67,16 @@ fun CoolestOfferContent(
             ) {
 
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Image(
-                        painter = painterResource(id = R.drawable.lamp),
-                        modifier = Modifier.size(32.dp),
-                        contentDescription = null,
-                        contentScale = ContentScale.Fit
-                    )
+                    Box(contentAlignment = Alignment.Center) {
+
+                        Image(
+                            painter = painterResource(id = R.drawable.lamp),
+                            modifier = Modifier.size(32.dp),
+                            contentDescription = null,
+                            contentScale = ContentScale.Fit
+                        )
+                        Text("x250",   style = MaterialTheme.typography.bodyMedium.copy(Color.White))
+                    }
                     Spacer(modifier = Modifier.width(Dimensions.Padding.Small.value))
                     Image(
                         painter = painterResource(id = R.drawable.remove_ads),
@@ -84,7 +89,7 @@ fun CoolestOfferContent(
                 BuyButton(text = details?.oneTimePurchaseOfferDetails?.formattedPrice ?: "",
                     onClick = {
                         details?.let {
-                            onClick(it, BillingProductType.COOLEST_OFFER)
+                            onClick(it, BillingProductType.SMARTEST_OFFER)
                         }
                     })
             }

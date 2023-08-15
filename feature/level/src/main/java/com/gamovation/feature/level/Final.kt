@@ -15,8 +15,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -26,25 +24,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.gamovation.core.domain.level.LevelScreenState
 import com.gamovation.core.ui.Dimensions
 import com.gamovation.core.ui.Durations
 import com.gamovation.core.ui.R
-import com.gamovation.core.ui.store.WatchAdDialog
-import com.gamovation.core.ui.store.WatchStoreItem
-import com.gamovation.core.ui.theme.WordefullTheme
 import com.gamovation.feature.level.common.Title
 
 @Composable
-fun Completed(
-    modifier: Modifier = Modifier,
-    id: Int,
-    onLevelUIAction: (LevelScreenState) -> Unit
-) {
-    var showWatchAdDialog by remember { mutableStateOf(false) }
+fun Final(modifier: Modifier = Modifier) {
     AnimatedVisibility(
         true,
         modifier = modifier.padding(Dimensions.Padding.Small.value),
@@ -63,48 +50,18 @@ fun Completed(
             )
             Spacer(modifier = Modifier.height(Dimensions.Padding.Medium.value))
             Title(
-                text = "Level $id completed",
+                text = "Level 20 completed",
                 style = MaterialTheme.typography.displaySmall
             )
             Title(
-                text = "You awesome!",
+                text = "You completed the game",
+                style = MaterialTheme.typography.displaySmall
+            )
+            Title(
+                text = "Thanks for the playing!",
                 style = MaterialTheme.typography.displaySmall.copy(color = Color.Yellow)
             )
-            Spacer(modifier = Modifier.height(Dimensions.Padding.Large.value))
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(1F),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                TextButton(onClick = {
-                    onLevelUIAction(LevelScreenState.NEXT_LEVEL)
-                }) {
-                    Text("Next Level", style = MaterialTheme.typography.headlineMedium)
-                }
-                Spacer(modifier = Modifier.height(Dimensions.Padding.Medium.value))
-                WatchStoreItem(value = "x25", text = "Watch Ad") {
-                    showWatchAdDialog = true
-                }
-            }
         }
 
-    }
-
-    WatchAdDialog(visible = showWatchAdDialog,
-        adUnitID = stringResource(id = com.gamovation.core.data.R.string.admob_rewarded_id_level_completed_get_extra),
-        onDismissed = { result ->
-            showWatchAdDialog = false
-            if (result == true) onLevelUIAction(LevelScreenState.WATCH_AD)
-        })
-}
-
-
-@Preview
-@Composable
-fun CompletedPreview() {
-    WordefullTheme {
-        Completed(id = 1, onLevelUIAction = {})
     }
 }

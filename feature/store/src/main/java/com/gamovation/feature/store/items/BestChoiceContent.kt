@@ -1,6 +1,7 @@
 package com.gamovation.feature.store.items
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -64,12 +65,16 @@ fun BestChoiceContent(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Image(
-                        painter = painterResource(id = R.drawable.lamp),
-                        modifier = Modifier.size(32.dp),
-                        contentDescription = null,
-                        contentScale = ContentScale.Fit
-                    )
+                    Box(contentAlignment = Alignment.Center) {
+
+                        Image(
+                            painter = painterResource(id = R.drawable.lamp),
+                            modifier = Modifier.size(32.dp),
+                            contentDescription = null,
+                            contentScale = ContentScale.Fit
+                        )
+                        Text("x1000",   style = MaterialTheme.typography.bodyMedium.copy(Color.White))
+                    }
                     Spacer(modifier = Modifier.width(Dimensions.Padding.Small.value))
                     Image(
                         painter = painterResource(id = R.drawable.remove_ads),

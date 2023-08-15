@@ -3,8 +3,6 @@ package com.gamovation.core.data.billing
 import android.content.Context
 import android.util.Log
 import androidx.activity.ComponentActivity
-import androidx.lifecycle.DefaultLifecycleObserver
-import androidx.lifecycle.LifecycleOwner
 import com.android.billingclient.api.AcknowledgePurchaseParams
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingClient.ProductType
@@ -35,12 +33,14 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @ActivityRetainedScoped
@@ -48,16 +48,11 @@ class BillingDataSource @Inject constructor(
     @ApplicationContext private val context: Context,
     @ApplicationScope private val scope: CoroutineScope,
     private val userInfoPreferencesRepository: OfflineUserInfoPreferencesRepository,
-) : DefaultLifecycleObserver {
-    override fun onResume(owner: LifecycleOwner) {
-        super.onResume(owner)
-        Log.i("TAG", "onResume: ")
-        if (client.isReady) {
-            scope.launch {
-                queryProductDetails()
-            }
-        }
-    }
+) {
+    private val initialBillingStartTime = System.currentTimeMillis()
+    var fetchDelay: Long = TimeUnit.SECONDS.toMillis(1)
+
+
 
     // Repository Pattern
     private val _productsDetailsFlow = MutableStateFlow(ProductDetailsInfo(null, null))
@@ -76,18 +71,21 @@ class BillingDataSource @Inject constructor(
         }
 
         override fun onBillingServiceDisconnected() {
-            initClient()
-            // TODO Delay
+            scope.launch {
+                delay(fetchDelay)
+                initClient()
+
+                val timePass = System.currentTimeMillis() - initialBillingStartTime
+                if (timePass > TimeUnit.SECONDS.toMillis(30)) {
+                   fetchDelay = TimeUnit.SECONDS.toMillis(1)
+                }else  fetchDelay += fetchDelay
+            }
         }
     }
     private val purchasesListener = PurchasesUpdatedListener { billingResult, purchases ->
-        Log.i("TAG", "BillingClient: responseCode ${billingResult.responseCode}")
-
-
         when (billingResult.responseCode) {
             BillingClient.BillingResponseCode.OK -> {
                 purchases?.forEach { purchase ->
-                    Log.i("TAG", "BillingClient: purchase $purchase")
                     if (purchase.purchaseState == Purchase.PurchaseState.PURCHASED && purchase.isAcknowledged.not()) {
                         verifyPurchase(purchase)
                     }
@@ -175,8 +173,7 @@ class BillingDataSource @Inject constructor(
         }
         if (subscriptionDetailsResult.billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
             val result = subscriptionDetailsResult.productDetailsList
-            _productsDetailsFlow.value =
-                _productsDetailsFlow.value.copy(subscriptionDetails = result)
+            _productsDetailsFlow.value = _productsDetailsFlow.value.copy(subscriptionDetails = result)
         }
     }
 
@@ -226,7 +223,7 @@ class BillingDataSource @Inject constructor(
                     updatePendingBenefitType(json)
                     when (productId) {
                         BillingProductType.VIP.id,
-                        BillingProductType.COOLEST_OFFER.id,
+                        BillingProductType.SMARTEST_OFFER.id,
                         BillingProductType.BEST_CHOICE_OFFER.id -> {
                             acknowledgePurchase(purchase)
                         }
@@ -257,7 +254,7 @@ class BillingDataSource @Inject constructor(
 
     private fun receiveProduct(type: BillingProductType?) = scope.launch {
         when (type) {
-            BillingProductType.COOLEST_OFFER -> {
+            BillingProductType.SMARTEST_OFFER -> {
                 userInfoPreferencesRepository.buyCurrency(250)
                 userInfoPreferencesRepository.setUserVipType(UserVipType.ADS_FREE)
             }
@@ -294,7 +291,9 @@ class BillingDataSource @Inject constructor(
     private fun consumePurchase(purchase: Purchase?) {
         Log.i("TAG", "consumePurchase: $purchase")
         val params =
-            ConsumeParams.newBuilder().setPurchaseToken(purchase?.purchaseToken ?: "").build()
+            ConsumeParams.newBuilder()
+                .setPurchaseToken(purchase?.purchaseToken ?: "")
+                .build()
         scope.launch {
             val consumeResult = client.consumePurchase(params)
             Log.i("TAG", "consumePurchase: $consumeResult")
@@ -313,7 +312,8 @@ class BillingDataSource @Inject constructor(
         if (purchase?.isAcknowledged == true) return
 
         val acknowledgeParams =
-            AcknowledgePurchaseParams.newBuilder().setPurchaseToken(purchase?.purchaseToken ?: "")
+            AcknowledgePurchaseParams.newBuilder()
+                .setPurchaseToken(purchase?.purchaseToken ?: "")
                 .build()
         scope.launch {
             val acknowledgeResult = client.acknowledgePurchase(acknowledgeParams)
@@ -336,16 +336,22 @@ class BillingDataSource @Inject constructor(
     }
 
     private fun updatePendingBenefitType(json: JSONObject?) {
-        Log.i("TAG", "updatePendingBenefitType: json $json")
-        val type = BillingProductType.values().find { billingProductType ->
+        val type = BillingProductType.entries.find { billingProductType ->
             json?.optString("productId") == billingProductType.id
         }
-        Log.i("TAG", "updatePendingBenefitType: type $type")
         _pendingBenefitFlow.value = pendingBenefitFlow.value.copy(type = type)
     }
 
     fun endConnection() {
         client.endConnection()
+    }
+
+    fun onResumeBilling() {
+        if (client.isReady) {
+            scope.launch {
+                queryProductDetails()
+            }
+        }
     }
 
     fun restorePurchases() = scope.launch {
@@ -359,8 +365,6 @@ class BillingDataSource @Inject constructor(
 
         val inAppResult = client.queryPurchaseHistory(inAppHistoryParams)
         val subscriptionResult = client.queryPurchaseHistory(subscriptionHistoryParams)
-        Log.i("TAG", "getHistoryRecords: ${inAppResult.purchaseHistoryRecordList}")
-        Log.i("TAG", "getHistoryRecords: ${subscriptionResult.purchaseHistoryRecordList}")
         if (inAppResult.billingResult.responseCode == BillingClient.BillingResponseCode.OK || subscriptionResult.billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
             queryPurchases()
         }

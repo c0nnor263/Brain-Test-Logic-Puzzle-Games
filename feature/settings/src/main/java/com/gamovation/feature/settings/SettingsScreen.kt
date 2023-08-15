@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -24,7 +25,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.net.toUri
 import com.gamovation.core.ui.Dimensions
@@ -34,120 +34,127 @@ import com.gamovation.core.ui.theme.WordefullTheme
 @Composable
 fun SettingsScreen(onRestorePurchases: () -> Unit) {
     val context = LocalContext.current
-    Column(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Top
-    ) {
-        Text(text = "Settings", style = MaterialTheme.typography.displayMedium)
-        Spacer(modifier = Modifier.height(Dimensions.Padding.Medium.value))
-        Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-            Text("Notification", style = MaterialTheme.typography.headlineMedium)
-            Box(contentAlignment = Alignment.Center) {
-                Image(
-                    modifier = Modifier.matchParentSize(),
-                    painter = painterResource(id = R.drawable.l5_o_mark),
-                    contentDescription = null
-                )
-                IconButton(
-                    modifier = Modifier.padding(Dimensions.Padding.Small.value),
-                    onClick = { }) {
-                    Icon(painter = painterResource(id = R.drawable.lamp), contentDescription = null)
-                }
-            }
-        }
-        Spacer(modifier = Modifier.height(Dimensions.Padding.Medium.value))
-
-        Row(
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(Dimensions.Padding.Medium.value),
-            horizontalArrangement = Arrangement.SpaceAround,
-            verticalAlignment = Alignment.CenterVertically
+                .align(Alignment.TopCenter),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
         ) {
-            Text(
-                "Language",
-                style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Bold)
-            )
-            Spacer(modifier = Modifier.width(Dimensions.Padding.Small.value))
             Row(
+                Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text("English", style = MaterialTheme.typography.headlineSmall)
-                IconButton(onClick = { }) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.l5_x_mark),
+                Text(text = "Settings", style = MaterialTheme.typography.displayMedium)
+                Spacer(modifier = Modifier.width(Dimensions.Padding.Small.value))
+                Box(contentAlignment = Alignment.Center) {
+                    Image(
+                        modifier = Modifier.matchParentSize(),
+                        painter = painterResource(id = R.drawable.l5_o_mark),
                         contentDescription = null
                     )
-                }
-            }
-        }
-
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(Dimensions.Padding.Medium.value),
-            horizontalArrangement = Arrangement.SpaceAround,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-
-            Card(shape = Dimensions.RoundedShape.ExtraLarge.value) {
-                TextButton(modifier = Modifier.padding(Dimensions.Padding.Small.value), onClick = {
-                    val intent = Intent(Intent.ACTION_SEND).run {
-                        type = "plain/text"
-                        putExtra(
-                            Intent.EXTRA_EMAIL,
-                            // TODO Support email
-                            ""
+                    IconButton(modifier = Modifier.padding(Dimensions.Padding.Small.value),
+                        onClick = { }
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.lamp),
+                            contentDescription = null
                         )
                     }
+                }
+            }
+            Spacer(modifier = Modifier.height(Dimensions.Padding.Medium.value))
 
-                    val intentChooser = Intent.createChooser(intent, "Share via mail app")
-                    context.startActivity(intentChooser)
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(Dimensions.Padding.Medium.value),
+                horizontalArrangement = Arrangement.SpaceAround,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
 
-                }) {
-                    Text(text = "Support", style = MaterialTheme.typography.displaySmall)
+                Card(shape = Dimensions.RoundedShape.ExtraLarge.value) {
+                    TextButton(
+                        modifier = Modifier.padding(Dimensions.Padding.Small.value),
+                        onClick = {
+                            val intent = Intent(Intent.ACTION_SEND).run {
+                                type = "plain/text"
+                                putExtra(
+                                    Intent.EXTRA_TEXT, "Let's find out how strong you are!\n" +
+                                            "\n" +
+                                            "https://play.google.com/store/apps/details?id=com.gamovation.tilecl"
+                                )
+                            }
+
+                            val intentChooser = Intent.createChooser(intent, "Share")
+                            context.startActivity(intentChooser)
+
+                        }) {
+                        Text(text = "Share", style = MaterialTheme.typography.displaySmall)
+
+                    }
+                }
+
+                Card(shape = Dimensions.RoundedShape.ExtraLarge.value) {
+                    TextButton(
+                        modifier = Modifier.padding(Dimensions.Padding.Small.value),
+                        onClick = {
+                            Intent(Intent.ACTION_SEND).apply {
+                                type = "plain/text"
+                                putExtra(
+                                    Intent.EXTRA_EMAIL,
+                                    "abrigojulianne08@gmail.com"
+                                )
+                                val intent = Intent.createChooser(this, "Contact us")
+                                context.startActivity(intent)
+                            }
+
+                        }) {
+                        Text(text = "Support", style = MaterialTheme.typography.displaySmall)
+                    }
                 }
             }
 
-            Card(shape = Dimensions.RoundedShape.ExtraLarge.value) {
-                TextButton(modifier = Modifier.padding(Dimensions.Padding.Small.value), onClick = {
+            Spacer(modifier = Modifier.height(Dimensions.Padding.Medium.value))
+
+
+        }
+
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.BottomCenter)
+                .padding(bottom = Dimensions.Padding.Large.value),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Row {
+                TextButton(onClick = {
+                    val intent = Intent(
+                        Intent.ACTION_VIEW,
+                        "https://github.com/WADevelopment/Wordefull/blob/master/privacy-policy.md".toUri()
+                    )
+                    context.startActivity(intent)
+
+                }) {
+                    Text(text = "Privacy Policy", style = MaterialTheme.typography.headlineSmall)
+                }
+
+                TextButton(onClick = {
                     val intent = Intent(Intent.ACTION_VIEW, "https://www.google.com".toUri())
                     context.startActivity(intent)
                 }) {
-                    Text(text = "Share", style = MaterialTheme.typography.displaySmall)
+                    Text(text = "Terms of Use", style = MaterialTheme.typography.headlineSmall)
                 }
             }
-        }
-        Spacer(modifier = Modifier.height(Dimensions.Padding.Medium.value))
-
-        Spacer(modifier = Modifier.height(Dimensions.Padding.Medium.value))
-
-        Row {
-            TextButton(onClick = {
-                val intent = Intent(Intent.ACTION_VIEW, "https://www.google.com".toUri())
-                context.startActivity(intent)
-
-            }) {
-                Text(text = "Privacy Policy")
-            }
 
             TextButton(onClick = {
-                val intent = Intent(Intent.ACTION_VIEW, "https://www.google.com".toUri())
-                context.startActivity(intent)
+                onRestorePurchases()
             }) {
-                Text(text = "Terms of Use")
+                Text(text = "Restore Purchases", style = MaterialTheme.typography.headlineSmall)
             }
         }
-
-        TextButton(onClick = {
-            onRestorePurchases()
-        }) {
-            Text(text = "Restore Purchases")
-        }
-
     }
 }
 

@@ -3,7 +3,7 @@ package com.gamovation.core.data.billing
 import com.android.billingclient.api.BillingClient
 
 enum class BillingProductType(val id: String, val productType: String) {
-    COOLEST_OFFER("coolest_offer", BillingClient.ProductType.INAPP),
+    SMARTEST_OFFER("smartest_offer", BillingClient.ProductType.INAPP),
     BEST_CHOICE_OFFER("best_choice_offer", BillingClient.ProductType.INAPP),
     CURRENCY_250("currency_250", BillingClient.ProductType.INAPP),
     CURRENCY_500("currency_500", BillingClient.ProductType.INAPP),

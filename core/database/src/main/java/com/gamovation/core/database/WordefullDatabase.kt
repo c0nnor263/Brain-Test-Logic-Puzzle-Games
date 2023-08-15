@@ -19,7 +19,6 @@ import javax.inject.Provider
     version = 1,
     entities = [LevelData::class],
     exportSchema = false,
-//    autoMigrations = [AutoMigration(from = 1, to = 2)]
 )
 abstract class WordefullDatabase : RoomDatabase() {
     abstract fun levelDataDao(): LevelDataDao
@@ -32,12 +31,11 @@ abstract class WordefullDatabase : RoomDatabase() {
             super.onCreate(db)
             val database = databaseProvider.get()
             CoroutineScope(SupervisorJob()).launch(Dispatchers.IO) {
-                val list = MutableList(MAX_LEVEL_ID - 1) { index ->
+                val list = MutableList(MAX_LEVEL_ID) { index ->
                     LevelData(
                         isLocked = if (BuildConfig.DEBUG) false else index != 0,
                         title = listOfLevelTitles[index],
                         advise = listOfLevelAdvises[index],
-
                         )
                 }
                 database.levelDataDao().insertLevelsData(list)

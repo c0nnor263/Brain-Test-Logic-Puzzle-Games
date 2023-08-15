@@ -9,6 +9,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -28,6 +29,7 @@ import com.gamovation.core.ui.animation.DrawAnimation
 import com.gamovation.core.ui.extensions.clickableNoRipple
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlin.random.Random
 
 @Composable
 fun Level4Bulb(
@@ -41,12 +43,14 @@ fun Level4Bulb(
     val painter = painterResource(id = bulbDrawableRes)
 
     val scope = rememberCoroutineScope()
-
+val randomID by remember {
+    mutableIntStateOf(Random.nextInt(0,2))
+}
 
     DrawAnimation(modifier = modifier, delayOrder = index) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(
-                text = (index + 1).toString(),
+                text = (index+ randomID + 1).toString(),
                 style = MaterialTheme.typography.headlineSmall.copy(
                     color = Color.Yellow, shadow = Shadow(
                         color = Color.Black,

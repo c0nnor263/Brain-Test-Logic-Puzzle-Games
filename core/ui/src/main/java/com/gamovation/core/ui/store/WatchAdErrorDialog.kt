@@ -65,7 +65,6 @@ fun WatchAdErrorDialog(
                     Text(
                         text = "Something went wrong!",
                         style = MaterialTheme.typography.bodyMedium.copy(color = Color.Yellow),
-                        modifier = Modifier.weight(0.7F),
                         textAlign = TextAlign.Center
                     )
                     Spacer(modifier = Modifier.height(Dimensions.Padding.Medium.value))
