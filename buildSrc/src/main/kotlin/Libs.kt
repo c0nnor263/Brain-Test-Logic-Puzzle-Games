@@ -12,6 +12,7 @@ fun PluginType.get(scope: PluginDependenciesSpec) {
                 id("kotlin-kapt")
                 id("com.google.gms.google-services")
                 id("com.google.firebase.crashlytics")
+                id("com.google.firebase.firebase-perf")
                 id("com.google.devtools.ksp") version Versions.ksp
                 id("com.google.dagger.hilt.android")
 
@@ -51,10 +52,6 @@ fun DependencyHandler.composeCore() {
     add(LibType.ANDROID_TEST.value, "androidx.compose.ui:ui-test-junit4")
     add(LibType.DEBUG.value, "androidx.compose.ui:ui-tooling")
     add(LibType.DEBUG.value, "androidx.compose.ui:ui-test-manifest")
-    add(
-        LibType.DEFAULT.value,
-        "com.google.accompanist:accompanist-navigation-animation:${Versions.Compose.navigationAnimation}"
-    )
     add(LibType.DEFAULT.value, "androidx.lifecycle:lifecycle-runtime-compose:${Versions.lifecycle}")
 
 

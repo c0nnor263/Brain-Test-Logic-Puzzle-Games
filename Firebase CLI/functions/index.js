@@ -2,7 +2,7 @@ const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 const googleapis = require('googleapis');
 const { JWT } = require('google-auth-library');
-const serviceAccount = require('./plannerapp-336108-e8a5b1e9cb6e.json');
+const serviceAccount = require('./wordefull-cf277-firebase-adminsdk-nc22e-52a6042be5.json');
 
 admin.initializeApp();
 
@@ -25,7 +25,7 @@ exports.verifyPurchases = functions.https.onRequest(async (request, response) =>
 
         // Выполнение запроса на проверку покупки
         const checkPurchaseResult = await playApi.purchases.products.get({
-            packageName: "com.conboi.wordefull",
+            packageName: "com.gamovation.tilecl",
             productId: productId,
             token: purchaseToken
         });

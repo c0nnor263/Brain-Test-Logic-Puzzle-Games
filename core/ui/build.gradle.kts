@@ -4,7 +4,7 @@ plugins {
     PluginType.LIBRARY.get(this)
 }
 android {
-    namespace = "com.conboi.core.ui"
+    namespace = "com.gamovation.core.ui"
     compileSdk = Versions.Config.compileSdk
 
     defaultConfig {

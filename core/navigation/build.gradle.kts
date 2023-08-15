@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.conboi.core.navigation"
+    namespace = "com.gamovation.core.navigation"
     compileSdk = Versions.Config.compileSdk
 
     defaultConfig {

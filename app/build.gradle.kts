@@ -16,7 +16,7 @@ val keystoreProperties = Properties().apply {
 
 // TODO add Google Services Rate API
 android {
-    namespace = "com.conboi.wordefull"
+    namespace = "com.gamovation.tilecl"
     compileSdk = Versions.Config.compileSdk
 
     defaultConfig {
@@ -103,15 +103,11 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutines}")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}")
 
-
-    // Navigation Compose
-    implementation("androidx.navigation:navigation-compose:${Versions.Compose.navigation}")
-    implementation("androidx.hilt:hilt-navigation-compose:${Versions.Compose.hiltNavigation}")
-
     // Firebase
-    implementation(platform("com.google.firebase:firebase-bom:${Versions.Firebase.firebaseBom}"))
-    implementation("com.google.firebase:firebase-crashlytics")
-    implementation("com.google.firebase:firebase-analytics")
+    implementation(platform("com.google.firebase:firebase-bom:${Versions.Firebase.bom}"))
+    implementation("com.google.firebase:firebase-crashlytics-ktx")
+    implementation("com.google.firebase:firebase-analytics-ktx")
+    implementation("com.google.firebase:firebase-perf-ktx")
 
 
 
