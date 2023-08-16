@@ -10,5 +10,4 @@ class MenuViewModel @Inject constructor(
     private val levelDataRepositoryImpl: OfflineLevelDataRepository
 ) : ViewModel() {
     fun getAllLevels() = levelDataRepositoryImpl.getAllLevelData()
-    fun getLevelDataListByIndex(page: Int) = levelDataRepositoryImpl.getLevelDataListByIndex(page)
 }

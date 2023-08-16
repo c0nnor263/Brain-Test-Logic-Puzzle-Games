@@ -30,8 +30,4 @@ class OfflineLevelDataRepository @Inject constructor(
         return levelDataDao.getLastUncompletedLevel()
     }
 
-    override fun getLevelDataListByIndex(index: Int): Flow<List<LevelData>> {
-        return levelDataDao.getLevelDataListByIndex(index)
-    }
-
 }

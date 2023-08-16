@@ -1,10 +1,12 @@
 package com.gamovation.feature.level
 
 import android.util.Log
+import androidx.activity.ComponentActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gamovation.core.data.repository.OfflineLevelDataRepository
 import com.gamovation.core.data.repository.OfflineUserInfoPreferencesRepository
+import com.gamovation.core.data.review.ReviewDataManager
 import com.gamovation.core.database.model.LevelData
 import com.gamovation.core.domain.level.DEFAULT_LEVEL_SCREEN_COUNTDOWN_DURATION
 import com.gamovation.core.domain.level.LevelActionState
@@ -24,7 +26,8 @@ import javax.inject.Inject
 @HiltViewModel
 class LevelScreenViewModel @Inject constructor(
     private val levelRepositoryImpl: OfflineLevelDataRepository,
-    private val userInfoPreferencesRepository: OfflineUserInfoPreferencesRepository
+    private val userInfoPreferencesRepository: OfflineUserInfoPreferencesRepository,
+    private val reviewDataManager: ReviewDataManager
 ) : ViewModel() {
     private var levelIndex = 1
 
@@ -151,6 +154,11 @@ class LevelScreenViewModel @Inject constructor(
             null -> {}
         }
     }
+
+    fun processReviewRequest(activity: ComponentActivity, showDialog: () -> Unit) =
+        viewModelScope.launch(Dispatchers.Main) {
+            reviewDataManager.requestReviewInfo(activity, showDialog)
+        }
 
 
 }

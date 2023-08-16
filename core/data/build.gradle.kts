@@ -24,7 +24,6 @@ android {
             "verifyPurchases",
             "\"${localProperties.getProperty("verifyPurchases")}\""
         )
-        buildConfigField("String", "authKey", "\"${localProperties.getProperty("authKey")}\"")
     }
 
     buildTypes {
@@ -64,4 +63,8 @@ dependencies {
     implementation("com.android.billingclient:billing-ktx:${Versions.billing}")
     implementation("com.android.volley:volley:1.2.1")
     coreData()
+
+
+    implementation("com.google.android.play:review:2.0.1")
+    implementation("com.google.android.play:review-ktx:2.0.1")
 }

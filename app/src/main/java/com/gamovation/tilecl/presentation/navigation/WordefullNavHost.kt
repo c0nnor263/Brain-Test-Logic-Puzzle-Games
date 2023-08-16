@@ -1,9 +1,7 @@
 package com.gamovation.tilecl.presentation.navigation
 
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.compose.animation.AnimatedContentTransitionScope
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -39,6 +37,7 @@ import com.gamovation.core.ui.extensions.navigate
 import com.gamovation.core.ui.level.rememberUserInteraction
 import com.gamovation.core.ui.state.LocalLevelActionState
 import com.gamovation.core.ui.state.LocalLevelScreenState
+import com.gamovation.core.ui.state.LocalReviewDataHandlerState
 import com.gamovation.feature.home.HomeScreen
 import com.gamovation.feature.home.HomeScreenViewModel
 import com.gamovation.feature.level.LevelScreen
@@ -50,9 +49,10 @@ import com.gamovation.feature.settings.SettingsScreenViewModel
 import com.gamovation.feature.store.StoreScreen
 import com.gamovation.feature.store.StoreScreenViewModel
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun WordefullNavHost(navController: NavHostController) {
+    val context = LocalContext.current
+
     NavHost(
         modifier = Modifier
             .fillMaxWidth()
@@ -84,7 +84,6 @@ fun WordefullNavHost(navController: NavHostController) {
                 else -> levelData.id
             }
 
-            Log.i("TAG", "WordefullNavHost: $idArg")
             HomeScreen(
                 onNavigateToLevel = {
                     navController.navigate(Screens.Level(idArg.toString()))
@@ -219,11 +218,27 @@ fun WordefullNavHost(navController: NavHostController) {
 
             LaunchedEffect(interaction.value) {
                 viewModel.processInteraction(interaction.value)
+                userInteractionState.onIdle()
             }
+
+
+            val reviewDataHandler = LocalReviewDataHandlerState.current
+            LaunchedEffect(reviewDataHandler.isReviewRequested) {
+
+                val state = reviewDataHandler.isReviewRequested
+                if (state) {
+                    val activity = context as ComponentActivity
+                    viewModel.processReviewRequest(activity) {
+                        reviewDataHandler.isDialogVisible = true
+                    }
+                }
+            }
+
+
 
             CompositionLocalProvider(
                 LocalLevelScreenState provides levelScreenState.value,
-                LocalLevelActionState provides levelActionState.value
+                LocalLevelActionState provides levelActionState.value,
             ) {
                 LevelScreen(
                     level = levelData.value,

@@ -1,14 +1,19 @@
 package com.gamovation.tilecl.presentation
 
+import android.animation.ObjectAnimator
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import android.view.WindowInsets
 import android.view.WindowInsetsController
 import android.view.WindowManager
+import android.view.animation.LinearInterpolator
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.core.animation.doOnEnd
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.gamovation.core.domain.billing.UserVipType
@@ -26,8 +31,22 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private val viewModel by viewModels<AppContentViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+        val splashScreen = installSplashScreen()
+        splashScreen.setOnExitAnimationListener { splashScreenView ->
+            val slideUp = ObjectAnimator.ofFloat(
+                splashScreenView.view,
+                View.TRANSLATION_Y,
+                0f,
+                splashScreenView.view.height.toFloat()
+            )
+            slideUp.interpolator = LinearInterpolator()
+            slideUp.duration = 500L
+            slideUp.doOnEnd { splashScreenView.remove() }
 
+            // Run your animation.
+            slideUp.start()
+        }
+        super.onCreate(savedInstanceState)
         setContent {
             WordefullTheme {
 
@@ -44,8 +63,6 @@ class MainActivity : ComponentActivity() {
                     WordefullAppContent()
                 }
             }
-
-
         }
 
         WindowCompat.setDecorFitsSystemWindows(window, false)

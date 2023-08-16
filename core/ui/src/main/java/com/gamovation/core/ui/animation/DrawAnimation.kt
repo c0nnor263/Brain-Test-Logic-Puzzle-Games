@@ -1,6 +1,5 @@
 package com.gamovation.core.ui.animation
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animate
 import androidx.compose.animation.core.animateFloat
@@ -65,8 +64,6 @@ fun DrawAnimation(
     )
     LaunchedEffect(Unit) {
         launch {
-
-
             if (delayOrder != null) {
                 delay(delayOrder * Durations.Medium.time.toLong())
             } else {
@@ -78,13 +75,11 @@ fun DrawAnimation(
 
 
             val offsetXJob = launch {
-                repeat(5) { index ->
+                repeat(3) { index ->
                     val xTargetState = when (index) {
                         0 -> 100F
                         1 -> -100F
                         2 -> 75F
-                        3 -> -75F
-                        4 -> 50F
                         else -> 0F
                     }
 
@@ -98,13 +93,11 @@ fun DrawAnimation(
                 }
             }
             val offsetYJob = launch {
-                repeat(5) { index ->
+                repeat(3) { index ->
                     val yTargetState = when (index) {
                         0 -> 20F
                         1 -> -20F
                         2 -> 40F
-                        3 -> -40F
-                        4 -> 60F
                         else -> 0F
                     }
                     animate(
@@ -125,7 +118,7 @@ fun DrawAnimation(
     Box(modifier = modifier.alpha(alphaAnimation), contentAlignment = Alignment.Center) {
         content()
 
-        AnimatedVisibility(visible = !isFinished) {
+        if (!isFinished) {
             Image(
                 modifier = Modifier
                     .size(64.dp)

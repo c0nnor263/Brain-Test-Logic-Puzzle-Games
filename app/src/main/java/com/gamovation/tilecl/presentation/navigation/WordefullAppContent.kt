@@ -1,7 +1,6 @@
 package com.gamovation.tilecl.presentation.navigation
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.scaleIn
@@ -26,7 +25,6 @@ import com.gamovation.core.ui.R
 import com.gamovation.tilecl.presentation.composables.BottomBarContent
 import com.gamovation.tilecl.presentation.composables.header_bar.HeaderBar
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun WordefullAppContent() {
     val navController = rememberNavController()
@@ -40,44 +38,40 @@ fun WordefullAppContent() {
             BottomBarContent()
         }
     ) { innerPadding ->
-        Box(
+        Image(
+            modifier = Modifier.fillMaxSize(),
+            painter = painterResource(id = R.drawable.main_background),
+            contentDescription = null,
+            contentScale = ContentScale.FillHeight
+        )
+
+        AnimatedVisibility(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding),
-            contentAlignment = Alignment.Center
+            visibleState = state,
+            enter = scaleIn(tween(Durations.Medium.time)),
+            exit = scaleOut(tween(Durations.Medium.time))
         ) {
-            Image(
-                modifier = Modifier.fillMaxSize(),
-                painter = painterResource(id = R.drawable.main_background),
-                contentDescription = null,
-                contentScale = ContentScale.FillHeight
-            )
-
-            AnimatedVisibility(
-                visibleState = state,
-                enter = scaleIn(tween(Durations.Long.time)),
-                exit = scaleOut(tween(Durations.Long.time))
+            Box(
+                modifier = Modifier
+                    .displayCutoutPadding()
+                    .padding(Dimensions.Padding.Medium.value),
+                contentAlignment = Alignment.Center
             ) {
-                Box(
+                Image(
+                    modifier = Modifier.fillMaxSize(),
+                    painter = painterResource(id = R.drawable.board),
+                    contentDescription = null,
+                    contentScale = ContentScale.FillBounds
+                )
+                Column(
                     modifier = Modifier
-                        .displayCutoutPadding()
-                        .padding(Dimensions.Padding.Medium.value),
-                    contentAlignment = Alignment.Center
+                        .fillMaxSize()
+                        .padding(Dimensions.Padding.Medium.value)
                 ) {
-                    Image(
-                        modifier = Modifier.fillMaxSize(),
-                        painter = painterResource(id = R.drawable.board),
-                        contentDescription = null,
-                        contentScale = ContentScale.FillBounds
-                    )
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(Dimensions.Padding.Medium.value)
-                    ) {
-                        HeaderBar(navController = navController)
-                        WordefullNavHost(navController = navController)
-                    }
+                    HeaderBar(navController = navController)
+                    WordefullNavHost(navController = navController)
                 }
             }
         }

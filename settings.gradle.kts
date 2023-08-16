@@ -1,12 +1,6 @@
 @file:Suppress("UnstableApiUsage")
 
-include(":feature:store")
-
-
-include(":feature:settings")
-
-
-
+include(":baselineprofile")
 
 
 
@@ -36,6 +30,7 @@ include(":core:navigation")
 include(":feature:home")
 include(":feature:menu")
 include(":feature:level")
-
-
+include(":feature:store")
+include(":feature:settings")
+//include(":benchmark")
 
