@@ -21,10 +21,10 @@ class UserInteractionState {
     val interactionFlow = _interactionFlow.asStateFlow()
 
     private fun updateInteraction(interaction: UserInteraction?) {
-
         _interactionFlow.value = interaction
     }
 
+    fun onIdle() = updateInteraction(null)
     fun onBack() = updateInteraction(UserInteraction.OnBack)
     fun onForward() = updateInteraction(UserInteraction.OnForward)
     fun onWatchAd() = updateInteraction(UserInteraction.OnWatchAd)

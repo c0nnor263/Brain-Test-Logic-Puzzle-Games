@@ -1,7 +1,6 @@
 package com.gamovation.feature.level.action_bar.dialog
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -66,9 +65,7 @@ fun ActionBarDialog(
         Dialog(onDismissRequest = { onActionResult(ActionResult(ActionResult.Type.CANCELLED)) }) {
             ChalkBoardCard {
                 Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .animateContentSize(),
+                    modifier = Modifier.fillMaxWidth(),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {

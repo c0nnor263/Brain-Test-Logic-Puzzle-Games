@@ -1,10 +1,11 @@
 import org.gradle.api.JavaVersion
 
 object Versions {
+    const val benNamesVersions = "0.47.0"
     const val material = "1.9.0"
     const val ads = "22.2.0"
     const val activity = "1.7.2"
-    const val appCompat ="1.6.1"
+    const val appCompat = "1.6.1"
     const val coreKtx = "1.10.1"
     const val billing = "6.0.1"
     const val gradle = "8.1.0"
@@ -32,7 +33,7 @@ object Versions {
     object Firebase {
         const val bom = "32.2.2"
         const val crashlyticsPlugin = "2.9.8"
-        const val performancePlugin= "1.4.2"
+        const val performancePlugin = "1.4.2"
         const val servicesPlugin = "4.3.15"
     }
 
@@ -46,6 +47,8 @@ object Versions {
     }
 
     object Tooling {
+        const val benchmarkMacroJunit4 = "1.2.0-beta03"
+        const val uiautomator = "2.2.0"
         const val androidEspressoCore = "3.5.1"
         const val androidJunit = "1.1.5"
         const val junit = "4.13.2"

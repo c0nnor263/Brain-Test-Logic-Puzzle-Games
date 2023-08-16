@@ -8,8 +8,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SettingsScreenViewModel @Inject constructor(
     private val billingDataSource: BillingDataSource
-) :
-    ViewModel() {
+) : ViewModel() {
     fun restorePurchases() {
         billingDataSource.restorePurchases()
     }

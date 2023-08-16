@@ -10,4 +10,7 @@ interface UserInfoPreferencesRepository {
     suspend fun buyCurrency(amount: Int)
     fun getUserVipType(): Flow<UserVipType>
     suspend fun setUserVipType(type: UserVipType)
+
+    fun getIsAvailableForReview(): Flow<Boolean>
+    suspend fun setIsAvailableForReview(newValue: Boolean)
 }

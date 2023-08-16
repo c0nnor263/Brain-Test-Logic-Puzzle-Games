@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -36,8 +37,8 @@ fun DraggableText(
     val screenWidth = with(density) { configuration.screenWidthDp.dp.roundToPx() }
     val screenHeight = with(density) { configuration.screenHeightDp.dp.roundToPx() }
 
-    var offsetX by remember { mutableStateOf(0F) }
-    var offsetY by remember { mutableStateOf(0F) }
+    var offsetX by remember { mutableFloatStateOf(0F) }
+    var offsetY by remember { mutableFloatStateOf(0F) }
     var currentPosition by remember { mutableStateOf(Offset.Zero) }
     var rectOfDraggable by remember { mutableStateOf<Rect?>(null) }
 

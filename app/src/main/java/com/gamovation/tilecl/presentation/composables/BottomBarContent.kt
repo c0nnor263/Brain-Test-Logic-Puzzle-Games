@@ -41,7 +41,7 @@ fun BottomBarContent(modifier: Modifier = Modifier) {
         ) {
             BannerAdView(
                 modifier = Modifier.fillMaxWidth(),
-                stringResource(id = com.gamovation.core.data.R.string.admob_application_id)
+                stringResource(id = com.gamovation.core.data.R.string.admob_banner_id_app_bottom_banner)
             )
         }
     }

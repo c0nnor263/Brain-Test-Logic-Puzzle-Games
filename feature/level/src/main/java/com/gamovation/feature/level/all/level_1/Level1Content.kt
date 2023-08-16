@@ -1,5 +1,6 @@
 package com.gamovation.feature.level.all.level_1
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -109,6 +110,7 @@ internal fun Level1Content(
         }
         Spacer(modifier = Modifier.height(Dimensions.Padding.Medium.value))
         AnswersBlock(listOfAnswers = listOfAnswers) { answerText ->
+            Log.i("TAG", "Level1Content: $answerText")
             val duckCount = 8.toString()
             val state = if (answerText == duckCount) {
                 LevelScreenState.CORRECT_CHOICE

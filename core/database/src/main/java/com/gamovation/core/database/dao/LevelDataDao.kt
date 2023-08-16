@@ -24,7 +24,4 @@ interface LevelDataDao {
 
     @Query("SELECT * FROM leveldata WHERE isCompleted = 0 ORDER BY id ASC LIMIT 1")
     fun getLastUncompletedLevel(): Flow<LevelData>
-
-    @Query("SELECT * FROM leveldata ORDER BY id LIMIT 5 OFFSET :id")
-    fun getLevelDataListByIndex(id: Int): Flow<List<LevelData>>
 }

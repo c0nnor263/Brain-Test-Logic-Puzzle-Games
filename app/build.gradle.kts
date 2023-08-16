@@ -5,6 +5,7 @@ import java.util.Properties
 
 plugins {
     PluginType.APPLICATION.get(this)
+    id("androidx.baselineprofile")
 }
 
 
@@ -13,8 +14,6 @@ val keystoreProperties = Properties().apply {
     load(FileInputStream(keystorePropertiesFile))
 }
 
-
-// TODO add Google Services Rate API
 android {
     namespace = "com.gamovation.tilecl"
     compileSdk = Versions.Config.compileSdk
@@ -23,8 +22,8 @@ android {
         applicationId = namespace
         minSdk = Versions.Config.minSdk
         targetSdk = Versions.Config.targetSdk
-        versionCode = 5
-        versionName = "5.0"
+        versionCode = 6
+        versionName = "23.08.17"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -91,6 +90,7 @@ dependencies {
     implementation(project(":feature:store"))
     implementation(project(":feature:level"))
     implementation(project(":feature:settings"))
+    "baselineProfile"(project(":baselineprofile"))
     composeCore()
 
 
@@ -112,5 +112,11 @@ dependencies {
 
 
     implementation("com.android.billingclient:billing-ktx:${Versions.billing}")
+
+    implementation("androidx.core:core-splashscreen:1.0.1")
+
+    implementation("androidx.profileinstaller:profileinstaller:1.3.1")
+    implementation("androidx.startup:startup-runtime:1.1.1")
+    implementation("com.google.android.gms:play-services-ads:${Versions.ads}")
 
 }

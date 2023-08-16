@@ -1,6 +1,7 @@
 package com.gamovation.core.database.preferences
 
 import android.content.Context
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
@@ -25,6 +26,7 @@ class UserInfoPreferencesDataStore @Inject constructor(@ApplicationContext val c
     object UserInfoPreferencesKeys {
         val USER_CURRENCY = intPreferencesKey("user_currency")
         val USER_VIP = stringPreferencesKey("user_vip")
+        val IS_AVAILABLE_REVIEW = booleanPreferencesKey("is_available_review")
     }
 
 
@@ -76,5 +78,17 @@ class UserInfoPreferencesDataStore @Inject constructor(@ApplicationContext val c
         }
     }
 
+
+    fun getIsAvailableForReview(): Flow<Boolean> {
+        return combine(dataStore.data) {
+            it.first()[UserInfoPreferencesKeys.IS_AVAILABLE_REVIEW] ?: true
+        }
+    }
+
+    suspend fun setIsAvailableForReview(newValue: Boolean) {
+        dataStore.edit { preferences ->
+            preferences[UserInfoPreferencesKeys.IS_AVAILABLE_REVIEW] = newValue
+        }
+    }
 
 }

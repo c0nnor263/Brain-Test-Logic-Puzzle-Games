@@ -18,6 +18,8 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import com.gamovation.core.database.model.LevelData
@@ -44,6 +46,9 @@ fun MenuScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             LazyColumn(
+                modifier = Modifier.semantics {
+                    contentDescription = "MenuLazyColumn"
+                },
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(Dimensions.Padding.Small.value),
                 contentPadding = PaddingValues(Dimensions.Padding.Small.value),

@@ -9,6 +9,4 @@ interface LevelDataRepository {
     fun getLevelDataById(id: Int): Flow<LevelData>
     fun getAllLevelData(): Flow<List<LevelData>>
     fun getLastUncompletedLevel(): Flow<LevelData>
-    fun getLevelDataListByIndex(id: Int): Flow<List<LevelData>>
-
 }

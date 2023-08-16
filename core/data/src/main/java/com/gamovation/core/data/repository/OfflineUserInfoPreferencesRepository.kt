@@ -31,4 +31,12 @@ class OfflineUserInfoPreferencesRepository @Inject constructor(
     override suspend fun setUserVipType(type: UserVipType) {
         userInfoPreferencesDataStore.setUserVip(type)
     }
+
+    override fun getIsAvailableForReview(): Flow<Boolean> {
+        return userInfoPreferencesDataStore.getIsAvailableForReview()
+    }
+
+    override suspend fun setIsAvailableForReview(newValue: Boolean) {
+        userInfoPreferencesDataStore.setIsAvailableForReview(newValue)
+    }
 }

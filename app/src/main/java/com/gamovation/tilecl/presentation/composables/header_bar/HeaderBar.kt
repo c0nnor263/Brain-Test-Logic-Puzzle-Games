@@ -21,6 +21,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -71,10 +73,9 @@ fun HeaderBar(navController: NavHostController) {
                             onNavigateToSettings = {
                                 navController.navigate(Screens.Settings)
                             },
-                            onNavigateToMenu = {
-                                navController.navigate(Screens.Menu)
-                            },
-                        )
+                        ) {
+                            navController.navigate(Screens.Menu)
+                        }
                     }
 
                     Screens.Level().route -> {
@@ -119,9 +120,11 @@ fun HeaderBar(navController: NavHostController) {
             modifier = Modifier.padding(Dimensions.Padding.Small.value),
             shape = Dimensions.RoundedShape.Large.value
         ) {
-            TextButton(onClick = {
-                navController.navigate(Screens.Store)
-            }) {
+            TextButton(
+                modifier = Modifier.semantics { contentDescription = "StoreScreenNavigate" },
+                onClick = {
+                    navController.navigate(Screens.Store)
+                }) {
                 Text(
                     text = currency.toString(), style = MaterialTheme.typography.headlineMedium
                 )

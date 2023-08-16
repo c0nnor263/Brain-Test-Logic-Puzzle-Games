@@ -72,6 +72,7 @@ fun Contents(
                 }
 
                 else -> LevelBody(level = level, onLevelScreenAction = { newState ->
+
                     if (screenState != LevelScreenState.IS_PLAYING) return@LevelBody
                     onLevelScreenAction(newState)
                 })

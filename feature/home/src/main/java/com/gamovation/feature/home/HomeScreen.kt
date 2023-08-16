@@ -11,6 +11,8 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.gamovation.core.ui.Dimensions
@@ -36,7 +38,9 @@ fun HomeScreen(
         }
 
         DrawAnimation(delayOrder = 1) {
-            TextButton(onClick = {
+            TextButton(modifier = Modifier.semantics {
+                contentDescription = "LevelScreenFastNavigate"
+            }, onClick = {
                 onNavigateToLevel()
             }) {
                 Text(text = "LET'S GO!", style = MaterialTheme.typography.displayLarge)
