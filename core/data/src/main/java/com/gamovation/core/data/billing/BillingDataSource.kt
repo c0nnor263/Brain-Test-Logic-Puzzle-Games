@@ -206,8 +206,8 @@ class BillingDataSource @Inject constructor(
 
 
     private fun verifyPurchase(purchase: Purchase?) {
-        val json = purchase?.originalJson?.let { JSONObject(it) }
-        val productId = json?.getString("productId")
+        val purchaseJson = purchase?.originalJson?.let { JSONObject(it) }
+        val productId = purchaseJson?.getString("productId")
         val type = when (productId) {
             BillingProductType.VIP.id -> ProductType.SUBS
             else -> ProductType.INAPP
@@ -221,28 +221,23 @@ class BillingDataSource @Inject constructor(
         Log.i("TAG", "verifyPurchase: $url")
 
         val responseListener = Response.Listener<String> { response ->
-            try {
-                Log.i("TAG", "verifyPurchase: response $response")
-                val isValid = JSONObject(response).getBoolean("isValid").also {
-                    Log.i("TAG", "verifyPurchase: $it")
-                }
-                if (isValid) {
-                    updatePendingBenefitType(json)
-                    when (productId) {
-                        BillingProductType.VIP.id,
-                        BillingProductType.REMOVE_ADS.id,
-                        BillingProductType.SMARTEST_OFFER.id,
-                        BillingProductType.BEST_CHOICE_OFFER.id -> {
-                            acknowledgePurchase(purchase)
-                        }
-
-                        else -> consumePurchase(purchase)
-                    }
-                } else updatePendingBenefitResult(VerifyResult.FAILED)
-            } catch (e: Exception) {
-                Log.i("TAG", "verifyPurchase: error $response")
-                updatePendingBenefitResult(VerifyResult.FAILED)
+            Log.i("TAG", "verifyPurchase: response $response")
+            val isValid = JSONObject(response).getBoolean("isValid").also {
+                Log.i("TAG", "verifyPurchase: $it")
             }
+            if (isValid) {
+                updatePendingBenefitType(purchaseJson)
+                when (productId) {
+                    BillingProductType.VIP.id,
+                    BillingProductType.REMOVE_ADS.id,
+                    BillingProductType.SMARTEST_OFFER.id,
+                    BillingProductType.BEST_CHOICE_OFFER.id -> {
+                        acknowledgePurchase(purchase)
+                    }
+
+                    else -> consumePurchase(purchase)
+                }
+            } else updatePendingBenefitResult(VerifyResult.FAILED)
 
         }
 
@@ -253,7 +248,19 @@ class BillingDataSource @Inject constructor(
                 "TAG",
                 "verifyPurchase: net error ${error.networkResponse.statusCode} \n${error.message}"
             )
-            updatePendingBenefitResult(VerifyResult.FAILED)
+            when (productId) {
+                BillingProductType.VIP.id,
+                BillingProductType.REMOVE_ADS.id,
+                BillingProductType.SMARTEST_OFFER.id,
+                BillingProductType.BEST_CHOICE_OFFER.id -> {
+                    updatePendingBenefitResult(VerifyResult.FAILED)
+                }
+
+                else -> {
+                    updatePendingBenefitType(purchaseJson)
+                    consumePurchase(purchase)
+                }
+            }
         }
 
         Volley.newRequestQueue(context).add(request)
