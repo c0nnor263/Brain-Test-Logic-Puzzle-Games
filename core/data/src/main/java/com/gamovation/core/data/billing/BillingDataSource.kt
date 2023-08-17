@@ -53,7 +53,6 @@ class BillingDataSource @Inject constructor(
     var fetchDelay: Long = TimeUnit.SECONDS.toMillis(1)
 
 
-
     // Repository Pattern
     private val _productsDetailsFlow = MutableStateFlow(ProductDetailsInfo(null, null))
     val productsDetailsFlow: StateFlow<ProductDetailsInfo> = _productsDetailsFlow.asStateFlow()
@@ -77,8 +76,8 @@ class BillingDataSource @Inject constructor(
 
                 val timePass = System.currentTimeMillis() - initialBillingStartTime
                 if (timePass > TimeUnit.SECONDS.toMillis(30)) {
-                   fetchDelay = TimeUnit.SECONDS.toMillis(1)
-                }else  fetchDelay += fetchDelay
+                    fetchDelay = TimeUnit.SECONDS.toMillis(1)
+                } else fetchDelay += fetchDelay
             }
         }
     }
@@ -173,7 +172,8 @@ class BillingDataSource @Inject constructor(
         }
         if (subscriptionDetailsResult.billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
             val result = subscriptionDetailsResult.productDetailsList
-            _productsDetailsFlow.value = _productsDetailsFlow.value.copy(subscriptionDetails = result)
+            _productsDetailsFlow.value =
+                _productsDetailsFlow.value.copy(subscriptionDetails = result)
         }
     }
 
@@ -208,21 +208,29 @@ class BillingDataSource @Inject constructor(
     private fun verifyPurchase(purchase: Purchase?) {
         val json = purchase?.originalJson?.let { JSONObject(it) }
         val productId = json?.getString("productId")
+        val type = when (productId) {
+            BillingProductType.VIP.id -> ProductType.SUBS
+            else -> ProductType.INAPP
+        }
         Log.i("TAG", "verifyPurchase: $purchase")
         val url =
             BuildConfig.verifyPurchases + "?" +
                     "purchaseToken=${purchase?.purchaseToken}&" +
-                    "productId=$productId"
+                    "productId=$productId&" +
+                    "productType=$type"
         Log.i("TAG", "verifyPurchase: $url")
 
         val responseListener = Response.Listener<String> { response ->
             try {
                 Log.i("TAG", "verifyPurchase: response $response")
-                val isValid = JSONObject(response).getBoolean("isValid")
+                val isValid = JSONObject(response).getBoolean("isValid").also {
+                    Log.i("TAG", "verifyPurchase: $it")
+                }
                 if (isValid) {
                     updatePendingBenefitType(json)
                     when (productId) {
                         BillingProductType.VIP.id,
+                        BillingProductType.REMOVE_ADS.id,
                         BillingProductType.SMARTEST_OFFER.id,
                         BillingProductType.BEST_CHOICE_OFFER.id -> {
                             acknowledgePurchase(purchase)

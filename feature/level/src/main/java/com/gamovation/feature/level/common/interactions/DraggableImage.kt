@@ -1,6 +1,5 @@
 package com.gamovation.feature.level.common.interactions
 
-import android.util.Log
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.gestures.detectDragGestures
@@ -72,7 +71,6 @@ fun DraggableImage(
 
                             val draggableOffset = Offset(offsetX, offsetY) + currentPosition
                             val screenSize = Offset(screenWidth.toFloat(), screenHeight.toFloat())
-                            Log.i("TAG", "Level2Content: $draggableOffset $screenSize")
                             onDrag(
                                 draggableOffset,
                                 screenSize

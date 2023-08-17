@@ -1,6 +1,5 @@
 package com.gamovation.feature.level
 
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -59,7 +58,7 @@ class LevelScreenViewModel @Inject constructor(
             LevelScreenState.CORRECT_CHOICE -> LevelScreenState.COMPLETED
             else -> LevelScreenState.IS_PLAYING
         }
-        Log.i("TAG", "updateLevelScreenState: NEW $newState")
+
         _levelScreenState.emit(newState)
     }
 

@@ -1,6 +1,5 @@
 package com.gamovation.core.ui.state
 
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -48,7 +47,6 @@ class InterstitialAdViewState(
             object : InterstitialAdLoadCallback() {
                 override fun onAdLoaded(ad: InterstitialAd) {
                     super.onAdLoaded(ad)
-                    Log.i("TAG", "onAdLoaded: ${ad.responseInfo}")
                     interstitialAd = ad
                 }
 

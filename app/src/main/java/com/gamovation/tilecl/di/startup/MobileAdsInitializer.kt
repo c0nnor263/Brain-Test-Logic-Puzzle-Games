@@ -9,7 +9,8 @@ class MobileAdsInitializer : Initializer<MobileAdsInitializer> {
     private val configuration = RequestConfiguration.Builder()
         .setTestDeviceIds(
             listOf(
-                "605294fe-166c-4a6f-a59e-f35f680865f3"
+                "56BE866E8D6B7D8AF4EC0676F9236973",
+                "B8422D142A4DEF246360E184189A5634"
             )
         )
         // TODO: Add your test device ID here

@@ -1,7 +1,6 @@
 package com.gamovation.core.data.review
 
 import android.content.Context
-import android.util.Log
 import androidx.activity.ComponentActivity
 import com.gamovation.core.data.repository.OfflineUserInfoPreferencesRepository
 import com.google.android.play.core.review.ReviewInfo
@@ -27,11 +26,10 @@ class ReviewDataManager @Inject constructor(
     }
 
     suspend fun requestReviewInfo(activity: ComponentActivity, showDialog: () -> Unit) {
-        Log.i("TAG", "requestReviewInfo: available ${isAvailableForReview()}")
+
         if (isAvailableForReview()) {
             showDialog()
             manager.requestReviewFlow().addOnCompleteListener { task ->
-                Log.i("TAG", "requestReviewInfo: ${task.exception}")
                 if (task.isSuccessful) {
 
                     val reviewInfo: ReviewInfo? = task.result

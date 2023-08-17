@@ -34,7 +34,7 @@ class RewardedInterstitialAdViewState(
         private set
 
     fun loadAd(context: ComponentActivity) {
-        Log.i("TAG", "loadAd reward: $context")
+
         val adRequest = AdRequestBuilder().createDefault()
         RewardedInterstitialAd.load(
             context,
@@ -49,7 +49,7 @@ class RewardedInterstitialAdViewState(
 
                 override fun onAdFailedToLoad(error: LoadAdError) {
                     super.onAdFailedToLoad(error)
-                    Log.i("TAG", "onAdFailedToLoad: ${error}")
+                    Log.i("TAG", "onAdFailedToLoad: ${error.responseInfo}")
                     rewardedInterstitialAd = null
                 }
             }
@@ -63,6 +63,7 @@ class RewardedInterstitialAdViewState(
                 super.onAdDismissedFullScreenContent()
                 rewardedInterstitialAd = null
                 loadAd(activity)
+                Log.i("TAG", "onAdDismissedFullScreenContent: ")
             }
 
             override fun onAdFailedToShowFullScreenContent(error: AdError) {
@@ -70,6 +71,7 @@ class RewardedInterstitialAdViewState(
                 rewardedInterstitialAd = null
                 loadAd(activity)
                 onDismissed(false)
+                Log.i("TAG", "onAdFailedToShowFullScreenContent: ${error.message} ")
             }
 
         }

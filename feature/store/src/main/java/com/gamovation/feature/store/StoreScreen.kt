@@ -13,6 +13,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -37,7 +38,7 @@ fun StoreScreen(
     onWatchAd: (Boolean?) -> Unit
 ) {
     var showWatchAdDialog by remember { mutableStateOf(false) }
-
+    val context = LocalContext.current
     LazyColumn(
         modifier = Modifier
             .semantics { contentDescription = "StoreLazyColumn" }
@@ -47,7 +48,9 @@ fun StoreScreen(
     ) {
         item {
             VipContent(onBuy = {
-                storeDetails?.vipDetails?.let { onBuy(it, BillingProductType.VIP) }
+                storeDetails?.vipDetails?.let {
+                    onBuy(it, BillingProductType.VIP)
+                }
             })
         }
 
@@ -58,7 +61,7 @@ fun StoreScreen(
             ) {
                 SmartestOfferContent(
                     modifier = Modifier.weight(0.5F),
-                    storeDetails?.coolestOfferDetails,
+                    storeDetails?.smartestOfferDetails,
                     onClick = onBuy
                 )
                 Spacer(modifier = Modifier.width(Dimensions.Padding.Medium.value))
@@ -81,6 +84,7 @@ fun StoreScreen(
         item {
             WatchStoreItem(value = "x25", text = "watch", onClick = {
                 showWatchAdDialog = true
+
             })
         }
         item {
@@ -91,6 +95,7 @@ fun StoreScreen(
         item {
             StoreItem(value = "x500", details = storeDetails?.currency500Details, onClick = {
                 onBuy(it, BillingProductType.CURRENCY_500)
+
             })
         }
         item {

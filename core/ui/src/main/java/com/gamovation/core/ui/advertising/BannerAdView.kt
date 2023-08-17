@@ -1,6 +1,7 @@
 package com.gamovation.core.ui.advertising
 
 import android.content.Context
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -21,7 +22,9 @@ fun BannerAdView(
 ) {
     val deviceCurrentWidth = LocalConfiguration.current.screenWidthDp
     val adRequest by remember {
-        mutableStateOf(AdRequestBuilder().createDefault())
+        mutableStateOf(AdRequestBuilder().createDefault().also {
+            Log.i("TAG", "BannerAdView: ${it.contentUrl} ${it.adString}")
+        })
     }
     AndroidView(modifier = modifier, factory = { context: Context ->
         AdView(context).apply {
@@ -30,7 +33,6 @@ fun BannerAdView(
                     context, deviceCurrentWidth
                 )
             )
-
             setAdUnitId(adUnitId)
             loadAd(adRequest)
         }

@@ -83,6 +83,7 @@ fun BestChoiceContent(
                         contentScale = ContentScale.Fit
                     )
                 }
+
                 Spacer(modifier = Modifier.height(Dimensions.Padding.Small.value))
                 BuyButton(text = details?.oneTimePurchaseOfferDetails?.formattedPrice ?: "",
                     onClick = {
