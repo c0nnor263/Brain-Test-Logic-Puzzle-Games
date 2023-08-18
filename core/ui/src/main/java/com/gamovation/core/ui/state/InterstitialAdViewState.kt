@@ -64,7 +64,6 @@ class InterstitialAdViewState(
             override fun onAdDismissedFullScreenContent() {
                 super.onAdDismissedFullScreenContent()
                 interstitialAd = null
-
                 onDismissed()
                 loadAd(activity)
             }

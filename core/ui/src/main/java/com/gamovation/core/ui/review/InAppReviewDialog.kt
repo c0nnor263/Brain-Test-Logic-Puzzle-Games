@@ -72,7 +72,7 @@ fun InAppReviewDialog(
                     }
                     Spacer(modifier = Modifier.height(Dimensions.Padding.Small.value))
 
-                    DrawAnimation {
+                    DrawAnimation(delayOrder = 1) {
                         Text(
                             text = "Could you share your feedback so we can work on improving it?",
                             style = MaterialTheme.typography.titleMedium,
@@ -83,13 +83,13 @@ fun InAppReviewDialog(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceAround
                     ) {
-                        DrawAnimation(delayOrder = 1) {
+                        DrawAnimation(delayOrder = 2) {
                             Text(text = "Yes", modifier = Modifier.clickable {
                                 onStartReview()
                             }, style = MaterialTheme.typography.headlineMedium)
                         }
                         Spacer(Modifier.width(Dimensions.Padding.Small.value))
-                        DrawAnimation(delayOrder = 1) {
+                        DrawAnimation(delayOrder = 3) {
                             Text(text = "No", modifier = Modifier.clickable {
                                 onDismiss()
                             }, style = MaterialTheme.typography.headlineMedium)

@@ -13,6 +13,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -116,11 +117,23 @@ fun WordefullNavHost(navController: NavHostController) {
             val storeScreenDetails = remember(productDetailsInfo) {
                 StoreScreenDetails.create(productDetailsInfo.value)
             }
+
+            var errorDialog by remember {
+                mutableStateOf(false)
+            }
             StoreScreen(
                 storeDetails = storeScreenDetails,
                 onWatchAd = { result -> if (result == true) viewModel.watchAdReward() },
+                errorDialog = errorDialog,
                 onBuy = { details, type ->
-                    viewModel.purchaseProduct(details, type) { activity }
+                    viewModel.purchaseProduct(details, type, onError = {
+                        errorDialog = true
+                    }) {
+                        activity
+                    }
+                },
+                onDismissErrorDialog = {
+                    errorDialog = false
                 }
             )
         }

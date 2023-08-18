@@ -7,8 +7,10 @@ import com.android.billingclient.api.ProductDetails
 import com.gamovation.core.data.billing.BillingDataSource
 import com.gamovation.core.data.billing.BillingProductType
 import com.gamovation.core.data.repository.OfflineUserInfoPreferencesRepository
+import com.gamovation.core.domain.billing.UserVipType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,10 +23,22 @@ class StoreScreenViewModel @Inject constructor(
     fun purchaseProduct(
         details: ProductDetails,
         type: BillingProductType,
+        onError: () -> Unit,
         onRequestActivity: () -> ComponentActivity
     ) =
         viewModelScope.launch(Dispatchers.IO) {
-            billingDataSource.purchaseProduct(details, type, onRequestActivity)
+            val currentType = userInfoPreferencesRepository.getUserVipType().first()
+            when (type) {
+                BillingProductType.REMOVE_ADS, BillingProductType.VIP -> {
+                    if (currentType != UserVipType.BASE) {
+                        onError()
+                    } else {
+                        billingDataSource.purchaseProduct(details, type, onRequestActivity)
+                    }
+                }
+
+                else -> billingDataSource.purchaseProduct(details, type, onRequestActivity)
+            }
         }
 
     fun watchAdReward() = viewModelScope.launch(Dispatchers.IO) {

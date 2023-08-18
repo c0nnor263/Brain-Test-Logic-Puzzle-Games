@@ -13,7 +13,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -34,11 +33,12 @@ import com.gamovation.feature.store.items.VipContent
 @Composable
 fun StoreScreen(
     storeDetails: StoreScreenDetails?,
+    errorDialog: Boolean,
     onBuy: (ProductDetails, BillingProductType) -> Unit,
-    onWatchAd: (Boolean?) -> Unit
+    onDismissErrorDialog: () -> Unit,
+    onWatchAd: (Boolean?) -> Unit,
 ) {
     var showWatchAdDialog by remember { mutableStateOf(false) }
-    val context = LocalContext.current
     LazyColumn(
         modifier = Modifier
             .semantics { contentDescription = "StoreLazyColumn" }
@@ -112,13 +112,15 @@ fun StoreScreen(
             showWatchAdDialog = false
             onWatchAd(it)
         })
+
+    StoreScreenErrorDialog(visible = errorDialog, onDismiss = onDismissErrorDialog)
 }
 
 @Preview
 @Composable
 fun StoreScreenPreview() {
     WordefullTheme {
-        StoreScreen(null, onWatchAd = {}, onBuy = { _, _ ->
+        StoreScreen(null, false, onWatchAd = {}, onDismissErrorDialog = {}, onBuy = { _, _ ->
 
         })
     }

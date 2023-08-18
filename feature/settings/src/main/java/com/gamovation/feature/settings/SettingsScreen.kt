@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -44,6 +45,7 @@ import androidx.core.net.toUri
 import com.gamovation.core.ui.Dimensions
 import com.gamovation.core.ui.R
 import com.gamovation.core.ui.theme.WordefullTheme
+import com.gamovation.core.ui.theme.boardBackgroundColor
 import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -155,7 +157,6 @@ fun SettingsScreen(onRestorePurchases: () -> Unit) {
                 .padding(bottom = Dimensions.Padding.Large.value),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Row {
                 TextButton(onClick = {
                     val intent = Intent(
                         Intent.ACTION_VIEW,
@@ -166,15 +167,6 @@ fun SettingsScreen(onRestorePurchases: () -> Unit) {
                 }) {
                     Text(text = "Privacy Policy", style = MaterialTheme.typography.headlineSmall)
                 }
-
-                TextButton(onClick = {
-                    val intent = Intent(Intent.ACTION_VIEW, "https://www.google.com".toUri())
-                    context.startActivity(intent)
-                }) {
-                    Text(text = "Terms of Use", style = MaterialTheme.typography.headlineSmall)
-                }
-            }
-
             TextButton(onClick = {
                 onRestorePurchases()
                 showLoadingDialog = true
@@ -187,7 +179,7 @@ fun SettingsScreen(onRestorePurchases: () -> Unit) {
         AnimatedVisibility(
             modifier = Modifier
                 .fillMaxSize()
-                .background(MaterialTheme.colorScheme.background),
+                .background(boardBackgroundColor),
             visible = showLoadingDialog
         ) {
             AlertDialog(
@@ -197,7 +189,10 @@ fun SettingsScreen(onRestorePurchases: () -> Unit) {
                     dismissOnClickOutside = false,
                 )
             ) {
-                Card(modifier = Modifier.wrapContentSize()) {
+                Card(
+                    modifier = Modifier.wrapContentSize(),
+                    colors = CardDefaults.cardColors(boardBackgroundColor)
+                ) {
                     Box(
                         modifier = Modifier.padding(48.dp),
                         contentAlignment = Alignment.Center

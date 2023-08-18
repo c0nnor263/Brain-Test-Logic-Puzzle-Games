@@ -200,8 +200,6 @@ class BillingDataSource @Inject constructor(
         } catch (e: Exception) {
             _pendingBenefitFlow.value = PurchaseProduct(type, VerifyResult.FAILED)
         }
-
-
     }
 
 
@@ -267,15 +265,19 @@ class BillingDataSource @Inject constructor(
     }
 
 
-    private fun receiveProduct(type: BillingProductType?) = scope.launch {
+    private fun receiveProduct(type: BillingProductType?, currencyInclude: Boolean) = scope.launch {
         when (type) {
             BillingProductType.SMARTEST_OFFER -> {
-                userInfoPreferencesRepository.buyCurrency(250)
+                if (currencyInclude) {
+                    userInfoPreferencesRepository.buyCurrency(250)
+                }
                 userInfoPreferencesRepository.setUserVipType(UserVipType.ADS_FREE)
             }
 
             BillingProductType.BEST_CHOICE_OFFER -> {
-                userInfoPreferencesRepository.buyCurrency(1000)
+                if (currencyInclude) {
+                    userInfoPreferencesRepository.buyCurrency(1000)
+                }
                 userInfoPreferencesRepository.setUserVipType(UserVipType.ADS_FREE)
             }
 
@@ -316,7 +318,6 @@ class BillingDataSource @Inject constructor(
                 updatePendingBenefitResult(VerifyResult.SUCCESS)
             } else {
                 updatePendingBenefitResult(VerifyResult.FAILED)
-                return@launch
             }
         }
     }
@@ -324,7 +325,10 @@ class BillingDataSource @Inject constructor(
 
     private fun acknowledgePurchase(purchase: Purchase?) {
         Log.i("TAG", "acknowledgePurchase: $purchase")
-        if (purchase?.isAcknowledged == true) return
+        if (purchase?.isAcknowledged == true) {
+            updatePendingBenefitResult(VerifyResult.SUCCESS, false)
+            return
+        }
 
         val acknowledgeParams =
             AcknowledgePurchaseParams.newBuilder()
@@ -337,16 +341,15 @@ class BillingDataSource @Inject constructor(
                 updatePendingBenefitResult(VerifyResult.SUCCESS)
             } else {
                 updatePendingBenefitResult(VerifyResult.FAILED)
-                return@launch
             }
         }
     }
 
-    private fun updatePendingBenefitResult(result: VerifyResult) {
+    private fun updatePendingBenefitResult(result: VerifyResult, currencyInclude: Boolean = true) {
         _pendingBenefitFlow.value = pendingBenefitFlow.value.copy(result = result)
 
         if (result == VerifyResult.SUCCESS) {
-            receiveProduct(pendingBenefitFlow.value.type)
+            receiveProduct(pendingBenefitFlow.value.type, currencyInclude)
         }
     }
 
