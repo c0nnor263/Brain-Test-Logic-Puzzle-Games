@@ -4,6 +4,5 @@ enum class LibType(val value: String) {
     ANNOTATION_PROCESSOR("annotationProcessor"),
     ANDROID_TEST("androidTestImplementation"),
     DEBUG("debugImplementation"),
-    KAPT("kapt"),
     KSP("ksp")
 }

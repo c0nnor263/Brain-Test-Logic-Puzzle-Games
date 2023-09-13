@@ -50,8 +50,8 @@ class BaselineProfileGenerator {
                 .clickAndWait(Until.newWindow(), 5000)
             device.findObject(By.desc("StoreLazyColumn"))
                 .also {
-                    it.fling(Direction.DOWN)
-                    it.fling(Direction.UP)
+                    it?.fling(Direction.DOWN)
+                    it?.fling(Direction.UP)
                 }
             device.pressBack()
             pressHome()
@@ -61,8 +61,8 @@ class BaselineProfileGenerator {
                 .clickAndWait(Until.newWindow(), 5000)
             device.findObject(By.desc("MenuLazyColumn"))
                 .also {
-                    it.fling(Direction.DOWN)
-                    it.fling(Direction.UP)
+                    it?.fling(Direction.DOWN)
+                    it?.fling(Direction.UP)
                 }
 
             device.pressBack()

@@ -9,11 +9,10 @@ fun PluginType.get(scope: PluginDependenciesSpec) {
             PluginType.APPLICATION -> {
                 id("com.android.application")
                 kotlin("android")
-                id("kotlin-kapt")
+                id("com.google.devtools.ksp")
                 id("com.google.gms.google-services")
                 id("com.google.firebase.crashlytics")
                 id("com.google.firebase.firebase-perf")
-                id("com.google.devtools.ksp") version Versions.ksp
                 id("com.google.dagger.hilt.android")
 
             }
@@ -21,8 +20,8 @@ fun PluginType.get(scope: PluginDependenciesSpec) {
             else -> {
                 id("com.android.library")
                 kotlin("android")
-                id("kotlin-kapt")
-                id("com.google.devtools.ksp") version Versions.ksp
+//                id("kotlin-kapt")
+                id("com.google.devtools.ksp")
                 id("com.google.dagger.hilt.android")
 
             }
@@ -72,7 +71,7 @@ fun DependencyHandler.composeCore() {
 
 
     add(LibType.DEFAULT.value, "com.google.dagger:hilt-android:${Versions.hilt}")
-    add(LibType.KAPT.value, "com.google.dagger:hilt-android-compiler:${Versions.hilt}")
+    add(LibType.KSP.value, "com.google.dagger:hilt-android-compiler:${Versions.hilt}")
 }
 
 fun DependencyHandler.coreData() {
@@ -84,7 +83,7 @@ fun DependencyHandler.coreData() {
 
 
     add(LibType.DEFAULT.value, "com.google.dagger:hilt-android:${Versions.hilt}")
-    add(LibType.KAPT.value, "com.google.dagger:hilt-android-compiler:${Versions.hilt}")
+    add(LibType.KSP.value, "com.google.dagger:hilt-android-compiler:${Versions.hilt}")
 
 
     add(LibType.DEFAULT.value, "com.google.android.gms:play-services-ads:${Versions.ads}")
