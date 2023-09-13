@@ -14,6 +14,7 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
+
 rootProject.name = "Wordefull"
 include(":app")
 include(":core:database")
