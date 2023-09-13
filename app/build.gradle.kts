@@ -22,8 +22,8 @@ android {
         applicationId = namespace
         minSdk = Versions.Config.minSdk
         targetSdk = Versions.Config.targetSdk
-        versionCode = 11
-        versionName = "23.08.18.3"
+        versionCode = 12
+        versionName = "23.09.13.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -73,10 +73,6 @@ android {
             resources.excludes.add(Versions.excludeFiles)
         }
     }
-}
-
-kapt {
-    correctErrorTypes = true
 }
 
 dependencies {

@@ -1,11 +1,5 @@
 @file:Suppress("UnstableApiUsage")
 
-include(":baselineprofile")
-
-
-
-
-
 pluginManagement {
     repositories {
         google()
@@ -32,5 +26,5 @@ include(":feature:menu")
 include(":feature:level")
 include(":feature:store")
 include(":feature:settings")
-//include(":benchmark")
+include(":baselineprofile")
 

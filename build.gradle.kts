@@ -10,6 +10,7 @@ plugins {
     id("com.android.library") version Versions.gradle apply false
     id("com.android.application") version Versions.gradle apply false
     id("com.google.dagger.hilt.android") version Versions.hilt apply false
+    id("com.google.devtools.ksp") version Versions.ksp apply false
     id("com.github.ben-manes.versions") version Versions.benNamesVersions apply false
     id("androidx.baselineprofile") version Versions.Tooling.benchmarkMacroJunit4 apply false
     id("com.google.gms.google-services") version Versions.Firebase.servicesPlugin apply false

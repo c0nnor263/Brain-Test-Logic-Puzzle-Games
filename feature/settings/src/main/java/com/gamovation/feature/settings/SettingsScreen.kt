@@ -2,6 +2,7 @@ package com.gamovation.feature.settings
 
 import android.content.Intent
 import android.content.res.Configuration
+import android.net.Uri
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -47,6 +48,7 @@ import com.gamovation.core.ui.R
 import com.gamovation.core.ui.theme.WordefullTheme
 import com.gamovation.core.ui.theme.boardBackgroundColor
 import kotlinx.coroutines.delay
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -129,16 +131,12 @@ fun SettingsScreen(onRestorePurchases: () -> Unit) {
                     TextButton(
                         modifier = Modifier.padding(Dimensions.Padding.Small.value),
                         onClick = {
-                            Intent(Intent.ACTION_SEND).apply {
-                                type = "plain/text"
-                                putExtra(
-                                    Intent.EXTRA_EMAIL,
-                                    "abrigojulianne08@gmail.com"
-                                )
+                            Intent(Intent.ACTION_SENDTO).apply {
+                                setData(Uri.parse("mailto:")) // only email apps should handle this
+                                putExtra(Intent.EXTRA_EMAIL, "abrigojulianne08@gmail.com")
                                 val intent = Intent.createChooser(this, "Contact us")
                                 context.startActivity(intent)
                             }
-
                         }) {
                         Text(text = "Support", style = MaterialTheme.typography.displaySmall)
                     }
