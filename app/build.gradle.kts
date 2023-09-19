@@ -22,7 +22,7 @@ android {
         applicationId = namespace
         minSdk = Versions.Config.minSdk
         targetSdk = Versions.Config.targetSdk
-        versionCode = 14
+        versionCode = 15
         versionName = "23.09.19.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
