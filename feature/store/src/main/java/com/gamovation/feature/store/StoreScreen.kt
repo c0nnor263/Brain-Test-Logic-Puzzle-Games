@@ -84,7 +84,6 @@ fun StoreScreen(
         item {
             WatchStoreItem(value = "x25", text = "watch", onClick = {
                 showWatchAdDialog = true
-
             })
         }
         item {

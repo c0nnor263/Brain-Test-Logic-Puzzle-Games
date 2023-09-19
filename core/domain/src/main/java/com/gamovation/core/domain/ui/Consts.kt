@@ -1,3 +1,4 @@
 package com.gamovation.core.domain.ui
 
 
+const val CLICK_DELAY = 750L

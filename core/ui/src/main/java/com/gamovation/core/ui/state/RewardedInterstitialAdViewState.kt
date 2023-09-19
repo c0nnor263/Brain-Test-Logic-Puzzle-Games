@@ -7,8 +7,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import com.gamovation.core.data.advertising.AdRequestBuilder
 import com.google.android.gms.ads.AdError
+import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.rewardedinterstitial.RewardedInterstitialAd
@@ -35,7 +35,7 @@ class RewardedInterstitialAdViewState(
 
     fun loadAd(context: ComponentActivity) {
 
-        val adRequest = AdRequestBuilder().createDefault()
+        val adRequest = AdRequest.Builder().build()
         RewardedInterstitialAd.load(
             context,
             adUnitID,
@@ -43,13 +43,16 @@ class RewardedInterstitialAdViewState(
             object : RewardedInterstitialAdLoadCallback() {
                 override fun onAdLoaded(ad: RewardedInterstitialAd) {
                     super.onAdLoaded(ad)
-                    Log.i("TAG", "onAdLoaded: ${ad.responseInfo}")
+                    Log.i("TAG", "onAdLoaded rewarded: ${ad.responseInfo}")
                     rewardedInterstitialAd = ad
                 }
 
                 override fun onAdFailedToLoad(error: LoadAdError) {
                     super.onAdFailedToLoad(error)
-                    Log.i("TAG", "onAdFailedToLoad: ${error.responseInfo}")
+                    Log.i(
+                        "TAG",
+                        "onAdFailedToLoad rewarded: ${error.responseInfo}\n${error.message}\n${error.cause}"
+                    )
                     rewardedInterstitialAd = null
                 }
             }

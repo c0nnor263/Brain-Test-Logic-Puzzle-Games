@@ -1,9 +1,11 @@
 package com.gamovation.core.ui.extensions
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
+import com.gamovation.core.domain.ui.CLICK_DELAY
 import com.gamovation.core.navigation.Screens
 
 fun Modifier.clickableNoRipple(enabled: Boolean = true, onClick: () -> Unit): Modifier {
@@ -17,7 +19,16 @@ fun Modifier.clickableNoRipple(enabled: Boolean = true, onClick: () -> Unit): Mo
 }
 
 
+var lastClickNavigateTime = 0L
+
 fun NavController.navigate(screen: Screens) {
+    val currentTime = System.currentTimeMillis()
+
+    Log.i("TAG", "navigate: ${currentTime - lastClickNavigateTime}")
+    if (currentTime - lastClickNavigateTime < CLICK_DELAY) {
+        return
+    }
+    lastClickNavigateTime = currentTime
     val route = screen.route
     if (currentDestination?.route != route) {
         navigate(route) {
@@ -26,4 +37,15 @@ fun NavController.navigate(screen: Screens) {
             }
         }
     }
+}
+
+
+var lastClickPopBackStackTime = 0L
+fun NavController.popBack() {
+    val currentTime = System.currentTimeMillis()
+    if (currentTime - lastClickNavigateTime < CLICK_DELAY) {
+        return
+    }
+    lastClickPopBackStackTime = currentTime
+    popBackStack()
 }

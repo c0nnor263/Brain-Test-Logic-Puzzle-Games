@@ -31,6 +31,7 @@ import com.gamovation.core.ui.Dimensions
 import com.gamovation.core.ui.R
 import com.gamovation.core.ui.defaultSpringAnimation
 import com.gamovation.core.ui.extensions.navigate
+import com.gamovation.core.ui.extensions.popBack
 import com.gamovation.core.ui.state.LocalCurrency
 import com.gamovation.tilecl.presentation.composables.header_bar.options.HeaderBarHomeOption
 import com.gamovation.tilecl.presentation.composables.header_bar.options.HeaderBarLevelOption
@@ -44,7 +45,6 @@ fun HeaderBar(navController: NavHostController) {
     val currency = LocalCurrency.current
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = currentBackStackEntry?.destination
-
 
     Row(
         modifier = Modifier.padding(
@@ -92,7 +92,7 @@ fun HeaderBar(navController: NavHostController) {
                     Screens.Menu.route -> {
                         HeaderBarMenuOption(
                             onNavigateBack = {
-                                navController.popBackStack()
+                                navController.popBack()
                             }
                         )
                     }
@@ -100,7 +100,7 @@ fun HeaderBar(navController: NavHostController) {
                     Screens.Settings.route -> {
                         HeaderBarSettingsOption(
                             onNavigateBack = {
-                                navController.popBackStack()
+                                navController.popBack()
                             }
                         )
                     }
@@ -108,7 +108,7 @@ fun HeaderBar(navController: NavHostController) {
                     Screens.Store.route -> {
                         HeaderBarStoreOption(
                             onNavigateBack = {
-                                navController.popBackStack()
+                                navController.popBack()
                             }
                         )
                     }

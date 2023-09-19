@@ -13,7 +13,6 @@ class MobileAdsInitializer : Initializer<MobileAdsInitializer> {
                 "B8422D142A4DEF246360E184189A5634"
             )
         )
-        // TODO: Add your test device ID here
         .build()
 
     override fun create(context: Context): MobileAdsInitializer {
