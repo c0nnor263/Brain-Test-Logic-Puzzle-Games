@@ -1,6 +1,5 @@
 package com.gamovation.feature.level
 
-import androidx.activity.ComponentActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -26,33 +25,26 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.gamovation.core.domain.level.LevelScreenState
 import com.gamovation.core.ui.Dimensions
 import com.gamovation.core.ui.Durations
 import com.gamovation.core.ui.R
-import com.gamovation.core.ui.state.rememberRewardedInterstitialAdViewState
+import com.gamovation.core.ui.state.RewardedInterstitialAdViewState
 import com.gamovation.core.ui.store.WatchAdDialog
 import com.gamovation.core.ui.store.WatchStoreItem
-import com.gamovation.core.ui.theme.WordefullTheme
 import com.gamovation.feature.level.common.Title
 
 @Composable
 fun Completed(
     modifier: Modifier = Modifier,
     id: Int,
+    rewardedInterstitialAd: RewardedInterstitialAdViewState,
     onLevelUIAction: (LevelScreenState) -> Unit
 ) {
     var showWatchAdDialog by remember { mutableStateOf(false) }
-    val context = LocalContext.current as ComponentActivity
-    val rewardedInterstitialAd = rememberRewardedInterstitialAdViewState(
-        context,
-        stringResource(id = com.gamovation.core.data.R.string.admob_rewarded_id_level_completed_get_extra)
-    )
+
     AnimatedVisibility(
         true,
         modifier = modifier.padding(Dimensions.Padding.Small.value),
@@ -111,13 +103,4 @@ fun Completed(
             showWatchAdDialog = false
             if (result == true) onLevelUIAction(LevelScreenState.WATCH_AD)
         })
-}
-
-
-@Preview
-@Composable
-fun CompletedPreview() {
-    WordefullTheme {
-        Completed(id = 1, onLevelUIAction = {})
-    }
 }

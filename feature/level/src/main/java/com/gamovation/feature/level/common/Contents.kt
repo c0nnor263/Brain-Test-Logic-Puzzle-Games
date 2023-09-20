@@ -18,6 +18,7 @@ import com.gamovation.core.domain.level.LevelScreenState
 import com.gamovation.core.ui.state.LocalLevelActionState
 import com.gamovation.core.ui.state.LocalLevelScreenState
 import com.gamovation.core.ui.state.rememberInterstitialAdViewState
+import com.gamovation.core.ui.state.rememberRewardedInterstitialAdViewState
 import com.gamovation.core.ui.theme.WordefullTheme
 import com.gamovation.feature.level.Completed
 import com.gamovation.feature.level.Final
@@ -31,13 +32,17 @@ fun Contents(
     onLevelAction: (LevelActionState) -> Unit,
     onLevelScreenAction: (LevelScreenState) -> Unit
 ) {
+    val activity = LocalContext.current as ComponentActivity
 
     val screenState = LocalLevelScreenState.current
     val actionState = LocalLevelActionState.current
-    val activity = LocalContext.current as ComponentActivity
     val interstitialAdView = rememberInterstitialAdViewState(
         activity = activity,
         stringResource(id = R.string.admob_interstitial_id_level_completed)
+    )
+    val rewardedInterstitialAd = rememberRewardedInterstitialAdViewState(
+        activity = activity,
+        stringResource(id = R.string.admob_rewarded_id_level_completed_get_extra)
     )
 
     LaunchedEffect(actionState) {
@@ -67,7 +72,9 @@ fun Contents(
 
                 LevelScreenState.COMPLETED -> {
                     Completed(
-                        id = level.id - 1, onLevelUIAction = onLevelScreenAction
+                        id = level.id - 1,
+                        rewardedInterstitialAd = rewardedInterstitialAd,
+                        onLevelUIAction = onLevelScreenAction
                     )
                 }
 
