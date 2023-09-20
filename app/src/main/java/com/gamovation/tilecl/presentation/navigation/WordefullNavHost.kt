@@ -123,7 +123,7 @@ fun WordefullNavHost(navController: NavHostController) {
             }
             StoreScreen(
                 storeDetails = storeScreenDetails,
-                onWatchAd = { result -> if (result == true) viewModel.watchAdReward() },
+                onWatchAd = { viewModel.watchAdReward() },
                 errorDialog = errorDialog,
                 onBuy = { details, type ->
                     viewModel.purchaseProduct(details, type, onError = {

@@ -1,13 +1,11 @@
 package com.gamovation.core.ui.level
 
-import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -26,6 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.gamovation.core.domain.level.MAX_LEVEL_ID
 import com.gamovation.core.ui.Dimensions
 import com.gamovation.core.ui.R
+import com.gamovation.core.ui.extensions.clickableNoRipple
 
 @Composable
 fun NavigationArrows(
@@ -34,7 +33,9 @@ fun NavigationArrows(
     onIndexUpdate: (Int) -> Unit,
 ) {
     Row(
-        modifier = modifier.fillMaxWidth().animateContentSize(),
+        modifier = modifier
+            .fillMaxWidth()
+            .animateContentSize(),
         horizontalArrangement = Arrangement.SpaceAround,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -46,7 +47,7 @@ fun NavigationArrows(
             ) {
                 Icon(
                     modifier = Modifier
-                        .clickable {
+                        .clickableNoRipple {
                             val newId = currentIndex - 5
                             onIndexUpdate(newId.coerceAtLeast(0))
                         }
@@ -66,7 +67,7 @@ fun NavigationArrows(
             ) {
                 Icon(
                     modifier = Modifier
-                        .clickable {
+                        .clickableNoRipple {
                             val newId = currentIndex + 5
                             onIndexUpdate(newId.coerceAtMost(MAX_LEVEL_ID - 5))
                         }

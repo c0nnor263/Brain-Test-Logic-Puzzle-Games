@@ -8,7 +8,6 @@ import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.animation.shrinkHorizontally
 import androidx.compose.animation.shrinkVertically
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -32,6 +31,7 @@ import com.gamovation.core.ui.Durations
 import com.gamovation.core.ui.R
 import com.gamovation.core.ui.animation.DrawAnimation
 import com.gamovation.core.ui.common.ChalkBoardCard
+import com.gamovation.core.ui.extensions.clickableNoRipple
 
 @Composable
 fun NotEnoughCurrencyDialog(
@@ -99,7 +99,7 @@ fun NotEnoughCurrencyDialog(
                     Spacer(modifier = Modifier.height(Dimensions.Padding.Medium.value))
 
                     DrawAnimation(delayOrder = 1) {
-                        Text(text = "Get more!", modifier = Modifier.clickable {
+                        Text(text = "Get more!", modifier = Modifier.clickableNoRipple {
                             onActionResult(ActionResult(ActionResult.Type.BUY_MORE))
                         }, style = MaterialTheme.typography.displaySmall)
 

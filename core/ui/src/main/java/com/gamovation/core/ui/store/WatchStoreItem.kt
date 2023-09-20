@@ -12,6 +12,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -25,6 +28,7 @@ fun WatchStoreItem(
     modifier: Modifier = Modifier,
     value: String,
     text: String,
+    isLoaded: Boolean,
     onClick: () -> Unit
 ) {
     Row(
@@ -48,6 +52,17 @@ fun WatchStoreItem(
             )
         }
 
-        BuyButton(modifier = Modifier.weight(1F, false), text = text, onClick = onClick)
+        BuyButton(modifier = Modifier
+            .weight(1F, false)
+            .drawWithContent {
+                drawContent()
+                if (!isLoaded) {
+                    drawRoundRect(Color.Gray.copy(0.5F), cornerRadius = CornerRadius(28F, 28F))
+                }
+            }, isLoaded = isLoaded, text = text, onClick = {
+            if (isLoaded) {
+                onClick()
+            }
+        })
     }
 }

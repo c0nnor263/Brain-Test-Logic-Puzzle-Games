@@ -1,6 +1,5 @@
 package com.gamovation.feature.level.action_bar.dialog.options
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.MaterialTheme
@@ -11,6 +10,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import com.gamovation.core.ui.Dimensions
 import com.gamovation.core.ui.animation.DrawAnimation
+import com.gamovation.core.ui.extensions.clickableNoRipple
 
 @Composable
 fun ActionBarDialogSkipOption(onClick: () -> Unit) {
@@ -33,7 +33,7 @@ fun ActionBarDialogSkipOption(onClick: () -> Unit) {
     DrawAnimation(delayOrder = 2) {
         Text(
             text = "Skip!",
-            modifier = Modifier.clickable(onClick = onClick),
+            modifier = Modifier.clickableNoRipple { onClick() },
             style = MaterialTheme.typography.displaySmall
         )
     }

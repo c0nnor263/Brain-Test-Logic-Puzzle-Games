@@ -6,9 +6,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import com.gamovation.core.data.advertising.AdRequestBuilder
 import com.gamovation.core.domain.billing.UserVipType
 import com.google.android.gms.ads.AdError
+import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.interstitial.InterstitialAd
@@ -39,7 +39,7 @@ class InterstitialAdViewState(
     fun loadAd(context: ComponentActivity) {
         if (userVipType != UserVipType.BASE) return
 
-        val adRequest = AdRequestBuilder().createDefault()
+        val adRequest = AdRequest.Builder().build()
         InterstitialAd.load(
             context,
             adUnitID,

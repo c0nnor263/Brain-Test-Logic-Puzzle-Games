@@ -10,6 +10,11 @@ plugins {
 
 val localProperties = Properties()
 localProperties.load(FileInputStream(rootProject.file("local.properties")))
+
+val admobPropertiesFile: File = rootProject.file("admob.properties")
+val admobProperties = Properties().apply {
+    load(FileInputStream(admobPropertiesFile))
+}
 android {
     namespace = "com.gamovation.core.data"
     compileSdk = Versions.Config.compileSdk
@@ -23,6 +28,32 @@ android {
             "String",
             "verifyPurchases",
             "\"${localProperties.getProperty("verifyPurchases")}\""
+        )
+
+        resValue(
+            "string",
+            "admob_application_id",
+            "\"${admobProperties.getProperty("admob_application_id")}\""
+        )
+        resValue(
+            "string",
+            "admob_rewarded_id_level_completed_get_extra",
+            "\"${admobProperties.getProperty("admob_rewarded_id_level_completed_get_extra")}\""
+        )
+        resValue(
+            "string",
+            "admob_rewarded_id_store_screen_watch_ad",
+            "\"${admobProperties.getProperty("admob_rewarded_id_store_screen_watch_ad")}\""
+        )
+        resValue(
+            "string",
+            "admob_interstitial_id_level_completed",
+            "\"${admobProperties.getProperty("admob_interstitial_id_level_completed")}\""
+        )
+        resValue(
+            "string",
+            "admob_banner_id_app_bottom_banner",
+            "\"${admobProperties.getProperty("admob_banner_id_app_bottom_banner")}\""
         )
     }
 

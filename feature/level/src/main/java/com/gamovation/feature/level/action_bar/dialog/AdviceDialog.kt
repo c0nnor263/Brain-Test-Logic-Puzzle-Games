@@ -8,7 +8,6 @@ import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.animation.shrinkHorizontally
 import androidx.compose.animation.shrinkVertically
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -26,6 +25,7 @@ import com.gamovation.core.ui.Dimensions
 import com.gamovation.core.ui.Durations
 import com.gamovation.core.ui.animation.DrawAnimation
 import com.gamovation.core.ui.common.ChalkBoardCard
+import com.gamovation.core.ui.extensions.clickableNoRipple
 
 @Composable
 fun AdviceDialog(
@@ -70,7 +70,7 @@ fun AdviceDialog(
                     Spacer(modifier = Modifier.height(Dimensions.Padding.Medium.value))
 
                     DrawAnimation(delayOrder = 1) {
-                        Text(text = "Thanks", modifier = Modifier.clickable {
+                        Text(text = "Thanks", modifier = Modifier.clickableNoRipple {
                             onDismiss()
                         }, style = MaterialTheme.typography.displaySmall)
 

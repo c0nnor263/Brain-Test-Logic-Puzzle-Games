@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="admob_application_id">ca-app-pub-2547006513016062~9130125499</string>
-    <string name="admob_rewarded_id_level_completed_get_extra">ca-app-pub-2547006513016062/6299863279</string>
-    <string name="admob_rewarded_id_store_screen_watch_ad">ca-app-pub-2547006513016062/4469311821</string>
-    <string name="admob_interstitial_id_level_completed">ca-app-pub-2547006513016062/4947074574</string>
-    <string name="admob_banner_id_app_bottom_banner">ca-app-pub-2547006513016062/6834871310</string>
-</resources>

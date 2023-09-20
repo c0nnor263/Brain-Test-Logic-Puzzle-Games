@@ -8,7 +8,6 @@ import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.animation.shrinkHorizontally
 import androidx.compose.animation.shrinkVertically
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -28,6 +27,7 @@ import com.gamovation.core.ui.Dimensions
 import com.gamovation.core.ui.Durations
 import com.gamovation.core.ui.animation.DrawAnimation
 import com.gamovation.core.ui.common.ChalkBoardCard
+import com.gamovation.core.ui.extensions.clickableNoRipple
 
 
 @Composable
@@ -84,13 +84,13 @@ fun InAppReviewDialog(
                         horizontalArrangement = Arrangement.SpaceAround
                     ) {
                         DrawAnimation(delayOrder = 2) {
-                            Text(text = "Yes", modifier = Modifier.clickable {
+                            Text(text = "Yes", modifier = Modifier.clickableNoRipple {
                                 onStartReview()
                             }, style = MaterialTheme.typography.headlineMedium)
                         }
                         Spacer(Modifier.width(Dimensions.Padding.Small.value))
                         DrawAnimation(delayOrder = 3) {
-                            Text(text = "No", modifier = Modifier.clickable {
+                            Text(text = "No", modifier = Modifier.clickableNoRipple {
                                 onDismiss()
                             }, style = MaterialTheme.typography.headlineMedium)
 

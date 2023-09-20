@@ -25,6 +25,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import com.gamovation.core.domain.level.LevelScreenState
 import com.gamovation.core.ui.Dimensions
+import com.gamovation.core.ui.extensions.clickableNoRipple
 
 @Composable
 fun Level11Content(modifier: Modifier = Modifier, onLevelAction: (LevelScreenState) -> Unit) {
@@ -68,7 +69,7 @@ fun Level11Content(modifier: Modifier = Modifier, onLevelAction: (LevelScreenSta
                     Text(
                         text = it,
                         modifier = Modifier
-                            .clickable {
+                            .clickableNoRipple {
                                 onLevelAction(LevelScreenState.WRONG_CHOICE)
                             }
                             .padding(Dimensions.Padding.Small.value),

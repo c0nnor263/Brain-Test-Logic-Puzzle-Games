@@ -1,5 +1,6 @@
 package com.gamovation.feature.level
 
+import androidx.activity.ComponentActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -25,6 +26,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -33,6 +35,7 @@ import com.gamovation.core.domain.level.LevelScreenState
 import com.gamovation.core.ui.Dimensions
 import com.gamovation.core.ui.Durations
 import com.gamovation.core.ui.R
+import com.gamovation.core.ui.state.rememberRewardedInterstitialAdViewState
 import com.gamovation.core.ui.store.WatchAdDialog
 import com.gamovation.core.ui.store.WatchStoreItem
 import com.gamovation.core.ui.theme.WordefullTheme
@@ -45,6 +48,11 @@ fun Completed(
     onLevelUIAction: (LevelScreenState) -> Unit
 ) {
     var showWatchAdDialog by remember { mutableStateOf(false) }
+    val context = LocalContext.current as ComponentActivity
+    val rewardedInterstitialAd = rememberRewardedInterstitialAdViewState(
+        context,
+        stringResource(id = com.gamovation.core.data.R.string.admob_rewarded_id_level_completed_get_extra)
+    )
     AnimatedVisibility(
         true,
         modifier = modifier.padding(Dimensions.Padding.Small.value),
@@ -85,7 +93,9 @@ fun Completed(
                 }
                 Spacer(modifier = Modifier.height(Dimensions.Padding.Medium.value))
                 WatchStoreItem(
-                    value = "x25", text = "Watch Ad\n" +
+                    value = "x25",
+                    isLoaded = rewardedInterstitialAd.isAdLoaded,
+                    text = "Watch Ad\n" +
                             "for reward"
                 ) {
                     showWatchAdDialog = true
@@ -96,7 +106,7 @@ fun Completed(
     }
 
     WatchAdDialog(visible = showWatchAdDialog,
-        adUnitID = stringResource(id = com.gamovation.core.data.R.string.admob_rewarded_id_level_completed_get_extra),
+        rewardedInterstitialAd = rewardedInterstitialAd,
         onDismissed = { result ->
             showWatchAdDialog = false
             if (result == true) onLevelUIAction(LevelScreenState.WATCH_AD)

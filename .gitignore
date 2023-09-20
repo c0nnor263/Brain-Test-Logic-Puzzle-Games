@@ -17,3 +17,5 @@ local.properties
 /com.gamovation.tilecl.jks
 /app/src/release/generated/baselineProfiles/baseline-prof.txt
 /app/src/release/generated/baselineProfiles/startup-prof.txt
+/core/data/src/main/res/values/strings.xml
+/admob.properties

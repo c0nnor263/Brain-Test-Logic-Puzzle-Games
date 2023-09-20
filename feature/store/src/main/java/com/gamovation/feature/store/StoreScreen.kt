@@ -1,5 +1,7 @@
 package com.gamovation.feature.store
 
+import android.util.Log
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -13,6 +15,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
@@ -22,6 +25,7 @@ import com.gamovation.core.data.billing.BillingProductType
 import com.gamovation.core.data.billing.store.StoreScreenDetails
 import com.gamovation.core.ui.Dimensions
 import com.gamovation.core.ui.R
+import com.gamovation.core.ui.state.rememberRewardedInterstitialAdViewState
 import com.gamovation.core.ui.store.WatchAdDialog
 import com.gamovation.core.ui.store.WatchStoreItem
 import com.gamovation.core.ui.theme.WordefullTheme
@@ -36,9 +40,14 @@ fun StoreScreen(
     errorDialog: Boolean,
     onBuy: (ProductDetails, BillingProductType) -> Unit,
     onDismissErrorDialog: () -> Unit,
-    onWatchAd: (Boolean?) -> Unit,
+    onWatchAd: () -> Unit,
 ) {
+    val context = LocalContext.current as ComponentActivity
     var showWatchAdDialog by remember { mutableStateOf(false) }
+    val rewardedInterstitialAd = rememberRewardedInterstitialAdViewState(
+        context,
+        stringResource(id = com.gamovation.core.data.R.string.admob_rewarded_id_store_screen_watch_ad)
+    )
     LazyColumn(
         modifier = Modifier
             .semantics { contentDescription = "StoreLazyColumn" }
@@ -82,9 +91,13 @@ fun StoreScreen(
                 })
         }
         item {
-            WatchStoreItem(value = "x25", text = "watch ad\nfor reward", onClick = {
-                showWatchAdDialog = true
-            })
+            WatchStoreItem(
+                value = "x25",
+                text = "Watch Ad\nfor reward",
+                isLoaded = rewardedInterstitialAd.isAdLoaded,
+                onClick = {
+                    showWatchAdDialog = true
+                })
         }
         item {
             StoreItem(value = "x250", details = storeDetails?.currency250Details, onClick = {
@@ -106,10 +119,11 @@ fun StoreScreen(
 
     WatchAdDialog(
         visible = showWatchAdDialog,
-        adUnitID = stringResource(id = com.gamovation.core.data.R.string.admob_rewarded_id_store_screen_watch_ad),
-        onDismissed = {
+        rewardedInterstitialAd = rewardedInterstitialAd,
+        onDismissed = { result ->
+            Log.i("TAG", "StoreScreen: $result")
             showWatchAdDialog = false
-            onWatchAd(it)
+            if (result == true) onWatchAd()
         })
 
     StoreScreenErrorDialog(
