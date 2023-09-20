@@ -39,7 +39,7 @@ fun BottomBarContent(modifier: Modifier = Modifier) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .border(width = Dimensions.Padding.Small.value, color = boardBorderColor),
+                .border(width = Dimensions.Padding.ExtraSmall.value, color = boardBorderColor),
             contentAlignment = Alignment.Center
         ) {
             BannerAdView(

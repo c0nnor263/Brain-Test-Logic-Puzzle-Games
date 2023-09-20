@@ -82,7 +82,7 @@ fun StoreScreen(
                 })
         }
         item {
-            WatchStoreItem(value = "x25", text = "watch", onClick = {
+            WatchStoreItem(value = "x25", text = "watch ad\nfor reward", onClick = {
                 showWatchAdDialog = true
             })
         }
@@ -112,7 +112,10 @@ fun StoreScreen(
             onWatchAd(it)
         })
 
-    StoreScreenErrorDialog(visible = errorDialog, onDismiss = onDismissErrorDialog)
+    StoreScreenErrorDialog(
+        visible = errorDialog,
+        onDismiss = onDismissErrorDialog
+    )
 }
 
 @Preview

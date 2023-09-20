@@ -84,7 +84,10 @@ fun Completed(
                     Text("Next Level", style = MaterialTheme.typography.headlineMedium)
                 }
                 Spacer(modifier = Modifier.height(Dimensions.Padding.Medium.value))
-                WatchStoreItem(value = "x25", text = "Watch Ad") {
+                WatchStoreItem(
+                    value = "x25", text = "Watch Ad\n" +
+                            "for reward"
+                ) {
                     showWatchAdDialog = true
                 }
             }

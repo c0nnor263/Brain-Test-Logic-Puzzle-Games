@@ -43,7 +43,7 @@ fun VipContent(onBuy: () -> Unit) {
                 Spacer(modifier = Modifier.height(Dimensions.Padding.Small.value))
                 TextButton(onClick = { onBuy() }) {
                     Text(
-                        text = "VIP", style = MaterialTheme.typography.headlineLarge
+                        text = "Get VIP", style = MaterialTheme.typography.headlineLarge
                     )
                 }
             }

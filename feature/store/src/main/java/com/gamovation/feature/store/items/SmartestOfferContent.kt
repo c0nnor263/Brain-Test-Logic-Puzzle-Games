@@ -1,7 +1,7 @@
 package com.gamovation.feature.store.items
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -64,19 +64,18 @@ fun SmartestOfferContent(
             Column(
                 modifier = Modifier,
                 horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
             ) {
 
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Box(contentAlignment = Alignment.Center) {
 
-                        Image(
-                            painter = painterResource(id = R.drawable.lamp),
-                            modifier = Modifier.size(32.dp),
-                            contentDescription = null,
-                            contentScale = ContentScale.Fit
-                        )
-                        Text("x250",   style = MaterialTheme.typography.bodyMedium.copy(Color.White))
-                    }
+                    Image(
+                        painter = painterResource(id = R.drawable.lamp),
+                        modifier = Modifier.size(32.dp),
+                        contentDescription = null,
+                        contentScale = ContentScale.Fit
+                    )
+                    Text("x250", style = MaterialTheme.typography.bodyMedium.copy(Color.White))
                     Spacer(modifier = Modifier.width(Dimensions.Padding.Small.value))
                     Image(
                         painter = painterResource(id = R.drawable.remove_ads),
