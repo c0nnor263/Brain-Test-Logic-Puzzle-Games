@@ -15,9 +15,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.gamovation.core.domain.level.LevelScreenState
-import com.gamovation.core.ui.R
 import com.gamovation.core.ui.extensions.clickableNoRipple
 import com.gamovation.core.ui.theme.WordefullTheme
+import com.gamovation.feature.level.R
 import com.gamovation.feature.level.common.interactions.CollisionImage
 import com.gamovation.feature.level.common.interactions.DraggableImage
 

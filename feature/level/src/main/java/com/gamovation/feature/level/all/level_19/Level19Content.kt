@@ -21,8 +21,8 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.core.content.ContextCompat
 import com.gamovation.core.domain.level.LevelScreenState
-import com.gamovation.core.ui.R
 import com.gamovation.core.ui.theme.WordefullTheme
+import com.gamovation.feature.level.R
 import com.gamovation.feature.level.common.interactions.CollisionImage
 import com.gamovation.feature.level.common.interactions.DraggableImage
 import com.squareup.seismic.ShakeDetector

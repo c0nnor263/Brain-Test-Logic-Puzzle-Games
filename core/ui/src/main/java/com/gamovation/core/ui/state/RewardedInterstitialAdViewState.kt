@@ -2,7 +2,6 @@ package com.gamovation.core.ui.state
 
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -47,16 +46,11 @@ class RewardedInterstitialAdViewState(
             object : RewardedInterstitialAdLoadCallback() {
                 override fun onAdLoaded(ad: RewardedInterstitialAd) {
                     super.onAdLoaded(ad)
-                    Log.i("TAG", "onAdLoaded rewarded: ${ad.responseInfo}")
                     rewardedInterstitialAd = ad
                 }
 
                 override fun onAdFailedToLoad(error: LoadAdError) {
                     super.onAdFailedToLoad(error)
-                    Log.i(
-                        "TAG",
-                        "onAdFailedToLoad rewarded: ${error.responseInfo}\n${error.message}\n${error.cause}"
-                    )
                     rewardedInterstitialAd = null
                     Handler(Looper.getMainLooper()).postDelayed({
                         loadAd(context)
@@ -74,7 +68,6 @@ class RewardedInterstitialAdViewState(
                 rewardedInterstitialAd = null
                 loadAd(activity)
                 onDismissed(null)
-                Log.i("TAG", "onAdDismissedFullScreenContent: ")
             }
 
             override fun onAdFailedToShowFullScreenContent(error: AdError) {
@@ -82,10 +75,6 @@ class RewardedInterstitialAdViewState(
                 rewardedInterstitialAd = null
                 loadAd(activity)
                 onDismissed(false)
-                Log.i(
-                    "TAG",
-                    "onAdFailedToShowFullScreenContent: ${error.message} ${error.cause} ${error.code} "
-                )
             }
 
 

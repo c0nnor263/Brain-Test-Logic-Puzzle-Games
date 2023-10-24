@@ -1,6 +1,7 @@
 package com.gamovation.core.database.preferences
 
 import android.content.Context
+import android.util.Log
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
@@ -12,6 +13,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
+import java.util.Locale
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -27,6 +29,7 @@ class UserInfoPreferencesDataStore @Inject constructor(@ApplicationContext val c
         val USER_CURRENCY = intPreferencesKey("user_currency")
         val USER_VIP = stringPreferencesKey("user_vip")
         val IS_AVAILABLE_REVIEW = booleanPreferencesKey("is_available_review")
+        val LANGUAGE = stringPreferencesKey("language")
     }
 
 
@@ -88,6 +91,19 @@ class UserInfoPreferencesDataStore @Inject constructor(@ApplicationContext val c
     suspend fun setIsAvailableForReview(newValue: Boolean) {
         dataStore.edit { preferences ->
             preferences[UserInfoPreferencesKeys.IS_AVAILABLE_REVIEW] = newValue
+        }
+    }
+
+    suspend fun setLanguage(language: String) {
+        dataStore.edit { preferences ->
+            Log.i("TAG", "setLanguage: $language")
+            preferences[UserInfoPreferencesKeys.LANGUAGE] = language
+        }
+    }
+
+    fun getLanguage(): Flow<String> {
+        return combine(dataStore.data) {
+            it.first()[UserInfoPreferencesKeys.LANGUAGE] ?: Locale.getDefault().language
         }
     }
 

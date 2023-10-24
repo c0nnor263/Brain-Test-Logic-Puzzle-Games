@@ -17,6 +17,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.gamovation.core.database.model.LevelData
@@ -27,18 +28,18 @@ import com.gamovation.core.ui.R
 import com.gamovation.core.ui.common.ChalkBoardCard
 import com.gamovation.core.ui.state.LocalCosts
 import com.gamovation.core.ui.state.LocalCurrency
-import com.gamovation.core.ui.state.LocalLevelActionState
+import com.gamovation.core.ui.state.LocalLevelAction
 import com.gamovation.feature.level.action_bar.dialog.options.ActionBarDialogAdviceOption
 import com.gamovation.feature.level.action_bar.dialog.options.ActionBarDialogSkipOption
 import com.gamovation.feature.level.common.NotEnoughCurrencyDialog
 
 @Composable
 fun ActionBarDialog(
-    levelData: LevelData,
-    onActionResult: (ActionResult) -> Unit
+    levelData: LevelData?,
+    onActionResult: (ActionResult) -> Unit,
 ) {
     val costsInfo = LocalCosts.current
-    val levelActionState = LocalLevelActionState.current
+    val levelActionState = LocalLevelAction.current
     val currency = LocalCurrency.current
     var showNotEnoughCurrency by rememberSaveable {
         mutableStateOf(false)
@@ -48,8 +49,8 @@ fun ActionBarDialog(
         mutableStateOf(false)
     }
 
-    LaunchedEffect(levelActionState, levelData.isHasAdvise) {
-        if (levelActionState == LevelActionState.ADVICE && levelData.isHasAdvise) {
+    LaunchedEffect(levelActionState, levelData?.isHasAdvise) {
+        if (levelActionState == LevelActionState.ADVICE && levelData?.isHasAdvise == true) {
             showAdvice = true
             onActionResult(ActionResult(ActionResult.Type.CANCELLED))
         }
@@ -78,7 +79,7 @@ fun ActionBarDialog(
                     when (levelActionState) {
                         LevelActionState.ADVICE -> {
                             ActionBarDialogAdviceOption {
-                                if (levelData.isHasAdvise) {
+                                if (levelData?.isHasAdvise == true) {
                                     return@ActionBarDialogAdviceOption
                                 }
                                 val cost = costsInfo.adviceCost
@@ -131,9 +132,12 @@ fun ActionBarDialog(
     )
 
 
-    AdviceDialog(visible = showAdvice, advice = levelData.advise) {
-        showAdvice = false
-        onActionResult(ActionResult(ActionResult.Type.CANCELLED))
+    levelData?.let {
+        AdviceDialog(visible = showAdvice, advice = stringResource(id = it.advise)) {
+            showAdvice = false
+            onActionResult(ActionResult(ActionResult.Type.CANCELLED))
+        }
     }
+
 
 }

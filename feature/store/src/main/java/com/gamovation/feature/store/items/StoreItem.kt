@@ -47,7 +47,7 @@ fun StoreItem(
             Spacer(modifier = Modifier.width(Dimensions.Padding.Small.value))
             Text(
                 text = value,
-                style = MaterialTheme.typography.titleLarge,
+                style = MaterialTheme.typography.titleSmall,
                 modifier = Modifier.weight(1F, false)
             )
         }

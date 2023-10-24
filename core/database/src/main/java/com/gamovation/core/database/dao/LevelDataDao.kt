@@ -10,18 +10,18 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface LevelDataDao {
     @Upsert
-    suspend fun upsertLevelData(levelData: LevelData)
+    suspend fun upsert(levelData: LevelData)
 
     @Insert
-    suspend fun insertLevelsData(list: List<LevelData>)
+    suspend fun insertAll(list: List<LevelData>)
 
     @Query("SELECT * FROM leveldata WHERE id = :id")
-    fun getLevelDataById(id: Int): Flow<LevelData>
+    fun getById(id: Int): Flow<LevelData>
 
     @Query("SELECT * FROM leveldata")
-    fun getAllLevelData(): Flow<List<LevelData>>
+    fun getAll(): Flow<List<LevelData>>
 
 
     @Query("SELECT * FROM leveldata WHERE isCompleted = 0 ORDER BY id ASC LIMIT 1")
-    fun getLastUncompletedLevel(): Flow<LevelData>
+    fun getLastUncompleted(): Flow<LevelData>
 }

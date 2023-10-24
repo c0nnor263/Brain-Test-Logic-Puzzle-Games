@@ -22,10 +22,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import com.gamovation.core.domain.level.LevelScreenState
 import com.gamovation.core.ui.Dimensions
-import com.gamovation.core.ui.Durations
-import com.gamovation.core.ui.R
+import com.gamovation.core.ui.animation.Durations
 import com.gamovation.core.ui.state.LocalCosts
-import com.gamovation.core.ui.state.LocalLevelScreenState
+import com.gamovation.core.ui.state.LocalLevelScreen
+import com.gamovation.feature.level.R
 
 @Composable
 fun ActionBar(
@@ -34,7 +34,7 @@ fun ActionBar(
     onGetAdvice: () -> Unit,
     onSkip: () -> Unit,
 ) {
-    val levelUIState = LocalLevelScreenState.current
+    val levelUIState = LocalLevelScreen.current
     val costsInfo = LocalCosts.current
     AnimatedVisibility(
         modifier = modifier,
@@ -60,7 +60,7 @@ fun ActionBar(
                     onClick = onGetAdvice
                 ) {
                     Image(
-                        painter = painterResource(id = R.drawable.lamp),
+                        painter = painterResource(id = com.gamovation.core.ui.R.drawable.lamp),
                         contentDescription = null
                     )
                 }

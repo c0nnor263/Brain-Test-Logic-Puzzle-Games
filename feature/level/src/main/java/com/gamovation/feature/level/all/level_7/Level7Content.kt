@@ -13,7 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import com.gamovation.core.domain.level.LevelScreenState
-import com.gamovation.core.ui.R
+import com.gamovation.feature.level.R
 import com.gamovation.feature.level.common.answers.NumbersBlock
 import com.gamovation.feature.level.common.interactions.DraggableImage
 

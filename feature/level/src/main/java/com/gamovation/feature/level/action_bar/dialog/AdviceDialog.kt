@@ -19,11 +19,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.window.Dialog
 import com.gamovation.core.ui.Dimensions
-import com.gamovation.core.ui.Durations
 import com.gamovation.core.ui.animation.DrawAnimation
+import com.gamovation.core.ui.animation.Durations
 import com.gamovation.core.ui.common.ChalkBoardCard
 import com.gamovation.core.ui.extensions.clickableNoRipple
 
@@ -32,7 +33,7 @@ fun AdviceDialog(
     modifier: Modifier = Modifier,
     visible: Boolean,
     advice: String,
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit,
 ) {
     AnimatedVisibility(
         visible = visible,
@@ -70,9 +71,12 @@ fun AdviceDialog(
                     Spacer(modifier = Modifier.height(Dimensions.Padding.Medium.value))
 
                     DrawAnimation(delayOrder = 1) {
-                        Text(text = "Thanks", modifier = Modifier.clickableNoRipple {
-                            onDismiss()
-                        }, style = MaterialTheme.typography.displaySmall)
+                        Text(
+                            text = stringResource(com.gamovation.core.ui.R.string.thanks),
+                            modifier = Modifier.clickableNoRipple {
+                                onDismiss()
+                            }, style = MaterialTheme.typography.titleSmall
+                        )
 
                     }
                 }

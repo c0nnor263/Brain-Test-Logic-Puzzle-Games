@@ -15,9 +15,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.gamovation.core.domain.billing.UserVipType
 import com.gamovation.core.ui.Dimensions
-import com.gamovation.core.ui.Durations
 import com.gamovation.core.ui.advertising.BannerAdView
+import com.gamovation.core.ui.animation.Durations
 import com.gamovation.core.ui.state.LocalVipType
+import com.gamovation.core.ui.theme.WordefullTheme
 import com.gamovation.core.ui.theme.boardBorderColor
 
 @Composable
@@ -54,5 +55,7 @@ fun BottomBarContent(modifier: Modifier = Modifier) {
 @Preview
 @Composable
 fun WordeBottomAppBarPreview() {
-    BottomBarContent()
+    WordefullTheme {
+        BottomBarContent()
+    }
 }

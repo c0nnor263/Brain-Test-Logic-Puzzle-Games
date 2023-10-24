@@ -32,7 +32,6 @@ internal fun AnswersBlock(
                         modifier = Modifier
                             .weight(0.5F)
                             .padding(horizontal = Dimensions.Padding.Small.value),
-                        index = indexRow * 2 + indexButton,
                         text = answerText,
                         onClick = { onAnswer(answerText) }
                     )

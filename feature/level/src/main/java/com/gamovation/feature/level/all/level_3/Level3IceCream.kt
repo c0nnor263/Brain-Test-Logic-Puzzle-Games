@@ -9,10 +9,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.res.painterResource
-import com.gamovation.core.ui.Durations
-import com.gamovation.core.ui.R
 import com.gamovation.core.ui.animation.DrawAnimation
+import com.gamovation.core.ui.animation.Durations
 import com.gamovation.core.ui.extensions.clickableNoRipple
+import com.gamovation.feature.level.R
 
 @Composable
 fun Level3IceCream(

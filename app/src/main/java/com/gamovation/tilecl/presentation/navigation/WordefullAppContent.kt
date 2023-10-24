@@ -20,8 +20,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.gamovation.core.ui.Dimensions
-import com.gamovation.core.ui.Durations
 import com.gamovation.core.ui.R
+import com.gamovation.core.ui.animation.Durations
 import com.gamovation.tilecl.presentation.composables.BottomBarContent
 import com.gamovation.tilecl.presentation.composables.header_bar.HeaderBar
 

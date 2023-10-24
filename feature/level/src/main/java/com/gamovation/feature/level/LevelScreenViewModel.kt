@@ -6,11 +6,11 @@ import androidx.lifecycle.viewModelScope
 import com.gamovation.core.data.repository.OfflineLevelDataRepository
 import com.gamovation.core.data.repository.OfflineUserInfoPreferencesRepository
 import com.gamovation.core.data.review.ReviewDataManager
+import com.gamovation.core.database.data.LevelManager.Companion.DEFAULT_LEVEL_SCREEN_COUNTDOWN_DURATION
+import com.gamovation.core.database.data.LevelManager.Companion.MAX_LEVEL_ID
 import com.gamovation.core.database.model.LevelData
-import com.gamovation.core.domain.level.DEFAULT_LEVEL_SCREEN_COUNTDOWN_DURATION
 import com.gamovation.core.domain.level.LevelActionState
 import com.gamovation.core.domain.level.LevelScreenState
-import com.gamovation.core.domain.level.MAX_LEVEL_ID
 import com.gamovation.core.ui.level.UserInteraction
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -74,7 +74,7 @@ class LevelScreenViewModel @Inject constructor(
 
             // Get level data for current index
             val data =
-                newLevelData ?: levelRepositoryImpl.getLevelDataById(levelIndex).first()
+                newLevelData ?: levelRepositoryImpl.getById(levelIndex).first()
             _levelData.emit(data)
         }
 
@@ -87,21 +87,21 @@ class LevelScreenViewModel @Inject constructor(
 
 
     suspend fun completeLevel() {
-        val levelData = levelRepositoryImpl.getLevelDataById(levelIndex).first().copy(
+        val levelData = levelRepositoryImpl.getById(levelIndex).first().copy(
             isCompleted = true, isHasAdvise = false
         )
-        levelRepositoryImpl.upsertLevelData(levelData)
+        levelRepositoryImpl.upsert(levelData)
     }
 
     suspend fun setNextLevel() {
         val nextLevelIndex = (levelIndex + 1).coerceAtMost(MAX_LEVEL_ID)
-        val nextData = levelRepositoryImpl.getLevelDataById(nextLevelIndex).first().copy(
+        val nextData = levelRepositoryImpl.getById(nextLevelIndex).first().copy(
             isLocked = false,
         )
 
         // Update current and next level data
 
-        levelRepositoryImpl.upsertLevelData(nextData)
+        levelRepositoryImpl.upsert(nextData)
         // Move to next level
         updateLevelIndex(nextLevelIndex, nextData)
     }
@@ -118,10 +118,10 @@ class LevelScreenViewModel @Inject constructor(
         when (levelActionState.value) {
             LevelActionState.ADVICE -> {
                 // Update level advice status to true
-                val levelData = levelRepositoryImpl.getLevelDataById(levelIndex).first().copy(
+                val levelData = levelRepositoryImpl.getById(levelIndex).first().copy(
                     isHasAdvise = true
                 )
-                levelRepositoryImpl.upsertLevelData(levelData)
+                levelRepositoryImpl.upsert(levelData)
                 _levelData.emit(levelData)
             }
 

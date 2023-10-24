@@ -9,10 +9,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.gamovation.core.ui.R
 import com.gamovation.core.ui.animation.DrawAnimation
+import com.gamovation.feature.level.R
 import kotlin.random.Random
 
 @Composable
@@ -30,7 +29,7 @@ internal fun Level1Image(modifier: Modifier = Modifier, index: Int = 0) {
         Image(
             modifier = Modifier.size(128.dp),
             painter = painterResource(id = randomDuckImage),
-            contentDescription = stringResource(id = R.string.number_0_duck_content_description)
+            contentDescription = null
         )
     }
 }

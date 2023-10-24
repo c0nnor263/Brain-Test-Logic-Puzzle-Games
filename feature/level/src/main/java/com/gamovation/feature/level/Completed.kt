@@ -26,14 +26,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.gamovation.core.domain.level.LevelScreenState
 import com.gamovation.core.ui.Dimensions
-import com.gamovation.core.ui.Durations
 import com.gamovation.core.ui.R
+import com.gamovation.core.ui.advertising.WatchAdDialog
+import com.gamovation.core.ui.advertising.WatchStoreItem
+import com.gamovation.core.ui.animation.Durations
 import com.gamovation.core.ui.state.RewardedInterstitialAdViewState
-import com.gamovation.core.ui.store.WatchAdDialog
-import com.gamovation.core.ui.store.WatchStoreItem
 import com.gamovation.feature.level.common.Title
 
 @Composable
@@ -41,7 +42,7 @@ fun Completed(
     modifier: Modifier = Modifier,
     id: Int,
     rewardedInterstitialAd: RewardedInterstitialAdViewState,
-    onLevelUIAction: (LevelScreenState) -> Unit
+    onLevelUIAction: (LevelScreenState) -> Unit,
 ) {
     var showWatchAdDialog by remember { mutableStateOf(false) }
 
@@ -63,11 +64,14 @@ fun Completed(
             )
             Spacer(modifier = Modifier.height(Dimensions.Padding.Medium.value))
             Title(
-                text = "Level $id completed",
+                text = stringResource(
+                    id = com.gamovation.feature.level.R.string.level_completed,
+                    id
+                ),
                 style = MaterialTheme.typography.displaySmall
             )
             Title(
-                text = "You awesome!",
+                text = stringResource(com.gamovation.feature.level.R.string.level_completed_you_awesome),
                 style = MaterialTheme.typography.displaySmall.copy(color = Color.Yellow)
             )
             Spacer(modifier = Modifier.height(Dimensions.Padding.Large.value))
@@ -81,14 +85,17 @@ fun Completed(
                 TextButton(onClick = {
                     onLevelUIAction(LevelScreenState.NEXT_LEVEL)
                 }) {
-                    Text("Next Level", style = MaterialTheme.typography.headlineMedium)
+                    Text(
+                        stringResource(com.gamovation.feature.level.R.string.next_level),
+                        style = MaterialTheme.typography.headlineSmall,
+                        maxLines = 2
+                    )
                 }
                 Spacer(modifier = Modifier.height(Dimensions.Padding.Medium.value))
                 WatchStoreItem(
-                    value = "x25",
+                    value = stringResource(R.string.ad_reward),
                     isLoaded = rewardedInterstitialAd.isAdLoaded,
-                    text = "Watch Ad\n" +
-                            "for reward"
+                    text = stringResource(R.string.watch_ad_for_reward)
                 ) {
                     showWatchAdDialog = true
                 }

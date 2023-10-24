@@ -1,4 +1,4 @@
-package com.gamovation.core.ui.store
+package com.gamovation.core.ui.advertising
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement

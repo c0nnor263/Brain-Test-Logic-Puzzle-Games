@@ -1,7 +1,6 @@
 package com.gamovation.core.data.billing
 
 import android.content.Context
-import android.util.Log
 import androidx.activity.ComponentActivity
 import com.android.billingclient.api.AcknowledgePurchaseParams
 import com.android.billingclient.api.BillingClient
@@ -138,26 +137,28 @@ class BillingDataSource @Inject constructor(
 
     suspend fun queryProductDetails() = withContext(Dispatchers.IO) {
         val inAppParams = QueryProductDetailsParams.newBuilder()
-            .setProductList(BillingProductType.values()
-                .filter { it.productType == ProductType.INAPP }
-                .map {
-                    QueryProductDetailsParams.Product.newBuilder()
-                        .setProductId(it.id)
-                        .setProductType(ProductType.INAPP)
-                        .build()
-                }
+            .setProductList(
+                BillingProductType.entries
+                    .filter { it.productType == ProductType.INAPP }
+                    .map {
+                        QueryProductDetailsParams.Product.newBuilder()
+                            .setProductId(it.id)
+                            .setProductType(ProductType.INAPP)
+                            .build()
+                    }
             )
             .build()
 
         val subscriptionParams = QueryProductDetailsParams.newBuilder()
-            .setProductList(BillingProductType.values()
-                .filter { it.productType == ProductType.SUBS }
-                .map {
-                    QueryProductDetailsParams.Product.newBuilder()
-                        .setProductId(it.id)
-                        .setProductType(ProductType.SUBS)
-                        .build()
-                }
+            .setProductList(
+                BillingProductType.entries
+                    .filter { it.productType == ProductType.SUBS }
+                    .map {
+                        QueryProductDetailsParams.Product.newBuilder()
+                            .setProductId(it.id)
+                            .setProductType(ProductType.SUBS)
+                            .build()
+                    }
             ).build()
 
         val inAppDetailsResult = client.queryProductDetails(inAppParams)
@@ -182,7 +183,6 @@ class BillingDataSource @Inject constructor(
         type: BillingProductType,
         onRequestActivity: () -> ComponentActivity
     ) {
-        Log.i("TAG", "purchaseProduct: $details")
         try {
             val productDetailsParamsList =
                 BillingFlowParams.ProductDetailsParams.newBuilder().setProductDetails(details)
@@ -210,19 +210,14 @@ class BillingDataSource @Inject constructor(
             BillingProductType.VIP.id -> ProductType.SUBS
             else -> ProductType.INAPP
         }
-        Log.i("TAG", "verifyPurchase: $purchase")
         val url =
             BuildConfig.verifyPurchases + "?" +
                     "purchaseToken=${purchase?.purchaseToken}&" +
                     "productId=$productId&" +
                     "productType=$type"
-        Log.i("TAG", "verifyPurchase: $url")
 
         val responseListener = Response.Listener<String> { response ->
-            Log.i("TAG", "verifyPurchase: response $response")
-            val isValid = JSONObject(response).getBoolean("isValid").also {
-                Log.i("TAG", "verifyPurchase: $it")
-            }
+            val isValid = JSONObject(response).getBoolean("isValid")
             if (isValid) {
                 updatePendingBenefitType(purchaseJson)
                 when (productId) {
@@ -242,10 +237,6 @@ class BillingDataSource @Inject constructor(
         val request = StringRequest(
             Request.Method.POST, url, responseListener
         ) { error ->
-            Log.i(
-                "TAG",
-                "verifyPurchase: net error ${error.networkResponse.statusCode} \n${error.message}"
-            )
             when (productId) {
                 BillingProductType.VIP.id,
                 BillingProductType.REMOVE_ADS.id,
@@ -306,14 +297,12 @@ class BillingDataSource @Inject constructor(
     }
 
     private fun consumePurchase(purchase: Purchase?) {
-        Log.i("TAG", "consumePurchase: $purchase")
         val params =
             ConsumeParams.newBuilder()
                 .setPurchaseToken(purchase?.purchaseToken ?: "")
                 .build()
         scope.launch {
             val consumeResult = client.consumePurchase(params)
-            Log.i("TAG", "consumePurchase: $consumeResult")
             if (consumeResult.billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
                 updatePendingBenefitResult(VerifyResult.SUCCESS)
             } else {
@@ -324,7 +313,6 @@ class BillingDataSource @Inject constructor(
 
 
     private fun acknowledgePurchase(purchase: Purchase?) {
-        Log.i("TAG", "acknowledgePurchase: $purchase")
         if (purchase?.isAcknowledged == true) {
             updatePendingBenefitResult(VerifyResult.SUCCESS, false)
             return
@@ -336,7 +324,6 @@ class BillingDataSource @Inject constructor(
                 .build()
         scope.launch {
             val acknowledgeResult = client.acknowledgePurchase(acknowledgeParams)
-            Log.i("TAG", "acknowledgePurchase: $acknowledgeResult")
             if (acknowledgeResult.responseCode == BillingClient.BillingResponseCode.OK) {
                 updatePendingBenefitResult(VerifyResult.SUCCESS)
             } else {

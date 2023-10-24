@@ -2,6 +2,7 @@ package com.gamovation.core.data.repository
 
 import com.gamovation.core.database.preferences.UserInfoPreferencesDataStore
 import com.gamovation.core.domain.billing.UserVipType
+import com.gamovation.core.domain.repository.UserInfoPreferencesRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -38,5 +39,13 @@ class OfflineUserInfoPreferencesRepository @Inject constructor(
 
     override suspend fun setIsAvailableForReview(newValue: Boolean) {
         userInfoPreferencesDataStore.setIsAvailableForReview(newValue)
+    }
+
+    override suspend fun setLanguage(language: String) {
+        userInfoPreferencesDataStore.setLanguage(language)
+    }
+
+    override fun getLanguage(): Flow<String> {
+        return userInfoPreferencesDataStore.getLanguage()
     }
 }

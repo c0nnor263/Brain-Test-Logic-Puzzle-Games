@@ -20,11 +20,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.gamovation.core.ui.Dimensions
-import com.gamovation.core.ui.R
 import com.gamovation.core.ui.extensions.clickableNoRipple
 import com.gamovation.core.ui.theme.WordefullTheme
+import com.gamovation.feature.level.R
 
 
 @Composable
@@ -109,8 +110,7 @@ fun CounterBlock(
 
             OptionButton(
                 modifier = Modifier.padding(horizontal = Dimensions.Padding.ExtraLarge2X.value),
-                index = 0,
-                text = "Submit",
+                text = stringResource(com.gamovation.core.ui.R.string.submit),
                 onClick = { onAnswer(count) },
                 style = MaterialTheme.typography.headlineLarge
             )
@@ -124,7 +124,7 @@ fun CounterBlock(
 fun CounterBlockPreview() {
     WordefullTheme {
 
-        CounterBlock() {
+        CounterBlock {
 
         }
 

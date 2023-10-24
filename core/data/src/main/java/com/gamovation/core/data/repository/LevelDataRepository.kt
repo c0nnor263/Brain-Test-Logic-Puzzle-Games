@@ -4,9 +4,9 @@ import com.gamovation.core.database.model.LevelData
 import kotlinx.coroutines.flow.Flow
 
 interface LevelDataRepository {
-    suspend fun upsertLevelData(levelData: LevelData)
-    suspend fun insertLevelsData(list: List<LevelData>)
-    fun getLevelDataById(id: Int): Flow<LevelData>
-    fun getAllLevelData(): Flow<List<LevelData>>
-    fun getLastUncompletedLevel(): Flow<LevelData>
+    suspend fun upsert(levelData: LevelData)
+    suspend fun insertAll(list: List<LevelData>)
+    fun getById(id: Int): Flow<LevelData>
+    fun getAll(): Flow<List<LevelData>>
+    fun getLastUncompleted(): Flow<LevelData>
 }

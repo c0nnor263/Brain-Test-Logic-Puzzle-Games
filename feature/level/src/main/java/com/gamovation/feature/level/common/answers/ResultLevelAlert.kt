@@ -1,7 +1,6 @@
 package com.gamovation.feature.level.common.answers
 
 import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -15,11 +14,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import com.gamovation.core.domain.level.LevelScreenState
 import com.gamovation.core.ui.Dimensions
-import com.gamovation.core.ui.Durations
-import com.gamovation.core.ui.R
+import com.gamovation.core.ui.animation.Durations
+import com.gamovation.feature.level.R
 
 @Composable
 fun BoxScope.ResultLevelAlert(currentState: LevelScreenState, checkState: LevelScreenState) {
@@ -28,13 +26,6 @@ fun BoxScope.ResultLevelAlert(currentState: LevelScreenState, checkState: LevelS
         LevelScreenState.CORRECT_CHOICE -> R.drawable.success
         else -> R.drawable.failure
     }
-
-    @StringRes val contentDescription = when (checkState) {
-        LevelScreenState.WRONG_CHOICE -> R.string.failure_image_content_description
-        LevelScreenState.CORRECT_CHOICE -> R.string.success_image_content_description
-        else -> R.string.failure_image_content_description
-    }
-
 
     AnimatedVisibility(
         currentState == checkState,
@@ -45,7 +36,7 @@ fun BoxScope.ResultLevelAlert(currentState: LevelScreenState, checkState: LevelS
         Image(
             modifier = Modifier.padding(Dimensions.Padding.ExtraLarge2X.value),
             painter = painterResource(id = drawableRes),
-            contentDescription = stringResource(id = contentDescription),
+            contentDescription = null,
             contentScale = ContentScale.Fit
         )
     }

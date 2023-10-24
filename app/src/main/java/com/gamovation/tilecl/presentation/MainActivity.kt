@@ -21,11 +21,13 @@ import com.gamovation.core.domain.currency.CostsInfo
 import com.gamovation.core.domain.currency.calculateCosts
 import com.gamovation.core.ui.state.LocalCosts
 import com.gamovation.core.ui.state.LocalCurrency
+import com.gamovation.core.ui.state.LocalLocale
 import com.gamovation.core.ui.state.LocalVipType
 import com.gamovation.core.ui.theme.WordefullTheme
 import com.gamovation.tilecl.presentation.navigation.AppContentViewModel
 import com.gamovation.tilecl.presentation.navigation.WordefullAppContent
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.Locale
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -33,32 +35,33 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         val splashScreen = installSplashScreen()
         splashScreen.setOnExitAnimationListener { splashScreenView ->
-            val slideUp = ObjectAnimator.ofFloat(
+            ObjectAnimator.ofFloat(
                 splashScreenView.view,
                 View.TRANSLATION_Y,
                 0f,
                 splashScreenView.view.height.toFloat()
-            )
-            slideUp.interpolator = LinearInterpolator()
-            slideUp.duration = 500L
-            slideUp.doOnEnd { splashScreenView.remove() }
-
-            // Run your animation.
-            slideUp.start()
+            ).apply {
+                interpolator = LinearInterpolator()
+                duration = 500L
+                doOnEnd { splashScreenView.remove() }
+                start()
+            }
         }
         super.onCreate(savedInstanceState)
         setContent {
             WordefullTheme {
-
                 val currency =
                     viewModel.getUserCurrency().collectAsStateWithLifecycle(initialValue = 0)
                 val userVipType =
                     viewModel.getUserVipType().collectAsStateWithLifecycle(UserVipType.BASE)
+                val language = viewModel.getLanguage()
+                    .collectAsStateWithLifecycle(Locale.getDefault().language)
 
                 CompositionLocalProvider(
                     LocalCurrency provides currency.value,
                     LocalVipType provides userVipType.value,
                     LocalCosts provides CostsInfo().calculateCosts(userVipType.value),
+                    LocalLocale provides Locale(language.value)
                 ) {
                     WordefullAppContent()
                 }

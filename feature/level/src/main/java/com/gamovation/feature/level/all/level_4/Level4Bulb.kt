@@ -21,12 +21,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import com.gamovation.core.domain.level.DEFAULT_LEVEL_SCREEN_COUNTDOWN_DURATION
+import com.gamovation.core.database.data.LevelManager.Companion.DEFAULT_LEVEL_SCREEN_COUNTDOWN_DURATION
 import com.gamovation.core.ui.Dimensions
-import com.gamovation.core.ui.Durations
-import com.gamovation.core.ui.R
 import com.gamovation.core.ui.animation.DrawAnimation
+import com.gamovation.core.ui.animation.Durations
 import com.gamovation.core.ui.extensions.clickableNoRipple
+import com.gamovation.feature.level.R
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.random.Random

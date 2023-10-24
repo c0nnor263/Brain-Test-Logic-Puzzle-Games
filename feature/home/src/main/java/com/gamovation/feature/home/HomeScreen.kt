@@ -11,6 +11,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
@@ -21,7 +22,7 @@ import com.gamovation.core.ui.theme.WordefullTheme
 
 @Composable
 fun HomeScreen(
-    onNavigateToLevel: () -> Unit
+    onNavigateToLevel: () -> Unit,
 ) {
     Column(
         modifier = Modifier.fillMaxWidth(),
@@ -31,19 +32,23 @@ fun HomeScreen(
         Spacer(modifier = Modifier.padding(Dimensions.Padding.ExtraLarge.value))
         DrawAnimation {
             Text(
-                text = "Are you ready to show your intelligence?",
-                style = MaterialTheme.typography.displaySmall,
-                textAlign = TextAlign.Center
+                text = stringResource(R.string.are_you_ready_to_show_your_intelligence),
+                style = MaterialTheme.typography.headlineSmall,
+                textAlign = TextAlign.Center,
+                maxLines = 3
             )
         }
-
+        Spacer(modifier = Modifier.padding(Dimensions.Padding.Medium.value))
         DrawAnimation(delayOrder = 1) {
             TextButton(modifier = Modifier.semantics {
                 contentDescription = "LevelScreenFastNavigate"
             }, onClick = {
                 onNavigateToLevel()
             }) {
-                Text(text = "LET'S GO!", style = MaterialTheme.typography.displayLarge)
+                Text(
+                    text = stringResource(R.string.let_s_go),
+                    style = MaterialTheme.typography.displayMedium
+                )
             }
         }
     }

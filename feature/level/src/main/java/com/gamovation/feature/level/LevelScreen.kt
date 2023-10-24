@@ -8,7 +8,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.gamovation.core.database.model.LevelData
@@ -17,8 +16,7 @@ import com.gamovation.core.domain.level.LevelActionState
 import com.gamovation.core.domain.level.LevelScreenState
 import com.gamovation.core.ui.Dimensions
 import com.gamovation.core.ui.level.UserInteractionState
-import com.gamovation.core.ui.state.LocalLevelScreenState
-import com.gamovation.core.ui.theme.WordefullTheme
+import com.gamovation.core.ui.state.LocalLevelScreen
 import com.gamovation.feature.level.action_bar.ActionBar
 import com.gamovation.feature.level.action_bar.dialog.ActionBarDialog
 import com.gamovation.feature.level.common.Contents
@@ -31,7 +29,7 @@ fun LevelScreen(
     userInteractionState: UserInteractionState?,
     onActionResult: (ActionResult) -> Unit,
 ) {
-    val screenState = LocalLevelScreenState.current
+    val screenState = LocalLevelScreen.current
     val scope = rememberCoroutineScope()
 
     LaunchedEffect(screenState) {
@@ -52,23 +50,26 @@ fun LevelScreen(
             val (contents, actionBar) = createRefs()
 
             val bottomGuideLine = createGuidelineFromBottom(0.1f)
-            Contents(
-                modifier = Modifier.constrainAs(contents) {
-                    width = Dimension.matchParent
-                    height = Dimension.fillToConstraints
-                    top.linkTo(parent.top)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                    bottom.linkTo(bottomGuideLine)
-                },
-                level = level ?: LevelData(),
-                onLevelAction = {
-                    userInteractionState?.onUpdateLevelActionState(it)
-                },
-                onLevelScreenAction = {
-                    userInteractionState?.onUpdateLevelScreenState(it)
-                }
-            )
+
+            level?.let {
+                Contents(
+                    modifier = Modifier.constrainAs(contents) {
+                        width = Dimension.matchParent
+                        height = Dimension.fillToConstraints
+                        top.linkTo(parent.top)
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                        bottom.linkTo(bottomGuideLine)
+                    },
+                    level = level,
+                    onLevelAction = {
+                        userInteractionState?.onUpdateLevelActionState(it)
+                    },
+                    onLevelScreenAction = {
+                        userInteractionState?.onUpdateLevelScreenState(it)
+                    }
+                )
+            }
 
             ActionBar(
                 modifier = Modifier
@@ -87,7 +88,7 @@ fun LevelScreen(
 
 
         ActionBarDialog(
-            levelData = level ?: LevelData(),
+            levelData = level,
             onActionResult = onActionResult
         )
 
@@ -105,20 +106,6 @@ fun LevelScreen(
     BackHandler {
         if (screenState == LevelScreenState.IS_PLAYING) {
             userInteractionState?.onBack()
-        }
-    }
-}
-
-
-@Preview
-@Composable
-fun LevelScreenPreview() {
-    WordefullTheme {
-        LevelScreen(
-            level = LevelData(),
-            null,
-        ) {
-
         }
     }
 }

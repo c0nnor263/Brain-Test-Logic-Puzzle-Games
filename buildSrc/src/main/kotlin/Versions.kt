@@ -1,6 +1,7 @@
 import org.gradle.api.JavaVersion
 
 object Versions {
+    const val oneSignal = "5.0.2"
     const val benNamesVersions = "0.48.0"
     const val material = "1.9.0"
     const val ads = "22.3.0"

@@ -22,7 +22,7 @@ android {
         applicationId = namespace
         minSdk = Versions.Config.minSdk
         targetSdk = Versions.Config.targetSdk
-        versionCode = 16
+        versionCode = 17
         versionName = "23.09.20.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -30,7 +30,7 @@ android {
             useSupportLibrary = true
         }
 
-
+        resConfigs("en", "ru", "ua")
     }
 
     signingConfigs {
@@ -117,4 +117,8 @@ dependencies {
     implementation("androidx.startup:startup-runtime:1.1.1")
     implementation("com.google.android.gms:play-services-ads:${Versions.ads}")
     implementation("com.google.android.play:integrity:1.2.0")
+
+    // OneSignal
+    implementation("com.onesignal:OneSignal:${Versions.oneSignal}")
+
 }

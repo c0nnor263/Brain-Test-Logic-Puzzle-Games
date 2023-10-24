@@ -1,4 +1,4 @@
-package com.gamovation.core.ui.store
+package com.gamovation.core.ui.advertising
 
 import androidx.activity.ComponentActivity
 import androidx.compose.runtime.Composable
@@ -17,7 +17,7 @@ fun WatchAdDialog(
     modifier: Modifier = Modifier,
     visible: Boolean,
     onDismissed: (Boolean?) -> Unit,
-    rewardedInterstitialAd: RewardedInterstitialAdViewState
+    rewardedInterstitialAd: RewardedInterstitialAdViewState,
 ) {
     val activity = LocalContext.current as ComponentActivity
 
@@ -25,7 +25,7 @@ fun WatchAdDialog(
     var showErrorDialog by remember { mutableStateOf(false) }
 
     LaunchedEffect(visible) {
-        if(visible) {
+        if (visible) {
             rewardedInterstitialAd.showAd(activity) {
                 if (it == false) {
                     showErrorDialog = true
@@ -36,8 +36,12 @@ fun WatchAdDialog(
         }
     }
 
-    WatchAdErrorDialog(visible = showErrorDialog, onDismissed = {
-        showErrorDialog = false
-        onDismissed(it)
-    })
+    WatchAdErrorDialog(
+        modifier = modifier,
+        visible = showErrorDialog,
+        onDismissed = {
+            showErrorDialog = false
+            onDismissed(it)
+        }
+    )
 }

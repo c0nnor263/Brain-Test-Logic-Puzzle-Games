@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings">Настройки</string>
+    <string name="share">Поделиться</string>
+    <string name="share_content">Давайте узнаем, насколько вы умны!\n\nhttps://play.google.com/store/apps/details?id=com.gamovation.tilecl</string>
+    <string name="contact_us">Связь с нами</string>
+    <string name="support">Поддержка</string>
+    <string name="privacy_policy">Конфиденциальность</string>
+    <string name="language">Язык:</string>
+    <string name="restore_purchases">Восстановить покупки</string>
+
+</resources>

@@ -23,21 +23,22 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.window.Dialog
 import com.gamovation.core.domain.level.ActionResult
 import com.gamovation.core.ui.Dimensions
-import com.gamovation.core.ui.Durations
-import com.gamovation.core.ui.R
 import com.gamovation.core.ui.animation.DrawAnimation
+import com.gamovation.core.ui.animation.Durations
 import com.gamovation.core.ui.common.ChalkBoardCard
 import com.gamovation.core.ui.extensions.clickableNoRipple
+import com.gamovation.feature.level.R
 
 @Composable
 fun NotEnoughCurrencyDialog(
     modifier: Modifier = Modifier,
     visible: Boolean,
-    onActionResult: (ActionResult) -> Unit
+    onActionResult: (ActionResult) -> Unit,
 ) {
     AnimatedVisibility(
         visible = visible,
@@ -67,7 +68,7 @@ fun NotEnoughCurrencyDialog(
                 ) {
                     DrawAnimation {
                         Text(
-                            text = "You don't have enough currency to get a hint",
+                            text = stringResource(R.string.you_don_t_have_enough_currency_to_get_a_hint),
                             style = MaterialTheme.typography.headlineSmall,
                             textAlign = TextAlign.Center
                         )
@@ -79,13 +80,13 @@ fun NotEnoughCurrencyDialog(
                         horizontalArrangement = Arrangement.Center
                     ) {
                         Text(
-                            text = "Do you want to get more",
+                            text = stringResource(R.string.do_you_want_to_get_more),
                             style = MaterialTheme.typography.bodyMedium.copy(color = Color.Yellow),
                             modifier = Modifier.weight(0.7F),
                             textAlign = TextAlign.Center
                         )
                         Icon(
-                            painter = painterResource(id = R.drawable.lamp),
+                            painter = painterResource(id = com.gamovation.core.ui.R.drawable.lamp),
                             modifier = Modifier.weight(0.1F),
                             contentDescription = null
                         )
@@ -99,7 +100,7 @@ fun NotEnoughCurrencyDialog(
                     Spacer(modifier = Modifier.height(Dimensions.Padding.Medium.value))
 
                     DrawAnimation(delayOrder = 1) {
-                        Text(text = "Get more!", modifier = Modifier.clickableNoRipple {
+                        Text(stringResource(R.string.get_more), Modifier.clickableNoRipple {
                             onActionResult(ActionResult(ActionResult.Type.BUY_MORE))
                         }, style = MaterialTheme.typography.displaySmall)
 

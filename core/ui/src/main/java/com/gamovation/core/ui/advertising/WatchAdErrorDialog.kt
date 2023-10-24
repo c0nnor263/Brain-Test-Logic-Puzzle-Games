@@ -1,4 +1,4 @@
-package com.gamovation.core.ui.store
+package com.gamovation.core.ui.advertising
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
@@ -20,11 +20,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.window.Dialog
 import com.gamovation.core.ui.Dimensions
-import com.gamovation.core.ui.Durations
+import com.gamovation.core.ui.R
 import com.gamovation.core.ui.animation.DrawAnimation
+import com.gamovation.core.ui.animation.Durations
 import com.gamovation.core.ui.common.ChalkBoardCard
 import com.gamovation.core.ui.extensions.clickableNoRipple
 
@@ -63,16 +65,20 @@ fun WatchAdErrorDialog(
                 ) {
 
                     Text(
-                        text = "Something went wrong!",
+                        text = stringResource(R.string.something_went_wrong),
                         style = MaterialTheme.typography.bodyMedium.copy(color = Color.Yellow),
                         textAlign = TextAlign.Center
                     )
                     Spacer(modifier = Modifier.height(Dimensions.Padding.Medium.value))
 
                     DrawAnimation {
-                        Text(text = "OK", modifier = Modifier.clickableNoRipple {
-                            onDismissed(false)
-                        }, style = MaterialTheme.typography.displaySmall)
+                        Text(
+                            text = stringResource(R.string.ok),
+                            modifier = Modifier.clickableNoRipple {
+                                onDismissed(false)
+                            },
+                            style = MaterialTheme.typography.displaySmall
+                        )
 
                     }
                 }

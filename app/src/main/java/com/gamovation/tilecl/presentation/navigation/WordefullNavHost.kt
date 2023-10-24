@@ -15,9 +15,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -27,17 +29,17 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.gamovation.core.data.billing.store.StoreScreenDetails
-import com.gamovation.core.database.model.LevelData
+import com.gamovation.core.database.data.LevelManager.Companion.MAX_LEVEL_ID
 import com.gamovation.core.domain.level.ActionResult
 import com.gamovation.core.domain.level.LevelActionState
-import com.gamovation.core.domain.level.MAX_LEVEL_ID
 import com.gamovation.core.navigation.Screens
 import com.gamovation.core.navigation.toArg
-import com.gamovation.core.ui.Durations
+import com.gamovation.core.ui.animation.Durations
 import com.gamovation.core.ui.extensions.navigate
 import com.gamovation.core.ui.level.rememberUserInteraction
-import com.gamovation.core.ui.state.LocalLevelActionState
-import com.gamovation.core.ui.state.LocalLevelScreenState
+import com.gamovation.core.ui.state.LocalLevelAction
+import com.gamovation.core.ui.state.LocalLevelScreen
+import com.gamovation.core.ui.state.LocalLocale
 import com.gamovation.core.ui.state.LocalReviewDataHandlerState
 import com.gamovation.feature.home.HomeScreen
 import com.gamovation.feature.home.HomeScreenViewModel
@@ -49,10 +51,24 @@ import com.gamovation.feature.settings.SettingsScreen
 import com.gamovation.feature.settings.SettingsScreenViewModel
 import com.gamovation.feature.store.StoreScreen
 import com.gamovation.feature.store.StoreScreenViewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import java.util.Locale
 
 @Composable
 fun WordefullNavHost(navController: NavHostController) {
     val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+
+    val locale = LocalLocale.current
+    val configuration = LocalConfiguration.current
+    LaunchedEffect(locale) {
+        Locale.setDefault(locale)
+        configuration.setLocale(locale)
+        context.createConfigurationContext(configuration)
+        context.resources.updateConfiguration(configuration, context.resources.displayMetrics)
+    }
+
 
     NavHost(
         modifier = Modifier
@@ -61,58 +77,44 @@ fun WordefullNavHost(navController: NavHostController) {
         navController = navController,
         startDestination = Screens.Home.route
     ) {
-        composable(
-            Screens.Home.route,
-            enterTransition = {
-                scaleIn(
-                    animationSpec = tween(Durations.Medium.time)
-                )
-            },
-            exitTransition = {
-                scaleOut(animationSpec = tween(Durations.Medium.time))
-            }
-        ) {
-            val viewModel: HomeScreenViewModel = hiltViewModel()
-            val levelData =
-                viewModel.getLastUncompletedLevel()
-                    .collectAsStateWithLifecycle(initialValue = null).value ?: LevelData(1)
-
-            val idArg = when (levelData.id) {
-                19 -> {
-                    if (levelData.isCompleted.not()) levelData.id else 1
-                }
-
-                else -> levelData.id
-            }
-
-            HomeScreen(
-                onNavigateToLevel = {
-                    navController.navigate(Screens.Level(idArg.toString()))
-                }
+        composable(Screens.Home.route, enterTransition = {
+            scaleIn(
+                animationSpec = tween(Durations.Medium.time)
             )
+        }, exitTransition = {
+            scaleOut(animationSpec = tween(Durations.Medium.time))
+        }) {
+            val viewModel: HomeScreenViewModel = hiltViewModel()
+            val levelData = viewModel.getLastUncompleted()
+                .collectAsStateWithLifecycle(initialValue = null).value
+
+            val idArg = when (levelData?.id) {
+                19 -> if (levelData.isCompleted.not()) levelData.id else 1
+                else -> levelData?.id ?: 1
+            }
+
+            HomeScreen(onNavigateToLevel = {
+                navController.navigate(Screens.Level(idArg.toString()))
+            })
         }
 
-        composable(
-            Screens.Store.route,
-            enterTransition = {
-                slideIntoContainer(
-                    AnimatedContentTransitionScope.SlideDirection.Down, animationSpec = tween(
-                        Durations.Medium.time
-                    )
+        composable(Screens.Store.route, enterTransition = {
+            slideIntoContainer(
+                AnimatedContentTransitionScope.SlideDirection.Down, animationSpec = tween(
+                    Durations.Medium.time
                 )
-            },
-            exitTransition = {
-                slideOutOfContainer(
-                    AnimatedContentTransitionScope.SlideDirection.Up, animationSpec = tween(
-                        Durations.Medium.time
-                    )
+            )
+        }, exitTransition = {
+            slideOutOfContainer(
+                AnimatedContentTransitionScope.SlideDirection.Up, animationSpec = tween(
+                    Durations.Medium.time
                 )
-            }
-        ) {
+            )
+        }) {
             val activity = LocalContext.current as ComponentActivity
             val viewModel: StoreScreenViewModel = hiltViewModel()
-            val productDetailsInfo = viewModel.getInAppProductsDetails()
-                .collectAsStateWithLifecycle()
+            val productDetailsInfo =
+                viewModel.getInAppProductsDetails().collectAsStateWithLifecycle()
 
             val storeScreenDetails = remember(productDetailsInfo) {
                 StoreScreenDetails.create(productDetailsInfo.value)
@@ -121,8 +123,7 @@ fun WordefullNavHost(navController: NavHostController) {
             var errorDialog by remember {
                 mutableStateOf(false)
             }
-            StoreScreen(
-                storeDetails = storeScreenDetails,
+            StoreScreen(storeDetails = storeScreenDetails,
                 onWatchAd = { viewModel.watchAdReward() },
                 errorDialog = errorDialog,
                 onBuy = { details, type ->
@@ -134,84 +135,69 @@ fun WordefullNavHost(navController: NavHostController) {
                 },
                 onDismissErrorDialog = {
                     errorDialog = false
-                }
-            )
+                })
         }
 
-        composable(
-            Screens.Settings.route,
-            enterTransition = {
-                scaleIn(
-                    animationSpec = tween(Durations.Medium.time)
-                )
-            },
-            exitTransition = {
-                scaleOut(animationSpec = tween(Durations.Medium.time))
-            }
-        ) {
+        composable(Screens.Settings.route, enterTransition = {
+            scaleIn(
+                animationSpec = tween(Durations.Medium.time)
+            )
+        }, exitTransition = {
+            scaleOut(animationSpec = tween(Durations.Medium.time))
+        }) {
             val viewModel: SettingsScreenViewModel = hiltViewModel()
-            SettingsScreen {
+            SettingsScreen(onUpdateAppLocale = {
+                scope.launch {
+                    viewModel.updateAppLocale(it)
+                    delay(1000)
+                    navController.navigate(Screens.Home)
+                }
+            }) {
                 viewModel.restorePurchases()
             }
         }
 
-        composable(
-            Screens.Menu.route,
-            enterTransition = {
-                scaleIn(
-                    animationSpec = tween(Durations.Medium.time)
-                )
-            },
-            exitTransition = {
-                scaleOut(animationSpec = tween(Durations.Medium.time))
-            }
-        ) {
+        composable(Screens.Menu.route, enterTransition = {
+            scaleIn(
+                animationSpec = tween(Durations.Medium.time)
+            )
+        }, exitTransition = {
+            scaleOut(animationSpec = tween(Durations.Medium.time))
+        }) {
             val viewModel: MenuViewModel = hiltViewModel()
-            val levelDataList =
-                viewModel.getAllLevels().collectAsStateWithLifecycle(emptyList())
+            val levelDataList = viewModel.getAllLevels().collectAsStateWithLifecycle(emptyList())
 
 
             var pageIndex by remember {
                 mutableIntStateOf(0)
             }
 
-            val list =
-                levelDataList.value.takeIf { it.isNotEmpty() }?.subList(
-                    pageIndex, (pageIndex + 5).coerceAtMost(
-                        MAX_LEVEL_ID
-                    )
+            val list = levelDataList.value.takeIf { it.isNotEmpty() }?.subList(
+                pageIndex, (pageIndex + 5).coerceAtMost(
+                    MAX_LEVEL_ID
                 )
-                    ?: listOf()
-            MenuScreen(
-                index = pageIndex,
-                levelList = list,
-                onNavigateToLevel = { levelId: Int ->
-                    navController.navigate(Screens.Level(levelId.toString()))
-                },
-                onIndexUpdate = {
-                    pageIndex = it.coerceAtMost(MAX_LEVEL_ID)
-                }
-            )
+            ) ?: listOf()
+            MenuScreen(index = pageIndex, levelList = list, onNavigateToLevel = { levelId: Int ->
+                navController.navigate(Screens.Level(levelId.toString()))
+            }, onIndexUpdate = {
+                pageIndex = it.coerceAtMost(MAX_LEVEL_ID)
+            })
         }
 
 
         val idArgName = Screens.Level().id.toArg()
-        composable(
-            Screens.Level().route, arguments = listOf(
-                navArgument(
-                    idArgName,
-                ) {
-                    type = NavType.IntType
-                    defaultValue = 1
-                },
-            ),
-            enterTransition = {
-                fadeIn(tween(Durations.Medium.time))
+        composable(Screens.Level().route, arguments = listOf(
+            navArgument(
+                idArgName,
+            ) {
+                type = NavType.IntType
+                defaultValue = 1
             },
-            exitTransition = {
-                fadeOut(animationSpec = tween(Durations.Medium.time))
-            }
-        ) { backStackEntry ->
+        ), enterTransition = {
+            fadeIn(tween(Durations.Medium.time))
+        }, exitTransition = {
+            fadeOut(animationSpec = tween(Durations.Medium.time))
+        }) { backStackEntry ->
             val viewModel: LevelScreenViewModel = hiltViewModel()
             val idArg = backStackEntry.arguments?.getInt(idArgName) ?: 1
 
@@ -250,8 +236,8 @@ fun WordefullNavHost(navController: NavHostController) {
 
 
             CompositionLocalProvider(
-                LocalLevelScreenState provides levelScreenState.value,
-                LocalLevelActionState provides levelActionState.value,
+                LocalLevelScreen provides levelScreenState.value,
+                LocalLevelAction provides levelActionState.value,
             ) {
                 LevelScreen(
                     level = levelData.value,
@@ -270,8 +256,7 @@ fun WordefullNavHost(navController: NavHostController) {
                         }
                         viewModel.updateLevelActionState(LevelActionState.IDLE)
                     },
-
-                    )
+                )
             }
 
 

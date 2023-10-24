@@ -1,16 +1,12 @@
 package com.gamovation.core.ui.advertising
 
 import android.content.Context
-import android.util.Log
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.viewinterop.AndroidView
-import com.gamovation.core.domain.advertising.TEST_AD_UNIT_ID
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
@@ -18,15 +14,12 @@ import com.google.android.gms.ads.AdView
 @Composable
 fun BannerAdView(
     modifier: Modifier = Modifier,
-    adUnitId: String = TEST_AD_UNIT_ID
+    adUnitId: String = stringResource(id = com.gamovation.core.domain.R.string.test_ad_unit),
 ) {
     val deviceCurrentWidth = LocalConfiguration.current.screenWidthDp
-    val adRequest by remember {
-        mutableStateOf(AdRequest.Builder().build().also {
-            Log.i("TAG", "BannerAdView: ${it.contentUrl} ${it.adString}")
-        })
-    }
+
     AndroidView(modifier = modifier, factory = { context: Context ->
+        val request = AdRequest.Builder().build()
         AdView(context).apply {
             setAdSize(
                 AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(
@@ -34,10 +27,11 @@ fun BannerAdView(
                 )
             )
             setAdUnitId(adUnitId)
-            loadAd(adRequest)
+            loadAd(request)
         }
     }, update = { adView ->
-        adView.loadAd(adRequest)
+        val request = AdRequest.Builder().build()
+        adView.loadAd(request)
     })
 
 }

@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.gamovation.core.ui.Durations
+import com.gamovation.core.ui.animation.Durations
 
 @Composable
 fun HeaderBarButton(modifier: Modifier = Modifier, @DrawableRes iconRes: Int, onClick: () -> Unit) {

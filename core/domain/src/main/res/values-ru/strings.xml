@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Titles -->
+    <string name="l1_title">Сколько уток?</string>
+    <string name="l2_title">Разбудите сову</string>
+    <string name="l3_title">Где не мороженое?</string>
+    <string name="l4_title">Включите 4-ю лампочку</string>
+    <string name="l5_title">Вам нужно выиграть игру</string>
+    <string name="l6_title">У меня было 10 рыб в аквариуме, но когда я пришел домой, я обнаружил, что 6 из них умерли. Сколько рыб осталось в аквариуме?</string>
+    <string name="l7_title">Какое число находится с другой стороны кубика?</string>
+    <string name="l8_title">Какое число скрыто здесь?</string>
+    <string name="l9_title">У моей вдовой бабушки трое детей. Они все женаты и у каждого есть хотя бы один ребенок. У моей тети 3 племянника. Какое минимальное количество стульев нам нужно, чтобы посадить всех за стол?</string>
+    <string name="l10_title">Если готовка одной курицы занимает 5 минут, сколько времени потребуется, чтобы приготовить 5 кур?</string>
+    <!-- empty 11 -->
+    <string name="l12_title">Что появляется два раза в неделю и один раз в век?</string>
+    <string name="l12_right_answer">Е</string>
+    <string name="l13_title">Сколько букв останется, если E и T выйдут из алфавита?</string>
+    <!-- empty 14 -->
+    <string name="l15_title">Сколько кусков у нас есть?</string>
+
+    <string name="l16_title">Петя снова голоден, покормите его</string>
+    <string name="l17_title">Помогите им влюбиться</string>
+    <string name="l18_title">Сколько дырок на рубашке спереди и сзади?</string>
+    <string name="l19_title">Пожалуйста, откройте соду</string>
+    <string name="l20_title">Какой из котов находится под этим текстом?</string>
+
+    <!-- Advices -->
+    <string name="l1_advise">Будьте внимательными к сторонам</string>
+    <string name="l2_advise">Сделайте темно</string>
+    <string name="l3_advise">Мороженое холодное</string>
+    <string name="l4_advise">Нажмите на 4-ю лампочку</string>
+    <string name="l5_advise">Вы касаетесь только одной клетки</string>
+    <string name="l6_advise">Посчитайте все рыбы</string>
+    <string name="l7_advise">Попробуйте его перекатить!</string>
+    <string name="l8_advise">Интересно, что под этим камнем?</string>
+    <string name="l9_advise">Посчитайте стулья</string>
+    <string name="l10_advise">Посчитайте кур</string>
+    <string name="l11_advise">Будьте внимательны к словам</string>
+    <string name="l12_advise">Посчитайте буквы</string>
+    <string name="l13_advise">Посчитайте оставшиеся буквы</string>
+    <string name="l14_advise">Мы можем их раскрасить?</string>
+    <string name="l15_advise">Хватит ли вам одной пиццы?</string>
+    <string name="l16_advise">Эта еда холодная для Пети</string>
+    <string name="l17_advise">БУМ</string>
+    <string name="l18_advise">Посмотрите внимательно</string>
+    <string name="l19_advise">Поднимите настроение этой бутылке</string>
+    <string name="l20_advise">Очевидно!</string>
+
+</resources>

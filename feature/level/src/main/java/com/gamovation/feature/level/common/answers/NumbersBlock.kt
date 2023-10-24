@@ -27,9 +27,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.gamovation.core.ui.Dimensions
-import com.gamovation.core.ui.R
 import com.gamovation.core.ui.extensions.clickableNoRipple
 import com.gamovation.core.ui.theme.WordefullTheme
+import com.gamovation.feature.level.R
 
 @Composable
 fun NumbersBlock(
@@ -173,7 +173,7 @@ fun NumbersBlock(
 fun NumbersBlockPreview() {
     WordefullTheme {
 
-        NumbersBlock() {
+        NumbersBlock {
 
         }
 

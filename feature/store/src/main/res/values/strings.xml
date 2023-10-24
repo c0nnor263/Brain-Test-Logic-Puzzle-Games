@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="remove_ads">remove ads</string>
+
+    <string name="you_can_t_buy_this_item">You can\'t buy this item!</string>
+    <string name="best_choice">Best Choice</string>
+    <string name="smartest">Smartest</string>
+
+    <!-- VIP -->
+    <string name="become_a_vip">BECOME A VIP!</string>
+    <string name="remove_ads_and_get_cheaper_costs_for_all_actions">Remove ads and get cheaper costs for all actions!</string>
+    <string name="get_vip">Get VIP</string>
+</resources>

@@ -17,8 +17,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.gamovation.core.domain.level.LevelScreenState
 import com.gamovation.core.ui.Dimensions
-import com.gamovation.core.ui.R
 import com.gamovation.core.ui.theme.WordefullTheme
+import com.gamovation.feature.level.R
 import com.gamovation.feature.level.common.answers.CounterBlock
 import com.gamovation.feature.level.common.interactions.DraggableImage
 

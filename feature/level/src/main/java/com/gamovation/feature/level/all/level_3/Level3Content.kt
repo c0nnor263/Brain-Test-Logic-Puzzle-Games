@@ -1,6 +1,5 @@
 package com.gamovation.feature.level.all.level_3
 
-import android.util.Log
 import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
@@ -15,15 +14,15 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.gamovation.core.domain.level.LevelScreenState
 import com.gamovation.core.ui.Dimensions
-import com.gamovation.core.ui.R
 import com.gamovation.core.ui.review.InAppReviewDialog
 import com.gamovation.core.ui.state.LocalReviewDataHandlerState
+import com.gamovation.feature.level.R
 import com.gamovation.feature.level.common.interactions.DraggableImage
 
 @Composable
 internal fun Level3Content(
     modifier: Modifier = Modifier,
-    onLevelAction: (LevelScreenState) -> Unit
+    onLevelAction: (LevelScreenState) -> Unit,
 ) {
     val reviewDataHandlerState = LocalReviewDataHandlerState.current
     var showReviewDialog by rememberSaveable {
@@ -34,7 +33,6 @@ internal fun Level3Content(
         if (!reviewDataHandlerState.isDialogVisible) {
             showReviewDialog = true
         }
-        Log.i("TAG", "Level3Content: ${reviewDataHandlerState.isDialogVisible}")
     }
 
 
@@ -48,13 +46,14 @@ internal fun Level3Content(
 
     ) {
 
-        val (iceCream1,
+        val (
+            iceCream1,
             iceCream2,
             iceCream3,
             iceCream4,
             iceCream5,
             iceCream6,
-            sun
+            sun,
         ) = createRefs()
 
 
@@ -130,9 +129,7 @@ internal fun Level3Content(
         onStartReview = {
             showReviewDialog = false
             reviewDataHandlerState.isReviewRequested = true
-            Log.i("TAG", "Level3Content: onstart")
         }, onDismiss = {
-            Log.i("TAG", "Level3Content: onDismiss")
             showReviewDialog = false
         }
     )

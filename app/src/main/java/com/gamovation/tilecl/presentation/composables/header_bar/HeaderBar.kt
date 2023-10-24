@@ -29,7 +29,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.gamovation.core.navigation.Screens
 import com.gamovation.core.ui.Dimensions
 import com.gamovation.core.ui.R
-import com.gamovation.core.ui.defaultSpringAnimation
+import com.gamovation.core.ui.animation.defaultSpringAnimation
 import com.gamovation.core.ui.extensions.navigate
 import com.gamovation.core.ui.extensions.popBack
 import com.gamovation.core.ui.state.LocalCurrency

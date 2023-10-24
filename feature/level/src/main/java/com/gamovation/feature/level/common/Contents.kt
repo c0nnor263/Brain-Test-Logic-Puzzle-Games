@@ -9,17 +9,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import com.gamovation.core.data.R
+import com.gamovation.core.database.data.LevelManager.Companion.DEFAULT_LEVEL_SCREEN_RESTART_DURATION
 import com.gamovation.core.database.model.LevelData
-import com.gamovation.core.domain.level.DEFAULT_LEVEL_SCREEN_RESTART_DURATION
 import com.gamovation.core.domain.level.LevelActionState
 import com.gamovation.core.domain.level.LevelScreenState
-import com.gamovation.core.ui.state.LocalLevelActionState
-import com.gamovation.core.ui.state.LocalLevelScreenState
+import com.gamovation.core.ui.state.LocalLevelAction
+import com.gamovation.core.ui.state.LocalLevelScreen
 import com.gamovation.core.ui.state.rememberInterstitialAdViewState
 import com.gamovation.core.ui.state.rememberRewardedInterstitialAdViewState
-import com.gamovation.core.ui.theme.WordefullTheme
 import com.gamovation.feature.level.Completed
 import com.gamovation.feature.level.Final
 import com.gamovation.feature.level.action_bar.Restarting
@@ -34,8 +32,8 @@ fun Contents(
 ) {
     val activity = LocalContext.current as ComponentActivity
 
-    val screenState = LocalLevelScreenState.current
-    val actionState = LocalLevelActionState.current
+    val screenState = LocalLevelScreen.current
+    val actionState = LocalLevelAction.current
     val interstitialAdView = rememberInterstitialAdViewState(
         activity = activity,
         stringResource(id = R.string.admob_interstitial_id_level_completed)
@@ -86,14 +84,5 @@ fun Contents(
             }
 
         }
-    }
-}
-
-
-@Preview
-@Composable
-fun LevelContentsPreview() {
-    WordefullTheme {
-        Contents(level = LevelData(id = 2), onLevelAction = {}, onLevelScreenAction = {})
     }
 }

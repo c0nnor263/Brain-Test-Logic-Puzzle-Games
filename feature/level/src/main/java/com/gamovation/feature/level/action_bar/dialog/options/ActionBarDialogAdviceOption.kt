@@ -1,40 +1,46 @@
 package com.gamovation.feature.level.action_bar.dialog.options
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import com.gamovation.core.ui.Dimensions
 import com.gamovation.core.ui.animation.DrawAnimation
 import com.gamovation.core.ui.extensions.clickableNoRipple
+import com.gamovation.feature.level.R
 
 @Composable
 fun ActionBarDialogAdviceOption(onClick: () -> Unit) {
-    DrawAnimation {
-        Text(
-            text = "Nothing else pops into your head?",
-            style = MaterialTheme.typography.headlineMedium,
-            textAlign = TextAlign.Center
-        )
-    }
-    DrawAnimation(delayOrder = 1) {
-        Text(
-            text = "Well, you can get a hint",
-            style = MaterialTheme.typography.headlineLarge.copy(color = Color.Yellow),
-            textAlign = TextAlign.Center
-        )
-    }
-    Spacer(modifier = Modifier.height(Dimensions.Padding.Large.value))
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        DrawAnimation {
+            Text(
+                text = stringResource(R.string.advice_nothing_else_pops_into_your_head),
+                style = MaterialTheme.typography.titleMedium,
+                textAlign = TextAlign.Center
+            )
+        }
+        DrawAnimation(delayOrder = 1) {
+            Text(
+                text = stringResource(R.string.advise_well_you_can_get_a_hint),
+                style = MaterialTheme.typography.titleLarge.copy(color = Color.Yellow),
+                textAlign = TextAlign.Center
+            )
+        }
+        Spacer(modifier = Modifier.height(Dimensions.Padding.Large.value))
 
-    DrawAnimation(delayOrder = 2) {
-        Text(
-            text = "Get hint!",
-            modifier = Modifier.clickableNoRipple { onClick() },
-            style = MaterialTheme.typography.displaySmall
-        )
+        DrawAnimation(delayOrder = 2) {
+            Text(
+                text = stringResource(R.string.advise_get_hint),
+                modifier = Modifier.clickableNoRipple { onClick() },
+                style = MaterialTheme.typography.titleMedium
+            )
+        }
     }
 }

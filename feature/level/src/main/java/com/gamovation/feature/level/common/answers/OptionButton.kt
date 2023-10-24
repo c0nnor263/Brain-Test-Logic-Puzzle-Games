@@ -12,18 +12,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import com.gamovation.core.ui.Dimensions
-import com.gamovation.core.ui.R
+import com.gamovation.feature.level.R
 
 @Composable
 internal fun OptionButton(
     modifier: Modifier = Modifier,
-    index: Int,
     text: String,
     style: TextStyle = MaterialTheme.typography.titleLarge,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     Card(
         modifier = modifier.clickable { onClick() },
@@ -33,9 +31,7 @@ internal fun OptionButton(
             Image(
                 modifier = Modifier.fillMaxWidth(),
                 painter = painterResource(id = R.drawable.button),
-                contentDescription = stringResource(
-                    id = R.string.option_button_content_description, index
-                ),
+                contentDescription = null,
                 contentScale = ContentScale.FillWidth
             )
 

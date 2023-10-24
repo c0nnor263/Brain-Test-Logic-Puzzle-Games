@@ -9,9 +9,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 sealed class UserInteraction {
-    object OnBack : UserInteraction()
-    object OnForward : UserInteraction()
-    object OnWatchAd : UserInteraction()
+    data object OnBack : UserInteraction()
+    data object OnForward : UserInteraction()
+    data object OnWatchAd : UserInteraction()
     data class OnUpdateLevelActionState(val levelActionState: LevelActionState) : UserInteraction()
     data class OnUpdateLevelScreenState(val levelScreenState: LevelScreenState) : UserInteraction()
 }

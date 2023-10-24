@@ -21,7 +21,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
@@ -38,7 +40,7 @@ import kotlin.math.roundToInt
 fun BestChoiceContent(
     modifier: Modifier = Modifier,
     details: ProductDetails?,
-    onClick: (ProductDetails, BillingProductType) -> Unit
+    onClick: (ProductDetails, BillingProductType) -> Unit,
 ) {
     Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
         Card(colors = CardDefaults.cardColors(boardBorderColor),
@@ -50,10 +52,14 @@ fun BestChoiceContent(
                 .fillMaxWidth()
         ) {
             Text(
-                text = "Best Choice",
-                modifier = Modifier.padding(Dimensions.Padding.Medium.value),
-                style = MaterialTheme.typography.headlineMedium,
-                textAlign = TextAlign.Center
+                text = stringResource(com.gamovation.feature.store.R.string.best_choice),
+                modifier = Modifier
+                    .padding(Dimensions.Padding.Medium.value)
+                    .align(Alignment.CenterHorizontally),
+                style = MaterialTheme.typography.titleMedium,
+                textAlign = TextAlign.Center,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
             )
         }
         ChalkBoardCard(
@@ -75,7 +81,7 @@ fun BestChoiceContent(
                     Text("x1000", style = MaterialTheme.typography.bodyMedium.copy(Color.White))
                     Spacer(modifier = Modifier.width(Dimensions.Padding.Small.value))
                     Image(
-                        painter = painterResource(id = R.drawable.remove_ads),
+                        painter = painterResource(id = com.gamovation.feature.store.R.drawable.remove_ads),
                         modifier = Modifier.size(32.dp),
                         contentDescription = null,
                         contentScale = ContentScale.Fit

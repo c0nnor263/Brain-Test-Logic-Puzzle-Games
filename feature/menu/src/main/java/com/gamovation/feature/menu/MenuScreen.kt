@@ -18,13 +18,13 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import com.gamovation.core.database.model.LevelData
 import com.gamovation.core.ui.Dimensions
-import com.gamovation.core.ui.level.NavigationArrows
 import com.gamovation.core.ui.theme.WordefullTheme
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -33,7 +33,7 @@ fun MenuScreen(
     index: Int,
     levelList: List<LevelData>,
     onNavigateToLevel: (Int) -> Unit,
-    onIndexUpdate: (Int) -> Unit
+    onIndexUpdate: (Int) -> Unit,
 ) {
 
 
@@ -56,22 +56,22 @@ fun MenuScreen(
 
                 items(items = levelList, key = { it.id }) {
 
-                        TextButton(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .align(Alignment.CenterHorizontally),
-                            enabled = it.isLocked.not(),
-                            onClick = {
-                                onNavigateToLevel(it.id)
-                            }
-                        ) {
-                            Text(
-                                text = "LEVEL ${it.id}",
-                                color = if (it.isLocked) Color.Gray else Color.White,
-                                style = MaterialTheme.typography.displaySmall,
-                                textDecoration = if (it.isCompleted) TextDecoration.LineThrough else TextDecoration.None
-                            )
+                    TextButton(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .align(Alignment.CenterHorizontally),
+                        enabled = it.isLocked.not(),
+                        onClick = {
+                            onNavigateToLevel(it.id)
                         }
+                    ) {
+                        Text(
+                            text = stringResource(R.string.level, it.id),
+                            color = if (it.isLocked) Color.Gray else Color.White,
+                            style = MaterialTheme.typography.displaySmall,
+                            textDecoration = if (it.isCompleted) TextDecoration.LineThrough else TextDecoration.None
+                        )
+                    }
                 }
             }
 
@@ -93,11 +93,41 @@ fun MenuScreenPreview() {
     WordefullTheme {
         MenuScreen(
             levelList = listOf(
-                LevelData(id = 1, isCompleted = true, isLocked = false),
-                LevelData(id = 2, isCompleted = false, isLocked = false),
-                LevelData(id = 3, isCompleted = false),
-                LevelData(id = 4, isCompleted = false),
-                LevelData(id = 5, isCompleted = false),
+                LevelData(
+                    id = 1,
+                    isCompleted = true,
+                    title = com.gamovation.core.domain.R.string.l1_title,
+                    advise = com.gamovation.core.domain.R.string.l1_advise,
+                    isLocked = false
+                ),
+                LevelData(
+                    id = 2,
+                    isCompleted = true,
+                    title = com.gamovation.core.domain.R.string.l2_title,
+                    advise = com.gamovation.core.domain.R.string.l2_advise,
+                    isLocked = false
+                ),
+                LevelData(
+                    id = 3,
+                    isCompleted = true,
+                    title = com.gamovation.core.domain.R.string.l3_title,
+                    advise = com.gamovation.core.domain.R.string.l3_advise,
+                    isLocked = false
+                ),
+                LevelData(
+                    id = 4,
+                    isCompleted = true,
+                    title = com.gamovation.core.domain.R.string.l4_title,
+                    advise = com.gamovation.core.domain.R.string.l4_advise,
+                    isLocked = false
+                ),
+                LevelData(
+                    id = 5,
+                    isCompleted = true,
+                    title = com.gamovation.core.domain.R.string.l5_title,
+                    advise = com.gamovation.core.domain.R.string.l5_advise,
+                    isLocked = false
+                ),
             ),
             index = 0,
             onNavigateToLevel = {},

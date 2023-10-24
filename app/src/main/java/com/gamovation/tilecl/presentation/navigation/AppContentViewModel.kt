@@ -24,7 +24,9 @@ class AppContentViewModel @Inject constructor(
     fun getUserCurrency() = userInfoPreferencesRepository.getUserCurrency()
 
     fun getUserVipType() = userInfoPreferencesRepository.getUserVipType()
-    fun onResumeBilling(){
+
+    fun getLanguage() = userInfoPreferencesRepository.getLanguage()
+    fun onResumeBilling() {
         billingDataSource.onResumeBilling()
     }
 

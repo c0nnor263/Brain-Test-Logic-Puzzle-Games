@@ -16,18 +16,16 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.gamovation.core.database.data.LevelManager
 import com.gamovation.core.ui.Dimensions
-import com.gamovation.core.ui.Durations
 import com.gamovation.core.ui.R
+import com.gamovation.core.ui.animation.Durations
 import com.gamovation.feature.level.common.Title
 
 @Composable
@@ -50,15 +48,18 @@ fun Final(modifier: Modifier = Modifier) {
             )
             Spacer(modifier = Modifier.height(Dimensions.Padding.Medium.value))
             Title(
-                text = "Level 20 completed",
+                text = stringResource(
+                    com.gamovation.feature.level.R.string.level_completed,
+                    LevelManager.MAX_LEVEL_ID
+                ),
                 style = MaterialTheme.typography.displaySmall
             )
             Title(
-                text = "You completed the game",
+                text = stringResource(com.gamovation.feature.level.R.string.you_completed_the_game),
                 style = MaterialTheme.typography.displaySmall
             )
             Title(
-                text = "Thanks for the playing!",
+                text = stringResource(com.gamovation.feature.level.R.string.thanks_for_the_playing),
                 style = MaterialTheme.typography.displaySmall.copy(color = Color.Yellow)
             )
         }

@@ -21,15 +21,23 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import com.gamovation.core.domain.level.LevelScreenState
 import com.gamovation.core.ui.Dimensions
 import com.gamovation.core.ui.extensions.clickableNoRipple
+import com.gamovation.feature.level.R
 
 @Composable
 fun Level11Content(modifier: Modifier = Modifier, onLevelAction: (LevelScreenState) -> Unit) {
-    val listOfOptions = listOf("Dog", "Mewka", "Murka", "Kilen", "Cow")
+    val listOfOptions = listOf(
+        stringResource(R.string.l11_dog),
+        stringResource(R.string.l11_mewka),
+        stringResource(R.string.l11_murka),
+        stringResource(R.string.l11_kilen),
+        stringResource(R.string.l11_cow)
+    )
     var isCorrect by remember {
         mutableStateOf(false)
     }
@@ -43,10 +51,13 @@ fun Level11Content(modifier: Modifier = Modifier, onLevelAction: (LevelScreenSta
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceAround
         ) {
-            Text(text = "What are the names of baby", style = MaterialTheme.typography.titleLarge)
+            Text(
+                text = stringResource(R.string.l11_what_are_the_names_of_baby),
+                style = MaterialTheme.typography.titleLarge
+            )
             Spacer(modifier = Modifier.width(Dimensions.Padding.ExtraSmall.value))
             Text(
-                text = "cats?", modifier = Modifier.clickable {
+                text = stringResource(R.string.l11_cats), modifier = Modifier.clickable {
                     isCorrect = true
                     onLevelAction(LevelScreenState.CORRECT_CHOICE)
                 }, style = MaterialTheme.typography.titleLarge,

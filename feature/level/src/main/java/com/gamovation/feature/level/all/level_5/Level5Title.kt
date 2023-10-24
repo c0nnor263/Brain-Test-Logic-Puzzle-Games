@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.gamovation.core.ui.R
 import com.gamovation.core.ui.animation.DrawAnimation
@@ -27,7 +28,8 @@ fun Level5Title(modifier: Modifier = Modifier) {
         DrawAnimation(delayOrder = 4) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
-                    text = "John:", style = MaterialTheme.typography.bodyLarge
+                    text = stringResource(com.gamovation.feature.level.R.string.l5_opponent),
+                    style = MaterialTheme.typography.bodyLarge
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Image(
@@ -40,7 +42,8 @@ fun Level5Title(modifier: Modifier = Modifier) {
         DrawAnimation(delayOrder = 5) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
-                    text = "You:", style = MaterialTheme.typography.bodyLarge
+                    text = stringResource(com.gamovation.feature.level.R.string.l5_player_you),
+                    style = MaterialTheme.typography.bodyLarge
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Image(

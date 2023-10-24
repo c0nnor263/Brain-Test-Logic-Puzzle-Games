@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="l5_opponent">Джон:</string>
+    <string name="l5_player_you">Вы:</string>
+
+    <string name="l11_what_are_the_names_of_baby">Как зовут маленьких</string>
+    <string name="l11_cats">котят?</string>
+    <string name="l11_dog">Собака</string>
+    <string name="l11_mewka">Котки</string>
+    <string name="l11_murka">Мурка</string>
+    <string name="l11_kilen">Килен</string>
+    <string name="l11_cow">Корова</string>
+
+    <string name="l14_where_is_a">Где находится</string>
+    <string name="l14_black">черная</string>
+    <string name="l14_sheep">овечка?</string>
+
+    <string name="l17_heart_emoji">❤️</string>
+    <string name="l17_snooze_emoji">💤</string>
+
+
+    <!-- Завершено -->
+    <string name="you_completed_the_game">Вы завершили игру</string>
+    <string name="thanks_for_the_playing">Спасибо за прохождение!</string>
+
+    <!-- Совет -->
+    <string name="advice_nothing_else_pops_into_your_head">Ничего больше не приходит в голову?</string>
+    <string name="advise_well_you_can_get_a_hint">Ну, вы можете получить подсказку</string>
+    <string name="advise_get_hint">Получить подсказку!</string>
+
+    <!-- Пропустить -->
+    <string name="skip_do_you_really_want_to_skip_this_level">Вы действительно хотите пропустить этот уровень?</string>
+    <string name="skip_this_level_will_let_you_do_this">Этот уровень позволит вам его завершить</string>
+    <string name="skip">Пропустить!</string>
+
+    <!-- Уровень завершен -->
+    <string name="level_completed">Уровень %1$s завершен</string>
+    <string name="level_completed_you_awesome">Вы молодец!</string>
+    <string name="next_level">Следующий уровень</string>
+
+    <!-- Недостаточно валюты -->
+    <string name="you_don_t_have_enough_currency_to_get_a_hint">У вас недостаточно валюты</string>
+    <string name="do_you_want_to_get_more">Хотите получить больше</string>
+    <string name="get_more">Получить!</string>
+
+</resources>

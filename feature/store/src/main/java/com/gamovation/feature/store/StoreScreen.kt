@@ -1,6 +1,5 @@
 package com.gamovation.feature.store
 
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -25,9 +24,9 @@ import com.gamovation.core.data.billing.BillingProductType
 import com.gamovation.core.data.billing.store.StoreScreenDetails
 import com.gamovation.core.ui.Dimensions
 import com.gamovation.core.ui.R
+import com.gamovation.core.ui.advertising.WatchAdDialog
+import com.gamovation.core.ui.advertising.WatchStoreItem
 import com.gamovation.core.ui.state.rememberRewardedInterstitialAdViewState
-import com.gamovation.core.ui.store.WatchAdDialog
-import com.gamovation.core.ui.store.WatchStoreItem
 import com.gamovation.core.ui.theme.WordefullTheme
 import com.gamovation.feature.store.items.BestChoiceContent
 import com.gamovation.feature.store.items.SmartestOfferContent
@@ -74,6 +73,7 @@ fun StoreScreen(
                     onClick = onBuy
                 )
                 Spacer(modifier = Modifier.width(Dimensions.Padding.Medium.value))
+
                 BestChoiceContent(
                     modifier = Modifier.weight(0.5F),
                     storeDetails?.bestChoiceDetails,
@@ -83,8 +83,8 @@ fun StoreScreen(
         }
 
         item {
-            StoreItem(value = "remove ads",
-                drawableRes = R.drawable.remove_ads,
+            StoreItem(value = stringResource(com.gamovation.feature.store.R.string.remove_ads),
+                drawableRes = com.gamovation.feature.store.R.drawable.remove_ads,
                 details = storeDetails?.removeAdsDetails,
                 onClick = {
                     onBuy(it, BillingProductType.REMOVE_ADS)
@@ -93,7 +93,7 @@ fun StoreScreen(
         item {
             WatchStoreItem(
                 value = "x25",
-                text = "Watch Ad\nfor reward",
+                text = stringResource(R.string.watch_ad_for_reward),
                 isLoaded = rewardedInterstitialAd.isAdLoaded,
                 onClick = {
                     showWatchAdDialog = true
@@ -121,7 +121,6 @@ fun StoreScreen(
         visible = showWatchAdDialog,
         rewardedInterstitialAd = rewardedInterstitialAd,
         onDismissed = { result ->
-            Log.i("TAG", "StoreScreen: $result")
             showWatchAdDialog = false
             if (result == true) onWatchAd()
         })

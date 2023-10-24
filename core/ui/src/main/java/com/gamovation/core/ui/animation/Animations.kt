@@ -1,4 +1,4 @@
-package com.gamovation.core.ui
+package com.gamovation.core.ui.animation
 
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring

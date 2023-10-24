@@ -21,11 +21,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.window.Dialog
 import com.gamovation.core.ui.Dimensions
-import com.gamovation.core.ui.Durations
+import com.gamovation.core.ui.R
 import com.gamovation.core.ui.animation.DrawAnimation
+import com.gamovation.core.ui.animation.Durations
 import com.gamovation.core.ui.common.ChalkBoardCard
 import com.gamovation.core.ui.extensions.clickableNoRipple
 
@@ -65,7 +67,7 @@ fun InAppReviewDialog(
                 ) {
                     DrawAnimation {
                         Text(
-                            text = "Did you like the game?",
+                            text = stringResource(R.string.did_you_like_the_game),
                             style = MaterialTheme.typography.titleLarge,
                             textAlign = TextAlign.Center
                         )
@@ -74,7 +76,7 @@ fun InAppReviewDialog(
 
                     DrawAnimation(delayOrder = 1) {
                         Text(
-                            text = "Could you share your feedback so we can work on improving it?",
+                            text = stringResource(R.string.could_you_share_your_feedback_so_we_can_work_on_improving_it),
                             style = MaterialTheme.typography.titleMedium,
                             textAlign = TextAlign.Center
                         )
@@ -84,15 +86,23 @@ fun InAppReviewDialog(
                         horizontalArrangement = Arrangement.SpaceAround
                     ) {
                         DrawAnimation(delayOrder = 2) {
-                            Text(text = "Yes", modifier = Modifier.clickableNoRipple {
-                                onStartReview()
-                            }, style = MaterialTheme.typography.headlineMedium)
+                            Text(
+                                text = stringResource(R.string.yes),
+                                modifier = Modifier.clickableNoRipple {
+                                    onStartReview()
+                                },
+                                style = MaterialTheme.typography.headlineMedium
+                            )
                         }
                         Spacer(Modifier.width(Dimensions.Padding.Small.value))
                         DrawAnimation(delayOrder = 3) {
-                            Text(text = "No", modifier = Modifier.clickableNoRipple {
-                                onDismiss()
-                            }, style = MaterialTheme.typography.headlineMedium)
+                            Text(
+                                text = stringResource(R.string.no),
+                                modifier = Modifier.clickableNoRipple {
+                                    onDismiss()
+                                },
+                                style = MaterialTheme.typography.headlineMedium
+                            )
 
                         }
                     }

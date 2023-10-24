@@ -15,7 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.gamovation.core.ui.Durations
+import com.gamovation.core.ui.animation.Durations
 import com.gamovation.core.ui.theme.boardBackgroundColor
 
 @Composable

@@ -20,7 +20,6 @@ class ReviewDataManager @Inject constructor(
 ) {
     private val manager = ReviewManagerFactory.create(applicationContext)
 
-
     private suspend fun isAvailableForReview(): Boolean = withContext(Dispatchers.IO) {
         offlineUserInfoPreferencesRepository.getIsAvailableForReview().firstOrNull() ?: true
     }

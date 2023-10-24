@@ -1,12 +1,21 @@
 <resources>
-    <string name="app_name">Brain Test: Logic Puzzle Games</string>
+    <string name="app_name" translatable="false">Brain Test: Logic Puzzle Games</string>
+
+    <string name="ad_reward" translatable="false">x25</string>
+
+    <!-- Review -->
+    <string name="did_you_like_the_game">Did you like the game?</string>
+    <string name="could_you_share_your_feedback_so_we_can_work_on_improving_it">Could you share your feedback so we can work on improving it?</string>
 
 
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="ok">OK</string>
+    <string name="thanks">Thanks</string>
+    <string name="submit">Submit</string>
+    <string name="something_went_wrong">Something went wrong!</string>
 
-    <string name="number_0_duck_content_description">Duck image</string>
-    <string name="option_button_content_description">Option button %d</string>
-    <string name="failure_image_content_description">Failure image</string>
-    <string name="success_image_content_description">Success image</string>
-    <string name="previous_level_button_content_description">Previous level button</string>
-    <string name="next_level_button_content_description">Next level button</string>
+
+    <string name="watch_ad_for_reward">Watch Ad\nfor reward</string>
+
 </resources>

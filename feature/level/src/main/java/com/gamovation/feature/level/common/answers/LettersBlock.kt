@@ -26,9 +26,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.gamovation.core.ui.Dimensions
-import com.gamovation.core.ui.R
 import com.gamovation.core.ui.extensions.clickableNoRipple
 import com.gamovation.core.ui.theme.WordefullTheme
+import com.gamovation.feature.level.R
 import kotlin.math.roundToInt
 
 
@@ -45,6 +45,7 @@ fun LettersBlock(
     }
 
     val currentAlphabet = when (alphabetType) {
+        AlphabetType.Cyrillic -> defaultCyrillicAlphabet
         AlphabetType.Latin -> defaultLatinAlphabet
     }
 
@@ -156,9 +157,57 @@ fun LettersBlockLatinPreview() {
 
         }
     }
+}
 
+
+@Preview
+@Composable
+fun LettersBlockCyrillicPreview() {
+    WordefullTheme {
+        LettersBlock(alphabetType = AlphabetType.Cyrillic) {
+
+        }
+
+    }
 
 }
+
+
+val defaultCyrillicAlphabet = listOf(
+    "А",
+    "Б",
+    "В",
+    "Г",
+    "Д",
+    "Е",
+    "Ё",
+    "Ж",
+    "З",
+    "И",
+    "Й",
+    "К",
+    "Л",
+    "М",
+    "Н",
+    "О",
+    "П",
+    "Р",
+    "С",
+    "Т",
+    "У",
+    "Ф",
+    "Х",
+    "Ц",
+    "Ч",
+    "Ш",
+    "Щ",
+    "Ъ",
+    "Ы",
+    "Ь",
+    "Э",
+    "Ю",
+    "Я"
+)
 
 val defaultLatinAlphabet = listOf(
     "A",

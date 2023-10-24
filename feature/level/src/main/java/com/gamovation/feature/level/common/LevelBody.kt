@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import com.gamovation.core.database.model.LevelData
 import com.gamovation.core.domain.level.LevelScreenState
 import com.gamovation.core.ui.Dimensions
@@ -34,13 +35,14 @@ import com.gamovation.feature.level.all.level_9.Level9Content
 
 @Composable
 fun LevelBody(level: LevelData, onLevelScreenAction: (LevelScreenState) -> Unit) {
+    val title = stringResource(id = level.title)
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        if (level.title.isNotBlank()) {
-            Title(text = level.title)
+        if (title.isNotBlank()) {
+            Title(text = title)
             Spacer(modifier = Modifier.height(Dimensions.Padding.ExtraLarge.value))
         }
 

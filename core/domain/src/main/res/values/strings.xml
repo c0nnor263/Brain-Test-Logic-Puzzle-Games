@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="empty" translatable="false" />
+    <string name="test_ad_unit" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
+
+
+    <!--    Titles     -->
+    <string name="l1_title">How many ducks?</string>
+    <string name="l2_title">Wake up the owl</string>
+    <string name="l3_title">Which one is not ice cream?</string>
+    <string name="l4_title">Light up the 4th bulb</string>
+    <string name="l5_title">You have to win the game</string>
+    <string name="l6_title">I had 10 fish in my aquarium, but when I came home, I found that 6 of them had died. How many fish are left in the aquarium?</string>
+    <string name="l7_title">Which number is on the other side of the dice?</string>
+    <string name="l8_title">What number is hidden here?</string>
+    <string name="l9_title">My widowed grandmother has three children. They are all married and each has at least one child. My aunt has 3 nephews. What\'s the minimum number of chairs we need to seat everyone at the table?</string>
+    <string name="l10_title">If cooking 1 chicken takes 5 minutes, how long does it take to cook 5 chickens?</string>
+    <!--    empty 11-->
+    <string name="l12_title">What appears twice a week and once a year?</string>
+    <string name="l12_right_answer">E</string>
+    <string name="l13_title">How many letters will remain if E and T leave the alphabet?</string>
+    <!--    empty 14-->
+    <string name="l15_title">How many pieces do we have?</string>
+    <string name="l16_title">Petya is hungry again, feed him</string>
+    <string name="l17_title">Help them fall in love</string>
+    <string name="l18_title">How many holes are there on the shirt in the front and back?</string>
+    <string name="l19_title">Please open the soda</string>
+    <string name="l20_title">Which of the cats is under this text?</string>
+
+
+    <!--    Advices     -->
+    <string name="l1_advise">Be attentive on sides</string>
+    <string name="l2_advise">Make it dark</string>
+    <string name="l3_advise">Ice scream is cold</string>
+    <string name="l4_advise">Tap on the 4th bulb</string>
+    <string name="l5_advise">You tap only one cell</string>
+    <string name="l6_advise">Count the all fish</string>
+    <string name="l7_advise">Try to roll it!</string>
+    <string name="l8_advise">I wonder what is under this stone?</string>
+    <string name="l9_advise">Count the chairs</string>
+    <string name="l10_advise">Count the chickens</string>
+    <string name="l11_advise">Be attentive to words</string>
+    <string name="l12_advise">Count the letters</string>
+    <string name="l13_advise">Count the remaining letters</string>
+    <string name="l14_advise">Can we color them in??</string>
+    <string name="l15_advise">Is one pizza enough for you?</string>
+    <string name="l16_advise">This food is cold for Petya</string>
+    <string name="l17_advise">BOOM</string>
+    <string name="l18_advise">Take a look</string>
+    <string name="l19_advise">Cheer up that bottle</string>
+    <string name="l20_advise">Obvious!</string>
+</resources>

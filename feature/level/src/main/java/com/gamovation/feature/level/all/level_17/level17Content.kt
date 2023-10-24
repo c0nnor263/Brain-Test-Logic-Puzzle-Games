@@ -19,16 +19,17 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.gamovation.core.domain.level.LevelScreenState
 import com.gamovation.core.ui.Dimensions
-import com.gamovation.core.ui.Durations
-import com.gamovation.core.ui.R
 import com.gamovation.core.ui.animation.DrawAnimation
+import com.gamovation.core.ui.animation.Durations
 import com.gamovation.core.ui.theme.WordefullTheme
+import com.gamovation.feature.level.R
 import com.gamovation.feature.level.common.interactions.CollisionImage
 import com.gamovation.feature.level.common.interactions.DraggableImage
 
@@ -80,7 +81,9 @@ fun Level17Content(modifier: Modifier = Modifier, onLevelAction: (LevelScreenSta
             delayOrder = 1
         ) {
             Text(
-                text = if (isBalloonPoppedOut) "❤️" else "\uD83D\uDCA4",
+                text = if (isBalloonPoppedOut) stringResource(R.string.l17_heart_emoji) else stringResource(
+                    R.string.l17_snooze_emoji
+                ),
                 style = MaterialTheme.typography.headlineLarge,
                 textAlign = TextAlign.Center,
 

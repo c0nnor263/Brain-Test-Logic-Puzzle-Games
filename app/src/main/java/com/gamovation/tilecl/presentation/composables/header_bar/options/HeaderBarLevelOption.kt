@@ -13,8 +13,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import com.gamovation.core.ui.Durations
 import com.gamovation.core.ui.R
+import com.gamovation.core.ui.animation.Durations
 import com.gamovation.tilecl.presentation.composables.header_bar.common.HeaderBarButton
 
 @Composable

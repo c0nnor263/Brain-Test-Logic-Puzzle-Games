@@ -29,7 +29,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
-import com.gamovation.core.ui.Durations
 import com.gamovation.core.ui.R
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.joinAll
@@ -141,7 +140,7 @@ fun DrawAnimationPreview() {
         DrawAnimation(delayOrder = 1000) {
             Image(
                 modifier = Modifier.size(128.dp),
-                painter = painterResource(id = R.drawable.l5_x_mark),
+                painter = painterResource(id = R.drawable.chalk),
                 contentDescription = null,
                 contentScale = ContentScale.Fit
             )

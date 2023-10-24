@@ -12,4 +12,4 @@ sealed class Screens(val route: String) {
 }
 
 
-fun String.toArg(): String = this.removeSurrounding("{", "}")
+

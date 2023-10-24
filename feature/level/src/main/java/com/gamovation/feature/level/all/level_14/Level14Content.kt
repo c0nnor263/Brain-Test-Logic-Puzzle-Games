@@ -18,20 +18,21 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.gamovation.core.domain.level.LevelScreenState
 import com.gamovation.core.ui.Dimensions
-import com.gamovation.core.ui.R
-import com.gamovation.core.ui.state.LocalLevelScreenState
+import com.gamovation.core.ui.state.LocalLevelScreen
+import com.gamovation.feature.level.R
 import com.gamovation.feature.level.common.interactions.CollisionImage
 import com.gamovation.feature.level.common.interactions.DraggableText
 
 
 @Composable
 fun Level14Content(modifier: Modifier = Modifier, onLevelAction: (LevelScreenState) -> Unit) {
-    val levelScreenState = LocalLevelScreenState.current
+    val levelScreenState = LocalLevelScreen.current
     var positionOfText by remember { mutableStateOf(Offset.Zero) }
 
 
@@ -45,10 +46,13 @@ fun Level14Content(modifier: Modifier = Modifier, onLevelAction: (LevelScreenSta
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(text = "Где ", style = MaterialTheme.typography.headlineSmall)
+                Text(
+                    text = stringResource(R.string.l14_where_is_a),
+                    style = MaterialTheme.typography.headlineSmall
+                )
                 Spacer(modifier = Modifier.width(Dimensions.Padding.ExtraSmall.value))
                 DraggableText(
-                    text = "черная",
+                    text = stringResource(R.string.l14_black),
                     style = MaterialTheme.typography.headlineSmall,
                     delayOrder = null,
                     isEnabled = levelScreenState != LevelScreenState.CORRECT_CHOICE,
@@ -57,7 +61,8 @@ fun Level14Content(modifier: Modifier = Modifier, onLevelAction: (LevelScreenSta
                 }
                 Spacer(modifier = Modifier.width(Dimensions.Padding.ExtraSmall.value))
                 Text(
-                    text = "овечка?", style = MaterialTheme.typography.headlineSmall,
+                    text = stringResource(R.string.l14_sheep),
+                    style = MaterialTheme.typography.headlineSmall,
                 )
             }
             Spacer(modifier = Modifier.width(Dimensions.Padding.Small.value))

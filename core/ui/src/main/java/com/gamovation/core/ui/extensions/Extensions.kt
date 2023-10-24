@@ -1,6 +1,5 @@
 package com.gamovation.core.ui.extensions
 
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.ui.Modifier
@@ -23,8 +22,6 @@ var lastClickNavigateTime = 0L
 
 fun NavController.navigate(screen: Screens) {
     val currentTime = System.currentTimeMillis()
-
-    Log.i("TAG", "navigate: ${currentTime - lastClickNavigateTime}")
     if (currentTime - lastClickNavigateTime < CLICK_DELAY) {
         return
     }

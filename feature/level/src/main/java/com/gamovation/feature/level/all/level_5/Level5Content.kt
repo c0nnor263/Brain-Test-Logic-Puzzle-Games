@@ -28,7 +28,7 @@ import com.gamovation.core.ui.animation.DrawAnimation
 @Composable
 internal fun Level5Content(
     modifier: Modifier = Modifier,
-    onLevelAction: (LevelScreenState) -> Unit
+    onLevelAction: (LevelScreenState) -> Unit,
 ) {
     val firstMarkInteractionSource = remember { MutableInteractionSource() }
     val secondMarkInteractionSource = remember { MutableInteractionSource() }
@@ -59,8 +59,10 @@ internal fun Level5Content(
         ConstraintLayout(
             modifier = Modifier.fillMaxWidth()
         ) {
-            val (backgroundImage, firstMark, secondMark, thirdMark, fourthMark,
-                fifthNark, sixthMark) = createRefs()
+            val (
+                backgroundImage, firstMark, secondMark, thirdMark, fourthMark,
+                fifthNark, sixthMark,
+            ) = createRefs()
 
 
             DrawAnimation(
@@ -72,7 +74,7 @@ internal fun Level5Content(
                 }, delayOrder = 6
             ) {
                 Image(
-                    painter = painterResource(id = R.drawable.l5_tic_tac_toe_board),
+                    painter = painterResource(id = com.gamovation.feature.level.R.drawable.l5_tic_tac_toe_board),
                     contentDescription = null,
                     contentScale = ContentScale.FillWidth
                 )

@@ -1,4 +1,4 @@
-package com.gamovation.core.data.repository
+package com.gamovation.core.domain.repository
 
 import com.gamovation.core.domain.billing.UserVipType
 import kotlinx.coroutines.flow.Flow
@@ -13,4 +13,8 @@ interface UserInfoPreferencesRepository {
 
     fun getIsAvailableForReview(): Flow<Boolean>
     suspend fun setIsAvailableForReview(newValue: Boolean)
+
+    suspend fun setLanguage(language: String)
+
+    fun getLanguage(): Flow<String>
 }
