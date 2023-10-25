@@ -1,5 +1,8 @@
 package com.gamovation.tilecl.presentation.navigation
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.gamovation.core.data.billing.BillingDataSource
 import com.gamovation.core.data.repository.OfflineUserInfoPreferencesRepository
@@ -11,6 +14,8 @@ class AppContentViewModel @Inject constructor(
     private val userInfoPreferencesRepository: OfflineUserInfoPreferencesRepository,
     private val billingDataSource: BillingDataSource
 ) : ViewModel() {
+
+    var isViewInitialized by mutableStateOf(false)
 
     override fun onCleared() {
         super.onCleared()

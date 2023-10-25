@@ -3,6 +3,8 @@ package com.gamovation.feature.settings
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -48,6 +50,7 @@ import androidx.core.net.toUri
 import com.gamovation.core.domain.enums.ApplicationLocales
 import com.gamovation.core.ui.Dimensions
 import com.gamovation.core.ui.R
+import com.gamovation.core.ui.animation.Durations
 import com.gamovation.core.ui.common.ChalkBoardCard
 import com.gamovation.core.ui.extensions.clickableNoRipple
 import com.gamovation.core.ui.theme.boardBackgroundColor
@@ -228,7 +231,8 @@ fun LanguageDropdownMenu(showDialog: Boolean, locale: Locale, onUpdateLocale: (L
                         style = MaterialTheme.typography.headlineSmall,
                         modifier = Modifier
                             .clickableNoRipple { showDropdownMenu = true }
-                            .padding(16.dp)
+                            .padding(8.dp)
+                            .animateContentSize(tween(Durations.Medium.time))
                     )
                     DropdownMenu(expanded = showDropdownMenu, onDismissRequest = { }) {
                         ApplicationLocales.entries.forEach {

@@ -3,7 +3,9 @@ package com.gamovation.tilecl.presentation
 import android.animation.ObjectAnimator
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.view.ViewTreeObserver
 import android.view.WindowInsets
 import android.view.WindowInsetsController
 import android.view.WindowManager
@@ -12,6 +14,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.core.animation.doOnEnd
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
@@ -48,6 +53,24 @@ class MainActivity : ComponentActivity() {
             }
         }
         super.onCreate(savedInstanceState)
+
+
+        val content: View = findViewById(android.R.id.content)
+        content.viewTreeObserver.addOnPreDrawListener(
+            object : ViewTreeObserver.OnPreDrawListener {
+                override fun onPreDraw(): Boolean {
+                    // Check whether the initial data is ready.
+                    return if (viewModel.isViewInitialized) {
+                        content.viewTreeObserver.removeOnPreDrawListener(this)
+                        true
+                    } else {
+                        // The content isn't ready. Suspend.
+                        false
+                    }
+                }
+            }
+        )
+
         setContent {
             WordefullTheme {
                 val currency =
@@ -55,15 +78,36 @@ class MainActivity : ComponentActivity() {
                 val userVipType =
                     viewModel.getUserVipType().collectAsStateWithLifecycle(UserVipType.BASE)
                 val language = viewModel.getLanguage()
-                    .collectAsStateWithLifecycle(Locale.getDefault().language)
+                    .collectAsStateWithLifecycle(null)
 
                 CompositionLocalProvider(
                     LocalCurrency provides currency.value,
                     LocalVipType provides userVipType.value,
                     LocalCosts provides CostsInfo().calculateCosts(userVipType.value),
-                    LocalLocale provides Locale(language.value)
+                    LocalLocale provides language.value?.let { Locale(it) }
                 ) {
-                    WordefullAppContent()
+
+                    val context = LocalContext.current
+                    val locale = LocalLocale.current
+                    val configuration = LocalConfiguration.current
+                    LaunchedEffect(locale) {
+                        locale?.let {
+
+                            Locale.setDefault(locale)
+                            configuration.setLocale(locale)
+                            context.createConfigurationContext(configuration)
+                            context.resources.updateConfiguration(
+                                configuration,
+                                context.resources.displayMetrics
+                            )
+                            viewModel.isViewInitialized = true
+                            Log.i("TAG", "onCreate: $locale ${viewModel.isViewInitialized}")
+                        }
+                    }
+
+                    if (viewModel.isViewInitialized) {
+                        WordefullAppContent()
+                    }
                 }
             }
         }

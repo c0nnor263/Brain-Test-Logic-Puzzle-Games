@@ -19,7 +19,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -39,7 +38,6 @@ import com.gamovation.core.ui.extensions.navigate
 import com.gamovation.core.ui.level.rememberUserInteraction
 import com.gamovation.core.ui.state.LocalLevelAction
 import com.gamovation.core.ui.state.LocalLevelScreen
-import com.gamovation.core.ui.state.LocalLocale
 import com.gamovation.core.ui.state.LocalReviewDataHandlerState
 import com.gamovation.feature.home.HomeScreen
 import com.gamovation.feature.home.HomeScreenViewModel
@@ -53,21 +51,11 @@ import com.gamovation.feature.store.StoreScreen
 import com.gamovation.feature.store.StoreScreenViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.util.Locale
 
 @Composable
 fun WordefullNavHost(navController: NavHostController) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
-
-    val locale = LocalLocale.current
-    val configuration = LocalConfiguration.current
-    LaunchedEffect(locale) {
-        Locale.setDefault(locale)
-        configuration.setLocale(locale)
-        context.createConfigurationContext(configuration)
-        context.resources.updateConfiguration(configuration, context.resources.displayMetrics)
-    }
 
 
     NavHost(
