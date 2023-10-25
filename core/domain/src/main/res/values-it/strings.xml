@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Titles -->
+    <string name="l1_title">Quanti anatroccoli?</string>
+    <string name="l2_title">Sveglia il gufo</string>
+    <string name="l3_title">Quale di questi non è gelato?</string>
+    <string name="l4_title">Accendi la quarta lampadina</string>
+    <string name="l5_title">Devi vincere il gioco</string>
+    <string name="l6_title">Avevo 10 pesci nel mio acquario, ma quando sono tornato a casa, ho scoperto che ne erano morti 6. Quanti pesci sono rimasti nell\'acquario?</string>
+    <string name="l7_title">Quale numero si trova dall\'altro lato del dado?</string>
+    <string name="l8_title">Che numero è nascosto qui?</string>
+    <string name="l9_title">Mia nonna vedova ha tre figli. Sono tutti sposati e ognuno ha almeno un figlio. Mia zia ha 3 nipoti. Qual è il numero minimo di sedie di cui abbiamo bisogno per far sedere tutti al tavolo?</string>
+    <string name="l10_title">Se cuocere 1 pollo richiede 5 minuti, quanto tempo ci vuole per cuocere 5 polli?</string>
+    <!-- empty 11 -->
+    <string name="l13_title">Quante lettere rimarranno se E e T lasciano l\'alfabeto?</string>
+    <!-- empty 14 -->
+    <string name="l15_title">Quanti pezzi abbiamo?</string>
+    <string name="l16_title">Petya ha fame di nuovo, dategli da mangiare</string>
+    <string name="l17_title">Aiutali a innamorarsi</string>
+    <string name="l18_title">Quanti buchi ci sono sulla camicia davanti e dietro?</string>
+    <string name="l19_title">Per favore, apri la bibita</string>
+    <string name="l20_title">Quale dei gatti è sotto questo testo?</string>
+
+    <!-- Advices -->
+    <string name="l1_advise">Sii attento ai lati</string>
+    <string name="l2_advise">Rendilo buio</string>
+    <string name="l3_advise">Il gelato è freddo</string>
+    <string name="l4_advise">Tocca la quarta lampadina</string>
+    <string name="l5_advise">Tocchi solo una cella</string>
+    <string name="l6_advise">Conta tutti i pesci</string>
+    <string name="l7_advise">Cerca di lanciarlo!</string>
+    <string name="l8_advise">Mi chiedo cosa c\'è sotto questa pietra.</string>
+    <string name="l9_advise">Conta le sedie</string>
+    <string name="l10_advise">Conta i polli</string>
+    <string name="l11_advise">Sii attento alle parole</string>
+    <string name="l12_advise">Conta le lettere</string>
+    <string name="l13_advise">Conta le lettere rimanenti</string>
+    <string name="l14_advise">Possiamo colorarli?</string>
+    <string name="l15_advise">Una pizza ti basta?</string>
+    <string name="l16_advise">Questo cibo è freddo per Petya</string>
+    <string name="l17_advise">BOOM</string>
+    <string name="l18_advise">Dai un\'occhiata</string>
+    <string name="l19_advise">Alza il morale a quella bottiglia</string>
+    <string name="l20_advise">Ovvio!</string>
+
+</resources>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="remove_ads">видалити рекламу</string>
+
+    <string name="you_can_t_buy_this_item">Ви не можете купити цей предмет!</string>
+    <string name="best_choice">Найкращий вибір</string>
+    <string name="smartest">Найрозумніший</string>
+
+    <!-- VIP -->
+    <string name="become_a_vip">СТАНЬТЕ VIP!</string>
+    <string name="remove_ads_and_get_cheaper_costs_for_all_actions">Видаліть рекламу і отримайте знижені витрати на всі дії!</string>
+    <string name="get_vip">Отримайте VIP</string>
+
+</resources>

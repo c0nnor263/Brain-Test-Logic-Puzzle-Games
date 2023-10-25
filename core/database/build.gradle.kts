@@ -36,13 +36,5 @@ android {
 
 dependencies {
     implementation(project(":core:domain"))
-
-    implementation("androidx.core:core-ktx:${Versions.coreKtx}")
-    implementation("androidx.appcompat:appcompat:${Versions.appCompat}")
-    implementation("com.google.android.material:material:${Versions.material}")
-    testImplementation("junit:junit:${Versions.Tooling.junit}")
-    androidTestImplementation("androidx.test.ext:junit:${Versions.Tooling.androidJunit}")
-    androidTestImplementation("androidx.test.espresso:espresso-core:${Versions.Tooling.androidEspressoCore}")
-
     coreData()
 }

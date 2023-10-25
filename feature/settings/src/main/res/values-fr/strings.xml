@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings">Paramètres</string>
+    <string name="share">Partager</string>
+    <string name="share_content">Découvrons à quel point tu es fort !\n\nhttps://play.google.com/store/apps/details?id=com.gamovation.tilecl</string>
+    <string name="contact_us">Contactez-nous</string>
+    <string name="support">Support</string>
+    <string name="privacy_policy">Politique de confidentialité</string>
+    <string name="language">Langue :</string>
+    <string name="restore_purchases">Restaurer les achats</string>
+</resources>

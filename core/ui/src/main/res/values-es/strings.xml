@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Review -->
+    <string name="did_you_like_the_game">¿Te gustó el juego?</string>
+    <string name="could_you_share_your_feedback_so_we_can_work_on_improving_it">¿Podrías compartir tu opinión para que podamos trabajar en mejorarlo?</string>
+
+    <string name="yes">Sí</string>
+    <string name="no">No</string>
+    <string name="ok">OK</string>
+    <string name="thanks">Gracias</string>
+    <string name="submit">Enviar</string>
+    <string name="something_went_wrong">¡Algo salió mal!</string>
+
+    <string name="watch_ad_for_reward">Ver anuncio\npara recompensa</string>
+
+</resources>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="l5_opponent">John:</string>
+    <string name="l5_player_you">Tu:</string>
+
+    <string name="l11_what_are_the_names_of_baby">Quali sono i nomi dei bebè</string>
+    <string name="l11_cats">gatti?</string>
+    <string name="l11_dog">Cane</string>
+    <string name="l11_mewka">Mewka</string>
+    <string name="l11_murka">Murka</string>
+    <string name="l11_kilen">Kilen</string>
+    <string name="l11_cow">Mucca</string>
+
+    <string name="l14_where_is_a">Dov\'è la</string>
+    <string name="l14_black">nave</string>
+    <string name="l14_sheep">nera?</string>
+
+    <string name="l17_heart_emoji">❤️</string>
+    <string name="l17_snooze_emoji">💤</string>
+
+    <!-- Completed -->
+    <string name="you_completed_the_game">Hai completato il gioco</string>
+    <string name="thanks_for_the_playing">Grazie per aver giocato!</string>
+
+    <!-- Hint -->
+    <string name="advice_nothing_else_pops_into_your_head">Niente altro ti viene in mente?</string>
+    <string name="advise_well_you_can_get_a_hint">Beh, puoi ottenere un suggerimento</string>
+    <string name="advise_get_hint">Ottieni un suggerimento!</string>
+
+    <!-- Skip -->
+    <string name="skip_do_you_really_want_to_skip_this_level">Vuoi davvero saltare questo livello?</string>
+    <string name="skip_this_level_will_let_you_do_this">Questo livello ti permetterà di finirlo</string>
+    <string name="skip">Salta!</string>
+
+    <!-- Level Completed -->
+    <string name="level_completed">Livello %1$s completato</string>
+    <string name="level_completed_you_awesome">Sei fantastico!</string>
+    <string name="next_level">Prossimo Livello</string>
+
+    <!-- Not enough currency -->
+    <string name="you_don_t_have_enough_currency_to_get_a_hint">Non hai abbastanza moneta</string>
+    <string name="do_you_want_to_get_more">Vuoi ottenerne di più</string>
+    <string name="get_more">Ottieni di più!</string>
+</resources>

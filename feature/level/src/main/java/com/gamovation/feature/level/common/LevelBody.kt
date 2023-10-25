@@ -1,5 +1,6 @@
 package com.gamovation.feature.level.common
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -35,7 +36,9 @@ import com.gamovation.feature.level.all.level_9.Level9Content
 
 @Composable
 fun LevelBody(level: LevelData, onLevelScreenAction: (LevelScreenState) -> Unit) {
-    val title = stringResource(id = level.title)
+    val title = stringResource(id = level.title.also {
+        Log.i("TAG", "LevelBody: $it")
+    })
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,

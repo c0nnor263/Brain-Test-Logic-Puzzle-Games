@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Titres -->
+    <string name="l1_title">Combien de canards ?</string>
+    <string name="l2_title">Réveille le hibou</string>
+    <string name="l3_title">Lequel n\'est pas de la glace ?</string>
+    <string name="l4_title">Allume la 4ème ampoule</string>
+    <string name="l5_title">Tu dois gagner le jeu</string>
+    <string name="l6_title">J\'avais 10 poissons dans mon aquarium, mais quand je suis rentré à la maison, j\'ai découvert que 6 d\'entre eux étaient morts. Combien de poissons restent dans l\'aquarium ?</string>
+    <string name="l7_title">Quel numéro se trouve de l\'autre côté du dé ?</string>
+    <string name="l8_title">Quel numéro est caché ici ?</string>
+    <string name="l9_title">Ma grand-mère veuve a trois enfants. Ils sont tous mariés et chacun a au moins un enfant. Ma tante a 3 neveux. Combien de chaises minimum avons-nous besoin pour que tout le monde puisse s\'asseoir à la table ?</string>
+    <string name="l10_title">Si la cuisson d\'un poulet prend 5 minutes, combien de temps faut-il pour cuire 5 poulets ?</string>
+    <!--    empty 11-->
+    <string name="l13_title">Combien de lettres resteront si E et T quittent l\'alphabet ?</string>
+    <!--    empty 14-->
+    <string name="l15_title">Combien de pièces avons-nous ?</string>
+    <string name="l16_title">Petya a encore faim, nourris-le</string>
+    <string name="l17_title">Aide-les à tomber amoureux</string>
+    <string name="l18_title">Combien de trous y a-t-il sur la chemise à l\'avant et à l\'arrière ?</string>
+    <string name="l19_title">S\'il te plaît, ouvre la bouteille de soda</string>
+    <string name="l20_title">Lequel des chats est sous ce texte ?</string>
+
+    <!-- Conseils -->
+    <string name="l1_advise">Sois attentif sur les côtés</string>
+    <string name="l2_advise">Assombris-le</string>
+    <string name="l3_advise">La glace est froide</string>
+    <string name="l4_advise">Appuie sur la 4ème ampoule</string>
+    <string name="l5_advise">Appuie seulement sur une cellule</string>
+    <string name="l6_advise">Compte tous les poissons</string>
+    <string name="l7_advise">Essaie de le faire rouler !</string>
+    <string name="l8_advise">Je me demande ce qui se cache sous cette pierre ?</string>
+    <string name="l9_advise">Compte les chaises</string>
+    <string name="l10_advise">Compte les poulets</string>
+    <string name="l11_advise">Sois attentif aux mots</string>
+    <string name="l12_advise">Compte les lettres</string>
+    <string name="l13_advise">Compte les lettres restantes</string>
+    <string name="l14_advise">Peut-on les colorier ?</string>
+    <string name="l15_advise">Une pizza te suffit-elle ?</string>
+    <string name="l16_advise">Ce repas est froid pour Petya</string>
+    <string name="l17_advise">BOUM</string>
+    <string name="l18_advise">Jette un coup d\'œil</string>
+    <string name="l19_advise">Anime cette bouteille</string>
+    <string name="l20_advise">Évident !</string>
+
+</resources>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="empty" translatable="false" />
     <string name="test_ad_unit" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
 
@@ -16,8 +16,8 @@
     <string name="l9_title">My widowed grandmother has three children. They are all married and each has at least one child. My aunt has 3 nephews. What\'s the minimum number of chairs we need to seat everyone at the table?</string>
     <string name="l10_title">If cooking 1 chicken takes 5 minutes, how long does it take to cook 5 chickens?</string>
     <!--    empty 11-->
-    <string name="l12_title">What appears twice a week and once a year?</string>
-    <string name="l12_right_answer">E</string>
+    <string name="l12_title" tools:ignore="MissingTranslation">What appears twice a week and once a year?</string>
+    <string name="l12_right_answer" tools:ignore="MissingTranslation">E</string>
     <string name="l13_title">How many letters will remain if E and T leave the alphabet?</string>
     <!--    empty 14-->
     <string name="l15_title">How many pieces do we have?</string>

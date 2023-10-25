@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <string name="privacy_policy_link" translatable="false">https://github.com/WADevelopment/Wordefull/blob/master/privacy-policy.md</string>
     <string name="developer_email" translatable="false">abrigojulianne08@gmail.com</string>
     <string name="settings">Settings</string>
     <string name="share">Share</string>
-    <string name="share_content">Let\'s find out how strong you are!\n\nhttps://play.google.com/store/apps/details?id=com.gamovation.tilecl</string>
+    <string name="share_content">Let\'s find out how strong you are!\n\n<xliff:g id="play_store_url">https://play.google.com/store/apps/details?id=com.gamovation.tilecl</xliff:g></string>
     <string name="contact_us">Contact Us</string>
     <string name="support">Support</string>
     <string name="privacy_policy">Privacy Policy</string>

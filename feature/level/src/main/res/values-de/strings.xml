@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="l5_opponent">John:</string>
+    <string name="l5_player_you">Du:</string>
+
+    <string name="l11_what_are_the_names_of_baby">Wie lauten die Namen des Babys</string>
+    <string name="l11_cats">Kätzchen?</string>
+    <string name="l11_dog">Hund</string>
+    <string name="l11_mewka">Mewka</string>
+    <string name="l11_murka">Murka</string>
+    <string name="l11_kilen">Kilen</string>
+    <string name="l11_cow">Kuh</string>
+
+    <string name="l14_where_is_a">Wo ist das</string>
+    <string name="l14_black">schwarze</string>
+    <string name="l14_sheep">Schiff?</string>
+
+    <string name="l17_heart_emoji">❤️</string>
+    <string name="l17_snooze_emoji">💤</string>
+
+    <!-- Completed -->
+    <string name="you_completed_the_game">Du hast das Spiel abgeschlossen</string>
+    <string name="thanks_for_the_playing">Danke für das Spielen!</string>
+
+    <!-- Hint -->
+    <string name="advice_nothing_else_pops_into_your_head">Kommt dir nichts anderes in den Sinn?</string>
+    <string name="advise_well_you_can_get_a_hint">Nun, du kannst einen Tipp bekommen</string>
+    <string name="advise_get_hint">Tipp holen!</string>
+
+    <!-- Skip -->
+    <string name="skip_do_you_really_want_to_skip_this_level">Möchtest du dieses Level wirklich überspringen?</string>
+    <string name="skip_this_level_will_let_you_do_this">Dieses Level wird es dir ermöglichen, ihn zu beenden</string>
+    <string name="skip">Überspringen!</string>
+
+    <!-- Level Completed -->
+    <string name="level_completed">Level %1$s abgeschlossen</string>
+    <string name="level_completed_you_awesome">Du bist großartig!</string>
+    <string name="next_level">Nächstes Level</string>
+
+    <!-- Not enough currency -->
+    <string name="you_don_t_have_enough_currency_to_get_a_hint">Du hast nicht genug Währung</string>
+    <string name="do_you_want_to_get_more">Möchtest du mehr bekommen</string>
+    <string name="get_more">Mehr bekommen!</string>
+
+</resources>

@@ -97,7 +97,8 @@ fun StoreScreen(
                 isLoaded = rewardedInterstitialAd.isAdLoaded,
                 onClick = {
                     showWatchAdDialog = true
-                })
+                }
+            )
         }
         item {
             StoreItem(value = "x250", details = storeDetails?.currency250Details, onClick = {

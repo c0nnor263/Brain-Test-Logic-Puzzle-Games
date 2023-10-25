@@ -84,18 +84,11 @@ android {
 dependencies {
     implementation(project(":core:database"))
     implementation(project(":core:domain"))
-
-    implementation("androidx.core:core-ktx:${Versions.coreKtx}")
-    implementation("androidx.appcompat:appcompat:${Versions.appCompat}")
-    implementation("com.google.android.material:material:${Versions.material}")
-    testImplementation("junit:junit:${Versions.Tooling.junit}")
-    androidTestImplementation("androidx.test.ext:junit:${Versions.Tooling.androidJunit}")
-    androidTestImplementation("androidx.test.espresso:espresso-core:${Versions.Tooling.androidEspressoCore}")
     implementation("com.android.billingclient:billing-ktx:${Versions.billing}")
-    implementation("com.android.volley:volley:1.2.1")
+    implementation("com.android.volley:volley:${Versions.volley}")
     coreData()
 
 
-    implementation("com.google.android.play:review:2.0.1")
-    implementation("com.google.android.play:review-ktx:2.0.1")
+    implementation("com.google.android.play:review:${Versions.playReview}")
+    implementation("com.google.android.play:review-ktx:${Versions.playReview}")
 }

@@ -30,7 +30,8 @@ fun VipContent(onBuy: () -> Unit) {
         horizontalArrangement = Arrangement.Center
     ) {
         ChalkBoardCard(
-            modifier = Modifier.weight(1F, false), color = Color.White.copy(alpha = 0.7F)
+            modifier = Modifier.weight(1F, false),
+            color = Color.White.copy(alpha = 0.7F)
         ) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Text(text = stringResource(com.gamovation.feature.store.R.string.become_a_vip))

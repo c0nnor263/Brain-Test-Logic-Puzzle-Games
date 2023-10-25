@@ -29,8 +29,18 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
-
-        resConfigs("en", "ru", "ua")
+        resourceConfigurations.addAll(
+            listOf(
+                "en",
+                "de",
+                "fr",
+                "es",
+                "it",
+                "pt",
+                "ru",
+                "uk"
+            )
+        )
     }
 
     signingConfigs {
@@ -111,12 +121,12 @@ dependencies {
 
     implementation("com.android.billingclient:billing-ktx:${Versions.billing}")
 
-    implementation("androidx.core:core-splashscreen:1.0.1")
+    implementation("androidx.core:core-splashscreen:${Versions.splashScreen}")
 
-    implementation("androidx.profileinstaller:profileinstaller:1.3.1")
-    implementation("androidx.startup:startup-runtime:1.1.1")
+    implementation("androidx.profileinstaller:profileinstaller:${Versions.profileinstaller}")
+    implementation("androidx.startup:startup-runtime:${Versions.startup}")
     implementation("com.google.android.gms:play-services-ads:${Versions.ads}")
-    implementation("com.google.android.play:integrity:1.2.0")
+    implementation("com.google.android.play:integrity:${Versions.playIntegrity}")
 
     // OneSignal
     implementation("com.onesignal:OneSignal:${Versions.oneSignal}")

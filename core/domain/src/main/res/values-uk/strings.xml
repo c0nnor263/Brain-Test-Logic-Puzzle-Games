@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Titles -->
+    <string name="l1_title">Скільки качок?</string>
+    <string name="l2_title">Розбудіть сову</string>
+    <string name="l3_title">Який з них не морозиво?</string>
+    <string name="l4_title">Увімкніть 4-у лампочку</string>
+    <string name="l5_title">Вам потрібно виграти гру</string>
+    <string name="l6_title">У моєму акваріумі було 10 рибок, але коли я прийшов додому, я виявив, що 6 з них померли. Скільки рибок залишилося в акваріумі?</string>
+    <string name="l7_title">Який номер на іншому боці кубика?</string>
+    <string name="l8_title">Який номер тут прихований?</string>
+    <string name="l9_title">У моєї вдової бабусі є троє дітей. Вони всі одружені і кожен має принаймні одне дитя. У моєї тітки є 3 племінники. Скільки стільців нам потрібно, щоб розсадити всіх за столом?</string>
+    <string name="l10_title">Якщо готувати 1 курку 5 хвилин, скільки часу потрібно приготувати 5 курок?</string>
+    <!-- empty 11 -->
+    <!-- empty 12 -->
+    <string name="l13_title">Скільки літер залишиться, якщо І залишить алфавіт?</string>
+    <!-- empty 14 -->
+    <string name="l15_title">Скільки шматків ми маємо?</string>
+    <string name="l16_title">Петя знову голодний, погодуйте його</string>
+    <string name="l17_title">Допоможіть їм закохатися</string>
+    <string name="l18_title">Скільки дірок на сорочці спереду і ззаду?</string>
+    <string name="l19_title">Будь ласка, відкрийте соду</string>
+    <string name="l20_title">Яка з кішок знаходиться під цим текстом?</string>
+
+    <!-- Advices -->
+    <string name="l1_advise">Будьте уважні до боків</string>
+    <string name="l2_advise">Зробіть темно</string>
+    <string name="l3_advise">Морозиво - це холод</string>
+    <string name="l4_advise">Клацніть на 4-й лампочці</string>
+    <string name="l5_advise">Ви клацніть лише на одній клітці</string>
+    <string name="l6_advise">Порахуйте всі рибки</string>
+    <string name="l7_advise">Спробуйте її кинути!</string>
+    <string name="l8_advise">Цікаво, що тут під цим каменем?</string>
+    <string name="l9_advise">Порахуйте стільці</string>
+    <string name="l10_advise">Порахуйте курок</string>
+    <string name="l11_advise">Будьте уважні до слів</string>
+    <string name="l12_advise">Порахуйте літери</string>
+    <string name="l13_advise">Порахуйте отримані літери</string>
+    <string name="l14_advise">Чи можна їх розфарбувати?</string>
+    <string name="l15_advise">Чи вам достатньо однієї піци?</string>
+    <string name="l16_advise">Ця їжа занадто холодна для Петі</string>
+    <string name="l17_advise">БА-БАХ!</string>
+    <string name="l18_advise">Подивіться</string>
+    <string name="l19_advise">Зробіть цю нервову пляшку</string>
+    <string name="l20_advise">Очевидно!</string>
+
+</resources>

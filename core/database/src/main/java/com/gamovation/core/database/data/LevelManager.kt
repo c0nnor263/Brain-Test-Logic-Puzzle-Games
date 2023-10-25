@@ -1,5 +1,6 @@
 package com.gamovation.core.database.data
 
+import android.util.Log
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.gamovation.core.database.WordefullDatabase
@@ -23,7 +24,9 @@ class LevelManager @Inject constructor(
     private val levels = listOf(
         LevelData(
             id = 1,
-            title = R.string.l1_title,
+            title = R.string.l1_title.also {
+                Log.i("TAG", "title: $it")
+            },
             advise = R.string.l1_advise,
             isLocked = false
         ),

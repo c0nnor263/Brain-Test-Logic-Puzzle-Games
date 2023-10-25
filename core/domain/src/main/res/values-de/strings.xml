@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Titles -->
+    <string name="l1_title">Wie viele Enten?</string>
+    <string name="l2_title">Wecke die Eule auf</string>
+    <string name="l3_title">Welches ist kein Eis?</string>
+    <string name="l4_title">Schalte die vierte Glühbirne ein</string>
+    <string name="l5_title">Du musst das Spiel gewinnen</string>
+    <string name="l6_title">Ich hatte 10 Fische in meinem Aquarium, aber als ich nach Hause kam, fand ich heraus, dass 6 von ihnen gestorben waren. Wie viele Fische sind noch im Aquarium?</string>
+    <string name="l7_title">Welche Zahl ist auf der anderen Seite des Würfels?</string>
+    <string name="l8_title">Welche Zahl ist hier versteckt?</string>
+    <string name="l9_title">Meine verwitwete Großmutter hat drei Kinder. Alle sind verheiratet und haben mindestens ein Kind. Meine Tante hat 3 Neffen. Wie viele Stühle brauchen wir mindestens, um alle am Tisch zu platzieren?</string>
+    <string name="l10_title">Wenn das Kochen eines Huhns 5 Minuten dauert, wie lange dauert es, 5 Hühner zu kochen?</string>
+    <!-- empty 11 -->
+    <string name="l13_title">Wie viele Buchstaben bleiben übrig, wenn E und T aus dem Alphabet verschwinden?</string>
+    <!-- empty 14 -->
+    <string name="l15_title">Wie viele Stücke haben wir?</string>
+    <string name="l16_title">Petya hat wieder Hunger, füttere ihn</string>
+    <string name="l17_title">Hilf ihnen sich zu verlieben</string>
+    <string name="l18_title">Wie viele Löcher gibt es vorne und hinten im Hemd?</string>
+    <string name="l19_title">Bitte öffne die Limonade</string>
+    <string name="l20_title">Welche der Katzen ist unter diesem Text?</string>
+
+    <!-- Advices -->
+    <string name="l1_advise">Sei aufmerksam auf die Seiten</string>
+    <string name="l2_advise">Mach es dunkel</string>
+    <string name="l3_advise">Eiscreme ist kalt</string>
+    <string name="l4_advise">Tippe auf die vierte Glühbirne</string>
+    <string name="l5_advise">Du tippst nur auf eine Zelle</string>
+    <string name="l6_advise">Zähle alle Fische</string>
+    <string name="l7_advise">Versuche, sie zu würfeln!</string>
+    <string name="l8_advise">Ich frage mich, was unter diesem Stein ist?</string>
+    <string name="l9_advise">Zähle die Stühle</string>
+    <string name="l10_advise">Zähle die Hühner</string>
+    <string name="l11_advise">Achte auf die Worte</string>
+    <string name="l12_advise">Zähle die Buchstaben</string>
+    <string name="l13_advise">Zähle die verbleibenden Buchstaben</string>
+    <string name="l14_advise">Können wir sie ausmalen?</string>
+    <string name="l15_advise">Reicht dir eine Pizza?</string>
+    <string name="l16_advise">Dieses Essen ist kalt für Petya</string>
+    <string name="l17_advise">BOOM</string>
+    <string name="l18_advise">Schau mal nach</string>
+    <string name="l19_advise">Mach die Limonade auf</string>
+    <string name="l20_advise">Offensichtlich!</string>
+
+</resources>

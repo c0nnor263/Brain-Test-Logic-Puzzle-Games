@@ -12,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.gamovation.core.ui.Dimensions
 import com.gamovation.core.ui.R
@@ -22,14 +23,18 @@ fun BuyButton(
     modifier: Modifier = Modifier,
     isLoaded: Boolean = true,
     text: String,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
-    Box(modifier = modifier.clickableNoRipple {
-        onClick()
-    }, contentAlignment = Alignment.Center) {
+    Box(
+        modifier = modifier.clickableNoRipple {
+            onClick()
+        }, contentAlignment = Alignment.Center
+    ) {
         Image(
             modifier = Modifier
-                .defaultMinSize(minHeight = Dimensions.Padding.ExtraLarge.value),
+                .defaultMinSize(
+                    minHeight = Dimensions.Padding.ExtraLarge.value
+                ),
             painter = painterResource(id = R.drawable.orange_button),
             contentDescription = null,
             contentScale = ContentScale.FillBounds
@@ -38,8 +43,9 @@ fun BuyButton(
         if (isLoaded) {
             Text(
                 text = text,
-                style = MaterialTheme.typography.titleSmall,
+                style = MaterialTheme.typography.bodyMedium,
                 maxLines = 3,
+                textAlign = TextAlign.Center
             )
         } else {
             CircularProgressIndicator(

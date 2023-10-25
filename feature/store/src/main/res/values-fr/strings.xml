@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="remove_ads">Supprimer les publicités</string>
+    <string name="you_can_t_buy_this_item">Vous ne pouvez pas acheter cet article !</string>
+    <string name="best_choice">Meilleur choix</string>
+    <string name="smartest">Le plus intelligent</string>
+    <string name="become_a_vip">DEVENEZ UN VIP !</string>
+    <string name="remove_ads_and_get_cheaper_costs_for_all_actions">Supprimez les publicités et obtenez des coûts moins élevés pour toutes les actions !</string>
+    <string name="get_vip">Obtenez le statut VIP</string>
+</resources>
