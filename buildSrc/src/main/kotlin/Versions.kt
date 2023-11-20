@@ -4,11 +4,11 @@ object Versions {
     const val playReview = "2.0.1"
     const val volley = "1.2.1"
     const val oneSignal = "5.0.3"
-    const val benNamesVersions = "0.49.0"
-    const val ads = "22.4.0"
+    const val benNamesVersions = "0.50.0"
+    const val ads = "22.5.0"
     const val activity = "1.8.0"
     const val coreKtx = "1.12.0"
-    const val billing = "6.0.1"
+    const val billing = "6.1.0"
     const val gradle = "8.1.2"
     const val hilt = "2.48.1"
     const val kotlin = "1.9.10"
@@ -19,7 +19,7 @@ object Versions {
     const val splashScreen = "1.0.1"
     const val profileinstaller = "1.3.1"
     const val startup = "1.1.1"
-    const val playIntegrity = "1.2.0"
+    const val playIntegrity = "1.3.0"
 
     object Config {
         const val compileSdk = 34
