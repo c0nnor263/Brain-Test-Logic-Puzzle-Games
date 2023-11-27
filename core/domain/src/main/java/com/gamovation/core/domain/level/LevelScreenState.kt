@@ -8,5 +8,5 @@ enum class LevelScreenState {
     COMPLETED,
     NEXT_LEVEL,
     WATCH_AD,
-     FINAL
+    FINAL
 }

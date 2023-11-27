@@ -2,9 +2,9 @@ package com.gamovation.core.data.repository
 
 import com.gamovation.core.database.dao.LevelDataDao
 import com.gamovation.core.database.model.LevelData
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlinx.coroutines.flow.Flow
 
 @Singleton
 class OfflineLevelDataRepository @Inject constructor(
@@ -29,5 +29,4 @@ class OfflineLevelDataRepository @Inject constructor(
     override fun getLastUncompleted(): Flow<LevelData> {
         return levelDataDao.getLastUncompleted()
     }
-
 }

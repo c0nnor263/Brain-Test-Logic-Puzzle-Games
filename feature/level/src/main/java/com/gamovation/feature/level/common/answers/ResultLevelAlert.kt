@@ -31,7 +31,7 @@ fun BoxScope.ResultLevelAlert(currentState: LevelScreenState, checkState: LevelS
         currentState == checkState,
         modifier = Modifier.matchParentSize(),
         enter = fadeIn(tween(Durations.Medium.time)) + scaleIn(tween(Durations.Medium.time)),
-        exit = scaleOut(tween(Durations.Medium.time)) + fadeOut(tween(Durations.Medium.time)),
+        exit = scaleOut(tween(Durations.Medium.time)) + fadeOut(tween(Durations.Medium.time))
     ) {
         Image(
             modifier = Modifier.padding(Dimensions.Padding.ExtraLarge2X.value),
@@ -41,5 +41,3 @@ fun BoxScope.ResultLevelAlert(currentState: LevelScreenState, checkState: LevelS
         )
     }
 }
-
-

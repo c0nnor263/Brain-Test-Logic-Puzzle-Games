@@ -39,7 +39,6 @@ fun ChalkBoardCard(
             content()
         }
     }
-
 }
 
 @Preview

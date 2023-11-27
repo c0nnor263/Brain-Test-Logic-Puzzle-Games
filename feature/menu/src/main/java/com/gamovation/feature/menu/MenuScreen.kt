@@ -33,10 +33,8 @@ fun MenuScreen(
     index: Int,
     levelList: List<LevelData>,
     onNavigateToLevel: (Int) -> Unit,
-    onIndexUpdate: (Int) -> Unit,
+    onIndexUpdate: (Int) -> Unit
 ) {
-
-
     CompositionLocalProvider(
         LocalOverscrollConfiguration provides null
     ) {
@@ -51,11 +49,9 @@ fun MenuScreen(
                 },
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(Dimensions.Padding.Small.value),
-                contentPadding = PaddingValues(Dimensions.Padding.Small.value),
+                contentPadding = PaddingValues(Dimensions.Padding.Small.value)
             ) {
-
                 items(items = levelList, key = { it.id }) {
-
                     TextButton(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -79,13 +75,11 @@ fun MenuScreen(
             NavigationArrows(
                 modifier = Modifier.padding(Dimensions.Padding.Small.value),
                 currentIndex = index,
-                onIndexUpdate = onIndexUpdate,
+                onIndexUpdate = onIndexUpdate
             )
         }
-
     }
 }
-
 
 @Preview()
 @Composable
@@ -127,7 +121,7 @@ fun MenuScreenPreview() {
                     title = com.gamovation.core.domain.R.string.l5_title,
                     advise = com.gamovation.core.domain.R.string.l5_advise,
                     isLocked = false
-                ),
+                )
             ),
             index = 0,
             onNavigateToLevel = {},

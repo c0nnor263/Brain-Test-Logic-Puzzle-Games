@@ -57,7 +57,6 @@ object Versions {
         const val androidJunit = "1.1.5"
         const val junit = "4.13.2"
 
-
         val testExtJunit = "1.1.5"
         val espressoCore = "3.5.1"
     }

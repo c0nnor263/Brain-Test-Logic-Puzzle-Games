@@ -78,8 +78,6 @@ fun DraggableText(
                                 screenSize
                             )
                         }
-
-
                     }
                 },
             style = style

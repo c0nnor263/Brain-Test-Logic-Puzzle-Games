@@ -14,19 +14,17 @@ import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 
-
 @Composable
 fun rememberInterstitialAdViewState(
     activity: ComponentActivity,
-    adUnitID:String,
+    adUnitID: String,
     userVipType: UserVipType = UserVipType.BASE
 ): InterstitialAdViewState =
     remember {
-        InterstitialAdViewState(userVipType,adUnitID).also { state ->
+        InterstitialAdViewState(userVipType, adUnitID).also { state ->
             state.loadAd(activity)
         }
     }
-
 
 class InterstitialAdViewState(
     private val userVipType: UserVipType,
@@ -59,7 +57,6 @@ class InterstitialAdViewState(
     }
 
     fun showAd(activity: ComponentActivity, onDismissed: () -> Unit = {}) {
-
         interstitialAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
             override fun onAdDismissedFullScreenContent() {
                 super.onAdDismissedFullScreenContent()

@@ -14,18 +14,18 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object DatabaseModule {
 
-
     @Provides
     @Singleton
     fun provideWordefullDatabase(
         application: Application,
-        callback: LevelManager,
+        callback: LevelManager
     ): WordefullDatabase =
         Room.databaseBuilder(
             application,
             WordefullDatabase::class.java,
             WordefullDatabase.DATABASE_NAME
         )
+            .fallbackToDestructiveMigration()
             .addCallback(callback)
             .build()
 

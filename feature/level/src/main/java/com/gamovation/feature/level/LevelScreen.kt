@@ -17,8 +17,8 @@ import com.gamovation.core.domain.level.LevelScreenState
 import com.gamovation.core.ui.Dimensions
 import com.gamovation.core.ui.level.UserInteractionState
 import com.gamovation.core.ui.state.LocalLevelScreen
-import com.gamovation.feature.level.action_bar.ActionBar
-import com.gamovation.feature.level.action_bar.dialog.ActionBarDialog
+import com.gamovation.feature.level.actionbar.ActionBar
+import com.gamovation.feature.level.actionbar.dialog.ActionBarDialog
 import com.gamovation.feature.level.common.Contents
 import com.gamovation.feature.level.common.answers.ResultLevelAlert
 import kotlinx.coroutines.launch
@@ -27,7 +27,7 @@ import kotlinx.coroutines.launch
 fun LevelScreen(
     level: LevelData?,
     userInteractionState: UserInteractionState?,
-    onActionResult: (ActionResult) -> Unit,
+    onActionResult: (ActionResult) -> Unit
 ) {
     val screenState = LocalLevelScreen.current
     val scope = rememberCoroutineScope()
@@ -80,12 +80,15 @@ fun LevelScreen(
                         end.linkTo(parent.end)
                         bottom.linkTo(parent.bottom, margin = Dimensions.Padding.Medium.value)
                     },
-                onRestart = { userInteractionState?.onUpdateLevelActionState(LevelActionState.RESTART) },
-                onGetAdvice = { userInteractionState?.onUpdateLevelActionState(LevelActionState.ADVICE) },
+                onRestart = {
+                    userInteractionState?.onUpdateLevelActionState(LevelActionState.RESTART)
+                },
+                onGetAdvice = {
+                    userInteractionState?.onUpdateLevelActionState(LevelActionState.ADVICE)
+                },
                 onSkip = { userInteractionState?.onUpdateLevelActionState(LevelActionState.SKIP) }
             )
         }
-
 
         ActionBarDialog(
             levelData = level,
@@ -101,7 +104,6 @@ fun LevelScreen(
             checkState = LevelScreenState.WRONG_CHOICE
         )
     }
-
 
     BackHandler {
         if (screenState == LevelScreenState.IS_PLAYING) {

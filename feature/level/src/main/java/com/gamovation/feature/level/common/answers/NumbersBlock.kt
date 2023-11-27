@@ -38,7 +38,6 @@ fun NumbersBlock(
     numberMaxLength: Int = 1,
     onAnswer: (String) -> Unit
 ) {
-
     var currentAnswer by rememberSaveable {
         mutableStateOf("")
     }
@@ -53,7 +52,6 @@ fun NumbersBlock(
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-
                 IconButton(
                     modifier = Modifier
                         .weight(1F)
@@ -61,14 +59,14 @@ fun NumbersBlock(
                     onClick = {
                         currentAnswer =
                             if (currentAnswer.length > 1) currentAnswer.dropLast(1) else ""
-                    }) {
+                    }
+                ) {
                     Image(
                         modifier = Modifier.fillMaxSize(),
                         painter = painterResource(id = R.drawable.no_icon),
                         contentDescription = null
                     )
                 }
-
 
                 Box(
                     modifier = Modifier
@@ -89,14 +87,16 @@ fun NumbersBlock(
                     )
                 }
 
-                IconButton(modifier = Modifier
-                    .weight(1F)
-                    .wrapContentWidth(Alignment.Start),
+                IconButton(
+                    modifier = Modifier
+                        .weight(1F)
+                        .wrapContentWidth(Alignment.Start),
                     onClick = {
                         if (currentAnswer.isNotBlank()) {
                             onAnswer(currentAnswer)
                         }
-                    }) {
+                    }
+                ) {
                     Image(
                         modifier = Modifier.fillMaxSize(),
                         painter = painterResource(id = R.drawable.yes_icon),
@@ -167,15 +167,11 @@ fun NumbersBlock(
     }
 }
 
-
 @Preview
 @Composable
 fun NumbersBlockPreview() {
     WordefullTheme {
-
         NumbersBlock {
-
         }
-
     }
 }

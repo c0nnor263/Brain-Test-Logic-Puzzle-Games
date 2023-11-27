@@ -9,10 +9,10 @@ import com.gamovation.core.data.billing.BillingProductType
 import com.gamovation.core.data.repository.OfflineUserInfoPreferencesRepository
 import com.gamovation.core.domain.billing.UserVipType
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @HiltViewModel
 class StoreScreenViewModel @Inject constructor(
@@ -44,5 +44,4 @@ class StoreScreenViewModel @Inject constructor(
     fun watchAdReward() = viewModelScope.launch(Dispatchers.IO) {
         userInfoPreferencesRepository.buyCurrency(25)
     }
-
 }

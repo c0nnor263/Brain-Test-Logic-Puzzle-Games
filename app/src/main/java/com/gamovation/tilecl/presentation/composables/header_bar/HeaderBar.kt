@@ -41,7 +41,6 @@ import com.gamovation.tilecl.presentation.composables.header_bar.options.HeaderB
 
 @Composable
 fun HeaderBar(navController: NavHostController) {
-
     val currency = LocalCurrency.current
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = currentBackStackEntry?.destination
@@ -53,14 +52,14 @@ fun HeaderBar(navController: NavHostController) {
         ),
         verticalAlignment = Alignment.CenterVertically
     ) {
-
         AnimatedContent(
             targetState = currentDestination?.route ?: "",
             label = "",
             transitionSpec = {
-                (scaleIn(animationSpec = defaultSpringAnimation()) + fadeIn() togetherWith
+                (
+                    scaleIn(animationSpec = defaultSpringAnimation()) + fadeIn() togetherWith
                         scaleOut(animationSpec = defaultSpringAnimation()) + fadeOut()
-                        )
+                    )
                     .using(
                         SizeTransform(clip = false)
                     )
@@ -72,7 +71,7 @@ fun HeaderBar(navController: NavHostController) {
                         HeaderBarHomeOption(
                             onNavigateToSettings = {
                                 navController.navigate(Screens.Settings)
-                            },
+                            }
                         ) {
                             navController.navigate(Screens.Menu)
                         }
@@ -85,7 +84,7 @@ fun HeaderBar(navController: NavHostController) {
                             },
                             onNavigateToMenu = {
                                 navController.navigate(Screens.Menu)
-                            },
+                            }
                         )
                     }
 
@@ -124,9 +123,11 @@ fun HeaderBar(navController: NavHostController) {
                 modifier = Modifier.semantics { contentDescription = "StoreScreenNavigate" },
                 onClick = {
                     navController.navigate(Screens.Store)
-                }) {
+                }
+            ) {
                 Text(
-                    text = currency.toString(), style = MaterialTheme.typography.headlineMedium
+                    text = currency.toString(),
+                    style = MaterialTheme.typography.headlineMedium
                 )
                 Image(
                     modifier = Modifier.size(36.dp),

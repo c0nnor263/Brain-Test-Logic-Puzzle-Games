@@ -17,7 +17,6 @@ fun Modifier.clickableNoRipple(enabled: Boolean = true, onClick: () -> Unit): Mo
     )
 }
 
-
 var lastClickNavigateTime = 0L
 
 fun NavController.navigate(screen: Screens) {
@@ -35,7 +34,6 @@ fun NavController.navigate(screen: Screens) {
         }
     }
 }
-
 
 var lastClickPopBackStackTime = 0L
 fun NavController.popBack() {

@@ -7,7 +7,6 @@ plugins {
     PluginType.LIBRARY.get(this)
 }
 
-
 val localProperties = Properties()
 localProperties.load(FileInputStream(rootProject.file("local.properties")))
 
@@ -87,7 +86,6 @@ dependencies {
     implementation("com.android.billingclient:billing-ktx:${Versions.billing}")
     implementation("com.android.volley:volley:${Versions.volley}")
     coreData()
-
 
     implementation("com.google.android.play:review:${Versions.playReview}")
     implementation("com.google.android.play:review-ktx:${Versions.playReview}")

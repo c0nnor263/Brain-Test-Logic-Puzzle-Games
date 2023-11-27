@@ -54,14 +54,13 @@ import com.gamovation.core.ui.animation.Durations
 import com.gamovation.core.ui.common.ChalkBoardCard
 import com.gamovation.core.ui.extensions.clickableNoRipple
 import com.gamovation.core.ui.theme.boardBackgroundColor
-import kotlinx.coroutines.delay
 import java.util.Locale
-
+import kotlinx.coroutines.delay
 
 @Composable
 fun SettingsScreen(
     onUpdateAppLocale: (Locale?) -> Unit,
-    onRestorePurchases: () -> Unit,
+    onRestorePurchases: () -> Unit
 ) {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Column(
@@ -82,9 +81,7 @@ fun SettingsScreen(
 
         SettingsBottomContent(onRestorePurchases = onRestorePurchases)
     }
-
 }
-
 
 @Composable
 fun TitleBar(modifier: Modifier) {
@@ -106,7 +103,8 @@ fun TitleBar(modifier: Modifier) {
             )
             IconButton(
                 modifier = Modifier.padding(Dimensions.Padding.Small.value),
-                onClick = { }) {
+                onClick = { }
+            ) {
                 Icon(
                     painter = painterResource(id = R.drawable.lamp),
                     contentDescription = null
@@ -126,15 +124,17 @@ fun SocialBar() {
         horizontalArrangement = Arrangement.SpaceAround,
         verticalAlignment = Alignment.CenterVertically
     ) {
-
         Card(shape = Dimensions.RoundedShape.ExtraLarge.value) {
-            TextButton(modifier = Modifier.padding(Dimensions.Padding.Small.value),
+            TextButton(
+                modifier = Modifier.padding(Dimensions.Padding.Small.value),
                 onClick = {
                     val intent = Intent(Intent.ACTION_SEND).run {
                         type = "plain/text"
                         putExtra(
                             Intent.EXTRA_TEXT,
-                            context.getString(com.gamovation.feature.settings.R.string.share_content)
+                            context.getString(
+                                com.gamovation.feature.settings.R.string.share_content
+                            )
                         )
                     }
 
@@ -143,24 +143,26 @@ fun SocialBar() {
                         context.getString(com.gamovation.feature.settings.R.string.share)
                     )
                     context.startActivity(intentChooser)
-
-                }) {
+                }
+            ) {
                 Text(
                     text = stringResource(id = com.gamovation.feature.settings.R.string.share),
                     style = MaterialTheme.typography.titleMedium
                 )
-
             }
         }
 
         Card(shape = Dimensions.RoundedShape.ExtraLarge.value) {
-            TextButton(modifier = Modifier.padding(Dimensions.Padding.Small.value),
+            TextButton(
+                modifier = Modifier.padding(Dimensions.Padding.Small.value),
                 onClick = {
                     Intent(Intent.ACTION_SENDTO).apply {
                         data = Uri.parse("mailto:") // only email apps should handle this
                         putExtra(
                             Intent.EXTRA_EMAIL,
-                            context.getString(com.gamovation.feature.settings.R.string.developer_email)
+                            context.getString(
+                                com.gamovation.feature.settings.R.string.developer_email
+                            )
                         )
                         val intent = Intent.createChooser(
                             this,
@@ -168,7 +170,8 @@ fun SocialBar() {
                         )
                         context.startActivity(intent)
                     }
-                }) {
+                }
+            ) {
                 Text(
                     text = stringResource(com.gamovation.feature.settings.R.string.support),
                     style = MaterialTheme.typography.titleMedium
@@ -201,7 +204,6 @@ fun LanguageChooser(onUpdateAppLocale: (Locale?) -> Unit) {
         )
     }
 
-
     LanguageDropdownMenu(
         showDialog = showDialog,
         locale = locale,
@@ -215,7 +217,6 @@ fun LanguageChooser(onUpdateAppLocale: (Locale?) -> Unit) {
     )
 }
 
-
 @Composable
 fun LanguageDropdownMenu(showDialog: Boolean, locale: Locale, onUpdateLocale: (Locale?) -> Unit) {
     var showDropdownMenu by remember { mutableStateOf(false) }
@@ -227,7 +228,8 @@ fun LanguageDropdownMenu(showDialog: Boolean, locale: Locale, onUpdateLocale: (L
                 modifier = Modifier.padding(Dimensions.Padding.Small.value)
             ) {
                 Column {
-                    Text(text = bufferLocale.displayLanguage,
+                    Text(
+                        text = bufferLocale.displayLanguage,
                         style = MaterialTheme.typography.headlineSmall,
                         modifier = Modifier
                             .clickableNoRipple { showDropdownMenu = true }
@@ -237,7 +239,8 @@ fun LanguageDropdownMenu(showDialog: Boolean, locale: Locale, onUpdateLocale: (L
                     DropdownMenu(expanded = showDropdownMenu, onDismissRequest = { }) {
                         ApplicationLocales.entries.forEach {
                             val applicationLocale = Locale(it.code)
-                            DropdownMenuItem(text = { Text(text = applicationLocale.displayLanguage) },
+                            DropdownMenuItem(
+                                text = { Text(text = applicationLocale.displayLanguage) },
                                 onClick = {
                                     bufferLocale = applicationLocale
                                     showDropdownMenu = false
@@ -245,10 +248,12 @@ fun LanguageDropdownMenu(showDialog: Boolean, locale: Locale, onUpdateLocale: (L
                             )
                         }
                     }
-                    TextButton(modifier = Modifier.padding(Dimensions.Padding.Small.value),
+                    TextButton(
+                        modifier = Modifier.padding(Dimensions.Padding.Small.value),
                         onClick = {
                             onUpdateLocale(bufferLocale)
-                        }) {
+                        }
+                    ) {
                         Text(
                             text = stringResource(id = R.string.submit),
                             style = MaterialTheme.typography.displaySmall
@@ -259,7 +264,6 @@ fun LanguageDropdownMenu(showDialog: Boolean, locale: Locale, onUpdateLocale: (L
         }
     }
 }
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -289,7 +293,6 @@ fun BoxScope.SettingsBottomContent(onRestorePurchases: () -> Unit) {
                     .toUri()
             )
             context.startActivity(intent)
-
         }) {
             Text(
                 text = stringResource(com.gamovation.feature.settings.R.string.privacy_policy),
@@ -307,7 +310,6 @@ fun BoxScope.SettingsBottomContent(onRestorePurchases: () -> Unit) {
         }
     }
 
-
     AnimatedVisibility(
         modifier = Modifier
             .fillMaxSize()
@@ -319,7 +321,7 @@ fun BoxScope.SettingsBottomContent(onRestorePurchases: () -> Unit) {
             onDismissRequest = {},
             properties = DialogProperties(
                 dismissOnBackPress = false,
-                dismissOnClickOutside = false,
+                dismissOnClickOutside = false
             )
         ) {
             Card(
@@ -327,10 +329,12 @@ fun BoxScope.SettingsBottomContent(onRestorePurchases: () -> Unit) {
                 colors = CardDefaults.cardColors(boardBackgroundColor)
             ) {
                 Box(
-                    modifier = Modifier.padding(48.dp), contentAlignment = Alignment.Center
+                    modifier = Modifier.padding(48.dp),
+                    contentAlignment = Alignment.Center
                 ) {
                     CircularProgressIndicator(
-                        modifier = Modifier.size(64.dp), strokeWidth = 8.dp
+                        modifier = Modifier.size(64.dp),
+                        strokeWidth = 8.dp
                     )
                 }
             }

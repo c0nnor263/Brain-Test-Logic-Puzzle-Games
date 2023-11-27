@@ -10,5 +10,4 @@ fun RowScope.HeaderBarMenuOption(
     onNavigateBack: () -> Unit,
 ) {
     HeaderBarButton(iconRes = R.drawable.home_icon, onClick = onNavigateBack)
-
 }

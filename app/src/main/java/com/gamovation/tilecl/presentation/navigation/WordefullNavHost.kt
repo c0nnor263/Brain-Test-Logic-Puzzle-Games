@@ -57,7 +57,6 @@ fun WordefullNavHost(navController: NavHostController) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
 
-
     NavHost(
         modifier = Modifier
             .fillMaxWidth()
@@ -81,20 +80,25 @@ fun WordefullNavHost(navController: NavHostController) {
                 else -> levelData?.id ?: 1
             }
 
-            HomeScreen(onNavigateToLevel = {
-                navController.navigate(Screens.Level(idArg.toString()))
-            })
+            HomeScreen(
+                viewModel = viewModel,
+                onNavigateToLevel = {
+                    navController.navigate(Screens.Level(idArg.toString()))
+                }
+            )
         }
 
         composable(Screens.Store.route, enterTransition = {
             slideIntoContainer(
-                AnimatedContentTransitionScope.SlideDirection.Down, animationSpec = tween(
+                AnimatedContentTransitionScope.SlideDirection.Down,
+                animationSpec = tween(
                     Durations.Medium.time
                 )
             )
         }, exitTransition = {
             slideOutOfContainer(
-                AnimatedContentTransitionScope.SlideDirection.Up, animationSpec = tween(
+                AnimatedContentTransitionScope.SlideDirection.Up,
+                animationSpec = tween(
                     Durations.Medium.time
                 )
             )
@@ -111,7 +115,8 @@ fun WordefullNavHost(navController: NavHostController) {
             var errorDialog by remember {
                 mutableStateOf(false)
             }
-            StoreScreen(storeDetails = storeScreenDetails,
+            StoreScreen(
+                storeDetails = storeScreenDetails,
                 onWatchAd = { viewModel.watchAdReward() },
                 errorDialog = errorDialog,
                 onBuy = { details, type ->
@@ -123,7 +128,8 @@ fun WordefullNavHost(navController: NavHostController) {
                 },
                 onDismissErrorDialog = {
                     errorDialog = false
-                })
+                }
+            )
         }
 
         composable(Screens.Settings.route, enterTransition = {
@@ -155,13 +161,13 @@ fun WordefullNavHost(navController: NavHostController) {
             val viewModel: MenuViewModel = hiltViewModel()
             val levelDataList = viewModel.getAllLevels().collectAsStateWithLifecycle(emptyList())
 
-
             var pageIndex by remember {
                 mutableIntStateOf(0)
             }
 
             val list = levelDataList.value.takeIf { it.isNotEmpty() }?.subList(
-                pageIndex, (pageIndex + 5).coerceAtMost(
+                pageIndex,
+                (pageIndex + 5).coerceAtMost(
                     MAX_LEVEL_ID
                 )
             ) ?: listOf()
@@ -172,32 +178,33 @@ fun WordefullNavHost(navController: NavHostController) {
             })
         }
 
-
         val idArgName = Screens.Level().id.toArg()
-        composable(Screens.Level().route, arguments = listOf(
-            navArgument(
-                idArgName,
-            ) {
-                type = NavType.IntType
-                defaultValue = 1
+        composable(
+            Screens.Level().route,
+            arguments = listOf(
+                navArgument(
+                    idArgName
+                ) {
+                    type = NavType.IntType
+                    defaultValue = 1
+                }
+            ),
+            enterTransition = {
+                fadeIn(tween(Durations.Medium.time))
             },
-        ), enterTransition = {
-            fadeIn(tween(Durations.Medium.time))
-        }, exitTransition = {
-            fadeOut(animationSpec = tween(Durations.Medium.time))
-        }) { backStackEntry ->
+            exitTransition = {
+                fadeOut(animationSpec = tween(Durations.Medium.time))
+            }
+        ) { backStackEntry ->
             val viewModel: LevelScreenViewModel = hiltViewModel()
             val idArg = backStackEntry.arguments?.getInt(idArgName) ?: 1
-
 
             val levelData = viewModel.levelData.collectAsStateWithLifecycle()
             val levelScreenState = viewModel.levelScreenState.collectAsStateWithLifecycle()
             val levelActionState = viewModel.levelActionState.collectAsStateWithLifecycle()
 
-
             val userInteractionState = rememberUserInteraction()
             val interaction = userInteractionState.interactionFlow.collectAsStateWithLifecycle()
-
 
             LaunchedEffect(idArg) {
                 viewModel.updateLevelIndex(idArg)
@@ -208,10 +215,8 @@ fun WordefullNavHost(navController: NavHostController) {
                 userInteractionState.onIdle()
             }
 
-
             val reviewDataHandler = LocalReviewDataHandlerState.current
             LaunchedEffect(reviewDataHandler.isReviewRequested) {
-
                 val state = reviewDataHandler.isReviewRequested
                 if (state) {
                     val activity = context as ComponentActivity
@@ -221,11 +226,9 @@ fun WordefullNavHost(navController: NavHostController) {
                 }
             }
 
-
-
             CompositionLocalProvider(
                 LocalLevelScreen provides levelScreenState.value,
-                LocalLevelAction provides levelActionState.value,
+                LocalLevelAction provides levelActionState.value
             ) {
                 LevelScreen(
                     level = levelData.value,
@@ -243,13 +246,9 @@ fun WordefullNavHost(navController: NavHostController) {
                             else -> {}
                         }
                         viewModel.updateLevelActionState(LevelActionState.IDLE)
-                    },
+                    }
                 )
             }
-
-
         }
-
-
     }
 }

@@ -21,7 +21,7 @@ internal fun OptionButton(
     modifier: Modifier = Modifier,
     text: String,
     style: TextStyle = MaterialTheme.typography.titleLarge,
-    onClick: () -> Unit,
+    onClick: () -> Unit
 ) {
     Card(
         modifier = modifier.clickable { onClick() },
@@ -37,9 +37,8 @@ internal fun OptionButton(
 
             Text(
                 text = text,
-                style = style.copy(color = MaterialTheme.colorScheme.onPrimary),
+                style = style.copy(color = MaterialTheme.colorScheme.onPrimary)
             )
         }
-
     }
 }

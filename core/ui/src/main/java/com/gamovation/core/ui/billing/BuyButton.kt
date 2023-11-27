@@ -23,12 +23,13 @@ fun BuyButton(
     modifier: Modifier = Modifier,
     isLoaded: Boolean = true,
     text: String,
-    onClick: () -> Unit,
+    onClick: () -> Unit
 ) {
     Box(
         modifier = modifier.clickableNoRipple {
             onClick()
-        }, contentAlignment = Alignment.Center
+        },
+        contentAlignment = Alignment.Center
     ) {
         Image(
             modifier = Modifier

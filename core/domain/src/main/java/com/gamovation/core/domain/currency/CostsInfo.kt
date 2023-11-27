@@ -4,7 +4,7 @@ import com.gamovation.core.domain.billing.UserVipType
 
 data class CostsInfo(
     val adviceCost: Int = DEFAULT_ADVICE_COST,
-    val skipCost: Int = DEFAULT_SKIP_COST,
+    val skipCost: Int = DEFAULT_SKIP_COST
 )
 
 fun CostsInfo.calculateCosts(type: UserVipType): CostsInfo {

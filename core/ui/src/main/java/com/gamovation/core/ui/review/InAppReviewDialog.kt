@@ -31,7 +31,6 @@ import com.gamovation.core.ui.animation.Durations
 import com.gamovation.core.ui.common.ChalkBoardCard
 import com.gamovation.core.ui.extensions.clickableNoRipple
 
-
 @Composable
 fun InAppReviewDialog(
     modifier: Modifier = Modifier,
@@ -44,20 +43,18 @@ fun InAppReviewDialog(
         modifier = modifier,
         enter =
         scaleIn(tween(Durations.Short.time)) +
-                expandVertically(tween(Durations.Short.time)) { it } + expandHorizontally(
-            tween(
-                Durations.ShortMedium.time
-            )
-        ) { it },
+            expandVertically(tween(Durations.Short.time)) { it } + expandHorizontally(
+                tween(
+                    Durations.ShortMedium.time
+                )
+            ) { it },
         exit =
         shrinkVertically(tween(Durations.Short.time)) { it } + shrinkHorizontally(
             tween(
                 Durations.ShortMedium.time
             )
-        ) { it } + scaleOut(tween(Durations.Short.time)),
+        ) { it } + scaleOut(tween(Durations.Short.time))
     ) {
-
-
         Dialog(onDismissRequest = { onDismiss() }) {
             ChalkBoardCard(modifier = Modifier.padding(Dimensions.Padding.Small.value)) {
                 Column(
@@ -76,7 +73,9 @@ fun InAppReviewDialog(
 
                     DrawAnimation(delayOrder = 1) {
                         Text(
-                            text = stringResource(R.string.could_you_share_your_feedback_so_we_can_work_on_improving_it),
+                            text = stringResource(
+                                R.string.could_you_share_your_feedback_so_we_can_work_on_improving_it
+                            ),
                             style = MaterialTheme.typography.titleMedium,
                             textAlign = TextAlign.Center
                         )
@@ -103,13 +102,10 @@ fun InAppReviewDialog(
                                 },
                                 style = MaterialTheme.typography.headlineMedium
                             )
-
                         }
                     }
-
                 }
             }
         }
-
     }
 }

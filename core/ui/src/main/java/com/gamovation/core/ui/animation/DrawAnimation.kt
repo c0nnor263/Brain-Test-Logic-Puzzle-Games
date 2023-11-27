@@ -30,11 +30,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.gamovation.core.ui.R
+import kotlin.math.roundToInt
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
-import kotlin.math.roundToInt
-
 
 @Composable
 fun DrawAnimation(
@@ -53,7 +52,8 @@ fun DrawAnimation(
         animationSpec = infiniteRepeatable(
             animation = tween(Durations.Short.time),
             repeatMode = RepeatMode.Reverse
-        ), label = ""
+        ),
+        label = ""
     )
 
     val alphaAnimation by animateFloatAsState(
@@ -71,7 +71,6 @@ fun DrawAnimation(
                 return@launch
             }
             isStarted = true
-
 
             val offsetXJob = launch {
                 repeat(3) { index ->
@@ -113,7 +112,6 @@ fun DrawAnimation(
         }
     }
 
-
     Box(modifier = modifier.alpha(alphaAnimation), contentAlignment = Alignment.Center) {
         content()
 
@@ -129,8 +127,6 @@ fun DrawAnimation(
             )
         }
     }
-
-
 }
 
 @Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)

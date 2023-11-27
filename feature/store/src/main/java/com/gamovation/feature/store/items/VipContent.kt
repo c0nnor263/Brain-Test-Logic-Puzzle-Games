@@ -37,7 +37,9 @@ fun VipContent(onBuy: () -> Unit) {
                 Text(text = stringResource(com.gamovation.feature.store.R.string.become_a_vip))
                 Spacer(modifier = Modifier.height(Dimensions.Padding.Small.value))
                 Text(
-                    text = stringResource(com.gamovation.feature.store.R.string.remove_ads_and_get_cheaper_costs_for_all_actions),
+                    text = stringResource(
+                        com.gamovation.feature.store.R.string.remove_ads_and_get_cheaper_costs_for_all_actions
+                    ),
                     maxLines = 4,
                     textAlign = TextAlign.Center
                 )
@@ -58,8 +60,7 @@ fun VipContent(onBuy: () -> Unit) {
             modifier = Modifier
                 .width(100.dp)
                 .height(100.dp),
-            contentDescription = null,
+            contentDescription = null
         )
-
     }
 }

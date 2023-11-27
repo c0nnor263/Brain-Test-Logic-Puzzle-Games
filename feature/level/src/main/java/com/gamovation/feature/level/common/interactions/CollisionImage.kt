@@ -50,8 +50,7 @@ fun CollisionImage(
             modifier = Modifier.onGloballyPositioned { coordinates ->
                 rectOfImage = coordinates.boundsInWindow()
             },
-            contentDescription = null,
+            contentDescription = null
         )
     }
-
 }

@@ -17,4 +17,10 @@ interface UserInfoPreferencesRepository {
     suspend fun setLanguage(language: String)
 
     fun getLanguage(): Flow<String>
+
+    fun getNotificationPermissionTryCount(): Flow<Int>
+
+    suspend fun increaseNotificationPermissionTryCount()
+
+    suspend fun resetNotificationRequestCount()
 }

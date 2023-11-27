@@ -1,7 +1,6 @@
 package com.gamovation.core.database.preferences
 
 import android.content.Context
-import android.util.Log
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
@@ -10,18 +9,19 @@ import androidx.datastore.preferences.preferencesDataStore
 import com.gamovation.core.domain.billing.UserVipType
 import com.gamovation.core.domain.currency.DEFAULT_USER_CURRENCY
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.first
 import java.util.Locale
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 
 @Singleton
 class UserInfoPreferencesDataStore @Inject constructor(@ApplicationContext val context: Context) {
 
     companion object {
         const val NAME = "user_info"
+        const val DEFAULT_NOTIFICATION_PERMISSION_LIMIT = 3
         val Context.userInfoPreferencesDataStore by preferencesDataStore(name = NAME)
     }
 
@@ -30,11 +30,11 @@ class UserInfoPreferencesDataStore @Inject constructor(@ApplicationContext val c
         val USER_VIP = stringPreferencesKey("user_vip")
         val IS_AVAILABLE_REVIEW = booleanPreferencesKey("is_available_review")
         val LANGUAGE = stringPreferencesKey("language")
+        val NOTIFICATION_PERMISSION_TRY_COUNT =
+            intPreferencesKey("notification_permission_try_count")
     }
 
-
     private val dataStore = context.userInfoPreferencesDataStore
-
 
     fun getUserCurrency(): Flow<Int> {
         return combine(dataStore.data) {
@@ -62,7 +62,6 @@ class UserInfoPreferencesDataStore @Inject constructor(@ApplicationContext val c
         }
     }
 
-
     fun getUserVip(): Flow<UserVipType> {
         return combine(dataStore.data) {
             val rawType = it.first()[UserInfoPreferencesKeys.USER_VIP]
@@ -81,7 +80,6 @@ class UserInfoPreferencesDataStore @Inject constructor(@ApplicationContext val c
         }
     }
 
-
     fun getIsAvailableForReview(): Flow<Boolean> {
         return combine(dataStore.data) {
             it.first()[UserInfoPreferencesKeys.IS_AVAILABLE_REVIEW] ?: true
@@ -96,7 +94,6 @@ class UserInfoPreferencesDataStore @Inject constructor(@ApplicationContext val c
 
     suspend fun setLanguage(language: String) {
         dataStore.edit { preferences ->
-            Log.i("TAG", "setLanguage: $language")
             preferences[UserInfoPreferencesKeys.LANGUAGE] = language
         }
     }
@@ -107,4 +104,22 @@ class UserInfoPreferencesDataStore @Inject constructor(@ApplicationContext val c
         }
     }
 
+    fun getNotificationPermissionTryCount(): Flow<Int> {
+        return combine(dataStore.data) {
+            it.first()[UserInfoPreferencesKeys.NOTIFICATION_PERMISSION_TRY_COUNT] ?: 0
+        }
+    }
+
+    suspend fun increaseNotificationPermissionTryCount() {
+        dataStore.edit { preferences ->
+            val current = getNotificationPermissionTryCount().first()
+            preferences[UserInfoPreferencesKeys.NOTIFICATION_PERMISSION_TRY_COUNT] = current.plus(1)
+        }
+    }
+
+    suspend fun resetNotificationPermissionTryCount() {
+        dataStore.edit { preferences ->
+            preferences[UserInfoPreferencesKeys.NOTIFICATION_PERMISSION_TRY_COUNT] = 0
+        }
+    }
 }

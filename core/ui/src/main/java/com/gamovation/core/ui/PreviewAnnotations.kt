@@ -2,7 +2,6 @@ package com.gamovation.core.ui
 
 import androidx.compose.ui.tooling.preview.Preview
 
-
 @Preview(name = "sw480", device = "spec:width=480dp,height=1036dp,dpi=560")
 @Preview(name = "sw460", device = "spec:width=460dp,height=993dp,dpi=440")
 @Preview(name = "sw440", device = "spec:width=440dp,height=950dp,dpi=440")

@@ -13,6 +13,7 @@ import com.gamovation.core.domain.level.LevelActionState
 import com.gamovation.core.domain.level.LevelScreenState
 import com.gamovation.core.ui.level.UserInteraction
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,7 +21,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
 @HiltViewModel
 class LevelScreenViewModel @Inject constructor(
@@ -38,7 +38,6 @@ class LevelScreenViewModel @Inject constructor(
 
     private val _levelActionState = MutableStateFlow(LevelActionState.IDLE)
     val levelActionState: StateFlow<LevelActionState> = _levelActionState
-
 
     fun updateLevelScreenState(state: LevelScreenState) = viewModelScope.launch(Dispatchers.Main) {
         _levelScreenState.emit(state)
@@ -78,17 +77,16 @@ class LevelScreenViewModel @Inject constructor(
             _levelData.emit(data)
         }
 
-
     fun onForwardLevel() = viewModelScope.launch(Dispatchers.IO) {
         // Completing current level and unlocking next level
         completeLevel()
         setNextLevel()
     }
 
-
     suspend fun completeLevel() {
         val levelData = levelRepositoryImpl.getById(levelIndex).first().copy(
-            isCompleted = true, isHasAdvise = false
+            isCompleted = true,
+            isHasAdvise = false
         )
         levelRepositoryImpl.upsert(levelData)
     }
@@ -96,7 +94,7 @@ class LevelScreenViewModel @Inject constructor(
     suspend fun setNextLevel() {
         val nextLevelIndex = (levelIndex + 1).coerceAtMost(MAX_LEVEL_ID)
         val nextData = levelRepositoryImpl.getById(nextLevelIndex).first().copy(
-            isLocked = false,
+            isLocked = false
         )
 
         // Update current and next level data
@@ -114,7 +112,6 @@ class LevelScreenViewModel @Inject constructor(
     fun buyAction(cost: Int) = viewModelScope.launch(Dispatchers.IO) {
         // Spend currency for action
 
-
         when (levelActionState.value) {
             LevelActionState.ADVICE -> {
                 // Update level advice status to true
@@ -130,7 +127,6 @@ class LevelScreenViewModel @Inject constructor(
         }
         userInfoPreferencesRepository.spendCurrency(cost)
     }
-
 
     fun watchAdReward() = viewModelScope.launch(Dispatchers.IO) {
         userInfoPreferencesRepository.buyCurrency(25)
@@ -158,6 +154,4 @@ class LevelScreenViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.Main) {
             reviewDataManager.requestReviewInfo(activity, showDialog)
         }
-
-
 }

@@ -33,8 +33,6 @@ data class StoreScreenDetails(
                 inAppDetails?.get(BillingProductType.REMOVE_ADS.id),
                 subsDetails?.get(BillingProductType.VIP.id),
             )
-
         }
     }
 }
-

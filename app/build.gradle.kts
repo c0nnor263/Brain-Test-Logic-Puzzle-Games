@@ -8,7 +8,6 @@ plugins {
     id("androidx.baselineprofile")
 }
 
-
 val keystorePropertiesFile: File = rootProject.file("keystore.properties")
 val keystoreProperties = Properties().apply {
     load(FileInputStream(keystorePropertiesFile))
@@ -22,8 +21,8 @@ android {
         applicationId = namespace
         minSdk = Versions.Config.minSdk
         targetSdk = Versions.Config.targetSdk
-        versionCode = 20
-        versionName = "23.11.20.0"
+        versionCode = 21
+        versionName = "23.11.27.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -101,7 +100,6 @@ dependencies {
     "baselineProfile"(project(":baselineprofile"))
     composeCore()
 
-
     // Lifecycle + ViewModel
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycle}")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}")
@@ -117,8 +115,6 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics-ktx")
     implementation("com.google.firebase:firebase-perf-ktx")
 
-
-
     implementation("com.android.billingclient:billing-ktx:${Versions.billing}")
 
     implementation("androidx.core:core-splashscreen:${Versions.splashScreen}")
@@ -130,5 +126,4 @@ dependencies {
 
     // OneSignal
     implementation("com.onesignal:OneSignal:${Versions.oneSignal}")
-
 }

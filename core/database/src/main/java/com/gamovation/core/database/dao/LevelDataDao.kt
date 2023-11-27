@@ -21,7 +21,6 @@ interface LevelDataDao {
     @Query("SELECT * FROM leveldata")
     fun getAll(): Flow<List<LevelData>>
 
-
     @Query("SELECT * FROM leveldata WHERE isCompleted = 0 ORDER BY id ASC LIMIT 1")
     fun getLastUncompleted(): Flow<LevelData>
 }

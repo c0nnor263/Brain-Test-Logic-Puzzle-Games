@@ -5,4 +5,3 @@ data class ActionResult(val type: Type, val cost: Int = 0) {
         SUCCESS, BUY_MORE, CANCELLED
     }
 }
-

@@ -38,27 +38,25 @@ import com.gamovation.feature.level.R
 fun NotEnoughCurrencyDialog(
     modifier: Modifier = Modifier,
     visible: Boolean,
-    onActionResult: (ActionResult) -> Unit,
+    onActionResult: (ActionResult) -> Unit
 ) {
     AnimatedVisibility(
         visible = visible,
         modifier = modifier,
         enter =
         scaleIn(tween(Durations.Short.time)) +
-                expandVertically(tween(Durations.Short.time)) { it } + expandHorizontally(
-            tween(
-                Durations.ShortMedium.time
-            )
-        ) { it },
+            expandVertically(tween(Durations.Short.time)) { it } + expandHorizontally(
+                tween(
+                    Durations.ShortMedium.time
+                )
+            ) { it },
         exit =
         shrinkVertically(tween(Durations.Short.time)) { it } + shrinkHorizontally(
             tween(
                 Durations.ShortMedium.time
             )
-        ) { it } + scaleOut(tween(Durations.Short.time)),
+        ) { it } + scaleOut(tween(Durations.Short.time))
     ) {
-
-
         Dialog(onDismissRequest = {}) {
             ChalkBoardCard(modifier = Modifier.padding(Dimensions.Padding.Small.value)) {
                 Column(
@@ -68,7 +66,9 @@ fun NotEnoughCurrencyDialog(
                 ) {
                     DrawAnimation {
                         Text(
-                            text = stringResource(R.string.you_don_t_have_enough_currency_to_get_a_hint),
+                            text = stringResource(
+                                R.string.you_don_t_have_enough_currency_to_get_a_hint
+                            ),
                             style = MaterialTheme.typography.headlineSmall,
                             textAlign = TextAlign.Center
                         )
@@ -100,14 +100,16 @@ fun NotEnoughCurrencyDialog(
                     Spacer(modifier = Modifier.height(Dimensions.Padding.Medium.value))
 
                     DrawAnimation(delayOrder = 1) {
-                        Text(stringResource(R.string.get_more), Modifier.clickableNoRipple {
-                            onActionResult(ActionResult(ActionResult.Type.BUY_MORE))
-                        }, style = MaterialTheme.typography.displaySmall)
-
+                        Text(
+                            stringResource(R.string.get_more),
+                            Modifier.clickableNoRipple {
+                                onActionResult(ActionResult(ActionResult.Type.BUY_MORE))
+                            },
+                            style = MaterialTheme.typography.displaySmall
+                        )
                     }
                 }
             }
         }
-
     }
 }

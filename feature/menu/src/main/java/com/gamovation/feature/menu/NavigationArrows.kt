@@ -27,7 +27,7 @@ import com.gamovation.core.ui.extensions.clickableNoRipple
 fun NavigationArrows(
     modifier: Modifier = Modifier,
     currentIndex: Int,
-    onIndexUpdate: (Int) -> Unit,
+    onIndexUpdate: (Int) -> Unit
 ) {
     Row(
         modifier = modifier
@@ -38,7 +38,6 @@ fun NavigationArrows(
         ),
         verticalAlignment = Alignment.CenterVertically
     ) {
-
         AnimatedVisibility(
             visible = currentIndex != 0,
             enter = fadeIn() + scaleIn(),
@@ -56,7 +55,9 @@ fun NavigationArrows(
                         }
                         .padding(Dimensions.Padding.Medium.value)
                         .scale(2F),
-                    painter = painterResource(id = com.gamovation.core.ui.R.drawable.baseline_arrow_left_24),
+                    painter = painterResource(
+                        id = com.gamovation.core.ui.R.drawable.baseline_arrow_left_24
+                    ),
                     contentDescription = null
                 )
             }
@@ -80,15 +81,15 @@ fun NavigationArrows(
                         }
                         .padding(Dimensions.Padding.Medium.value)
                         .scale(2F),
-                    painter = painterResource(id = com.gamovation.core.ui.R.drawable.baseline_arrow_right_24),
+                    painter = painterResource(
+                        id = com.gamovation.core.ui.R.drawable.baseline_arrow_right_24
+                    ),
                     contentDescription = null
                 )
             }
         }
     }
-
 }
-
 
 @Preview
 @Composable

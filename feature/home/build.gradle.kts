@@ -45,7 +45,6 @@ android {
             resources.excludes.add(Versions.excludeFiles)
         }
     }
-
 }
 
 dependencies {

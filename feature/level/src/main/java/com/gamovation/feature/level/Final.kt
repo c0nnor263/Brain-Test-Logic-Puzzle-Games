@@ -34,7 +34,7 @@ fun Final(modifier: Modifier = Modifier) {
         true,
         modifier = modifier.padding(Dimensions.Padding.Small.value),
         enter = fadeIn(tween(Durations.Medium.time)) + scaleIn(tween(Durations.Medium.time)),
-        exit = scaleOut(tween(Durations.Medium.time)) + fadeOut(tween(Durations.Medium.time)),
+        exit = scaleOut(tween(Durations.Medium.time)) + fadeOut(tween(Durations.Medium.time))
     ) {
         Column(
             modifier = Modifier.fillMaxWidth(),
@@ -44,7 +44,7 @@ fun Final(modifier: Modifier = Modifier) {
             Image(
                 painter = painterResource(id = R.drawable.lamp),
                 modifier = Modifier.size(64.dp),
-                contentDescription = null,
+                contentDescription = null
             )
             Spacer(modifier = Modifier.height(Dimensions.Padding.Medium.value))
             Title(
@@ -63,6 +63,5 @@ fun Final(modifier: Modifier = Modifier) {
                 style = MaterialTheme.typography.displaySmall.copy(color = Color.Yellow)
             )
         }
-
     }
 }

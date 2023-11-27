@@ -27,13 +27,11 @@ import com.gamovation.core.ui.extensions.clickableNoRipple
 import com.gamovation.core.ui.theme.WordefullTheme
 import com.gamovation.feature.level.R
 
-
 @Composable
 fun CounterBlock(
     modifier: Modifier = Modifier,
     onAnswer: (Int) -> Unit
 ) {
-
     var count by rememberSaveable {
         mutableStateOf(0)
     }
@@ -48,8 +46,6 @@ fun CounterBlock(
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-
-
                 Box(
                     modifier = Modifier
                         .weight(1F)
@@ -71,7 +67,6 @@ fun CounterBlock(
                         style = MaterialTheme.typography.headlineSmall
                     )
                 }
-
 
                 Box(
                     modifier = Modifier.weight(1F),
@@ -118,15 +113,11 @@ fun CounterBlock(
     }
 }
 
-
 @Preview
 @Composable
 fun CounterBlockPreview() {
     WordefullTheme {
-
         CounterBlock {
-
         }
-
     }
 }

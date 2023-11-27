@@ -31,7 +31,6 @@ import com.gamovation.core.ui.theme.WordefullTheme
 import com.gamovation.feature.level.R
 import kotlin.math.roundToInt
 
-
 @Composable
 fun LettersBlock(
     modifier: Modifier = Modifier,
@@ -39,7 +38,6 @@ fun LettersBlock(
     numberMaxLength: Int = 1,
     onAnswer: (String) -> Unit
 ) {
-
     var currentAnswer by rememberSaveable {
         mutableStateOf("")
     }
@@ -60,10 +58,10 @@ fun LettersBlock(
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-
-                IconButton(modifier = Modifier
-                    .weight(1F)
-                    .wrapContentWidth(Alignment.End),
+                IconButton(
+                    modifier = Modifier
+                        .weight(1F)
+                        .wrapContentWidth(Alignment.End),
                     onClick = {
                         currentAnswer =
                             if (currentAnswer.length > 1) currentAnswer.dropLast(1) else ""
@@ -75,7 +73,6 @@ fun LettersBlock(
                         contentDescription = null
                     )
                 }
-
 
                 Box(
                     modifier = Modifier
@@ -103,7 +100,8 @@ fun LettersBlock(
                         if (currentAnswer.isNotBlank()) {
                             onAnswer(currentAnswer)
                         }
-                    }) {
+                    }
+                ) {
                     Image(
                         modifier = Modifier.fillMaxSize(),
                         painter = painterResource(id = R.drawable.yes_icon),
@@ -112,7 +110,6 @@ fun LettersBlock(
                 }
             }
             Spacer(modifier = Modifier.height(Dimensions.Padding.Small.value))
-
 
             repeat((currentAlphabet.size / 7F).roundToInt()) { rowIndex ->
                 Row(
@@ -133,7 +130,8 @@ fun LettersBlock(
                                 )
 
                                 Text(
-                                    text = text, modifier = Modifier
+                                    text = text,
+                                    modifier = Modifier
                                         .padding(Dimensions.Padding.Small.value)
                                         .clickableNoRipple {
                                             currentAnswer += if (currentAnswer.length < numberMaxLength) text else ""
@@ -154,24 +152,18 @@ fun LettersBlock(
 fun LettersBlockLatinPreview() {
     WordefullTheme {
         LettersBlock(alphabetType = AlphabetType.Latin) {
-
         }
     }
 }
-
 
 @Preview
 @Composable
 fun LettersBlockCyrillicPreview() {
     WordefullTheme {
         LettersBlock(alphabetType = AlphabetType.Cyrillic) {
-
         }
-
     }
-
 }
-
 
 val defaultCyrillicAlphabet = listOf(
     "А",
@@ -237,5 +229,3 @@ val defaultLatinAlphabet = listOf(
     "Y",
     "Z"
 )
-
-

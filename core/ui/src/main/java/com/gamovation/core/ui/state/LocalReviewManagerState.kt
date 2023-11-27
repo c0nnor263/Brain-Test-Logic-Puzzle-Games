@@ -9,7 +9,6 @@ val LocalReviewDataHandlerState = compositionLocalOf<ReviewDataHandler> {
     ReviewDataHandler()
 }
 
-
 class ReviewDataHandler {
     var isReviewRequested by mutableStateOf(false)
     var isDialogVisible by mutableStateOf(false)

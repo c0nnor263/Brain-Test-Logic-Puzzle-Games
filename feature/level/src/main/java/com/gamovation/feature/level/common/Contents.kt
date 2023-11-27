@@ -20,7 +20,7 @@ import com.gamovation.core.ui.state.rememberInterstitialAdViewState
 import com.gamovation.core.ui.state.rememberRewardedInterstitialAdViewState
 import com.gamovation.feature.level.Completed
 import com.gamovation.feature.level.Final
-import com.gamovation.feature.level.action_bar.Restarting
+import com.gamovation.feature.level.actionbar.Restarting
 import kotlinx.coroutines.delay
 
 @Composable
@@ -57,9 +57,9 @@ fun Contents(
     }
 
     Box(
-        modifier = modifier, contentAlignment = Alignment.TopCenter
+        modifier = modifier,
+        contentAlignment = Alignment.TopCenter
     ) {
-
         if (actionState == LevelActionState.RESTART) {
             Restarting(modifier = Modifier.fillMaxSize(), true)
         } else {
@@ -82,7 +82,6 @@ fun Contents(
                     onLevelScreenAction(newState)
                 })
             }
-
         }
     }
 }

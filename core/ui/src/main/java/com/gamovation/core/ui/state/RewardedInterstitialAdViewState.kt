@@ -15,17 +15,16 @@ import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.rewardedinterstitial.RewardedInterstitialAd
 import com.google.android.gms.ads.rewardedinterstitial.RewardedInterstitialAdLoadCallback
 
-
 @Composable
 fun rememberRewardedInterstitialAdViewState(
-    activity: ComponentActivity, adUnitID: String
+    activity: ComponentActivity,
+    adUnitID: String
 ): RewardedInterstitialAdViewState =
     remember {
         RewardedInterstitialAdViewState(adUnitID = adUnitID).also { state ->
             state.loadAd(activity)
         }
     }
-
 
 class RewardedInterstitialAdViewState(
     rewardedInterstitialAd: RewardedInterstitialAd? = null,
@@ -37,7 +36,6 @@ class RewardedInterstitialAdViewState(
         get() = rewardedInterstitialAd != null
 
     fun loadAd(context: ComponentActivity) {
-
         val adRequest = AdRequest.Builder().build()
         RewardedInterstitialAd.load(
             context,
@@ -61,7 +59,6 @@ class RewardedInterstitialAdViewState(
     }
 
     fun showAd(activity: ComponentActivity, onDismissed: (result: Boolean?) -> Unit = {}) {
-
         rewardedInterstitialAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
             override fun onAdDismissedFullScreenContent() {
                 super.onAdDismissedFullScreenContent()
@@ -76,8 +73,6 @@ class RewardedInterstitialAdViewState(
                 loadAd(activity)
                 onDismissed(false)
             }
-
-
         }
 
         rewardedInterstitialAd?.show(activity) {

@@ -6,8 +6,3 @@ data class ProductDetailsInfo(
     val inAppDetails: List<ProductDetails>?,
     val subscriptionDetails: List<ProductDetails>?
 )
-
-
-
-
-

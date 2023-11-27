@@ -8,10 +8,11 @@ import com.gamovation.core.database.model.LevelData
 @Database(
     version = 1,
     entities = [LevelData::class],
-    exportSchema = false,
+    exportSchema = false
 )
 abstract class WordefullDatabase : RoomDatabase() {
     abstract fun levelDataDao(): LevelDataDao
+
     companion object {
         const val DATABASE_NAME = "tilecl.db"
     }

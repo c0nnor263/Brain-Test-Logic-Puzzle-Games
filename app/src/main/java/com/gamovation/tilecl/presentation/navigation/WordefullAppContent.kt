@@ -78,7 +78,6 @@ fun WordefullAppContent() {
     }
 }
 
-
 @Preview
 @Composable
 fun WordefullAppContentPreview() {

@@ -76,12 +76,10 @@ fun DraggableImage(
                                 screenSize
                             )
                         }
-
-
                     }
                 },
             painter = painterResource(id = drawableRes),
-            contentDescription = null,
+            contentDescription = null
         )
     }
 }

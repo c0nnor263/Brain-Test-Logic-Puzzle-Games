@@ -40,4 +40,3 @@ internal fun AnswersBlock(
         }
     }
 }
-

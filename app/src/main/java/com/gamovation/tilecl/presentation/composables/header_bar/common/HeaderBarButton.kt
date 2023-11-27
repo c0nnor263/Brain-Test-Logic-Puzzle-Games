@@ -22,7 +22,6 @@ fun HeaderBarButton(modifier: Modifier = Modifier, @DrawableRes iconRes: Int, on
     val interactionSource = remember { MutableInteractionSource() }
     val isButtonPressed = interactionSource.collectIsPressedAsState()
 
-
     val scaleAnimation by animateFloatAsState(
         targetValue = if (isButtonPressed.value) 0.9f else 1f,
         animationSpec = tween(Durations.Short.time),

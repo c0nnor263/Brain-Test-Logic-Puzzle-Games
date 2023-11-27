@@ -42,7 +42,7 @@ fun Completed(
     modifier: Modifier = Modifier,
     id: Int,
     rewardedInterstitialAd: RewardedInterstitialAdViewState,
-    onLevelUIAction: (LevelScreenState) -> Unit,
+    onLevelUIAction: (LevelScreenState) -> Unit
 ) {
     var showWatchAdDialog by remember { mutableStateOf(false) }
 
@@ -50,7 +50,7 @@ fun Completed(
         true,
         modifier = modifier.padding(Dimensions.Padding.Small.value),
         enter = fadeIn(tween(Durations.Medium.time)) + scaleIn(tween(Durations.Medium.time)),
-        exit = scaleOut(tween(Durations.Medium.time)) + fadeOut(tween(Durations.Medium.time)),
+        exit = scaleOut(tween(Durations.Medium.time)) + fadeOut(tween(Durations.Medium.time))
     ) {
         Column(
             modifier = Modifier.fillMaxWidth(),
@@ -60,7 +60,7 @@ fun Completed(
             Image(
                 painter = painterResource(id = R.drawable.lamp),
                 modifier = Modifier.size(64.dp),
-                contentDescription = null,
+                contentDescription = null
             )
             Spacer(modifier = Modifier.height(Dimensions.Padding.Medium.value))
             Title(
@@ -71,7 +71,9 @@ fun Completed(
                 style = MaterialTheme.typography.displaySmall
             )
             Title(
-                text = stringResource(com.gamovation.feature.level.R.string.level_completed_you_awesome),
+                text = stringResource(
+                    com.gamovation.feature.level.R.string.level_completed_you_awesome
+                ),
                 style = MaterialTheme.typography.displaySmall.copy(color = Color.Yellow)
             )
             Spacer(modifier = Modifier.height(Dimensions.Padding.Large.value))
@@ -101,13 +103,14 @@ fun Completed(
                 }
             }
         }
-
     }
 
-    WatchAdDialog(visible = showWatchAdDialog,
+    WatchAdDialog(
+        visible = showWatchAdDialog,
         rewardedInterstitialAd = rewardedInterstitialAd,
         onDismissed = { result ->
             showWatchAdDialog = false
             if (result == true) onLevelUIAction(LevelScreenState.WATCH_AD)
-        })
+        }
+    )
 }

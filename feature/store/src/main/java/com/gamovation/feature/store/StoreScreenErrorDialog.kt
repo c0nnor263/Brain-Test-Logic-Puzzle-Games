@@ -62,7 +62,6 @@ fun StoreScreenErrorDialog(modifier: Modifier = Modifier, visible: Boolean, onDi
                             },
                             style = MaterialTheme.typography.titleLarge
                         )
-
                     }
                 }
             }

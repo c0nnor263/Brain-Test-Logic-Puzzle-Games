@@ -36,7 +36,6 @@ import org.junit.runner.RunWith
 @RequiresApi(Build.VERSION_CODES.P)
 class BaselineProfileGenerator {
 
-
     @get:Rule
     val rule = BaselineProfileRule()
 
@@ -45,6 +44,11 @@ class BaselineProfileGenerator {
         rule.collect("com.gamovation.tilecl", includeInStartupProfile = true) {
             pressHome()
             startActivityAndWait()
+
+            Thread.sleep(3000)
+            device.findObject(By.desc("RequestNotificationPermissionYesTag"))
+                ?.clickAndWait(Until.newWindow(), 5000)
+            Thread.sleep(3000)
 
             device.findObject(By.desc("StoreScreenNavigate"))
                 .clickAndWait(Until.newWindow(), 5000)

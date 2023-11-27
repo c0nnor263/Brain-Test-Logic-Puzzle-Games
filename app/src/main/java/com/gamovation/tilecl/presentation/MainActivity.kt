@@ -3,7 +3,6 @@ package com.gamovation.tilecl.presentation
 import android.animation.ObjectAnimator
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.ViewTreeObserver
 import android.view.WindowInsets
@@ -54,7 +53,6 @@ class MainActivity : ComponentActivity() {
         }
         super.onCreate(savedInstanceState)
 
-
         val content: View = findViewById(android.R.id.content)
         content.viewTreeObserver.addOnPreDrawListener(
             object : ViewTreeObserver.OnPreDrawListener {
@@ -86,13 +84,11 @@ class MainActivity : ComponentActivity() {
                     LocalCosts provides CostsInfo().calculateCosts(userVipType.value),
                     LocalLocale provides language.value?.let { Locale(it) }
                 ) {
-
                     val context = LocalContext.current
                     val locale = LocalLocale.current
                     val configuration = LocalConfiguration.current
                     LaunchedEffect(locale) {
                         locale?.let {
-
                             Locale.setDefault(locale)
                             configuration.setLocale(locale)
                             context.createConfigurationContext(configuration)
@@ -101,7 +97,6 @@ class MainActivity : ComponentActivity() {
                                 context.resources.displayMetrics
                             )
                             viewModel.isViewInitialized = true
-                            Log.i("TAG", "onCreate: $locale ${viewModel.isViewInitialized}")
                         }
                     }
 

@@ -1,6 +1,5 @@
 import org.gradle.api.artifacts.dsl.DependencyHandler
 import org.gradle.kotlin.dsl.kotlin
-import org.gradle.kotlin.dsl.version
 import org.gradle.plugin.use.PluginDependenciesSpec
 
 fun PluginType.get(scope: PluginDependenciesSpec) {
@@ -14,7 +13,6 @@ fun PluginType.get(scope: PluginDependenciesSpec) {
                 id("com.google.firebase.crashlytics")
                 id("com.google.firebase.firebase-perf")
                 id("com.google.dagger.hilt.android")
-
             }
 
             else -> {
@@ -23,7 +21,6 @@ fun PluginType.get(scope: PluginDependenciesSpec) {
 //                id("kotlin-kapt")
                 id("com.google.devtools.ksp")
                 id("com.google.dagger.hilt.android")
-
             }
         }
     }
@@ -53,7 +50,6 @@ fun DependencyHandler.composeCore() {
     add(LibType.DEBUG.value, "androidx.compose.ui:ui-test-manifest")
     add(LibType.DEFAULT.value, "androidx.lifecycle:lifecycle-runtime-compose:${Versions.lifecycle}")
 
-
     add(
         LibType.DEFAULT.value,
         "androidx.navigation:navigation-compose:${Versions.Compose.navigation}"
@@ -68,8 +64,6 @@ fun DependencyHandler.composeCore() {
         "androidx.constraintlayout:constraintlayout-compose:${Versions.Compose.constraintLayout}"
     )
 
-
-
     add(LibType.DEFAULT.value, "com.google.dagger:hilt-android:${Versions.hilt}")
     add(LibType.KSP.value, "com.google.dagger:hilt-android-compiler:${Versions.hilt}")
 }
@@ -81,25 +75,9 @@ fun DependencyHandler.coreData() {
     add(LibType.KSP.value, "androidx.room:room-compiler:${Versions.Storage.room}")
     add(LibType.DEFAULT.value, "androidx.room:room-ktx:${Versions.Storage.room}")
 
-
     add(LibType.DEFAULT.value, "com.google.dagger:hilt-android:${Versions.hilt}")
     add(LibType.KSP.value, "com.google.dagger:hilt-android-compiler:${Versions.hilt}")
-
 
     add(LibType.DEFAULT.value, "com.google.android.gms:play-services-ads:${Versions.ads}")
     add(LibType.DEFAULT.value, "androidx.datastore:datastore-preferences:1.0.0")
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

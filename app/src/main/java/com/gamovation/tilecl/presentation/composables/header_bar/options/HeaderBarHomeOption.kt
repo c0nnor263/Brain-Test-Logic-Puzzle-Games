@@ -13,14 +13,18 @@ import com.gamovation.tilecl.presentation.composables.header_bar.common.HeaderBa
 @Composable
 fun HeaderBarHomeOption(
     onNavigateToSettings: () -> Unit,
-    onNavigateToMenu: () -> Unit,
+    onNavigateToMenu: () -> Unit
 ) {
     HeaderBarButton(
         iconRes = R.drawable.baseline_settings_24,
         onClick = onNavigateToSettings
     )
     Spacer(modifier = Modifier.width(Dimensions.Padding.Small.value))
-    HeaderBarButton(modifier = Modifier.semantics {
-        contentDescription = "MenuScreenNavigate"
-    }, iconRes = R.drawable.baseline_more_horiz_24, onClick = onNavigateToMenu)
+    HeaderBarButton(
+        modifier = Modifier.semantics {
+            contentDescription = "MenuScreenNavigate"
+        },
+        iconRes = R.drawable.baseline_more_horiz_24,
+        onClick = onNavigateToMenu
+    )
 }

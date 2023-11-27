@@ -18,4 +18,7 @@
 
     <string name="watch_ad_for_reward">Watch Ad\nfor reward</string>
 
+    <string name="request_notification_permission_title">Stay Updated with us!</string>
+    <string name="request_notification_permission_message">Enable push notifications to receive the latest updates and exclusive offers from %1$s. Stay connected and never miss out on what\'s new and exciting!</string>
+
 </resources>

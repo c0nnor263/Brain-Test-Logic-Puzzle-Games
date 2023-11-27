@@ -40,10 +40,11 @@ import kotlin.math.roundToInt
 fun BestChoiceContent(
     modifier: Modifier = Modifier,
     details: ProductDetails?,
-    onClick: (ProductDetails, BillingProductType) -> Unit,
+    onClick: (ProductDetails, BillingProductType) -> Unit
 ) {
     Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
-        Card(colors = CardDefaults.cardColors(boardBorderColor),
+        Card(
+            colors = CardDefaults.cardColors(boardBorderColor),
             modifier = Modifier
                 .zIndex(2F)
                 .offset {
@@ -81,7 +82,9 @@ fun BestChoiceContent(
                     Text("x1000", style = MaterialTheme.typography.bodyMedium.copy(Color.White))
                     Spacer(modifier = Modifier.width(Dimensions.Padding.Small.value))
                     Image(
-                        painter = painterResource(id = com.gamovation.feature.store.R.drawable.remove_ads),
+                        painter = painterResource(
+                            id = com.gamovation.feature.store.R.drawable.remove_ads
+                        ),
                         modifier = Modifier.size(32.dp),
                         contentDescription = null,
                         contentScale = ContentScale.Fit
@@ -89,12 +92,14 @@ fun BestChoiceContent(
                 }
 
                 Spacer(modifier = Modifier.height(Dimensions.Padding.Small.value))
-                BuyButton(text = details?.oneTimePurchaseOfferDetails?.formattedPrice ?: "",
+                BuyButton(
+                    text = details?.oneTimePurchaseOfferDetails?.formattedPrice ?: "",
                     onClick = {
                         details?.let {
                             onClick(it, BillingProductType.BEST_CHOICE_OFFER)
                         }
-                    })
+                    }
+                )
             }
         }
     }

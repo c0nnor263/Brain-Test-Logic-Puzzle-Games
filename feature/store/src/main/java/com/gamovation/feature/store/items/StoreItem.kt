@@ -63,7 +63,6 @@ fun StoreItem(
 fun StoreItemPreview() {
     WordefullTheme {
         StoreItem(value = "10") {
-
         }
     }
 }

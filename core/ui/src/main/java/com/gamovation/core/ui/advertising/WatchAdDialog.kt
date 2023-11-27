@@ -11,16 +11,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import com.gamovation.core.ui.state.RewardedInterstitialAdViewState
 
-
 @Composable
 fun WatchAdDialog(
     modifier: Modifier = Modifier,
     visible: Boolean,
     onDismissed: (Boolean?) -> Unit,
-    rewardedInterstitialAd: RewardedInterstitialAdViewState,
+    rewardedInterstitialAd: RewardedInterstitialAdViewState
 ) {
     val activity = LocalContext.current as ComponentActivity
-
 
     var showErrorDialog by remember { mutableStateOf(false) }
 

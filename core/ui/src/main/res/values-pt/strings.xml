@@ -12,5 +12,7 @@
     <string name="something_went_wrong">Algo deu errado!</string>
 
     <string name="watch_ad_for_reward">Assista ao anúncio\npara recompensa</string>
+    <string name="request_notification_permission_title">Fique atualizado conosco!</string>
+    <string name="request_notification_permission_message">Ative as notificações push para receber as últimas atualizações e ofertas exclusivas de %1$s. Fique conectado e nunca perca o que é novo e empolgante!</string>
 
 </resources>

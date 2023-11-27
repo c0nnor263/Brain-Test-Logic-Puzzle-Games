@@ -14,7 +14,7 @@ import com.google.android.gms.ads.AdView
 @Composable
 fun BannerAdView(
     modifier: Modifier = Modifier,
-    adUnitId: String = stringResource(id = com.gamovation.core.domain.R.string.test_ad_unit),
+    adUnitId: String = stringResource(id = com.gamovation.core.domain.R.string.test_ad_unit)
 ) {
     val deviceCurrentWidth = LocalConfiguration.current.screenWidthDp
 
@@ -23,7 +23,8 @@ fun BannerAdView(
         AdView(context).apply {
             setAdSize(
                 AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(
-                    context, deviceCurrentWidth
+                    context,
+                    deviceCurrentWidth
                 )
             )
             setAdUnitId(adUnitId)
@@ -33,7 +34,6 @@ fun BannerAdView(
         val request = AdRequest.Builder().build()
         adView.loadAd(request)
     })
-
 }
 
 @Preview

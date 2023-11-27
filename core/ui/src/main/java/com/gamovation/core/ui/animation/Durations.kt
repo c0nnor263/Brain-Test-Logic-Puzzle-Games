@@ -6,7 +6,6 @@ sealed class Durations(val time: Int) {
      */
     data object ShortLight : Durations(100)
 
-
     /**
      * 200
      */
@@ -26,6 +25,4 @@ sealed class Durations(val time: Int) {
      * 800
      */
     data object Long : Durations(800)
-
 }
-

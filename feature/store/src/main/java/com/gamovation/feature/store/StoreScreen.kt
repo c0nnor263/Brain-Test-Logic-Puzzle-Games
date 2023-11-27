@@ -39,13 +39,15 @@ fun StoreScreen(
     errorDialog: Boolean,
     onBuy: (ProductDetails, BillingProductType) -> Unit,
     onDismissErrorDialog: () -> Unit,
-    onWatchAd: () -> Unit,
+    onWatchAd: () -> Unit
 ) {
     val context = LocalContext.current as ComponentActivity
     var showWatchAdDialog by remember { mutableStateOf(false) }
     val rewardedInterstitialAd = rememberRewardedInterstitialAdViewState(
         context,
-        stringResource(id = com.gamovation.core.data.R.string.admob_rewarded_id_store_screen_watch_ad)
+        stringResource(
+            id = com.gamovation.core.data.R.string.admob_rewarded_id_store_screen_watch_ad
+        )
     )
     LazyColumn(
         modifier = Modifier
@@ -83,12 +85,14 @@ fun StoreScreen(
         }
 
         item {
-            StoreItem(value = stringResource(com.gamovation.feature.store.R.string.remove_ads),
+            StoreItem(
+                value = stringResource(com.gamovation.feature.store.R.string.remove_ads),
                 drawableRes = com.gamovation.feature.store.R.drawable.remove_ads,
                 details = storeDetails?.removeAdsDetails,
                 onClick = {
                     onBuy(it, BillingProductType.REMOVE_ADS)
-                })
+                }
+            )
         }
         item {
             WatchStoreItem(
@@ -108,7 +112,6 @@ fun StoreScreen(
         item {
             StoreItem(value = "x500", details = storeDetails?.currency500Details, onClick = {
                 onBuy(it, BillingProductType.CURRENCY_500)
-
             })
         }
         item {
@@ -124,7 +127,8 @@ fun StoreScreen(
         onDismissed = { result ->
             showWatchAdDialog = false
             if (result == true) onWatchAd()
-        })
+        }
+    )
 
     StoreScreenErrorDialog(
         visible = errorDialog,
@@ -137,7 +141,6 @@ fun StoreScreen(
 fun StoreScreenPreview() {
     WordefullTheme {
         StoreScreen(null, false, onWatchAd = {}, onDismissErrorDialog = {}, onBuy = { _, _ ->
-
         })
     }
 }

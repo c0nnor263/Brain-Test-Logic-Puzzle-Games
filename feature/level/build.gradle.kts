@@ -45,7 +45,6 @@ android {
             resources.excludes.add(Versions.excludeFiles)
         }
     }
-
 }
 
 dependencies {
@@ -56,4 +55,3 @@ dependencies {
     composeCore()
     implementation("com.squareup:seismic:1.0.3")
 }
-

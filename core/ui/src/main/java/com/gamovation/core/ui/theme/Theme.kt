@@ -43,7 +43,7 @@ private val DarkColors = darkColorScheme(
     inversePrimary = md_theme_dark_inversePrimary,
     surfaceTint = md_theme_dark_surfaceTint,
     outlineVariant = md_theme_dark_outlineVariant,
-    scrim = md_theme_dark_scrim,
+    scrim = md_theme_dark_scrim
 )
 
 @Composable
@@ -68,10 +68,11 @@ fun WordefullTheme(
 
     MaterialTheme(
         colorScheme = DarkColors,
-        typography = typography,
+        typography = typography
     ) {
         Surface(
-            modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colorScheme.background
         ) {
             content()
         }
@@ -86,7 +87,7 @@ fun ThemeP() {
             Text(
                 modifier = Modifier.fillMaxWidth(),
                 text = "Example text with displayLarge",
-                style = MaterialTheme.typography.displayLarge,
+                style = MaterialTheme.typography.displayLarge
             )
             Divider(
                 thickness = 16.dp
@@ -113,7 +114,8 @@ fun ThemeP() {
                 style = MaterialTheme.typography.headlineLarge
             )
             Divider(
-                modifier = Modifier.fillMaxWidth(), thickness = 16.dp
+                modifier = Modifier.fillMaxWidth(),
+                thickness = 16.dp
             )
             Text(
                 modifier = Modifier.fillMaxWidth(),

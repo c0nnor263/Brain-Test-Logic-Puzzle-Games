@@ -28,4 +28,3 @@ include(":feature:level")
 include(":feature:store")
 include(":feature:settings")
 include(":baselineprofile")
-

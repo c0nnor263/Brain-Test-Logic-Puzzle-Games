@@ -22,7 +22,6 @@ import com.gamovation.core.ui.Dimensions
 import com.gamovation.core.ui.R
 import com.gamovation.core.ui.billing.BuyButton
 
-
 @Composable
 fun WatchStoreItem(
     modifier: Modifier = Modifier,
@@ -37,7 +36,6 @@ fun WatchStoreItem(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Row(modifier = Modifier.weight(1F), verticalAlignment = Alignment.CenterVertically) {
-
             Image(
                 painter = painterResource(id = R.drawable.present),
                 modifier = Modifier.size(64.dp),
@@ -52,17 +50,22 @@ fun WatchStoreItem(
             )
         }
 
-        BuyButton(modifier = Modifier
-            .weight(1F, false)
-            .drawWithContent {
-                drawContent()
-                if (!isLoaded) {
-                    drawRoundRect(Color.Gray.copy(0.5F), cornerRadius = CornerRadius(28F, 28F))
+        BuyButton(
+            modifier = Modifier
+                .weight(1F, false)
+                .drawWithContent {
+                    drawContent()
+                    if (!isLoaded) {
+                        drawRoundRect(Color.Gray.copy(0.5F), cornerRadius = CornerRadius(28F, 28F))
+                    }
+                },
+            isLoaded = isLoaded,
+            text = text,
+            onClick = {
+                if (isLoaded) {
+                    onClick()
                 }
-            }, isLoaded = isLoaded, text = text, onClick = {
-            if (isLoaded) {
-                onClick()
             }
-        })
+        )
     }
 }

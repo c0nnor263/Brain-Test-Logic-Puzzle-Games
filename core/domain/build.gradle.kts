@@ -27,7 +27,6 @@ android {
         }
     }
 
-
     compileOptions {
         sourceCompatibility = Versions.Config.sourceCompatibility
         targetCompatibility = Versions.Config.targetCompatibility

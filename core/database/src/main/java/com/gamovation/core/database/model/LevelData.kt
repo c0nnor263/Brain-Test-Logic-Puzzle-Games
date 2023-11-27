@@ -7,10 +7,10 @@ import com.gamovation.core.database.BuildConfig
 
 @Entity
 data class LevelData(
- @PrimaryKey val id: Int,
- @StringRes val title: Int,
- @StringRes val advise: Int,
- val isCompleted: Boolean = false,
- val isHasAdvise: Boolean = false,
- val isLocked: Boolean = !BuildConfig.DEBUG,
+    @PrimaryKey val id: Int,
+    @StringRes val title: Int,
+    @StringRes val advise: Int,
+    val isCompleted: Boolean = false,
+    val isHasAdvise: Boolean = false,
+    val isLocked: Boolean = !BuildConfig.DEBUG
 )
