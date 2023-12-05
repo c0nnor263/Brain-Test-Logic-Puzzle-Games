@@ -27,20 +27,20 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import com.android.billingclient.api.ProductDetails
-import com.gamovation.core.data.billing.BillingProductType
+import com.gamovation.core.data.model.StoreItemInfo
 import com.gamovation.core.ui.Dimensions
 import com.gamovation.core.ui.R
 import com.gamovation.core.ui.billing.BuyButton
 import com.gamovation.core.ui.common.ChalkBoardCard
 import com.gamovation.core.ui.theme.boardBorderColor
+import com.gamovation.feature.store.price
 import kotlin.math.roundToInt
 
 @Composable
 fun SmartestOfferContent(
     modifier: Modifier = Modifier,
-    details: ProductDetails?,
-    onClick: (ProductDetails, BillingProductType) -> Unit
+    info: StoreItemInfo?,
+    onBuy: (StoreItemInfo) -> Unit
 ) {
     Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
         Card(
@@ -48,7 +48,7 @@ fun SmartestOfferContent(
             modifier = Modifier
                 .zIndex(2F)
                 .offset {
-                    IntOffset(0, +Dimensions.Padding.Large.value.value.roundToInt())
+                    IntOffset(0, +Dimensions.Padding.ExtraLarge.value.value.roundToInt())
                 }
                 .fillMaxWidth()
         ) {
@@ -69,7 +69,7 @@ fun SmartestOfferContent(
             color = Color.White.copy(alpha = 0.7F)
         ) {
             Column(
-                modifier = Modifier,
+                modifier = Modifier.padding(Dimensions.Padding.ExtraSmall.value),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
@@ -93,10 +93,11 @@ fun SmartestOfferContent(
                 }
                 Spacer(modifier = Modifier.height(Dimensions.Padding.Small.value))
                 BuyButton(
-                    text = details?.oneTimePurchaseOfferDetails?.formattedPrice ?: "",
+                    text = info?.price(),
+                    isLoaded = info?.details != null,
                     onClick = {
-                        details?.let {
-                            onClick(it, BillingProductType.SMARTEST_OFFER)
+                        info?.let {
+                            onBuy(info)
                         }
                     }
                 )

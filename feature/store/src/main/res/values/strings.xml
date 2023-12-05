@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="x25" translatable="false">x25</string>
+    <string name="x250" translatable="false">x250</string>
+    <string name="x500" translatable="false">x500</string>
+    <string name="x1000" translatable="false">x1000</string>
     <string name="remove_ads">remove ads</string>
 
     <string name="you_can_t_buy_this_item">You can\'t buy this item!</string>

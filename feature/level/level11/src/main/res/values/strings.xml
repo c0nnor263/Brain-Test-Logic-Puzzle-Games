@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="l11_what_are_the_names_of_baby">What are the names of baby</string>
+    <string name="l11_cats">cats?</string>
+    <string name="l11_dog">Dog</string>
+    <string name="l11_mewka">Mewka</string>
+    <string name="l11_murka">Murka</string>
+    <string name="l11_kilen">Kilen</string>
+    <string name="l11_cow">Cow</string>
+
+</resources>

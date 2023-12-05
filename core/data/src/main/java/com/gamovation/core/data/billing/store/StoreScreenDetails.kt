@@ -1,37 +1,40 @@
 package com.gamovation.core.data.billing.store
 
-import com.android.billingclient.api.ProductDetails
 import com.gamovation.core.data.billing.BillingProductType
 import com.gamovation.core.data.billing.ProductDetailsInfo
+import com.gamovation.core.data.model.StoreItemInfo
 
 data class StoreScreenDetails(
-    val bestChoiceDetails: ProductDetails?,
-    val smartestOfferDetails: ProductDetails?,
-    val currency250Details: ProductDetails?,
-    val currency500Details: ProductDetails?,
-    val currency1000Details: ProductDetails?,
-    val removeAdsDetails: ProductDetails?,
-    val vipDetails: ProductDetails?,
+    val bestChoiceDetails: StoreItemInfo?,
+    val smartestOfferDetails: StoreItemInfo?,
+    val currency250Details: StoreItemInfo?,
+    val currency500Details: StoreItemInfo?,
+    val currency1000Details: StoreItemInfo?,
+    val removeAdsDetails: StoreItemInfo?,
+    val vipDetails: StoreItemInfo?
 ) {
 
     companion object {
         fun create(info: ProductDetailsInfo?): StoreScreenDetails? {
             if (info == null) return null
-            val inAppDetails = info.inAppDetails?.associate {
-                it.productId to it
-            }
-            val subsDetails = info.subscriptionDetails?.associate {
-                it.productId to it
+
+            // Combining in-app and subscription details into a single map
+            val allDetails = (info.inAppDetails.orEmpty() + info.subscriptionDetails.orEmpty())
+                .associateBy { it.productId }
+
+            // Creating a map for all store items from the combined details
+            val storeDetails = BillingProductType.entries.associateWith { type ->
+                StoreItemInfo(allDetails[type.id], type)
             }
 
             return StoreScreenDetails(
-                inAppDetails?.get(BillingProductType.BEST_CHOICE_OFFER.id),
-                inAppDetails?.get(BillingProductType.SMARTEST_OFFER.id),
-                inAppDetails?.get(BillingProductType.CURRENCY_250.id),
-                inAppDetails?.get(BillingProductType.CURRENCY_500.id),
-                inAppDetails?.get(BillingProductType.CURRENCY_1000.id),
-                inAppDetails?.get(BillingProductType.REMOVE_ADS.id),
-                subsDetails?.get(BillingProductType.VIP.id),
+                bestChoiceDetails = storeDetails[BillingProductType.BEST_CHOICE_OFFER],
+                smartestOfferDetails = storeDetails[BillingProductType.SMARTEST_OFFER],
+                currency250Details = storeDetails[BillingProductType.CURRENCY_250],
+                currency500Details = storeDetails[BillingProductType.CURRENCY_500],
+                currency1000Details = storeDetails[BillingProductType.CURRENCY_1000],
+                removeAdsDetails = storeDetails[BillingProductType.REMOVE_ADS],
+                vipDetails = storeDetails[BillingProductType.VIP]
             )
         }
     }

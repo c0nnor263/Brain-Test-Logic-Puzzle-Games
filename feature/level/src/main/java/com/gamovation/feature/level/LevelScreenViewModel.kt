@@ -6,18 +6,18 @@ import androidx.lifecycle.viewModelScope
 import com.gamovation.core.data.repository.OfflineLevelDataRepository
 import com.gamovation.core.data.repository.OfflineUserInfoPreferencesRepository
 import com.gamovation.core.data.review.ReviewDataManager
-import com.gamovation.core.database.data.LevelManager.Companion.DEFAULT_LEVEL_SCREEN_COUNTDOWN_DURATION
 import com.gamovation.core.database.data.LevelManager.Companion.MAX_LEVEL_ID
 import com.gamovation.core.database.model.LevelData
 import com.gamovation.core.domain.level.LevelActionState
 import com.gamovation.core.domain.level.LevelScreenState
-import com.gamovation.core.ui.level.UserInteraction
+import com.gamovation.core.ui.DEFAULT_LEVEL_SCREEN_COUNTDOWN_DURATION
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -28,12 +28,15 @@ class LevelScreenViewModel @Inject constructor(
     private val userInfoPreferencesRepository: OfflineUserInfoPreferencesRepository,
     private val reviewDataManager: ReviewDataManager
 ) : ViewModel() {
+    private val _uiState = MutableStateFlow<UiState?>(null)
+    val uiState: StateFlow<UiState?> = _uiState.asStateFlow()
+
     private var levelIndex = 1
 
     private val _levelData = MutableStateFlow<LevelData?>(null)
     val levelData: StateFlow<LevelData?> = _levelData
 
-    private val _levelScreenState = MutableStateFlow(LevelScreenState.IS_PLAYING)
+    private val _levelScreenState = MutableStateFlow(LevelScreenState.IS_LEVEL_PLAYING)
     val levelScreenState: StateFlow<LevelScreenState> = _levelScreenState
 
     private val _levelActionState = MutableStateFlow(LevelActionState.IDLE)
@@ -43,19 +46,23 @@ class LevelScreenViewModel @Inject constructor(
         _levelScreenState.emit(state)
 
         // If state is not equals to next level, do some delay
-        if (state != LevelScreenState.NEXT_LEVEL) delay(DEFAULT_LEVEL_SCREEN_COUNTDOWN_DURATION)
+        if (state != LevelScreenState.PROCEED_TO_NEXT_LEVEL) {
+            delay(
+                DEFAULT_LEVEL_SCREEN_COUNTDOWN_DURATION
+            )
+        }
 
         // If user completed level with correct choice, update state to completed, otherwise update state to is playing
         val newState = when (state) {
-            LevelScreenState.FINAL -> {
+            LevelScreenState.COMPLETED_THE_GAME -> {
                 withContext(Dispatchers.IO) {
                     completeLevel()
                 }
-                LevelScreenState.FINAL
+                LevelScreenState.COMPLETED_THE_GAME
             }
 
-            LevelScreenState.CORRECT_CHOICE -> LevelScreenState.COMPLETED
-            else -> LevelScreenState.IS_PLAYING
+            LevelScreenState.USER_CORRECT_CHOICE -> LevelScreenState.LEVEL_COMPLETED
+            else -> LevelScreenState.IS_LEVEL_PLAYING
         }
 
         _levelScreenState.emit(newState)
@@ -63,7 +70,7 @@ class LevelScreenViewModel @Inject constructor(
 
     fun updateLevelActionState(state: LevelActionState) = viewModelScope.launch(Dispatchers.Main) {
         // If state is not playing, do not update action state
-        if (levelScreenState.value != LevelScreenState.IS_PLAYING) return@launch
+        if (levelScreenState.value != LevelScreenState.IS_LEVEL_PLAYING) return@launch
         _levelActionState.emit(state)
     }
 
@@ -83,7 +90,12 @@ class LevelScreenViewModel @Inject constructor(
         setNextLevel()
     }
 
-    suspend fun completeLevel() {
+    fun onBackLevel() {
+        val previousLevelIndex = (levelIndex - 1).coerceAtLeast(1)
+        updateLevelIndex(previousLevelIndex)
+    }
+
+    private suspend fun completeLevel() {
         val levelData = levelRepositoryImpl.getById(levelIndex).first().copy(
             isCompleted = true,
             isHasAdvise = false
@@ -91,7 +103,7 @@ class LevelScreenViewModel @Inject constructor(
         levelRepositoryImpl.upsert(levelData)
     }
 
-    suspend fun setNextLevel() {
+    private suspend fun setNextLevel() {
         val nextLevelIndex = (levelIndex + 1).coerceAtMost(MAX_LEVEL_ID)
         val nextData = levelRepositoryImpl.getById(nextLevelIndex).first().copy(
             isLocked = false
@@ -102,11 +114,6 @@ class LevelScreenViewModel @Inject constructor(
         levelRepositoryImpl.upsert(nextData)
         // Move to next level
         updateLevelIndex(nextLevelIndex, nextData)
-    }
-
-    fun onBackLevel() {
-        val previousLevelIndex = (levelIndex - 1).coerceAtLeast(1)
-        updateLevelIndex(previousLevelIndex)
     }
 
     fun buyAction(cost: Int) = viewModelScope.launch(Dispatchers.IO) {
@@ -122,7 +129,7 @@ class LevelScreenViewModel @Inject constructor(
                 _levelData.emit(levelData)
             }
 
-            LevelActionState.SKIP -> updateLevelScreenState(LevelScreenState.COMPLETED)
+            LevelActionState.SKIP -> updateLevelScreenState(LevelScreenState.LEVEL_COMPLETED)
             else -> {}
         }
         userInfoPreferencesRepository.spendCurrency(cost)
@@ -130,28 +137,29 @@ class LevelScreenViewModel @Inject constructor(
 
     fun watchAdReward() = viewModelScope.launch(Dispatchers.IO) {
         userInfoPreferencesRepository.buyCurrency(25)
-        updateLevelScreenState(LevelScreenState.NEXT_LEVEL)
-    }
-
-    fun processInteraction(interaction: UserInteraction?) {
-        when (interaction) {
-            UserInteraction.OnBack -> onBackLevel()
-            UserInteraction.OnForward -> onForwardLevel()
-            UserInteraction.OnWatchAd -> watchAdReward()
-            is UserInteraction.OnUpdateLevelActionState -> {
-                updateLevelActionState(interaction.levelActionState)
-            }
-
-            is UserInteraction.OnUpdateLevelScreenState -> {
-                updateLevelScreenState(interaction.levelScreenState)
-            }
-
-            null -> {}
-        }
+        updateLevelScreenState(LevelScreenState.PROCEED_TO_NEXT_LEVEL)
     }
 
     fun processReviewRequest(activity: ComponentActivity, showDialog: () -> Unit) =
         viewModelScope.launch(Dispatchers.Main) {
             reviewDataManager.requestReviewInfo(activity, showDialog)
         }
+
+    fun updateUiState(state: UiState) {
+        _uiState.value = state
+    }
+
+    fun clearUiState() {
+        _uiState.value = null
+    }
+
+    sealed class UiState {
+
+        data object OnReviewRequest : UiState()
+        data object OnBack : UiState()
+        data object OnForward : UiState()
+        data object OnWatchAd : UiState()
+        data class OnUpdateLevelActionState(val actionState: LevelActionState) : UiState()
+        data class OnUpdateLevelScreenState(val screenState: LevelScreenState) : UiState()
+    }
 }

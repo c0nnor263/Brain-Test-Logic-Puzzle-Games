@@ -1,12 +1,12 @@
 package com.gamovation.core.domain.level
 
 enum class LevelScreenState {
-    CORRECT_CHOICE,
-    WRONG_CHOICE,
-    IS_PLAYING,
+    USER_CORRECT_CHOICE,
+    USER_WRONG_CHOICE,
+    USER_WATCH_AD,
 
-    COMPLETED,
-    NEXT_LEVEL,
-    WATCH_AD,
-    FINAL
+    IS_LEVEL_PLAYING,
+    LEVEL_COMPLETED,
+    PROCEED_TO_NEXT_LEVEL,
+    COMPLETED_THE_GAME
 }

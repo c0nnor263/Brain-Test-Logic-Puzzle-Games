@@ -5,15 +5,15 @@ import androidx.lifecycle.viewModelScope
 import com.gamovation.core.data.billing.BillingDataSource
 import com.gamovation.core.data.repository.OfflineUserInfoPreferencesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import java.util.Locale
 import javax.inject.Inject
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @HiltViewModel
 class SettingsScreenViewModel @Inject constructor(
     private val billingDataSource: BillingDataSource,
-    private val offlineUserInfoPreferencesRepository: OfflineUserInfoPreferencesRepository,
+    private val offlineUserInfoPreferencesRepository: OfflineUserInfoPreferencesRepository
 ) : ViewModel() {
     fun restorePurchases() {
         billingDataSource.restorePurchases()

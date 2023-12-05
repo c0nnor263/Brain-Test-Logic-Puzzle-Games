@@ -2,7 +2,6 @@ package com.gamovation.core.ui.billing
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -14,46 +13,45 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.gamovation.core.ui.Dimensions
 import com.gamovation.core.ui.R
-import com.gamovation.core.ui.extensions.clickableNoRipple
+import com.gamovation.core.ui.common.ScalableButton
 
 @Composable
 fun BuyButton(
     modifier: Modifier = Modifier,
     isLoaded: Boolean = true,
-    text: String,
+    text: String?,
     onClick: () -> Unit
 ) {
-    Box(
-        modifier = modifier.clickableNoRipple {
-            onClick()
-        },
-        contentAlignment = Alignment.Center
+    ScalableButton(
+        modifier = modifier,
+        enabled = isLoaded,
+        onClick = onClick,
+        isDrawingAnimationEnabled = false
     ) {
-        Image(
-            modifier = Modifier
-                .defaultMinSize(
-                    minHeight = Dimensions.Padding.ExtraLarge.value
-                ),
-            painter = painterResource(id = R.drawable.orange_button),
-            contentDescription = null,
-            contentScale = ContentScale.FillBounds
-        )
+        Box(
+            contentAlignment = Alignment.Center
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.orange_button),
+                contentDescription = null,
+                contentScale = ContentScale.FillHeight
+            )
 
-        if (isLoaded) {
-            Text(
-                text = text,
-                style = MaterialTheme.typography.bodyMedium,
-                maxLines = 3,
-                textAlign = TextAlign.Center
-            )
-        } else {
-            CircularProgressIndicator(
-                modifier = Modifier
-                    .size(16.dp),
-                strokeWidth = 2.dp
-            )
+            if (isLoaded) {
+                Text(
+                    text = text ?: "...",
+                    style = MaterialTheme.typography.bodyMedium,
+                    maxLines = 3,
+                    textAlign = TextAlign.Center
+                )
+            } else {
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .size(16.dp),
+                    strokeWidth = 2.dp
+                )
+            }
         }
     }
 }

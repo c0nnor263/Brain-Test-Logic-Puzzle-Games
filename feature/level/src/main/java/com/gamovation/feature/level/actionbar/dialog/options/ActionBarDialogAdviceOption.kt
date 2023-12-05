@@ -13,11 +13,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import com.gamovation.core.ui.Dimensions
 import com.gamovation.core.ui.animation.DrawAnimation
-import com.gamovation.core.ui.extensions.clickableNoRipple
+import com.gamovation.core.ui.clickableNoRipple
 import com.gamovation.feature.level.R
 
 @Composable
-fun ActionBarDialogAdviceOption(onClick: () -> Unit) {
+internal fun ActionBarDialogAdviceOption(onClick: () -> Unit) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         DrawAnimation {
             Text(

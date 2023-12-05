@@ -1,22 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="l5_opponent">John :</string>
-    <string name="l5_player_you">Toi :</string>
 
-    <string name="l11_what_are_the_names_of_baby">Quels sont les prénoms du bébé</string>
-    <string name="l11_cats">chats ?</string>
-    <string name="l11_dog">Chien</string>
-    <string name="l11_mewka">Mewka</string>
-    <string name="l11_murka">Murka</string>
-    <string name="l11_kilen">Kilen</string>
-    <string name="l11_cow">Vache</string>
-
-    <string name="l14_where_is_a">Où est le</string>
-    <string name="l14_black">noir</string>
-    <string name="l14_sheep">navire ?</string>
-
-    <string name="l17_heart_emoji">❤️</string>
-    <string name="l17_snooze_emoji">💤</string>
 
     <!-- Completed -->
     <string name="you_completed_the_game">Tu as terminé le jeu</string>

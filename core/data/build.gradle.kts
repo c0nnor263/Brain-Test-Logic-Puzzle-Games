@@ -1,5 +1,3 @@
-@file:Suppress("UnstableApiUsage")
-
 import java.io.FileInputStream
 import java.util.Properties
 
@@ -53,6 +51,12 @@ android {
             "string",
             "admob_banner_id_app_bottom_banner",
             "\"${admobProperties.getProperty("admob_banner_id_app_bottom_banner")}\""
+        )
+
+        resValue(
+            "string",
+            "admob_app_open_from_push",
+            "\"${admobProperties.getProperty("admob_app_open_from_push")}\""
         )
     }
 

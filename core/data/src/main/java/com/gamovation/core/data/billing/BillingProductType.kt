@@ -9,5 +9,5 @@ enum class BillingProductType(val id: String, val productType: String) {
     CURRENCY_500("currency_500", BillingClient.ProductType.INAPP),
     CURRENCY_1000("currency_1000", BillingClient.ProductType.INAPP),
     REMOVE_ADS("remove_ads", BillingClient.ProductType.INAPP),
-    VIP("vip_subscription", BillingClient.ProductType.SUBS),
+    VIP("vip_subscription", BillingClient.ProductType.SUBS)
 }

@@ -73,12 +73,20 @@ class InterstitialAdViewState(
             }
         }
 
-        when ((0..10).random()) {
+        if (isAdChosenToShow()) {
+            interstitialAd?.show(activity) ?: onDismissed()
+        } else {
+            onDismissed()
+        }
+    }
+
+    private fun isAdChosenToShow(): Boolean {
+        return when ((0..10).random()) {
             in 0..4 -> {
-                interstitialAd?.show(activity) ?: onDismissed()
+                true
             }
 
-            else -> onDismissed()
+            else -> false
         }
     }
 }

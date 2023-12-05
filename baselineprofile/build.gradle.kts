@@ -51,5 +51,7 @@ dependencies {
     implementation("androidx.test.ext:junit:${Versions.Tooling.testExtJunit}")
     implementation("androidx.test.espresso:espresso-core:${Versions.Tooling.espressoCore}")
     implementation("androidx.test.uiautomator:uiautomator:${Versions.Tooling.uiautomator}")
-    implementation("androidx.benchmark:benchmark-macro-junit4:${Versions.Tooling.benchmarkMacroJunit4}")
+    implementation(
+        "androidx.benchmark:benchmark-macro-junit4:${Versions.Tooling.benchmarkMacroJunit4}"
+    )
 }

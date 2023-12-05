@@ -1,5 +1,3 @@
-@file:Suppress("UnstableApiUsage")
-
 plugins {
     PluginType.LIBRARY.get(this)
 }
@@ -52,4 +50,6 @@ dependencies {
     implementation(project(":core:navigation"))
     coreData()
     composeCore()
+
+    implementation("nl.dionsegijn:konfetti-compose:2.0.3")
 }

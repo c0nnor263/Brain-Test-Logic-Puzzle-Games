@@ -1,22 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="l5_opponent">Джон:</string>
-    <string name="l5_player_you">Ви:</string>
-
-    <string name="l11_what_are_the_names_of_baby">Які імена у дитинки</string>
-    <string name="l11_cats">кішки?</string>
-    <string name="l11_dog">Собака</string>
-    <string name="l11_mewka">Мевка</string>
-    <string name="l11_murka">Мурка</string>
-    <string name="l11_kilen">Кілен</string>
-    <string name="l11_cow">Корова</string>
-
-    <string name="l14_where_is_a">Де</string>
-    <string name="l14_black">чорна</string>
-    <string name="l14_sheep">вівця?</string>
-
-    <string name="l17_heart_emoji">❤️</string>
-    <string name="l17_snooze_emoji">💤</string>
 
     <!-- Completed -->
     <string name="you_completed_the_game">Ви завершили усі рівні</string>

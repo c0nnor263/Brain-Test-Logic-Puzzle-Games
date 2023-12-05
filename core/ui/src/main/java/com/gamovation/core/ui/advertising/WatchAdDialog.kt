@@ -3,30 +3,25 @@ package com.gamovation.core.ui.advertising
 import androidx.activity.ComponentActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import com.gamovation.core.ui.state.DialogState
 import com.gamovation.core.ui.state.RewardedInterstitialAdViewState
 
 @Composable
 fun WatchAdDialog(
     modifier: Modifier = Modifier,
-    visible: Boolean,
+    dialogState: DialogState,
     onDismissed: (Boolean?) -> Unit,
     rewardedInterstitialAd: RewardedInterstitialAdViewState
 ) {
     val activity = LocalContext.current as ComponentActivity
 
-    var showErrorDialog by remember { mutableStateOf(false) }
-
-    LaunchedEffect(visible) {
-        if (visible) {
+    LaunchedEffect(dialogState.isShowing) {
+        if (dialogState.isShowing) {
             rewardedInterstitialAd.showAd(activity) {
                 if (it == false) {
-                    showErrorDialog = true
+                    dialogState.show()
                 } else {
                     onDismissed(it)
                 }
@@ -36,9 +31,9 @@ fun WatchAdDialog(
 
     WatchAdErrorDialog(
         modifier = modifier,
-        visible = showErrorDialog,
+        dialogState = dialogState,
         onDismissed = {
-            showErrorDialog = false
+            dialogState.dismiss()
             onDismissed(it)
         }
     )

@@ -92,6 +92,7 @@ class MainActivity : ComponentActivity() {
                             Locale.setDefault(locale)
                             configuration.setLocale(locale)
                             context.createConfigurationContext(configuration)
+                            @Suppress("DEPRECATION")
                             context.resources.updateConfiguration(
                                 configuration,
                                 context.resources.displayMetrics

@@ -11,11 +11,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import com.gamovation.core.ui.Dimensions
 import com.gamovation.core.ui.animation.DrawAnimation
-import com.gamovation.core.ui.extensions.clickableNoRipple
+import com.gamovation.core.ui.clickableNoRipple
 import com.gamovation.feature.level.R
 
 @Composable
-fun ActionBarDialogSkipOption(onClick: () -> Unit) {
+internal fun ActionBarDialogSkipOption(onClick: () -> Unit) {
     DrawAnimation {
         Text(
             text = stringResource(R.string.skip_do_you_really_want_to_skip_this_level),

@@ -1,6 +1,7 @@
 package com.gamovation.core.data.billing
 
 import android.content.Context
+import android.util.Log
 import androidx.activity.ComponentActivity
 import com.android.billingclient.api.AcknowledgePurchaseParams
 import com.android.billingclient.api.BillingClient
@@ -48,6 +49,10 @@ class BillingDataSource @Inject constructor(
     @ApplicationScope private val scope: CoroutineScope,
     private val userInfoPreferencesRepository: OfflineUserInfoPreferencesRepository
 ) {
+    companion object {
+        const val TAG = "BillingDataSource"
+    }
+
     private val initialBillingStartTime = System.currentTimeMillis()
     var fetchDelay: Long = TimeUnit.SECONDS.toMillis(1)
 
@@ -60,6 +65,7 @@ class BillingDataSource @Inject constructor(
 
     private val billingStateListener = object : BillingClientStateListener {
         override fun onBillingSetupFinished(billingResult: BillingResult) {
+            Log.i(TAG, "onBillingSetupFinished: billingResult $billingResult")
             if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
                 scope.launch(Dispatchers.IO) {
                     queryProductDetails()
@@ -68,6 +74,7 @@ class BillingDataSource @Inject constructor(
         }
 
         override fun onBillingServiceDisconnected() {
+            Log.i(TAG, "onBillingServiceDisconnected: ")
             scope.launch {
                 delay(fetchDelay)
                 initClient()
@@ -85,7 +92,9 @@ class BillingDataSource @Inject constructor(
         when (billingResult.responseCode) {
             BillingClient.BillingResponseCode.OK -> {
                 purchases?.forEach { purchase ->
-                    if (purchase.purchaseState == Purchase.PurchaseState.PURCHASED && purchase.isAcknowledged.not()) {
+                    if (purchase.purchaseState == Purchase.PurchaseState.PURCHASED &&
+                        purchase.isAcknowledged.not()
+                    ) {
                         verifyPurchase(purchase)
                     }
                 }
@@ -119,17 +128,19 @@ class BillingDataSource @Inject constructor(
         val subscriptionParams =
             QueryPurchasesParams.newBuilder().setProductType(ProductType.SUBS).build()
 
-        val inAppProductsResult = client.queryPurchasesAsync(inAppParams)
-        val subscriptionsResult = client.queryPurchasesAsync(subscriptionParams)
+        val (inAppBillingResult, inAppPurchasesList) = client.queryPurchasesAsync(inAppParams)
+        val (subscriptionBillingResult, subscriptionPurchasesList) = client.queryPurchasesAsync(
+            subscriptionParams
+        )
 
-        if (inAppProductsResult.billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-            inAppProductsResult.purchasesList.forEach { purchase ->
+        if (inAppBillingResult.responseCode == BillingClient.BillingResponseCode.OK) {
+            inAppPurchasesList.forEach { purchase ->
                 verifyPurchase(purchase)
             }
         }
 
-        if (subscriptionsResult.billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-            subscriptionsResult.purchasesList.forEach { purchase ->
+        if (subscriptionBillingResult.responseCode == BillingClient.BillingResponseCode.OK) {
+            subscriptionPurchasesList.forEach { purchase ->
                 verifyPurchase(purchase)
             }
         }
@@ -161,19 +172,21 @@ class BillingDataSource @Inject constructor(
                     }
             ).build()
 
-        val inAppDetailsResult = client.queryProductDetails(inAppParams)
-        val subscriptionDetailsResult = client.queryProductDetails(subscriptionParams)
+        val (inAppBillingResult, inAppDetailsList) = client.queryProductDetails(inAppParams)
+        val (subscriptionBillingResult, subscriptionDetailsList) = client.queryProductDetails(
+            subscriptionParams
+        )
 
-        if (inAppDetailsResult.billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-            val result = inAppDetailsResult.productDetailsList
+        if (inAppBillingResult.responseCode == BillingClient.BillingResponseCode.OK) {
             _productsDetailsFlow.value = _productsDetailsFlow.value.copy(
-                inAppDetails = result
+                inAppDetails = inAppDetailsList
             )
         }
-        if (subscriptionDetailsResult.billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-            val result = subscriptionDetailsResult.productDetailsList
+        if (subscriptionBillingResult.responseCode == BillingClient.BillingResponseCode.OK) {
             _productsDetailsFlow.value =
-                _productsDetailsFlow.value.copy(subscriptionDetails = result)
+                _productsDetailsFlow.value.copy(
+                    subscriptionDetails = subscriptionDetailsList
+                )
         }
     }
 
@@ -369,9 +382,12 @@ class BillingDataSource @Inject constructor(
             ProductType.SUBS
         ).build()
 
-        val inAppResult = client.queryPurchaseHistory(inAppHistoryParams)
-        val subscriptionResult = client.queryPurchaseHistory(subscriptionHistoryParams)
-        if (inAppResult.billingResult.responseCode == BillingClient.BillingResponseCode.OK || subscriptionResult.billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
+        val (inAppBillingResult, _) = client.queryPurchaseHistory(inAppHistoryParams)
+        val (subscriptionBillingResult, _) = client.queryPurchaseHistory(subscriptionHistoryParams)
+        if (
+            inAppBillingResult.responseCode == BillingClient.BillingResponseCode.OK ||
+            subscriptionBillingResult.responseCode == BillingClient.BillingResponseCode.OK
+        ) {
             queryPurchases()
         }
     }

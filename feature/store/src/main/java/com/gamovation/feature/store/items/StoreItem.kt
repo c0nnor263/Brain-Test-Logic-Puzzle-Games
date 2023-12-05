@@ -1,11 +1,13 @@
 package com.gamovation.feature.store.items
 
 import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
@@ -15,22 +17,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.android.billingclient.api.ProductDetails
-import com.gamovation.core.data.price
+import com.gamovation.core.data.model.StoreItemInfo
 import com.gamovation.core.ui.Dimensions
 import com.gamovation.core.ui.R
 import com.gamovation.core.ui.billing.BuyButton
-import com.gamovation.core.ui.theme.WordefullTheme
+import com.gamovation.feature.store.price
 
 @Composable
 fun StoreItem(
     modifier: Modifier = Modifier,
     @DrawableRes drawableRes: Int = R.drawable.lamp,
-    value: String,
-    details: ProductDetails? = null,
-    onClick: (ProductDetails) -> Unit
+    @StringRes stringRes: Int,
+    info: StoreItemInfo? = null,
+    onBuy: (StoreItemInfo) -> Unit
 ) {
     Row(
         modifier = modifier.fillMaxWidth(),
@@ -46,23 +47,19 @@ fun StoreItem(
             )
             Spacer(modifier = Modifier.width(Dimensions.Padding.Small.value))
             Text(
-                text = value,
+                text = stringResource(id = stringRes),
                 style = MaterialTheme.typography.titleSmall,
-                modifier = Modifier.weight(1F, false)
+                modifier = Modifier.weight(1F, false).padding(Dimensions.Padding.ExtraSmall.value)
             )
         }
 
-        BuyButton(modifier = Modifier.weight(1F, false), text = details.price(), onClick = {
-            details?.let(onClick)
-        })
-    }
-}
-
-@Preview
-@Composable
-fun StoreItemPreview() {
-    WordefullTheme {
-        StoreItem(value = "10") {
-        }
+        BuyButton(
+            modifier = Modifier.weight(1F, false),
+            text = info.price(),
+            isLoaded = info?.details != null,
+            onClick = {
+                info?.let(onBuy)
+            }
+        )
     }
 }

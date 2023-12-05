@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="l11_what_are_the_names_of_baby">Які імена у дитинки</string>
+    <string name="l11_cats">кішки?</string>
+    <string name="l11_dog">Собака</string>
+    <string name="l11_mewka">Мевка</string>
+    <string name="l11_murka">Мурка</string>
+    <string name="l11_kilen">Кілен</string>
+    <string name="l11_cow">Корова</string>
+
+</resources>

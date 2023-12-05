@@ -1,12 +1,16 @@
-@file:Suppress("UnstableApiUsage")
-
 import java.io.FileInputStream
 import java.util.Properties
 
 plugins {
     PluginType.APPLICATION.get(this)
-    id("androidx.baselineprofile")
 }
+
+// commonAndroid(
+//    configPluginType = PluginType.APPLICATION,
+//    configNamespace = "com.gamovation.tilecl",
+//    configVersionCode = 23,
+//    configVersionName = "23.11.29.1"
+// )
 
 val keystorePropertiesFile: File = rootProject.file("keystore.properties")
 val keystoreProperties = Properties().apply {
@@ -21,13 +25,9 @@ android {
         applicationId = namespace
         minSdk = Versions.Config.minSdk
         targetSdk = Versions.Config.targetSdk
-        versionCode = 21
-        versionName = "23.11.27.0"
+        versionCode = 23
+        versionName = "2312314125"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary = true
-        }
         resourceConfigurations.addAll(
             listOf(
                 "en",
@@ -40,6 +40,11 @@ android {
                 "uk"
             )
         )
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary = true
+        }
     }
 
     signingConfigs {
@@ -65,13 +70,6 @@ android {
             signingConfig = signingConfigs.getByName("release")
         }
     }
-    compileOptions {
-        sourceCompatibility = Versions.Config.sourceCompatibility
-        targetCompatibility = Versions.Config.targetCompatibility
-    }
-    kotlinOptions {
-        jvmTarget = Versions.Config.jvmTarget
-    }
 
     buildFeatures {
         compose = true
@@ -84,20 +82,55 @@ android {
             resources.excludes.add(Versions.excludeFiles)
         }
     }
+
+    compileOptions {
+        sourceCompatibility = Versions.Config.sourceCompatibility
+        targetCompatibility = Versions.Config.targetCompatibility
+    }
 }
 
 dependencies {
-    implementation(project(":core:data"))
-    implementation(project(":core:database"))
-    implementation(project(":core:domain"))
-    implementation(project(":core:ui"))
-    implementation(project(":core:navigation"))
-    implementation(project(":feature:home"))
-    implementation(project(":feature:menu"))
-    implementation(project(":feature:store"))
-    implementation(project(":feature:level"))
-    implementation(project(":feature:settings"))
-    "baselineProfile"(project(":baselineprofile"))
+    add(
+        JavaPlugin.IMPLEMENTATION_CONFIGURATION_NAME,
+        project(":core:data")
+    )
+    add(
+        JavaPlugin.IMPLEMENTATION_CONFIGURATION_NAME,
+        project(":core:database")
+    )
+    add(
+        JavaPlugin.IMPLEMENTATION_CONFIGURATION_NAME,
+        project(":core:domain")
+    )
+    add(
+        JavaPlugin.IMPLEMENTATION_CONFIGURATION_NAME,
+        project(":core:ui")
+    )
+    add(
+        JavaPlugin.IMPLEMENTATION_CONFIGURATION_NAME,
+        project(":core:navigation")
+    )
+    add(
+        JavaPlugin.IMPLEMENTATION_CONFIGURATION_NAME,
+        project(":feature:home")
+    )
+    add(
+        JavaPlugin.IMPLEMENTATION_CONFIGURATION_NAME,
+        project(":feature:menu")
+    )
+    add(
+        JavaPlugin.IMPLEMENTATION_CONFIGURATION_NAME,
+        project(":feature:store")
+    )
+    add(
+        JavaPlugin.IMPLEMENTATION_CONFIGURATION_NAME,
+        project(":feature:level")
+    )
+    add(
+        JavaPlugin.IMPLEMENTATION_CONFIGURATION_NAME,
+        project(":feature:settings")
+    )
+    add("baselineProfile", project(":baselineprofile"))
     composeCore()
 
     // Lifecycle + ViewModel
