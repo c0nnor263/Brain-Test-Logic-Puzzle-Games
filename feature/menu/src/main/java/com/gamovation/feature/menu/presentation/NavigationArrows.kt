@@ -1,27 +1,26 @@
 package com.gamovation.feature.menu.presentation
 
+import androidx.annotation.DrawableRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.scale
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.gamovation.core.database.data.LevelManager.Companion.MAX_LEVEL_ID
 import com.gamovation.core.ui.Dimensions
-import com.gamovation.core.ui.clickableNoRipple
+import com.gamovation.core.ui.common.ScalableButton
 
 @Composable
 fun NavigationArrows(
@@ -43,24 +42,13 @@ fun NavigationArrows(
             enter = fadeIn() + scaleIn(),
             exit = scaleOut() + fadeOut()
         ) {
-            Card(
-                shape = Dimensions.RoundedShape.ExtraLarge.value,
-                colors = CardDefaults.cardColors(Color.Transparent)
-            ) {
-                Icon(
-                    modifier = Modifier
-                        .clickableNoRipple {
-                            val newId = currentIndex - 5
-                            onIndexUpdate(newId.coerceAtLeast(0))
-                        }
-                        .padding(Dimensions.Padding.Medium.value)
-                        .scale(2F),
-                    painter = painterResource(
-                        id = com.gamovation.core.ui.R.drawable.baseline_arrow_left_24
-                    ),
-                    contentDescription = null
-                )
-            }
+            ArrowButton(
+                drawableRes = com.gamovation.core.ui.R.drawable.baseline_arrow_left_24,
+                onClick = {
+                    val newId = currentIndex - 5
+                    onIndexUpdate(newId.coerceAtLeast(0))
+                }
+            )
         }
 
         AnimatedVisibility(
@@ -68,25 +56,32 @@ fun NavigationArrows(
             enter = fadeIn() + scaleIn(),
             exit = scaleOut() + fadeOut()
         ) {
-            Card(
-                modifier = Modifier.scale(1.1F),
-                shape = Dimensions.RoundedShape.ExtraLarge.value,
-                colors = CardDefaults.cardColors(Color.Transparent)
-            ) {
-                Icon(
-                    modifier = Modifier
-                        .clickableNoRipple {
-                            val newId = currentIndex + 5
-                            onIndexUpdate(newId.coerceAtMost(MAX_LEVEL_ID - 5))
-                        }
-                        .padding(Dimensions.Padding.Medium.value)
-                        .scale(2F),
-                    painter = painterResource(
-                        id = com.gamovation.core.ui.R.drawable.baseline_arrow_right_24
-                    ),
-                    contentDescription = null
-                )
-            }
+            ArrowButton(
+                drawableRes = com.gamovation.core.ui.R.drawable.baseline_arrow_right_24,
+                onClick = {
+                    val newId = currentIndex + 5
+                    onIndexUpdate(newId.coerceAtMost(MAX_LEVEL_ID - 5))
+                }
+            )
+        }
+    }
+}
+
+@Composable
+fun ArrowButton(@DrawableRes drawableRes: Int, onClick: () -> Unit) {
+    ScalableButton(
+        onClick = onClick
+    ) {
+        Box(contentAlignment = Alignment.Center) {
+            Image(
+                painterResource(id = com.gamovation.core.ui.R.drawable.orange_button),
+                contentDescription = null,
+                contentScale = ContentScale.FillBounds
+            )
+            Icon(
+                painter = painterResource(id = drawableRes),
+                contentDescription = null
+            )
         }
     }
 }

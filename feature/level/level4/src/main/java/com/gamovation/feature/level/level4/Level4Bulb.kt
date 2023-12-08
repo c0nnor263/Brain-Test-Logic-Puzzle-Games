@@ -25,9 +25,9 @@ import com.gamovation.core.ui.Dimensions
 import com.gamovation.core.ui.animation.DrawAnimation
 import com.gamovation.core.ui.animation.Durations
 import com.gamovation.core.ui.clickableNoRipple
-import kotlin.random.Random
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlin.random.Random
 
 @Composable
 internal fun Level4Bulb(
@@ -41,14 +41,16 @@ internal fun Level4Bulb(
     val painter = painterResource(id = bulbDrawableRes)
 
     val scope = rememberCoroutineScope()
-    val randomID by remember {
-        mutableIntStateOf(Random.nextInt(0, 2))
+    val bulbText by remember {
+        mutableIntStateOf(
+            index + 1 + Random.nextInt(0, 2)
+        )
     }
 
     DrawAnimation(modifier = modifier, delayOrder = index) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(
-                text = (index + randomID + 1).toString(),
+                text = (if (bulbText == 4) 5 else index).toString(),
                 style = MaterialTheme.typography.headlineSmall.copy(
                     color = Color.Yellow,
                     shadow = Shadow(

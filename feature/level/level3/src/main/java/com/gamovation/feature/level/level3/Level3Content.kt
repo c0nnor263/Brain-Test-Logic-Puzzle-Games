@@ -13,8 +13,8 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.gamovation.core.domain.level.LevelScreenState
 import com.gamovation.core.ui.Dimensions
+import com.gamovation.core.ui.InAppReviewDialog
 import com.gamovation.core.ui.level.interactions.DraggableImage
-import com.gamovation.core.ui.review.InAppReviewDialog
 import com.gamovation.core.ui.state.LocalReviewDataHandlerState
 import com.gamovation.core.ui.state.rememberDialogState
 

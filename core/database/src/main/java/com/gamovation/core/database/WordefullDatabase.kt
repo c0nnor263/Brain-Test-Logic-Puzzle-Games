@@ -2,7 +2,7 @@ package com.gamovation.core.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.gamovation.core.database.dao.LevelDataDao
+import com.gamovation.core.database.dao.LevelManagerDao
 import com.gamovation.core.database.model.LevelData
 
 @Database(
@@ -11,7 +11,7 @@ import com.gamovation.core.database.model.LevelData
     exportSchema = false
 )
 abstract class WordefullDatabase : RoomDatabase() {
-    abstract fun levelDataDao(): LevelDataDao
+    abstract fun levelDataDao(): LevelManagerDao
 
     companion object {
         const val DATABASE_NAME = "tilecl.db"

@@ -13,7 +13,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import com.gamovation.core.ui.Dimensions
 import com.gamovation.core.ui.animation.DrawAnimation
-import com.gamovation.core.ui.clickableNoRipple
+import com.gamovation.core.ui.common.ScalableButton
 import com.gamovation.feature.level.R
 
 @Composable
@@ -35,12 +35,11 @@ internal fun ActionBarDialogAdviceOption(onClick: () -> Unit) {
         }
         Spacer(modifier = Modifier.height(Dimensions.Padding.Large.value))
 
-        DrawAnimation(delayOrder = 2) {
-            Text(
-                text = stringResource(R.string.advise_get_hint),
-                modifier = Modifier.clickableNoRipple { onClick() },
-                style = MaterialTheme.typography.titleMedium
-            )
-        }
+        ScalableButton(
+            delayOrder = 2,
+            onClick = onClick,
+            stringRes = R.string.advise_get_hint,
+            textStyle = MaterialTheme.typography.displaySmall
+        )
     }
 }

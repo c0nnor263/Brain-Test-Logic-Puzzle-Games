@@ -19,8 +19,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.gamovation.core.data.billing.store.StoreScreenDetails
-import com.gamovation.core.data.model.StoreItemInfo
+import com.gamovation.core.billing.model.StoreItemInfo
+import com.gamovation.core.billing.store.StoreScreenDetails
+import com.gamovation.core.domain.enums.RewardedInterstitialAdResult
 import com.gamovation.core.ui.Dimensions
 import com.gamovation.core.ui.advertising.WatchAdDialog
 import com.gamovation.core.ui.advertising.WatchStoreButton
@@ -114,8 +115,7 @@ fun StoreScreen(viewModel: StoreScreenViewModel) {
     }
 
     LazyColumn(
-        modifier = Modifier
-            .semantics { contentDescription = "StoreLazyColumn" }
+        modifier = Modifier.semantics { contentDescription = "StoreLazyColumn" }
             .fillMaxWidth(),
         contentPadding = PaddingValues(horizontal = Dimensions.Padding.Small.value),
         verticalArrangement = Arrangement.spacedBy(Dimensions.Padding.Small.value)
@@ -127,7 +127,7 @@ fun StoreScreen(viewModel: StoreScreenViewModel) {
 
         CurrencyContent(
             currencyItems = currencyItems,
-            isAdLoaded = rewardedInterstitialAd.isAdLoaded,
+            isAdLoaded = rewardedInterstitialAd.isAdAvailable,
             onShowAd = {
                 showWatchAdDialogState.show()
             },
@@ -143,9 +143,12 @@ fun StoreScreen(viewModel: StoreScreenViewModel) {
         rewardedInterstitialAd = rewardedInterstitialAd,
         onDismissed = { result ->
             showWatchAdDialogState.dismiss()
-            // TODO Change boolean to enum
-            if (result == true) {
-                viewModel.updateUiState(StoreScreenViewModel.UiState.OnWatchAd)
+            when (result) {
+                RewardedInterstitialAdResult.REWARDED -> {
+                    viewModel.updateUiState(StoreScreenViewModel.UiState.OnWatchAd)
+                }
+
+                else -> {}
             }
         }
     )

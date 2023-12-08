@@ -15,7 +15,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.gamovation.core.database.model.LevelData
 import com.gamovation.core.domain.level.ActionResult
 import com.gamovation.core.domain.level.LevelActionState
 import com.gamovation.core.domain.level.LevelScreenState
@@ -27,6 +26,7 @@ import com.gamovation.core.ui.state.LocalReviewDataHandlerState
 import com.gamovation.feature.level.actionbar.ActionBar
 import com.gamovation.feature.level.actionbar.dialog.ActionBarDialog
 import com.gamovation.feature.level.common.LevelSpecificContent
+import com.gamovation.feature.level.domain.model.LevelUiDetails
 import kotlinx.coroutines.launch
 
 @Composable
@@ -40,7 +40,7 @@ fun LevelScreen(
     val scope = rememberCoroutineScope()
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val levelData by viewModel.levelData.collectAsStateWithLifecycle()
+    val levelData by viewModel.levelUiDetails.collectAsStateWithLifecycle()
     val screenState by viewModel.levelScreenState.collectAsStateWithLifecycle()
     val actionState by viewModel.levelActionState.collectAsStateWithLifecycle()
 
@@ -103,7 +103,7 @@ fun LevelScreen(
         LocalLevelAction provides actionState
     ) {
         LevelScreenContent(
-            level = levelData,
+            details = levelData,
             onActionResult = { result ->
                 when (result.type) {
                     ActionResult.Type.SUCCESS -> {
@@ -141,7 +141,7 @@ fun LevelScreen(
 
 @Composable
 fun LevelScreenContent(
-    level: LevelData?,
+    details: LevelUiDetails?,
     onActionResult: (ActionResult) -> Unit,
     onReviewRequest: () -> Unit,
     onUpdateLevelActionState: (LevelActionState) -> Unit,
@@ -158,7 +158,7 @@ fun LevelScreenContent(
 
             val bottomGuideLine = createGuidelineFromBottom(0.1f)
 
-            level?.let {
+            details?.let {
                 LevelSpecificContent(
                     modifier = Modifier.constrainAs(contents) {
                         width = Dimension.matchParent
@@ -168,7 +168,7 @@ fun LevelScreenContent(
                         end.linkTo(parent.end)
                         bottom.linkTo(bottomGuideLine)
                     },
-                    level = it,
+                    details = it,
                     onLevelAction = { action ->
                         onUpdateLevelActionState(action)
                     },
@@ -190,9 +190,9 @@ fun LevelScreenContent(
             )
         }
 
-        level?.let {
+        details?.let {
             ActionBarDialog(
-                levelData = it,
+                details = it,
                 onActionResult = onActionResult
             )
         }

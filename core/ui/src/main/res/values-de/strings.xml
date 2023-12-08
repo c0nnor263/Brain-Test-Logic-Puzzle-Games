@@ -14,5 +14,6 @@
     <string name="watch_ad_for_reward">Werbung ansehen\nfür Belohnung</string>
     <string name="request_notification_permission_title">Bleiben Sie mit uns auf dem Laufenden!</string>
     <string name="request_notification_permission_message">Aktivieren Sie Push-Benachrichtigungen, um die neuesten Updates und exklusiven Angebote von %1$s zu erhalten. Bleiben Sie verbunden und verpassen Sie nie, was neu und aufregend ist!</string>
-
+    <string name="get_vip">VIP erhalten</string>
+    <string name="go">GO</string>
 </resources>

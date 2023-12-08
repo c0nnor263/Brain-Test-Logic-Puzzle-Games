@@ -28,7 +28,6 @@ import androidx.compose.ui.unit.dp
 import com.gamovation.core.ui.Dimensions
 import com.gamovation.core.ui.R
 import com.gamovation.core.ui.animation.DrawAnimation
-import com.gamovation.core.ui.clickableNoRipple
 import com.gamovation.core.ui.common.ScalableButton
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
@@ -141,36 +140,21 @@ internal fun AlphabetInputContent(
     listOfAnswers: ImmutableList<Int>,
     onClickSymbol: (String) -> Unit
 ) {
-    Row(
-        horizontalArrangement = Arrangement.spacedBy(
-            Dimensions.Padding.Small.value,
-            Alignment.CenterHorizontally
-        ),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        repeat(5) {
-            val symbol = remember { listOfAnswers[it].toString() }
-            Box(
-                contentAlignment = Alignment.Center
-            ) {
-                Image(
-                    modifier = Modifier.matchParentSize(),
-                    painter = painterResource(id = R.drawable.answer_unit),
-                    contentDescription = null
-                )
-
-                Text(
-                    text = symbol,
-                    modifier = Modifier
-                        .padding(Dimensions.Padding.Medium.value)
-                        .clickableNoRipple {
-                            onClickSymbol(symbol)
-                        },
-                    style = MaterialTheme.typography.titleLarge
-                )
-            }
-        }
+    repeat(2) { index ->
+        AlphabetInputRowButtons(
+            listOfAnswers = listOfAnswers,
+            itemAfterIndex = index * 5,
+            onClickSymbol = onClickSymbol
+        )
     }
+}
+
+@Composable
+fun AlphabetInputRowButtons(
+    listOfAnswers: ImmutableList<Int>,
+    itemAfterIndex: Int,
+    onClickSymbol: (String) -> Unit
+) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(
             Dimensions.Padding.Small.value,
@@ -179,24 +163,30 @@ internal fun AlphabetInputContent(
         verticalAlignment = Alignment.CenterVertically
     ) {
         repeat(5) {
-            val symbol = remember { listOfAnswers[it + 5].toString() }
-            Box(
-                contentAlignment = Alignment.Center
+            val symbol = remember { listOfAnswers[it + itemAfterIndex].toString() }
+            ScalableButton(
+
+                isDrawingAnimationEnabled = false,
+                onClick = {
+                    onClickSymbol(symbol)
+                }
             ) {
-                Image(
-                    modifier = Modifier.matchParentSize(),
-                    painter = painterResource(id = R.drawable.answer_unit),
-                    contentDescription = null
-                )
-                Text(
-                    text = symbol,
-                    modifier = Modifier
-                        .padding(Dimensions.Padding.Medium.value)
-                        .clickableNoRipple {
-                            onClickSymbol(symbol)
-                        },
-                    style = MaterialTheme.typography.titleLarge
-                )
+                Box(
+                    contentAlignment = Alignment.Center
+                ) {
+                    Image(
+                        modifier = Modifier.matchParentSize(),
+                        painter = painterResource(id = R.drawable.answer_unit),
+                        contentDescription = null
+                    )
+
+                    Text(
+                        text = symbol,
+                        modifier = Modifier
+                            .padding(Dimensions.Padding.Medium.value),
+                        style = MaterialTheme.typography.titleLarge
+                    )
+                }
             }
         }
     }

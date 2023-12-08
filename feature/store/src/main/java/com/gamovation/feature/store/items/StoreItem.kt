@@ -19,11 +19,12 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.gamovation.core.data.model.StoreItemInfo
+import com.gamovation.core.billing.model.StoreItemInfo
+import com.gamovation.core.billing.model.isNotEmpty
+import com.gamovation.core.billing.model.price
+import com.gamovation.core.ui.BuyButton
 import com.gamovation.core.ui.Dimensions
 import com.gamovation.core.ui.R
-import com.gamovation.core.ui.billing.BuyButton
-import com.gamovation.feature.store.price
 
 @Composable
 fun StoreItem(
@@ -56,7 +57,7 @@ fun StoreItem(
         BuyButton(
             modifier = Modifier.weight(1F, false),
             text = info.price(),
-            isLoaded = info?.details != null,
+            isLoaded = info.isNotEmpty(),
             onClick = {
                 info?.let(onBuy)
             }

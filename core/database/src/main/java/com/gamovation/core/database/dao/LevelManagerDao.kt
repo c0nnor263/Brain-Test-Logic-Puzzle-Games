@@ -8,7 +8,7 @@ import com.gamovation.core.database.model.LevelData
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface LevelDataDao {
+interface LevelManagerDao {
     @Upsert
     suspend fun upsert(levelData: LevelData)
 

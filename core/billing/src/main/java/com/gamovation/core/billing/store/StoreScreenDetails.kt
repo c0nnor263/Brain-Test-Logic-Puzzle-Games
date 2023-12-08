@@ -1,8 +1,8 @@
-package com.gamovation.core.data.billing.store
+package com.gamovation.core.billing.store
 
-import com.gamovation.core.data.billing.BillingProductType
-import com.gamovation.core.data.billing.ProductDetailsInfo
-import com.gamovation.core.data.model.StoreItemInfo
+import com.gamovation.core.billing.BillingProductType
+import com.gamovation.core.billing.ProductDetailsInfo
+import com.gamovation.core.billing.model.StoreItemInfo
 
 data class StoreScreenDetails(
     val bestChoiceDetails: StoreItemInfo?,

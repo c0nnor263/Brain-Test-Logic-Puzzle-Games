@@ -5,6 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import com.gamovation.core.domain.enums.RewardedInterstitialAdResult
 import com.gamovation.core.ui.state.DialogState
 import com.gamovation.core.ui.state.RewardedInterstitialAdViewState
 
@@ -12,18 +13,20 @@ import com.gamovation.core.ui.state.RewardedInterstitialAdViewState
 fun WatchAdDialog(
     modifier: Modifier = Modifier,
     dialogState: DialogState,
-    onDismissed: (Boolean?) -> Unit,
+    onDismissed: (RewardedInterstitialAdResult) -> Unit,
     rewardedInterstitialAd: RewardedInterstitialAdViewState
 ) {
     val activity = LocalContext.current as ComponentActivity
 
     LaunchedEffect(dialogState.isShowing) {
         if (dialogState.isShowing) {
-            rewardedInterstitialAd.showAd(activity) {
-                if (it == false) {
-                    dialogState.show()
-                } else {
-                    onDismissed(it)
+            rewardedInterstitialAd.showAd(activity) { result ->
+                when (result) {
+                    RewardedInterstitialAdResult.ERROR -> {
+                        dialogState.show()
+                    }
+
+                    else -> onDismissed(result)
                 }
             }
         }
@@ -34,7 +37,7 @@ fun WatchAdDialog(
         dialogState = dialogState,
         onDismissed = {
             dialogState.dismiss()
-            onDismissed(it)
+            onDismissed(RewardedInterstitialAdResult.DISMISSED)
         }
     )
 }

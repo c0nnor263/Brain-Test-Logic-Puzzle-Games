@@ -14,5 +14,6 @@
     <string name="watch_ad_for_reward">Переглянути рекламу\nдля винагороди</string>
     <string name="request_notification_permission_title">Залишайтеся оновленими з нами!</string>
     <string name="request_notification_permission_message">Увімкніть push-сповіщення, щоб отримувати останні оновлення та ексклюзивні пропозиції від %1$s. Залишайтеся на зв\'язку і не пропустіть нове та захоплююче!</string>
-
+    <string name="get_vip">Отримайте VIP</string>
+    <string name="go">GO</string>
 </resources>

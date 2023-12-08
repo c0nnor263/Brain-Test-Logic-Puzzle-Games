@@ -2,10 +2,12 @@ package com.gamovation.feature.store.domain.model
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import com.gamovation.core.data.model.StoreItemInfo
+import androidx.compose.runtime.Stable
+import com.gamovation.core.billing.model.StoreItemInfo
 
 data class StoreListItem(
     @StringRes val stringRes: Int,
     @DrawableRes val drawableRes: Int,
-    val info: StoreItemInfo? = null
+
+    @Stable val info: StoreItemInfo? = null
 )

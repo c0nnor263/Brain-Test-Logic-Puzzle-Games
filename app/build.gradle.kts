@@ -5,13 +5,6 @@ plugins {
     PluginType.APPLICATION.get(this)
 }
 
-// commonAndroid(
-//    configPluginType = PluginType.APPLICATION,
-//    configNamespace = "com.gamovation.tilecl",
-//    configVersionCode = 23,
-//    configVersionName = "23.11.29.1"
-// )
-
 val keystorePropertiesFile: File = rootProject.file("keystore.properties")
 val keystoreProperties = Properties().apply {
     load(FileInputStream(keystorePropertiesFile))
@@ -25,8 +18,8 @@ android {
         applicationId = namespace
         minSdk = Versions.Config.minSdk
         targetSdk = Versions.Config.targetSdk
-        versionCode = 23
-        versionName = "2312314125"
+        versionCode = 24
+        versionName = "2023.12.08.01-stable"
 
         resourceConfigurations.addAll(
             listOf(
@@ -90,47 +83,18 @@ android {
 }
 
 dependencies {
-    add(
-        JavaPlugin.IMPLEMENTATION_CONFIGURATION_NAME,
-        project(":core:data")
-    )
-    add(
-        JavaPlugin.IMPLEMENTATION_CONFIGURATION_NAME,
-        project(":core:database")
-    )
-    add(
-        JavaPlugin.IMPLEMENTATION_CONFIGURATION_NAME,
-        project(":core:domain")
-    )
-    add(
-        JavaPlugin.IMPLEMENTATION_CONFIGURATION_NAME,
-        project(":core:ui")
-    )
-    add(
-        JavaPlugin.IMPLEMENTATION_CONFIGURATION_NAME,
-        project(":core:navigation")
-    )
-    add(
-        JavaPlugin.IMPLEMENTATION_CONFIGURATION_NAME,
-        project(":feature:home")
-    )
-    add(
-        JavaPlugin.IMPLEMENTATION_CONFIGURATION_NAME,
-        project(":feature:menu")
-    )
-    add(
-        JavaPlugin.IMPLEMENTATION_CONFIGURATION_NAME,
-        project(":feature:store")
-    )
-    add(
-        JavaPlugin.IMPLEMENTATION_CONFIGURATION_NAME,
-        project(":feature:level")
-    )
-    add(
-        JavaPlugin.IMPLEMENTATION_CONFIGURATION_NAME,
-        project(":feature:settings")
-    )
-    add("baselineProfile", project(":baselineprofile"))
+    implementation(project(":core:billing"))
+    implementation(project(":core:data"))
+    implementation(project(":core:database"))
+    implementation(project(":core:domain"))
+    implementation(project(":core:ui"))
+    implementation(project(":core:navigation"))
+    implementation(project(":feature:home"))
+    implementation(project(":feature:menu"))
+    implementation(project(":feature:store"))
+    implementation(project(":feature:level"))
+    implementation(project(":feature:settings"))
+    "baselineProfile"(project(":baselineprofile"))
     composeCore()
 
     // Lifecycle + ViewModel
@@ -159,4 +123,7 @@ dependencies {
 
     // OneSignal
     implementation("com.onesignal:OneSignal:${Versions.oneSignal}")
+
+    // Play Services Games
+    implementation("com.google.android.gms:play-services-games-v2:19.0.0")
 }

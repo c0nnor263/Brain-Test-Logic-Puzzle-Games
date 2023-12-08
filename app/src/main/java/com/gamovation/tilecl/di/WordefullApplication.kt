@@ -8,7 +8,6 @@ import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
 class WordefullApplication : Application() {
-
     override fun onCreate() {
         super.onCreate()
         OneSignal.Debug.logLevel = LogLevel.VERBOSE

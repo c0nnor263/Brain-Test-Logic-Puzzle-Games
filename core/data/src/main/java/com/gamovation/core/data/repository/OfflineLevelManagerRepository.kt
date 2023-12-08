@@ -1,32 +1,32 @@
 package com.gamovation.core.data.repository
 
-import com.gamovation.core.database.dao.LevelDataDao
+import com.gamovation.core.database.dao.LevelManagerDao
 import com.gamovation.core.database.model.LevelData
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
-import kotlinx.coroutines.flow.Flow
 
 @Singleton
-class OfflineLevelDataRepository @Inject constructor(
-    private val levelDataDao: LevelDataDao
-) : LevelDataRepository {
+class OfflineLevelManagerRepository @Inject constructor(
+    private val levelManagerDao: LevelManagerDao
+) : LevelManagerRepository {
     override suspend fun upsert(levelData: LevelData) {
-        levelDataDao.upsert(levelData)
+        levelManagerDao.upsert(levelData)
     }
 
     override suspend fun insertAll(list: List<LevelData>) {
-        levelDataDao.insertAll(list)
+        levelManagerDao.insertAll(list)
     }
 
     override fun getById(id: Int): Flow<LevelData> {
-        return levelDataDao.getById(id)
+        return levelManagerDao.getById(id)
     }
 
     override fun getAll(): Flow<List<LevelData>> {
-        return levelDataDao.getAll()
+        return levelManagerDao.getAll()
     }
 
     override fun getLastUncompleted(): Flow<LevelData> {
-        return levelDataDao.getLastUncompleted()
+        return levelManagerDao.getLastUncompleted()
     }
 }

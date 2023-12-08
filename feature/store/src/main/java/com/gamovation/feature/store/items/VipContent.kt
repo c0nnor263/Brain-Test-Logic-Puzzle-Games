@@ -18,12 +18,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.gamovation.core.data.model.StoreItemInfo
+import com.gamovation.core.billing.model.StoreItemInfo
+import com.gamovation.core.billing.model.isNotEmpty
+import com.gamovation.core.ui.BoxWithSparkles
+import com.gamovation.core.ui.BuyButton
 import com.gamovation.core.ui.Dimensions
-import com.gamovation.core.ui.billing.BuyButton
 import com.gamovation.core.ui.common.ChalkBoardCard
 import com.gamovation.feature.store.R
-import com.gamovation.feature.store.price
 
 @Composable
 fun VipContent(info: StoreItemInfo?, onBuy: (StoreItemInfo) -> Unit) {
@@ -45,8 +46,9 @@ fun VipContent(info: StoreItemInfo?, onBuy: (StoreItemInfo) -> Unit) {
                     text = stringResource(
                         R.string.remove_ads_and_get_cheaper_costs_for_all_actions
                     ),
-                    maxLines = 4,
-                    textAlign = TextAlign.Center
+                    maxLines = 3,
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.bodySmall
                 )
             }
         }
@@ -56,22 +58,19 @@ fun VipContent(info: StoreItemInfo?, onBuy: (StoreItemInfo) -> Unit) {
             modifier = Modifier.weight(1F),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.crown),
-                modifier = Modifier
-                    .width(100.dp)
-                    .height(100.dp),
-                contentDescription = null
-            )
-            Text(
-                text = stringResource(R.string.get_vip),
-                style = MaterialTheme.typography.titleMedium,
-                textAlign = TextAlign.Center
-            )
+            BoxWithSparkles {
+                Image(
+                    painter = painterResource(id = com.gamovation.core.ui.R.drawable.crown),
+                    modifier = Modifier
+                        .width(100.dp)
+                        .height(100.dp),
+                    contentDescription = null
+                )
+            }
             Spacer(modifier = Modifier.height(Dimensions.Padding.ExtraSmall.value))
             BuyButton(
-                text = info.price(),
-                isLoaded = info?.details != null,
+                text = stringResource(id = com.gamovation.core.ui.R.string.get_vip),
+                isLoaded = info.isNotEmpty(),
                 onClick = {
                     info?.let(onBuy)
                 }

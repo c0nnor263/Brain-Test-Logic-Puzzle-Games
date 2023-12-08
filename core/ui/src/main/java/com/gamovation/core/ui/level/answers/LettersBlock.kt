@@ -26,7 +26,6 @@ import androidx.compose.ui.unit.dp
 import com.gamovation.core.ui.Dimensions
 import com.gamovation.core.ui.R
 import com.gamovation.core.ui.animation.DrawAnimation
-import com.gamovation.core.ui.clickableNoRipple
 import com.gamovation.core.ui.common.ScalableButton
 import kotlin.math.roundToInt
 
@@ -149,22 +148,27 @@ internal fun LettersInputContent(
                 val text = currentAlphabet.getOrNull(rowIndex * 8 + itemIndex)
 
                 text?.let {
-                    Box(
-                        contentAlignment = Alignment.Center
+                    ScalableButton(
+                        isDrawingAnimationEnabled = false,
+                        onClick = {
+                            onClickSymbol(text)
+                        }
                     ) {
-                        Image(
-                            modifier = Modifier.matchParentSize(),
-                            painter = painterResource(id = R.drawable.answer_unit),
-                            contentDescription = null
-                        )
+                        Box(
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Image(
+                                modifier = Modifier.matchParentSize(),
+                                painter = painterResource(id = R.drawable.answer_unit),
+                                contentDescription = null
+                            )
 
-                        Text(
-                            text = text,
-                            modifier = Modifier
-                                .padding(Dimensions.Padding.Small.value)
-                                .clickableNoRipple(onClick = { onClickSymbol(text) }),
-                            style = MaterialTheme.typography.titleMedium
-                        )
+                            Text(
+                                text = text,
+                                modifier = Modifier.padding(Dimensions.Padding.Small.value),
+                                style = MaterialTheme.typography.titleMedium
+                            )
+                        }
                     }
                 }
             }

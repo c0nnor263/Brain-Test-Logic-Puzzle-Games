@@ -1,4 +1,4 @@
-package com.gamovation.core.data.billing
+package com.gamovation.core.billing
 
 import android.content.Context
 import android.util.Log
@@ -10,7 +10,6 @@ import com.android.billingclient.api.BillingClientStateListener
 import com.android.billingclient.api.BillingFlowParams
 import com.android.billingclient.api.BillingResult
 import com.android.billingclient.api.ConsumeParams
-import com.android.billingclient.api.ProductDetails
 import com.android.billingclient.api.Purchase
 import com.android.billingclient.api.PurchasesUpdatedListener
 import com.android.billingclient.api.QueryProductDetailsParams
@@ -25,14 +24,12 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.gamovation.core.data.BuildConfig
+import com.gamovation.core.billing.model.StoreItemInfo
 import com.gamovation.core.data.repository.OfflineUserInfoPreferencesRepository
 import com.gamovation.core.domain.billing.UserVipType
 import com.gamovation.core.domain.di.ApplicationScope
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.android.scopes.ActivityRetainedScoped
-import java.util.concurrent.TimeUnit
-import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -42,6 +39,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
+import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
 @ActivityRetainedScoped
 class BillingDataSource @Inject constructor(
@@ -191,10 +190,11 @@ class BillingDataSource @Inject constructor(
     }
 
     fun purchaseProduct(
-        details: ProductDetails,
-        type: BillingProductType,
+        storeItemInfo: StoreItemInfo,
         onRequestActivity: () -> ComponentActivity
     ) {
+        val (details, type) = storeItemInfo
+        if (details == null) return
         try {
             val productDetailsParamsList =
                 BillingFlowParams.ProductDetailsParams.newBuilder().setProductDetails(details)

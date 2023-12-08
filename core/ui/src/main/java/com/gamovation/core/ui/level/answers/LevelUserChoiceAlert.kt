@@ -1,14 +1,14 @@
 package com.gamovation.core.ui.level.answers
 
-import androidx.annotation.DrawableRes
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,15 +17,18 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -36,39 +39,36 @@ import com.gamovation.core.ui.animation.DrawAnimation
 import com.gamovation.core.ui.animation.Durations
 import com.gamovation.core.ui.animation.tweenMedium
 import com.gamovation.core.ui.theme.WordefullTheme
-import java.util.concurrent.TimeUnit
+import kotlinx.coroutines.delay
 import nl.dionsegijn.konfetti.compose.KonfettiView
 import nl.dionsegijn.konfetti.core.Party
 import nl.dionsegijn.konfetti.core.Position
 import nl.dionsegijn.konfetti.core.emitter.Emitter
+import java.util.concurrent.TimeUnit
 
 @Composable
 fun BoxScope.LevelUserChoiceAlert(
     currentState: LevelScreenState,
     checkState: LevelScreenState
 ) {
-    if (currentState != LevelScreenState.USER_CORRECT_CHOICE &&
-        currentState != LevelScreenState.USER_WRONG_CHOICE
-    ) {
-        return
-    }
     val isCorrectChoice = currentState == LevelScreenState.USER_CORRECT_CHOICE
-
-    @DrawableRes val drawableRes = if (isCorrectChoice) {
-        R.drawable.success
-    } else {
-        R.drawable.failure
-    }
     val isVisible = currentState == checkState
 
-    val backgroundOverlayColorAnimation by animateColorAsState(
+    val backgroundBrushAlpha by animateFloatAsState(
         targetValue = if (isVisible) {
-            Color.Black.copy(0.5F)
+            0.4F
         } else {
-            Color.Transparent
+            0.0F
         },
         animationSpec = tweenMedium(delayMillis = if (isVisible) Durations.Medium.time else 0),
-        label = "Background overlay color animation"
+        label = "Background brush alpha"
+    )
+    val backgroundBrush = Brush.radialGradient(
+        listOf(
+            Color.Black.copy(backgroundBrushAlpha),
+            Color.Black.copy(backgroundBrushAlpha),
+            Color.Transparent
+        )
     )
 
     AnimatedVisibility(
@@ -81,18 +81,28 @@ fun BoxScope.LevelUserChoiceAlert(
             tweenMedium()
         )
     ) {
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = backgroundOverlayColorAnimation
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(backgroundBrush),
+            contentAlignment = Alignment.Center
         ) {
-            ImageResult(isVisible = isVisible, drawableRes = drawableRes)
+            ImageResult(isVisible = isVisible, isCorrectChoice = isCorrectChoice)
         }
     }
 
+    KonfettiGreeting(
+        modifier = Modifier.align(Alignment.Center),
+        isCorrectChoice = isCorrectChoice
+    )
+}
+
+@Composable
+fun KonfettiGreeting(modifier: Modifier = Modifier, isCorrectChoice: Boolean) {
     AnimatedVisibility(
         isCorrectChoice,
-        modifier = Modifier.align(Alignment.Center),
-        enter = fadeIn(tweenMedium()),
+        modifier = modifier,
+        enter = fadeIn(tweenMedium(delayMillis = Durations.Medium.time)),
         exit = fadeOut(tweenMedium())
     ) {
         val party = remember {
@@ -164,7 +174,27 @@ fun BoxScope.LevelUserChoiceAlert(
 }
 
 @Composable
-internal fun ImageResult(isVisible: Boolean, @DrawableRes drawableRes: Int) {
+internal fun ImageResult(isVisible: Boolean, isCorrectChoice: Boolean) {
+    // Too remember the correct choice image and prevent showing the wrong choice image
+    val drawableRes = remember {
+        if (isCorrectChoice) {
+            R.drawable.success
+        } else {
+            R.drawable.failure
+        }
+    }
+
+    val haptic = LocalHapticFeedback.current
+
+    LaunchedEffect(isCorrectChoice) {
+        if (isCorrectChoice) {
+            delay(Durations.Medium.time.toLong())
+            haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+            delay(Durations.Short.time.toLong())
+            haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+        }
+    }
+
     val scaleAnimation by animateFloatAsState(
         targetValue = if (isVisible) {
             1.0F
@@ -191,7 +221,9 @@ internal fun ImageResult(isVisible: Boolean, @DrawableRes drawableRes: Int) {
             DrawAnimation(delayOrder = 1) {
                 Image(
                     modifier = Modifier.fillMaxSize(),
-                    painter = painterResource(id = drawableRes),
+                    painter = painterResource(
+                        id = drawableRes
+                    ),
                     contentDescription = null,
                     contentScale = ContentScale.Fit
                 )

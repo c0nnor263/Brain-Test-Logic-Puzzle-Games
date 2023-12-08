@@ -19,8 +19,8 @@ import androidx.compose.ui.text.style.TextAlign
 import com.gamovation.core.domain.level.ActionResult
 import com.gamovation.core.ui.Dimensions
 import com.gamovation.core.ui.animation.DrawAnimation
-import com.gamovation.core.ui.clickableNoRipple
 import com.gamovation.core.ui.common.ChalkBoardDialog
+import com.gamovation.core.ui.common.ScalableButton
 import com.gamovation.core.ui.state.DialogState
 import com.gamovation.feature.level.R
 
@@ -81,15 +81,14 @@ internal fun NotEnoughCurrencyDialog(
             }
             Spacer(modifier = Modifier.height(Dimensions.Padding.Medium.value))
 
-            DrawAnimation(delayOrder = 1) {
-                Text(
-                    stringResource(R.string.get_more),
-                    Modifier.clickableNoRipple {
-                        onActionResult(ActionResult(ActionResult.Type.BUY_MORE))
-                    },
-                    style = MaterialTheme.typography.displaySmall
-                )
-            }
+            ScalableButton(
+                delayOrder = 1,
+                onClick = {
+                    onActionResult(ActionResult(ActionResult.Type.BUY_MORE))
+                },
+                stringRes = R.string.get_more,
+                textStyle = MaterialTheme.typography.displaySmall
+            )
         }
     }
 }

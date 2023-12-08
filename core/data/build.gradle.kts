@@ -21,12 +21,6 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
 
-        buildConfigField(
-            "String",
-            "verifyPurchases",
-            "\"${localProperties.getProperty("verifyPurchases")}\""
-        )
-
         resValue(
             "string",
             "admob_application_id",
@@ -88,7 +82,6 @@ dependencies {
     implementation(project(":core:database"))
     implementation(project(":core:domain"))
     implementation("com.android.billingclient:billing-ktx:${Versions.billing}")
-    implementation("com.android.volley:volley:${Versions.volley}")
     coreData()
 
     implementation("com.google.android.play:review:${Versions.playReview}")

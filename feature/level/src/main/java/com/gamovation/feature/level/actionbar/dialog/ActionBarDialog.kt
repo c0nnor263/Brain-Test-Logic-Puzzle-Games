@@ -15,7 +15,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.gamovation.core.database.model.LevelData
 import com.gamovation.core.domain.level.ActionResult
 import com.gamovation.core.domain.level.LevelActionState
 import com.gamovation.core.ui.Dimensions
@@ -29,10 +28,11 @@ import com.gamovation.core.ui.state.rememberDialogState
 import com.gamovation.feature.level.actionbar.dialog.options.ActionBarDialogAdviceOption
 import com.gamovation.feature.level.actionbar.dialog.options.ActionBarDialogSkipOption
 import com.gamovation.feature.level.common.NotEnoughCurrencyDialog
+import com.gamovation.feature.level.domain.model.LevelUiDetails
 
 @Composable
 internal fun ActionBarDialog(
-    levelData: LevelData,
+    details: LevelUiDetails,
     onActionResult: (ActionResult) -> Unit
 ) {
     val levelActionState = LocalLevelAction.current
@@ -50,9 +50,9 @@ internal fun ActionBarDialog(
     }
 
     ActionBarDialogContent(
-        adviceId = levelData.advise,
+        adviceId = details.advise,
         actionBarDialogState = actionBarDialogState,
-        levelHasAdvice = levelData.isHasAdvise,
+        levelHasAdvice = details.isHasAdvise,
         onActionResult = onActionResult,
         onNotEnoughCurrency = {
             notEnoughCurrencyDialogState.show()

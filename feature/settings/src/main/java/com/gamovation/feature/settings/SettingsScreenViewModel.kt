@@ -2,13 +2,13 @@ package com.gamovation.feature.settings
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gamovation.core.data.billing.BillingDataSource
+import com.gamovation.core.billing.BillingDataSource
 import com.gamovation.core.data.repository.OfflineUserInfoPreferencesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import java.util.Locale
-import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.Locale
+import javax.inject.Inject
 
 @HiltViewModel
 class SettingsScreenViewModel @Inject constructor(

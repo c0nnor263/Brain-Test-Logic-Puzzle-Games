@@ -24,6 +24,9 @@ fun WordefullNavHost(navController: NavHostController) {
         homeScreen(
             onNavigateToLevel = { idArg ->
                 navController.navigate(Screens.Level(idArg.toString()))
+            },
+            onNavigateToStore = {
+                navController.navigate(Screens.Store)
             }
         )
 

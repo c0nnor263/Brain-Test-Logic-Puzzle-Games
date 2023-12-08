@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="one_signal_key" translatable="false">7b292e3b-ae18-4c24-9975-ef3ba4762325</string>
+    <string name="game_services_project_id" translatable="false">116873765044</string>
 </resources>

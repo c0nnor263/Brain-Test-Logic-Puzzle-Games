@@ -14,8 +14,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import com.gamovation.core.ui.Dimensions
 import com.gamovation.core.ui.animation.DrawAnimation
-import com.gamovation.core.ui.clickableNoRipple
 import com.gamovation.core.ui.common.ChalkBoardDialog
+import com.gamovation.core.ui.common.ScalableButton
 import com.gamovation.core.ui.state.DialogState
 import com.gamovation.feature.store.R
 
@@ -40,15 +40,12 @@ fun StoreScreenErrorDialog(
             }
             Spacer(modifier = Modifier.height(Dimensions.Padding.Medium.value))
 
-            DrawAnimation(delayOrder = 1) {
-                Text(
-                    text = stringResource(com.gamovation.core.ui.R.string.ok),
-                    modifier = Modifier.clickableNoRipple {
-                        onDismiss()
-                    },
-                    style = MaterialTheme.typography.titleLarge
-                )
-            }
+            ScalableButton(
+                delayOrder = 1,
+                stringRes = com.gamovation.core.ui.R.string.ok,
+                onClick = onDismiss,
+                textStyle = MaterialTheme.typography.titleLarge
+            )
         }
     }
 }

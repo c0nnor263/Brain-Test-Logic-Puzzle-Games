@@ -23,3 +23,7 @@ fun <T> tweenEasy(delayMillis: Int = 0, easing: Easing = FastOutSlowInEasing): T
 fun <T> tweenLong(delayMillis: Int = 0, easing: Easing = FastOutSlowInEasing): TweenSpec<T> {
     return tween(Durations.Long.time, delayMillis = delayMillis, easing = easing)
 }
+
+fun <T> tweenTooLong(delayMillis: Int = 0, easing: Easing = FastOutSlowInEasing): TweenSpec<T> {
+    return tween(Durations.Second.time, delayMillis = delayMillis, easing = easing)
+}

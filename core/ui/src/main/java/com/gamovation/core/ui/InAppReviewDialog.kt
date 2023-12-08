@@ -1,4 +1,4 @@
-package com.gamovation.core.ui.review
+package com.gamovation.core.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,11 +14,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import com.gamovation.core.ui.Dimensions
-import com.gamovation.core.ui.R
 import com.gamovation.core.ui.animation.DrawAnimation
-import com.gamovation.core.ui.clickableNoRipple
 import com.gamovation.core.ui.common.ChalkBoardDialog
+import com.gamovation.core.ui.common.ScalableButton
 import com.gamovation.core.ui.state.DialogState
 
 @Composable
@@ -60,25 +58,20 @@ fun InAppReviewDialog(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceAround
             ) {
-                DrawAnimation(delayOrder = 2) {
-                    Text(
-                        text = stringResource(R.string.yes),
-                        modifier = Modifier.clickableNoRipple {
-                            onStartReview()
-                        },
-                        style = MaterialTheme.typography.headlineMedium
-                    )
-                }
+                ScalableButton(
+                    delayOrder = 2,
+                    onClick = onStartReview,
+                    stringRes = R.string.yes,
+                    textStyle = MaterialTheme.typography.headlineMedium
+                )
                 Spacer(Modifier.width(Dimensions.Padding.Small.value))
-                DrawAnimation(delayOrder = 3) {
-                    Text(
-                        text = stringResource(R.string.no),
-                        modifier = Modifier.clickableNoRipple {
-                            onDismiss()
-                        },
-                        style = MaterialTheme.typography.headlineMedium
-                    )
-                }
+
+                ScalableButton(
+                    delayOrder = 3,
+                    onClick = onDismiss,
+                    stringRes = R.string.no,
+                    textStyle = MaterialTheme.typography.headlineMedium
+                )
             }
         }
     }

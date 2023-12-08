@@ -3,7 +3,7 @@ package com.gamovation.feature.level
 import androidx.activity.ComponentActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gamovation.core.data.repository.OfflineLevelDataRepository
+import com.gamovation.core.data.repository.OfflineLevelManagerRepository
 import com.gamovation.core.data.repository.OfflineUserInfoPreferencesRepository
 import com.gamovation.core.data.review.ReviewDataManager
 import com.gamovation.core.database.data.LevelManager.Companion.MAX_LEVEL_ID
@@ -11,8 +11,8 @@ import com.gamovation.core.database.model.LevelData
 import com.gamovation.core.domain.level.LevelActionState
 import com.gamovation.core.domain.level.LevelScreenState
 import com.gamovation.core.ui.DEFAULT_LEVEL_SCREEN_COUNTDOWN_DURATION
+import com.gamovation.feature.level.domain.model.LevelUiDetails
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,10 +21,11 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
 @HiltViewModel
 class LevelScreenViewModel @Inject constructor(
-    private val levelRepositoryImpl: OfflineLevelDataRepository,
+    private val levelRepositoryImpl: OfflineLevelManagerRepository,
     private val userInfoPreferencesRepository: OfflineUserInfoPreferencesRepository,
     private val reviewDataManager: ReviewDataManager
 ) : ViewModel() {
@@ -33,8 +34,8 @@ class LevelScreenViewModel @Inject constructor(
 
     private var levelIndex = 1
 
-    private val _levelData = MutableStateFlow<LevelData?>(null)
-    val levelData: StateFlow<LevelData?> = _levelData
+    private val _levelUiDetails = MutableStateFlow<LevelUiDetails?>(null)
+    val levelUiDetails: StateFlow<LevelUiDetails?> = _levelUiDetails
 
     private val _levelScreenState = MutableStateFlow(LevelScreenState.IS_LEVEL_PLAYING)
     val levelScreenState: StateFlow<LevelScreenState> = _levelScreenState
@@ -81,7 +82,8 @@ class LevelScreenViewModel @Inject constructor(
             // Get level data for current index
             val data =
                 newLevelData ?: levelRepositoryImpl.getById(levelIndex).first()
-            _levelData.emit(data)
+            val details = LevelUiDetails.mapToUiDetails(data)
+            _levelUiDetails.emit(details)
         }
 
     fun onForwardLevel() = viewModelScope.launch(Dispatchers.IO) {
@@ -125,8 +127,9 @@ class LevelScreenViewModel @Inject constructor(
                 val levelData = levelRepositoryImpl.getById(levelIndex).first().copy(
                     isHasAdvise = true
                 )
+                val details = LevelUiDetails.mapToUiDetails(levelData)
                 levelRepositoryImpl.upsert(levelData)
-                _levelData.emit(levelData)
+                _levelUiDetails.emit(details)
             }
 
             LevelActionState.SKIP -> updateLevelScreenState(LevelScreenState.LEVEL_COMPLETED)

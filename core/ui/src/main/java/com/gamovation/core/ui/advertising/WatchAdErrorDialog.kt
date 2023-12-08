@@ -15,21 +15,20 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import com.gamovation.core.ui.Dimensions
 import com.gamovation.core.ui.R
-import com.gamovation.core.ui.animation.DrawAnimation
-import com.gamovation.core.ui.clickableNoRipple
 import com.gamovation.core.ui.common.ChalkBoardDialog
+import com.gamovation.core.ui.common.ScalableButton
 import com.gamovation.core.ui.state.DialogState
 
 @Composable
 fun WatchAdErrorDialog(
     modifier: Modifier = Modifier,
     dialogState: DialogState,
-    onDismissed: (Boolean?) -> Unit
+    onDismissed: () -> Unit
 ) {
     ChalkBoardDialog(
         modifier = modifier,
         dialogState = dialogState,
-        onDismissRequest = { onDismissed(null) }
+        onDismissRequest = { onDismissed() }
     ) {
         Column(
             modifier = Modifier.fillMaxWidth(),
@@ -42,16 +41,11 @@ fun WatchAdErrorDialog(
                 textAlign = TextAlign.Center
             )
             Spacer(modifier = Modifier.height(Dimensions.Padding.Medium.value))
-
-            DrawAnimation {
-                Text(
-                    text = stringResource(R.string.ok),
-                    modifier = Modifier.clickableNoRipple {
-                        onDismissed(false)
-                    },
-                    style = MaterialTheme.typography.displaySmall
-                )
-            }
+            ScalableButton(
+                textStyle = MaterialTheme.typography.displaySmall,
+                stringRes = R.string.ok,
+                onClick = onDismissed
+            )
         }
     }
 }

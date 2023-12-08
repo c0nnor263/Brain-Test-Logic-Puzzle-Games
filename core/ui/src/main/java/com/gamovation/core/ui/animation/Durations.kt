@@ -25,4 +25,9 @@ sealed class Durations(val time: Int) {
      * 800
      */
     data object Long : Durations(800)
+
+    /**
+     * 1000
+     */
+    data object Second : Durations(1000)
 }

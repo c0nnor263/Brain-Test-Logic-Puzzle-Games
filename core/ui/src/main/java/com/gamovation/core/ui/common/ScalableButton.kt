@@ -15,8 +15,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.hapticfeedback.HapticFeedbackType
-import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import com.gamovation.core.ui.Dimensions
@@ -28,11 +26,11 @@ import com.gamovation.core.ui.clickableNoRipple
 fun ScalableButton(
     modifier: Modifier = Modifier,
     delayOrder: Int = 0,
-    @StringRes stringRes: Int? = null,
     isDrawingAnimationEnabled: Boolean = true,
+    enabled: Boolean = true,
     textStyle: TextStyle = MaterialTheme.typography.displayMedium,
     maxLines: Int = Int.MAX_VALUE,
-    enabled: Boolean = true,
+    @StringRes stringRes: Int? = null,
     onClick: () -> Unit,
     content: (@Composable () -> Unit)? = null
 ) {
@@ -71,7 +69,6 @@ internal fun ScalableButtonContent(
     onClick: () -> Unit,
     content: (@Composable () -> Unit)?
 ) {
-    val haptic = LocalHapticFeedback.current
     val interaction = remember { MutableInteractionSource() }
     val isPressed = interaction.collectIsPressedAsState()
 
@@ -90,8 +87,6 @@ internal fun ScalableButtonContent(
             .clickableNoRipple(
                 onClick = {
                     onClick()
-                    // Test
-                    haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                 },
                 enabled = enabled,
                 interactionSource = interaction

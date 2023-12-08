@@ -1,6 +1,8 @@
 package com.gamovation.tilecl.presentation
 
+import android.Manifest
 import android.animation.ObjectAnimator
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -20,21 +22,32 @@ import androidx.core.animation.doOnEnd
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.gamovation.core.data.AppOpenAdManager
+import com.gamovation.core.database.preferences.UserInfoPreferencesDataStore
 import com.gamovation.core.domain.billing.UserVipType
 import com.gamovation.core.domain.currency.CostsInfo
 import com.gamovation.core.domain.currency.calculateCosts
+import com.gamovation.core.ui.RequestNotificationPermissionDialog
 import com.gamovation.core.ui.state.LocalCosts
 import com.gamovation.core.ui.state.LocalCurrency
 import com.gamovation.core.ui.state.LocalLocale
 import com.gamovation.core.ui.state.LocalVipType
+import com.gamovation.core.ui.state.rememberDialogState
 import com.gamovation.core.ui.theme.WordefullTheme
 import com.gamovation.tilecl.presentation.navigation.AppContentViewModel
 import com.gamovation.tilecl.presentation.navigation.WordefullAppContent
+import com.onesignal.OneSignal
+import com.onesignal.notifications.INotificationClickEvent
+import com.onesignal.notifications.INotificationClickListener
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Locale
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    @Inject
+    lateinit var appOpenAdManager: AppOpenAdManager
+
     private val viewModel by viewModels<AppContentViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         val splashScreen = installSplashScreen()
@@ -69,6 +82,15 @@ class MainActivity : ComponentActivity() {
             }
         )
 
+        // TODO Play Games sign in
+//        PlayGames.getGamesSignInClient(this).isAuthenticated().addOnCompleteListener {
+//            if (it.isSuccessful) {
+//                Log.d("TAG", "isAuthenticated: ${it.result.isAuthenticated}")
+//            } else {
+//                Log.d("TAG", "isAuthenticated: ${it.exception?.message}")
+//            }
+//        }
+
         setContent {
             WordefullTheme {
                 val currency =
@@ -102,14 +124,65 @@ class MainActivity : ComponentActivity() {
                     }
 
                     if (viewModel.isViewInitialized) {
+                        val dialogState = rememberDialogState()
+
+                        LaunchedEffect(Unit) {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                                val tryCount = viewModel.getNotificationPermissionTryCount()
+                                if (tryCount > UserInfoPreferencesDataStore.DEFAULT_NOTIFICATION_PERMISSION_LIMIT) {
+                                    return@LaunchedEffect
+                                }
+
+                                if (context.checkSelfPermission(
+                                        Manifest.permission.POST_NOTIFICATIONS
+                                    ) == PackageManager.PERMISSION_DENIED
+                                ) {
+                                    dialogState.show()
+                                    viewModel.increaseNotificationRequestCount()
+                                } else {
+                                    if (tryCount != 0) {
+                                        viewModel.resetNotificationRequestCount()
+                                    }
+                                }
+                            }
+                        }
+
                         WordefullAppContent()
+
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                            RequestNotificationPermissionDialog(
+                                dialogState = dialogState,
+                                onDismiss = {
+                                    dialogState.dismiss()
+                                }
+                            )
+                        }
                     }
                 }
             }
         }
+        setupOneSignalNotificationListener()
 
+        setupFullscreenMode()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.onResumeBilling()
+    }
+
+    private fun setupOneSignalNotificationListener() {
+        OneSignal.Notifications.addClickListener(
+            object : INotificationClickListener {
+                override fun onClick(event: INotificationClickEvent) {
+                    appOpenAdManager.showAdIfAvailable(this@MainActivity)
+                }
+            }
+        )
+    }
+
+    private fun setupFullscreenMode() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
-
         @Suppress("DEPRECATION")
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) {
             window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
@@ -124,10 +197,5 @@ class MainActivity : ComponentActivity() {
             window.attributes.layoutInDisplayCutoutMode =
                 WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        viewModel.onResumeBilling()
     }
 }

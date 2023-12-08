@@ -9,9 +9,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import com.gamovation.core.database.model.LevelData
 import com.gamovation.core.domain.level.LevelScreenState
 import com.gamovation.core.ui.Dimensions
+import com.gamovation.feature.level.domain.model.LevelUiDetails
 import com.gamovation.feature.level.level1.Level1Content
 import com.gamovation.feature.level.level10.Level10Content
 import com.gamovation.feature.level.level11.Level11Content
@@ -35,11 +35,12 @@ import com.gamovation.feature.level.level9.Level9Content
 
 @Composable
 internal fun LevelBody(
-    level: LevelData,
+    details: LevelUiDetails,
     onLevelScreenAction: (LevelScreenState) -> Unit,
     onReviewRequest: () -> Unit
 ) {
-    val title = stringResource(id = level.title)
+    val title = stringResource(id = details.title)
+
     Column(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -50,7 +51,7 @@ internal fun LevelBody(
             Spacer(modifier = Modifier.height(Dimensions.Padding.ExtraLarge.value))
         }
 
-        when (level.id) {
+        when (details.id) {
             1 -> Level1Content(
                 onLevelAction = onLevelScreenAction
             )

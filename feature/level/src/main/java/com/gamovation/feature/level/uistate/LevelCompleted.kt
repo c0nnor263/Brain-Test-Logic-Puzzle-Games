@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.gamovation.core.domain.enums.RewardedInterstitialAdResult
 import com.gamovation.core.domain.level.LevelScreenState
 import com.gamovation.core.ui.Dimensions
 import com.gamovation.core.ui.R
@@ -45,7 +46,7 @@ internal fun LevelCompleted(
     LevelCompletedContent(
         modifier = modifier,
         id = id,
-        isAdLoaded = rewardedInterstitialAd.isAdLoaded,
+        isAdLoaded = rewardedInterstitialAd.isAdAvailable,
         onLevelUIAction = onLevelUIAction,
         onShowAd = {
             showWatchAdDialogState.show()
@@ -57,7 +58,13 @@ internal fun LevelCompleted(
         rewardedInterstitialAd = rewardedInterstitialAd,
         onDismissed = { result ->
             showWatchAdDialogState.dismiss()
-            if (result == true) onLevelUIAction(LevelScreenState.USER_WATCH_AD)
+            when (result) {
+                RewardedInterstitialAdResult.REWARDED -> {
+                    onLevelUIAction(LevelScreenState.USER_WATCH_AD)
+                }
+
+                else -> {}
+            }
         }
     )
 }

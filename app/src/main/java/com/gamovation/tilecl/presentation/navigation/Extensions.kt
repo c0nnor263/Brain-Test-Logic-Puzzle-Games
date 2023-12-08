@@ -14,6 +14,7 @@ import androidx.navigation.navArgument
 import com.gamovation.core.navigation.Screens
 import com.gamovation.core.navigation.toArg
 import com.gamovation.core.ui.animation.Durations
+import com.gamovation.core.ui.animation.tweenMedium
 import com.gamovation.feature.home.HomeScreen
 import com.gamovation.feature.home.HomeScreenViewModel
 import com.gamovation.feature.level.LevelScreen
@@ -25,22 +26,23 @@ import com.gamovation.feature.settings.SettingsScreenViewModel
 import com.gamovation.feature.store.presentation.StoreScreen
 import com.gamovation.feature.store.presentation.StoreScreenViewModel
 
-fun NavGraphBuilder.homeScreen(onNavigateToLevel: (Int) -> Unit) {
+fun NavGraphBuilder.homeScreen(onNavigateToLevel: (Int) -> Unit, onNavigateToStore: () -> Unit) {
     composable(
         Screens.Home.route,
         enterTransition = {
             scaleIn(
-                animationSpec = tween(Durations.Medium.time)
+                animationSpec = tweenMedium()
             )
         },
         exitTransition = {
-            scaleOut(animationSpec = tween(Durations.Medium.time))
+            scaleOut(animationSpec = tweenMedium())
         }
     ) {
         val viewModel: HomeScreenViewModel = hiltViewModel()
         HomeScreen(
             viewModel = viewModel,
-            onNavigateToLevel = onNavigateToLevel
+            onNavigateToLevel = onNavigateToLevel,
+            onNavigateToStore = onNavigateToStore
         )
     }
 }
@@ -50,17 +52,15 @@ fun NavGraphBuilder.storeScreen() {
         Screens.Store.route,
         enterTransition = {
             slideIntoContainer(
-                AnimatedContentTransitionScope.SlideDirection.Down,
-                animationSpec = tween(
-                    Durations.Medium.time
-                )
+                AnimatedContentTransitionScope.SlideDirection.Up,
+                animationSpec = tweenMedium()
             )
         },
         exitTransition = {
             slideOutOfContainer(
-                AnimatedContentTransitionScope.SlideDirection.Up,
-                animationSpec = tween(Durations.Medium.time)
-            )
+                AnimatedContentTransitionScope.SlideDirection.Down,
+                animationSpec = tweenMedium()
+            ) + fadeOut(tweenMedium())
         }
     ) {
         val viewModel: StoreScreenViewModel = hiltViewModel()
@@ -69,13 +69,15 @@ fun NavGraphBuilder.storeScreen() {
 }
 
 fun NavGraphBuilder.settingsStore(onNavigateToHome: () -> Unit) {
-    composable(Screens.Settings.route, enterTransition = {
-        scaleIn(
-            animationSpec = tween(Durations.Medium.time)
-        )
-    }, exitTransition = {
-        scaleOut(animationSpec = tween(Durations.Medium.time))
-    }) {
+    composable(
+        Screens.Settings.route,
+        enterTransition = {
+            fadeIn(tweenMedium()) + scaleIn(animationSpec = tweenMedium())
+        },
+        exitTransition = {
+            scaleOut(animationSpec = tweenMedium()) + fadeOut(tweenMedium())
+        }
+    ) {
         val viewModel: SettingsScreenViewModel = hiltViewModel()
         SettingsScreen(
             viewModel = viewModel,
@@ -85,13 +87,15 @@ fun NavGraphBuilder.settingsStore(onNavigateToHome: () -> Unit) {
 }
 
 fun NavGraphBuilder.menuScreen(onNavigateToLevel: (Int) -> Unit) {
-    composable(Screens.Menu.route, enterTransition = {
-        scaleIn(
-            animationSpec = tween(Durations.Medium.time)
-        )
-    }, exitTransition = {
-        scaleOut(animationSpec = tween(Durations.Medium.time))
-    }) {
+    composable(
+        Screens.Menu.route,
+        enterTransition = {
+            fadeIn(tweenMedium()) + scaleIn(animationSpec = tweenMedium())
+        },
+        exitTransition = {
+            scaleOut(animationSpec = tweenMedium()) + fadeOut(tweenMedium())
+        }
+    ) {
         val viewModel: MenuViewModel = hiltViewModel()
         MenuScreen(
             viewModel = viewModel,
@@ -116,7 +120,7 @@ fun NavGraphBuilder.levelScreen(onNavigateToStore: () -> Unit) {
             fadeIn(tween(Durations.Medium.time))
         },
         exitTransition = {
-            fadeOut(animationSpec = tween(Durations.Medium.time))
+            fadeOut(animationSpec = tweenMedium())
         }
     ) { backStackEntry ->
         val viewModel: LevelScreenViewModel = hiltViewModel()

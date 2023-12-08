@@ -43,7 +43,7 @@ fun RequestNotificationPermissionDialog(
 
     ChalkBoardDialog(
         modifier = modifier,
-        onDismissRequest = { /*TODO*/ },
+        onDismissRequest = onDismiss,
         dialogState = dialogState
     ) {
         Column(

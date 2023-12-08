@@ -1,4 +1,4 @@
-package com.gamovation.core.data.billing
+package com.gamovation.core.billing
 
 import com.android.billingclient.api.BillingClient
 

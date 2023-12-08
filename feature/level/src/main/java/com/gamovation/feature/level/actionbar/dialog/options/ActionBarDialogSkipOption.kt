@@ -11,7 +11,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import com.gamovation.core.ui.Dimensions
 import com.gamovation.core.ui.animation.DrawAnimation
-import com.gamovation.core.ui.clickableNoRipple
+import com.gamovation.core.ui.common.ScalableButton
 import com.gamovation.feature.level.R
 
 @Composable
@@ -32,11 +32,10 @@ internal fun ActionBarDialogSkipOption(onClick: () -> Unit) {
     }
     Spacer(modifier = Modifier.height(Dimensions.Padding.Large.value))
 
-    DrawAnimation(delayOrder = 2) {
-        Text(
-            text = stringResource(R.string.skip),
-            modifier = Modifier.clickableNoRipple { onClick() },
-            style = MaterialTheme.typography.displaySmall
-        )
-    }
+    ScalableButton(
+        delayOrder = 2,
+        onClick = onClick,
+        stringRes = R.string.skip,
+        textStyle = MaterialTheme.typography.displaySmall
+    )
 }

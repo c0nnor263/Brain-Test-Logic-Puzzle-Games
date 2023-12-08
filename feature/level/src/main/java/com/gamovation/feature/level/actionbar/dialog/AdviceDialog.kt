@@ -47,7 +47,7 @@ internal fun AdviceDialog(
             ScalableButton(
                 delayOrder = 1,
                 stringRes = R.string.thanks,
-                textStyle = MaterialTheme.typography.titleSmall,
+                textStyle = MaterialTheme.typography.displaySmall,
                 onClick = onDismiss
             )
         }

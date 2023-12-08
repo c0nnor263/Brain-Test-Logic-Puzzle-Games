@@ -27,20 +27,20 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import com.gamovation.core.data.model.StoreItemInfo
+import com.gamovation.core.billing.model.isNotEmpty
+import com.gamovation.core.billing.model.price
+import com.gamovation.core.ui.BuyButton
 import com.gamovation.core.ui.Dimensions
 import com.gamovation.core.ui.R
-import com.gamovation.core.ui.billing.BuyButton
 import com.gamovation.core.ui.common.ChalkBoardCard
 import com.gamovation.core.ui.theme.boardBorderColor
-import com.gamovation.feature.store.price
 import kotlin.math.roundToInt
 
 @Composable
 fun SmartestOfferContent(
     modifier: Modifier = Modifier,
-    info: StoreItemInfo?,
-    onBuy: (StoreItemInfo) -> Unit
+    info: com.gamovation.core.billing.model.StoreItemInfo?,
+    onBuy: (com.gamovation.core.billing.model.StoreItemInfo) -> Unit
 ) {
     Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
         Card(
@@ -94,7 +94,7 @@ fun SmartestOfferContent(
                 Spacer(modifier = Modifier.height(Dimensions.Padding.Small.value))
                 BuyButton(
                     text = info?.price(),
-                    isLoaded = info?.details != null,
+                    isLoaded = info.isNotEmpty(),
                     onClick = {
                         info?.let {
                             onBuy(info)

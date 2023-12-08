@@ -10,7 +10,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.gamovation.core.data.R
-import com.gamovation.core.database.model.LevelData
 import com.gamovation.core.domain.level.LevelActionState
 import com.gamovation.core.domain.level.LevelScreenState
 import com.gamovation.core.ui.DEFAULT_LEVEL_SCREEN_RESTART_DURATION
@@ -18,6 +17,7 @@ import com.gamovation.core.ui.state.LocalLevelAction
 import com.gamovation.core.ui.state.LocalLevelScreen
 import com.gamovation.core.ui.state.rememberInterstitialAdViewState
 import com.gamovation.core.ui.state.rememberRewardedInterstitialAdViewState
+import com.gamovation.feature.level.domain.model.LevelUiDetails
 import com.gamovation.feature.level.uistate.CompetedTheGame
 import com.gamovation.feature.level.uistate.LevelCompleted
 import com.gamovation.feature.level.uistate.LevelRestart
@@ -26,7 +26,7 @@ import kotlinx.coroutines.delay
 @Composable
 internal fun LevelSpecificContent(
     modifier: Modifier = Modifier,
-    level: LevelData,
+    details: LevelUiDetails,
     onReviewRequest: () -> Unit,
     onLevelAction: (LevelActionState) -> Unit,
     onLevelScreenAction: (LevelScreenState) -> Unit
@@ -71,14 +71,14 @@ internal fun LevelSpecificContent(
 
                 LevelScreenState.LEVEL_COMPLETED -> {
                     LevelCompleted(
-                        id = level.id - 1,
+                        id = details.id - 1,
                         rewardedInterstitialAd = rewardedInterstitialAd,
                         onLevelUIAction = onLevelScreenAction
                     )
                 }
 
                 else -> LevelBody(
-                    level = level,
+                    details = details,
                     onReviewRequest = onReviewRequest,
                     onLevelScreenAction = { newState ->
                         if (screenState != LevelScreenState.IS_LEVEL_PLAYING) return@LevelBody
