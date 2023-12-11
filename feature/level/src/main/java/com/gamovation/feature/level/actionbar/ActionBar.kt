@@ -57,7 +57,7 @@ fun ActionBar(
 
     AnimatedVisibility(
         modifier = modifier,
-        visible = levelUIState == LevelScreenState.IS_LEVEL_PLAYING,
+        visible = levelUIState == LevelScreenState.IsLevelPlaying,
         enter = fadeIn(tween(Durations.Short.time)) +
             slideInVertically(tween(Durations.Short.time)) { it },
         exit = slideOutVertically(tween(Durations.Short.time)) { it } +

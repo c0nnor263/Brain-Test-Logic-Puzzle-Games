@@ -93,9 +93,13 @@ fun Level3Content(
             ) {
                 val newState =
                     if (meltingTransition.currentState && index == 4) {
-                        LevelScreenState.USER_CORRECT_CHOICE
+                        LevelScreenState.UserCorrectChoice(
+                            com.gamovation.core.domain.R.string.event_level_3_finished
+                        )
                     } else {
-                        LevelScreenState.USER_WRONG_CHOICE
+                        LevelScreenState.UserWrongChoice(
+                            com.gamovation.core.domain.R.string.event_level_3_wrong
+                        )
                     }
                 onLevelAction(newState)
             }

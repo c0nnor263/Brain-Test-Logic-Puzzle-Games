@@ -52,7 +52,7 @@ internal fun LevelSpecificContent(
     }
 
     LaunchedEffect(screenState) {
-        if (screenState == LevelScreenState.LEVEL_COMPLETED) {
+        if (screenState == LevelScreenState.LevelCompleted) {
             interstitialAdView.showAd(activity = activity)
         }
     }
@@ -65,11 +65,11 @@ internal fun LevelSpecificContent(
             LevelRestart(modifier = Modifier.fillMaxSize(), true)
         } else {
             when (screenState) {
-                LevelScreenState.COMPLETED_THE_GAME -> {
+                is LevelScreenState.CompletedTheGame -> {
                     CompetedTheGame()
                 }
 
-                LevelScreenState.LEVEL_COMPLETED -> {
+                LevelScreenState.LevelCompleted -> {
                     LevelCompleted(
                         id = details.id - 1,
                         rewardedInterstitialAd = rewardedInterstitialAd,
@@ -81,7 +81,7 @@ internal fun LevelSpecificContent(
                     details = details,
                     onReviewRequest = onReviewRequest,
                     onLevelScreenAction = { newState ->
-                        if (screenState != LevelScreenState.IS_LEVEL_PLAYING) return@LevelBody
+                        if (screenState != LevelScreenState.IsLevelPlaying) return@LevelBody
                         onLevelScreenAction(newState)
                     }
 

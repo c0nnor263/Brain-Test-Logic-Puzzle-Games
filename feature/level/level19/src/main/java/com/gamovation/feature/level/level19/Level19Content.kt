@@ -50,7 +50,11 @@ fun Level19Content(
         label = ""
     ) {
         if (bottleIsOpepened) {
-            onLevelAction(LevelScreenState.USER_CORRECT_CHOICE)
+            onLevelAction(
+                LevelScreenState.UserCorrectChoice(
+                    com.gamovation.core.domain.R.string.event_level_19_finished
+                )
+            )
         }
     }
 
@@ -98,7 +102,11 @@ fun Level19Content(
             defaultDrawableRes = R.drawable.l19_bottle,
             delayOrder = 1
         ) {
-            onLevelAction(LevelScreenState.USER_WRONG_CHOICE)
+            onLevelAction(
+                LevelScreenState.UserWrongChoice(
+                    com.gamovation.core.domain.R.string.event_level_19_wrong
+                )
+            )
         }
 
         DraggableImage(

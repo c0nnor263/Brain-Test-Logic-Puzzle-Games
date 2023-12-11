@@ -60,7 +60,11 @@ internal fun LevelCompleted(
             showWatchAdDialogState.dismiss()
             when (result) {
                 RewardedInterstitialAdResult.REWARDED -> {
-                    onLevelUIAction(LevelScreenState.USER_WATCH_AD)
+                    onLevelUIAction(
+                        LevelScreenState.UserWatchAd(
+                            com.gamovation.core.domain.R.string.event_level_competed_ad
+                        )
+                    )
                 }
 
                 else -> {}
@@ -117,7 +121,7 @@ fun LevelCompletedContent(
             ) {
                 ScalableButton(
                     onClick = {
-                        onLevelUIAction(LevelScreenState.PROCEED_TO_NEXT_LEVEL)
+                        onLevelUIAction(LevelScreenState.ProceedToNextLevel)
                     },
                     stringRes = com.gamovation.feature.level.R.string.next_level,
                     textStyle = MaterialTheme.typography.headlineSmall,

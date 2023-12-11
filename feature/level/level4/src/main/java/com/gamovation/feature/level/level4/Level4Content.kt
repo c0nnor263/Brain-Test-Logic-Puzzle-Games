@@ -68,9 +68,13 @@ fun Level4Content(
 
                     val isCorrectBulb = index == 3
                     val newState = if (isCorrectBulb) {
-                        LevelScreenState.USER_CORRECT_CHOICE
+                        LevelScreenState.UserCorrectChoice(
+                            com.gamovation.core.domain.R.string.event_level_4_finished
+                        )
                     } else {
-                        LevelScreenState.USER_WRONG_CHOICE
+                        LevelScreenState.UserWrongChoice(
+                            com.gamovation.core.domain.R.string.event_level_4_wrong
+                        )
                     }
                     onLevelAction(newState)
                     bulbAnimationStarted = true

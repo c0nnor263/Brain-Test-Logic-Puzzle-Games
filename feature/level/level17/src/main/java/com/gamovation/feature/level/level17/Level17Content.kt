@@ -130,7 +130,11 @@ fun Level17Content(
             },
             onMatch = {
                 isBalloonPoppedOut = true
-                onLevelAction(LevelScreenState.USER_CORRECT_CHOICE)
+                onLevelAction(
+                    LevelScreenState.UserCorrectChoice(
+                        com.gamovation.core.domain.R.string.event_level_17_finished
+                    )
+                )
             }
         )
     }

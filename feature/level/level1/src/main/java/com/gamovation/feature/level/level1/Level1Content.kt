@@ -104,9 +104,11 @@ fun Level1Content(
 
             val duckCount = 8.toString()
             val state = if (answerText == duckCount) {
-                LevelScreenState.USER_CORRECT_CHOICE
+                val levelEventId = com.gamovation.core.domain.R.string.event_level_1_finished
+                LevelScreenState.UserCorrectChoice(levelEventId)
             } else {
-                LevelScreenState.USER_WRONG_CHOICE
+                val levelEventId = com.gamovation.core.domain.R.string.event_level_1_wrong
+                LevelScreenState.UserWrongChoice(levelEventId)
             }
             onLevelAction(state)
         }

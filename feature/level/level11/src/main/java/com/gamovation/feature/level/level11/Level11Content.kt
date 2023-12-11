@@ -38,14 +38,22 @@ fun Level11Content(modifier: Modifier = Modifier, onLevelAction: (LevelScreenSta
     ) {
         Level11TopContent(
             onClick = {
-                onLevelAction(LevelScreenState.USER_CORRECT_CHOICE)
+                onLevelAction(
+                    LevelScreenState.UserCorrectChoice(
+                        com.gamovation.core.domain.R.string.event_level_11_finished
+                    )
+                )
             }
         )
 
         Spacer(modifier = Modifier.height(Dimensions.Padding.Medium.value))
         Level11BottomContent(
             onClick = {
-                onLevelAction(LevelScreenState.USER_WRONG_CHOICE)
+                onLevelAction(
+                    LevelScreenState.UserWrongChoice(
+                        com.gamovation.core.domain.R.string.event_level_11_wrong
+                    )
+                )
             }
         )
     }

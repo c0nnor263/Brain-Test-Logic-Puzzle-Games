@@ -53,9 +53,17 @@ fun Level15Content(
             Spacer(modifier = Modifier.height(Dimensions.Padding.Medium.value))
             CounterBlock {
                 if (it == 24) {
-                    onLevelAction(LevelScreenState.USER_CORRECT_CHOICE)
+                    onLevelAction(
+                        LevelScreenState.UserCorrectChoice(
+                            com.gamovation.core.domain.R.string.event_level_15_finished
+                        )
+                    )
                 } else {
-                    onLevelAction(LevelScreenState.USER_WRONG_CHOICE)
+                    onLevelAction(
+                        LevelScreenState.UserWrongChoice(
+                            com.gamovation.core.domain.R.string.event_level_15_wrong
+                        )
+                    )
                 }
             }
         }

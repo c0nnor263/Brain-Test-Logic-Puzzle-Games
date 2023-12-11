@@ -39,9 +39,13 @@ fun Level5Content(
     LaunchedEffect(isFirstMarkPressed, isSecondMarkPressed) {
         val event = if (isFirstMarkPressed && isSecondMarkPressed
         ) {
-            LevelScreenState.USER_CORRECT_CHOICE
+            LevelScreenState.UserCorrectChoice(
+                com.gamovation.core.domain.R.string.event_level_5_finished
+            )
         } else if (isFirstMarkPressed || isSecondMarkPressed) {
-            LevelScreenState.USER_WRONG_CHOICE
+            LevelScreenState.UserWrongChoice(
+                com.gamovation.core.domain.R.string.event_level_5_wrong
+            )
         } else {
             return@LaunchedEffect
         }

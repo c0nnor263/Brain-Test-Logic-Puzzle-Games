@@ -54,8 +54,9 @@ android {
             applicationIdSuffix = ".debug"
         }
         release {
-            isMinifyEnabled = true
-            isShrinkResources = true
+            // TODO enable minify
+//            isMinifyEnabled = true
+//            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -126,4 +127,6 @@ dependencies {
 
     // Play Services Games
     implementation("com.google.android.gms:play-services-games-v2:19.0.0")
+
+    implementation("com.google.ads.mediation:facebook:6.16.0.0")
 }

@@ -19,9 +19,17 @@ fun Level13Content(
     ) {
         NumbersBlock {
             if (it == "6") {
-                onLevelAction(LevelScreenState.USER_CORRECT_CHOICE)
+                onLevelAction(
+                    LevelScreenState.UserCorrectChoice(
+                        com.gamovation.core.domain.R.string.event_level_13_finished
+                    )
+                )
             } else {
-                onLevelAction(LevelScreenState.USER_WRONG_CHOICE)
+                onLevelAction(
+                    LevelScreenState.UserWrongChoice(
+                        com.gamovation.core.domain.R.string.event_level_13_wrong
+                    )
+                )
             }
         }
     }

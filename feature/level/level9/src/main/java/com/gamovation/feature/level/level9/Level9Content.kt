@@ -16,9 +16,17 @@ fun Level9Content(modifier: Modifier = Modifier, onLevelAction: (LevelScreenStat
     ) {
         NumbersBlock(numberMaxLength = 2) {
             if (it == "11") {
-                onLevelAction(LevelScreenState.USER_CORRECT_CHOICE)
+                onLevelAction(
+                    LevelScreenState.UserCorrectChoice(
+                        com.gamovation.core.domain.R.string.event_level_9_finished
+                    )
+                )
             } else {
-                onLevelAction(LevelScreenState.USER_WRONG_CHOICE)
+                onLevelAction(
+                    LevelScreenState.UserWrongChoice(
+                        com.gamovation.core.domain.R.string.event_level_9_wrong
+                    )
+                )
             }
         }
     }

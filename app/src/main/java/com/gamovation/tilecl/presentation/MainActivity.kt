@@ -23,6 +23,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.gamovation.core.data.AppOpenAdManager
+import com.gamovation.core.data.playservices.PlayEvents
 import com.gamovation.core.database.preferences.UserInfoPreferencesDataStore
 import com.gamovation.core.domain.billing.UserVipType
 import com.gamovation.core.domain.currency.CostsInfo
@@ -162,8 +163,8 @@ class MainActivity : ComponentActivity() {
             }
         }
         setupOneSignalNotificationListener()
-
         setupFullscreenMode()
+        initPlayGamesClients()
     }
 
     override fun onResume() {
@@ -197,5 +198,9 @@ class MainActivity : ComponentActivity() {
             window.attributes.layoutInDisplayCutoutMode =
                 WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
         }
+    }
+
+    private fun initPlayGamesClients() {
+        PlayEvents.createClient(this)
     }
 }

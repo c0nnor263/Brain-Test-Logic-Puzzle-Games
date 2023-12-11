@@ -107,9 +107,17 @@ fun Level18Content(
             }
         ) {
             if (it == 5) {
-                onLevelAction(LevelScreenState.USER_CORRECT_CHOICE)
+                onLevelAction(
+                    LevelScreenState.UserCorrectChoice(
+                        com.gamovation.core.domain.R.string.event_level_18_finished
+                    )
+                )
             } else {
-                onLevelAction(LevelScreenState.USER_WRONG_CHOICE)
+                onLevelAction(
+                    LevelScreenState.UserWrongChoice(
+                        com.gamovation.core.domain.R.string.event_level_18_wrong
+                    )
+                )
             }
         }
     }

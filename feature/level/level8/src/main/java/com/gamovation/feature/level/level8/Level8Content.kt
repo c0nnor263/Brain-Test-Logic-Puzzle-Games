@@ -49,9 +49,17 @@ fun Level8Content(modifier: Modifier = Modifier, onLevelAction: (LevelScreenStat
 
         NumbersBlock(modifier = Modifier.weight(1F), numberMaxLength = 2) {
             if (it == "40") {
-                onLevelAction(LevelScreenState.USER_CORRECT_CHOICE)
+                onLevelAction(
+                    LevelScreenState.UserCorrectChoice(
+                        com.gamovation.core.domain.R.string.event_level_8_finished
+                    )
+                )
             } else {
-                onLevelAction(LevelScreenState.USER_WRONG_CHOICE)
+                onLevelAction(
+                    LevelScreenState.UserWrongChoice(
+                        com.gamovation.core.domain.R.string.event_level_8_wrong
+                    )
+                )
             }
         }
     }

@@ -42,7 +42,7 @@ fun Level14Content(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             TitleContent(
-                isEnabled = levelScreenState != LevelScreenState.USER_CORRECT_CHOICE,
+                isEnabled = levelScreenState !is LevelScreenState.UserCorrectChoice,
                 onUpdatePosition = {
                     positionOfText = it
                 }
@@ -108,7 +108,11 @@ fun SheepContent(positionOfText: Offset, onLevelAction: (LevelScreenState) -> Un
             outerOffset = positionOfText
 
         ) {
-            onLevelAction(LevelScreenState.USER_CORRECT_CHOICE)
+            onLevelAction(
+                LevelScreenState.UserCorrectChoice(
+                    com.gamovation.core.domain.R.string.event_level_14_finished
+                )
+            )
         }
         CollisionImage(
             modifier = Modifier
@@ -124,7 +128,11 @@ fun SheepContent(positionOfText: Offset, onLevelAction: (LevelScreenState) -> Un
             notMatchedDrawableRes = R.drawable.l14_white_sheep,
             outerOffset = positionOfText
         ) {
-            onLevelAction(LevelScreenState.USER_CORRECT_CHOICE)
+            onLevelAction(
+                LevelScreenState.UserCorrectChoice(
+                    com.gamovation.core.domain.R.string.event_level_14_finished
+                )
+            )
         }
         CollisionImage(
             modifier = Modifier
@@ -141,7 +149,11 @@ fun SheepContent(positionOfText: Offset, onLevelAction: (LevelScreenState) -> Un
             outerOffset = positionOfText
 
         ) {
-            onLevelAction(LevelScreenState.USER_CORRECT_CHOICE)
+            onLevelAction(
+                LevelScreenState.UserCorrectChoice(
+                    com.gamovation.core.domain.R.string.event_level_14_finished
+                )
+            )
         }
     }
 }

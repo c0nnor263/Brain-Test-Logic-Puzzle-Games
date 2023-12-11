@@ -51,7 +51,7 @@ fun BoxScope.LevelUserChoiceAlert(
     currentState: LevelScreenState,
     checkState: LevelScreenState
 ) {
-    val isCorrectChoice = currentState == LevelScreenState.USER_CORRECT_CHOICE
+    val isCorrectChoice = currentState is LevelScreenState.UserCorrectChoice
     val isVisible = currentState == checkState
 
     val backgroundBrushAlpha by animateFloatAsState(
@@ -238,8 +238,8 @@ fun LevelUserChoiceAlertPreview() {
     WordefullTheme {
         BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
             LevelUserChoiceAlert(
-                currentState = LevelScreenState.USER_WRONG_CHOICE,
-                checkState = LevelScreenState.USER_WRONG_CHOICE
+                currentState = LevelScreenState.UserWrongChoice(0),
+                checkState = LevelScreenState.UserWrongChoice(0)
             )
         }
     }

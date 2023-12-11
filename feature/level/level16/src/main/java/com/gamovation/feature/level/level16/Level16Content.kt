@@ -68,7 +68,11 @@ fun Level16Content(
             },
             outerOffset = positionOfBowl
         ) {
-            onLevelAction(LevelScreenState.USER_CORRECT_CHOICE)
+            onLevelAction(
+                LevelScreenState.UserCorrectChoice(
+                    com.gamovation.core.domain.R.string.event_level_16_finished
+                )
+            )
         }
 
         Crossfade(

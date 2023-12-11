@@ -1,6 +1,7 @@
 package com.gamovation.feature.level
 
 import androidx.activity.ComponentActivity
+import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gamovation.core.data.repository.OfflineLevelManagerRepository
@@ -10,6 +11,7 @@ import com.gamovation.core.database.data.LevelManager.Companion.MAX_LEVEL_ID
 import com.gamovation.core.database.model.LevelData
 import com.gamovation.core.domain.level.LevelActionState
 import com.gamovation.core.domain.level.LevelScreenState
+import com.gamovation.core.domain.repository.PlayGamesEventRepository
 import com.gamovation.core.ui.DEFAULT_LEVEL_SCREEN_COUNTDOWN_DURATION
 import com.gamovation.feature.level.domain.model.LevelUiDetails
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,14 +22,14 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
 class LevelScreenViewModel @Inject constructor(
     private val levelRepositoryImpl: OfflineLevelManagerRepository,
     private val userInfoPreferencesRepository: OfflineUserInfoPreferencesRepository,
-    private val reviewDataManager: ReviewDataManager
+    private val reviewDataManager: ReviewDataManager,
+    private val playGamesEventRepository: PlayGamesEventRepository
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<UiState?>(null)
     val uiState: StateFlow<UiState?> = _uiState.asStateFlow()
@@ -37,41 +39,64 @@ class LevelScreenViewModel @Inject constructor(
     private val _levelUiDetails = MutableStateFlow<LevelUiDetails?>(null)
     val levelUiDetails: StateFlow<LevelUiDetails?> = _levelUiDetails
 
-    private val _levelScreenState = MutableStateFlow(LevelScreenState.IS_LEVEL_PLAYING)
+    private val _levelScreenState: MutableStateFlow<LevelScreenState> =
+        MutableStateFlow(LevelScreenState.IsLevelPlaying)
     val levelScreenState: StateFlow<LevelScreenState> = _levelScreenState
 
     private val _levelActionState = MutableStateFlow(LevelActionState.IDLE)
     val levelActionState: StateFlow<LevelActionState> = _levelActionState
 
     fun updateLevelScreenState(state: LevelScreenState) = viewModelScope.launch(Dispatchers.Main) {
+        checkForPlayGamesSubmitEvent(state)
         _levelScreenState.emit(state)
 
         // If state is not equals to next level, do some delay
-        if (state != LevelScreenState.PROCEED_TO_NEXT_LEVEL) {
-            delay(
-                DEFAULT_LEVEL_SCREEN_COUNTDOWN_DURATION
-            )
+        if (state != LevelScreenState.ProceedToNextLevel) {
+            delay(DEFAULT_LEVEL_SCREEN_COUNTDOWN_DURATION)
         }
 
         // If user completed level with correct choice, update state to completed, otherwise update state to is playing
         val newState = when (state) {
-            LevelScreenState.COMPLETED_THE_GAME -> {
-                withContext(Dispatchers.IO) {
-                    completeLevel()
-                }
-                LevelScreenState.COMPLETED_THE_GAME
+            is LevelScreenState.CompletedTheGame -> {
+                completeLevel()
+                state
             }
 
-            LevelScreenState.USER_CORRECT_CHOICE -> LevelScreenState.LEVEL_COMPLETED
-            else -> LevelScreenState.IS_LEVEL_PLAYING
+            is LevelScreenState.UserCorrectChoice -> {
+                LevelScreenState.LevelCompleted
+            }
+
+            else -> LevelScreenState.IsLevelPlaying
         }
 
         _levelScreenState.emit(newState)
     }
 
+    private fun checkForPlayGamesSubmitEvent(state: LevelScreenState) {
+        when (state) {
+            is LevelScreenState.CompletedTheGame -> {
+                submitEvent(state.eventId)
+            }
+
+            is LevelScreenState.UserCorrectChoice -> {
+                submitEvent(state.eventId)
+            }
+
+            is LevelScreenState.UserWatchAd -> {
+                submitEvent(state.eventId)
+            }
+
+            is LevelScreenState.UserWrongChoice -> {
+                submitEvent(state.eventId)
+            }
+
+            else -> {}
+        }
+    }
+
     fun updateLevelActionState(state: LevelActionState) = viewModelScope.launch(Dispatchers.Main) {
         // If state is not playing, do not update action state
-        if (levelScreenState.value != LevelScreenState.IS_LEVEL_PLAYING) return@launch
+        if (levelScreenState.value != LevelScreenState.IsLevelPlaying) return@launch
         _levelActionState.emit(state)
     }
 
@@ -97,7 +122,7 @@ class LevelScreenViewModel @Inject constructor(
         updateLevelIndex(previousLevelIndex)
     }
 
-    private suspend fun completeLevel() {
+    private fun completeLevel() = viewModelScope.launch(Dispatchers.IO) {
         val levelData = levelRepositoryImpl.getById(levelIndex).first().copy(
             isCompleted = true,
             isHasAdvise = false
@@ -132,7 +157,7 @@ class LevelScreenViewModel @Inject constructor(
                 _levelUiDetails.emit(details)
             }
 
-            LevelActionState.SKIP -> updateLevelScreenState(LevelScreenState.LEVEL_COMPLETED)
+            LevelActionState.SKIP -> updateLevelScreenState(LevelScreenState.LevelCompleted)
             else -> {}
         }
         userInfoPreferencesRepository.spendCurrency(cost)
@@ -140,13 +165,17 @@ class LevelScreenViewModel @Inject constructor(
 
     fun watchAdReward() = viewModelScope.launch(Dispatchers.IO) {
         userInfoPreferencesRepository.buyCurrency(25)
-        updateLevelScreenState(LevelScreenState.PROCEED_TO_NEXT_LEVEL)
+        updateLevelScreenState(LevelScreenState.ProceedToNextLevel)
     }
 
     fun processReviewRequest(activity: ComponentActivity, showDialog: () -> Unit) =
         viewModelScope.launch(Dispatchers.Main) {
             reviewDataManager.requestReviewInfo(activity, showDialog)
         }
+
+    private fun submitEvent(@StringRes event: Int, value: Int = 1) {
+        playGamesEventRepository.submitEvent(event, value)
+    }
 
     fun updateUiState(state: UiState) {
         _uiState.value = state
@@ -157,7 +186,6 @@ class LevelScreenViewModel @Inject constructor(
     }
 
     sealed class UiState {
-
         data object OnReviewRequest : UiState()
         data object OnBack : UiState()
         data object OnForward : UiState()

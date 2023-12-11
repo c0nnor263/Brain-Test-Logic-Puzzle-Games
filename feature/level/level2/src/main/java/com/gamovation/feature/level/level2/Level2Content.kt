@@ -49,7 +49,11 @@ fun Level2Content(
                 ) { sunOffset, screenSize ->
                     if (sunOffset.y >= screenSize.y / 1.5F) {
                         isOwlWakeUp = true
-                        onLevelAction(LevelScreenState.USER_CORRECT_CHOICE)
+                        onLevelAction(
+                            LevelScreenState.UserCorrectChoice(
+                                com.gamovation.core.domain.R.string.event_level_2_finished
+                            )
+                        )
                     }
                 }
                 Image(

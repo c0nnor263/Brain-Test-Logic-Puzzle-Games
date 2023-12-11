@@ -39,9 +39,17 @@ fun Level7Content(modifier: Modifier = Modifier, onLevelAction: (LevelScreenStat
 
         NumbersBlock(modifier = Modifier.weight(1F), numberMaxLength = 2) {
             if (it == "15") {
-                onLevelAction(LevelScreenState.USER_CORRECT_CHOICE)
+                onLevelAction(
+                    LevelScreenState.UserCorrectChoice(
+                        com.gamovation.core.domain.R.string.event_level_7_finished
+                    )
+                )
             } else {
-                onLevelAction(LevelScreenState.USER_WRONG_CHOICE)
+                onLevelAction(
+                    LevelScreenState.UserWrongChoice(
+                        com.gamovation.core.domain.R.string.event_level_7_wrong
+                    )
+                )
             }
         }
     }

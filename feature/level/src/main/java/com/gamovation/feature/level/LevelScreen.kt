@@ -90,8 +90,8 @@ fun LevelScreen(
     LaunchedEffect(screenState) {
         scope.launch {
             val state = when (screenState) {
-                LevelScreenState.LEVEL_COMPLETED -> LevelScreenViewModel.UiState.OnForward
-                LevelScreenState.USER_WATCH_AD -> LevelScreenViewModel.UiState.OnWatchAd
+                LevelScreenState.LevelCompleted -> LevelScreenViewModel.UiState.OnForward
+                is LevelScreenState.UserWatchAd -> LevelScreenViewModel.UiState.OnWatchAd
                 else -> null
             }
             state?.let { viewModel.updateUiState(it) }
@@ -133,7 +133,7 @@ fun LevelScreen(
     }
 
     BackHandler {
-        if (screenState == LevelScreenState.IS_LEVEL_PLAYING) {
+        if (screenState == LevelScreenState.IsLevelPlaying) {
             viewModel.updateUiState(LevelScreenViewModel.UiState.OnBack)
         }
     }
@@ -199,11 +199,11 @@ fun LevelScreenContent(
 
         LevelUserChoiceAlert(
             currentState = screenState,
-            checkState = LevelScreenState.USER_CORRECT_CHOICE
+            checkState = LevelScreenState.UserCorrectChoice(0)
         )
         LevelUserChoiceAlert(
             currentState = screenState,
-            checkState = LevelScreenState.USER_WRONG_CHOICE
+            checkState = LevelScreenState.UserWrongChoice(0)
         )
     }
 }

@@ -44,7 +44,11 @@ fun Level20Content(
                     bottom.linkTo(bottomGuideline)
                 }
                 .clickableNoRipple {
-                    onLevelAction(LevelScreenState.USER_WRONG_CHOICE)
+                    onLevelAction(
+                        LevelScreenState.UserWrongChoice(
+                            com.gamovation.core.domain.R.string.event_level_20_wrong
+                        )
+                    )
                 }
         )
 
@@ -61,7 +65,11 @@ fun Level20Content(
                     bottom.linkTo(bottomGuideline)
                 }
                 .clickableNoRipple {
-                    onLevelAction(LevelScreenState.COMPLETED_THE_GAME)
+                    onLevelAction(
+                        LevelScreenState.CompletedTheGame(
+                            com.gamovation.core.domain.R.string.event_completed_the_game
+                        )
+                    )
                 }
         )
         Image(
@@ -77,7 +85,11 @@ fun Level20Content(
                     bottom.linkTo(bottomGuideline)
                 }
                 .clickableNoRipple {
-                    onLevelAction(LevelScreenState.USER_WRONG_CHOICE)
+                    onLevelAction(
+                        LevelScreenState.UserWrongChoice(
+                            com.gamovation.core.domain.R.string.event_level_20_wrong
+                        )
+                    )
                 }
         )
     }
