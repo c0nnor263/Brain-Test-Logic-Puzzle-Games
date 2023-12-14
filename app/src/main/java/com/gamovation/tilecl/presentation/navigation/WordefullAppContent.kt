@@ -49,7 +49,9 @@ fun WordefullAppContent() {
         )
 
         AnimatedVisibility(
-            modifier = Modifier.fillMaxSize().padding(innerPadding),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding),
             visibleState = state,
             enter = scaleIn(tween(Durations.Medium.time)),
             exit = scaleOut(tween(Durations.Medium.time))

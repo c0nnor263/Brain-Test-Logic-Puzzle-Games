@@ -9,12 +9,12 @@ import androidx.datastore.preferences.preferencesDataStore
 import com.gamovation.core.domain.billing.UserVipType
 import com.gamovation.core.domain.currency.DEFAULT_USER_CURRENCY
 import dagger.hilt.android.qualifiers.ApplicationContext
-import java.util.Locale
-import javax.inject.Inject
-import javax.inject.Singleton
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
+import java.util.Locale
+import javax.inject.Inject
+import javax.inject.Singleton
 
 @Singleton
 class UserInfoPreferencesDataStore @Inject constructor(@ApplicationContext val context: Context) {

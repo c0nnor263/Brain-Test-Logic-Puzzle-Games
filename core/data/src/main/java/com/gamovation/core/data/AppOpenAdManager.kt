@@ -2,7 +2,6 @@ package com.gamovation.core.data
 
 import android.app.Activity
 import android.content.Context
-import android.util.Log
 import com.gamovation.core.domain.AdStatus
 import com.gamovation.core.domain.di.ApplicationScope
 import com.google.android.gms.ads.AdError
@@ -56,7 +55,6 @@ class AppOpenAdManager @Inject constructor(
 
                 override fun onAdFailedToLoad(error: LoadAdError) {
                     super.onAdFailedToLoad(error)
-                    Log.i("TAG", "onAdFailedToLoad: $error")
                     updateAppOpenAd(null, AdStatus.FAILED)
                 }
             }
@@ -87,11 +85,10 @@ class AppOpenAdManager @Inject constructor(
 
     private fun isAdAvailable(): Boolean {
         return appOpenAd != null &&
-            !wasLoadTimeLessThanLimitHoursAgo(loadTime, 4)
+                !wasLoadTimeLessThanLimitHoursAgo(loadTime, 4)
     }
 
     private fun updateAppOpenAd(ad: AppOpenAd?, adStatus: AdStatus) {
-        Log.i("TAG", "updateAppOpenAd: $adStatus")
         when (adStatus) {
             AdStatus.LOADED -> {
                 appOpenAd = ad

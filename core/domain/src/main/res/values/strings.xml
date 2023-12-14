@@ -132,7 +132,6 @@
     <!--event Level 20 Wrong-->
     <string name="event_level_20_wrong" translatable="false">CgkItMHgsbMDEAIQKQ</string>
 
-    <!--    TODO FINISH games events-->
     <!--event In-App Review-->
     <string name="event_inapp_review" translatable="false">CgkItMHgsbMDEAIQKg</string>
     <!--event Push Click-->

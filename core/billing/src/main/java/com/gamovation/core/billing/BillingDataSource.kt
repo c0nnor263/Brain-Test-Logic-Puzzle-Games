@@ -194,6 +194,7 @@ class BillingDataSource @Inject constructor(
         onRequestActivity: () -> ComponentActivity
     ) {
         val (details, type) = storeItemInfo
+        Log.i("TAG", "purchaseProduct: $details $type")
         if (details == null) return
         try {
             val productDetailsParamsList =
@@ -223,11 +224,12 @@ class BillingDataSource @Inject constructor(
         }
         val url =
             BuildConfig.verifyPurchases + "?" +
-                "purchaseToken=${purchase?.purchaseToken}&" +
-                "productId=$productId&" +
-                "productType=$type"
+                    "purchaseToken=${purchase?.purchaseToken}&" +
+                    "productId=$productId&" +
+                    "productType=$type"
 
         val responseListener = Response.Listener<String> { response ->
+            Log.i("TAG", "verifyPurchase: response $response")
             val isValid = JSONObject(response).getBoolean("isValid")
             if (isValid) {
                 updatePendingBenefitType(purchaseJson)
@@ -252,6 +254,7 @@ class BillingDataSource @Inject constructor(
             url,
             responseListener
         ) { error ->
+            Log.i("TAG", "verifyPurchase: error $error")
             when (productId) {
                 BillingProductType.VIP.id,
                 BillingProductType.REMOVE_ADS.id,

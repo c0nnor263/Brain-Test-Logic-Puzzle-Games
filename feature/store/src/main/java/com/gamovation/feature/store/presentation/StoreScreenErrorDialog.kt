@@ -41,7 +41,7 @@ fun StoreScreenErrorDialog(
             Spacer(modifier = Modifier.height(Dimensions.Padding.Medium.value))
 
             ScalableButton(
-                delayOrder = 1,
+                appearOrder = 1,
                 stringRes = com.gamovation.core.ui.R.string.ok,
                 onClick = onDismiss,
                 textStyle = MaterialTheme.typography.titleLarge

@@ -1,9 +1,6 @@
 package com.gamovation.core.ui.state
 
 import android.content.Context
-import android.os.Handler
-import android.os.Looper
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -11,6 +8,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import com.gamovation.core.data.AdRetryPolicy
 import com.gamovation.core.data.wasLoadTimeLessThanLimitHoursAgo
 import com.gamovation.core.domain.enums.RewardedInterstitialAdResult
 import com.google.android.gms.ads.AdError
@@ -44,29 +42,25 @@ class RewardedInterstitialAdViewState(
     private val scope: CoroutineScope,
     private val adUnitID: String
 ) {
-    private val retryPolicy = RewardedInterstitialAdRetryPolicy()
+    private val retryPolicy = AdRetryPolicy()
     var rewardedInterstitialAd by mutableStateOf<RewardedInterstitialAd?>(null)
         private set
     val isAdAvailable
         get() = rewardedInterstitialAd != null
 
-    fun loadOrGetAd(context: ComponentActivity) {
+    fun loadOrGetAd(activity: ComponentActivity) {
         scope.launch {
-            Log.i("TAG", "loadOrGetAd: $adUnitID")
             RewardedInterstitialAdManager
-                .loadAd(context, adUnitID)
+                .loadAd(activity, adUnitID)
                 .fold(
                     onSuccess = { ad ->
                         rewardedInterstitialAd = ad
                         retryPolicy.reset()
-                        Log.i("TAG", "loadOrGetAd: success $adUnitID")
                     },
                     onFailure = {
                         retryPolicy.retry {
-                            loadOrGetAd(context)
+                            loadOrGetAd(activity)
                         }
-
-                        Log.i("TAG", "loadOrGetAd: failure $adUnitID")
                     }
                 )
         }
@@ -81,6 +75,7 @@ class RewardedInterstitialAdViewState(
                 override fun onAdDismissedFullScreenContent() {
                     super.onAdDismissedFullScreenContent()
                     rewardedInterstitialAd = null
+                    RewardedInterstitialAdManager.reset()
                     loadOrGetAd(activity)
                     onDismissed(RewardedInterstitialAdResult.DISMISSED)
                 }
@@ -88,6 +83,7 @@ class RewardedInterstitialAdViewState(
                 override fun onAdFailedToShowFullScreenContent(error: AdError) {
                     super.onAdFailedToShowFullScreenContent(error)
                     rewardedInterstitialAd = null
+                    RewardedInterstitialAdManager.reset()
                     loadOrGetAd(activity)
                     onDismissed(RewardedInterstitialAdResult.ERROR)
                 }
@@ -111,12 +107,7 @@ object RewardedInterstitialAdManager {
         adUnitID: String
     ) =
         suspendCoroutine { continuation ->
-            Log.i(
-                "TAG",
-                "RewardedInterstitialAdManager loadAd " +
-                    wasLoadTimeLessThanLimitHoursAgo(lastLoadTime, 1) + " " + isAdAvailable
-            )
-            if (!wasLoadTimeLessThanLimitHoursAgo(lastLoadTime, 1) && isAdAvailable) {
+            if (wasLoadTimeLessThanLimitHoursAgo(lastLoadTime, 1) && isAdAvailable) {
                 continuation.resume(Result.success(lastLoadedAd))
                 return@suspendCoroutine
             }
@@ -129,6 +120,7 @@ object RewardedInterstitialAdManager {
                 object : RewardedInterstitialAdLoadCallback() {
                     override fun onAdLoaded(ad: RewardedInterstitialAd) {
                         super.onAdLoaded(ad)
+                        lastLoadTime = System.currentTimeMillis()
                         lastLoadedAd = ad
                         continuation.resume(Result.success(ad))
                     }
@@ -142,32 +134,10 @@ object RewardedInterstitialAdManager {
                 }
             )
         }
-}
-
-class RewardedInterstitialAdRetryPolicy(
-    private var retryCount: Int = MAX_RETRY_COUNT,
-    private val delay: Long = RETRY_DELAY
-) {
-    companion object {
-        const val MAX_RETRY_COUNT = 3
-        const val RETRY_DELAY = 3000L
-    }
-
-    fun retry(block: () -> Unit) {
-        Log.i("TAG", "retry: $retryCount")
-        if (retryCount > 0) {
-            retryCount--
-            val runnable = Runnable {
-                block()
-                Log.i("TAG", "retry: block")
-            }
-            Handler(Looper.getMainLooper())
-                .postDelayed(runnable, delay)
-        }
-    }
 
     fun reset() {
-        retryCount = MAX_RETRY_COUNT
-        Log.i("TAG", "reset: $retryCount")
+        lastLoadedAd = null
     }
 }
+
+

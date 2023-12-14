@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -38,7 +39,7 @@ fun Level14Content(
 
     BoxWithConstraints(modifier = modifier.fillMaxWidth(), contentAlignment = Alignment.TopCenter) {
         Column(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             TitleContent(
@@ -58,28 +59,36 @@ fun Level14Content(
 
 @Composable
 fun TitleContent(isEnabled: Boolean, onUpdatePosition: (Offset) -> Unit) {
-    Row(
+    Column(
         modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
         Text(
             text = stringResource(R.string.l14_where_is_a),
-            style = MaterialTheme.typography.headlineSmall
-        )
-        Spacer(modifier = Modifier.width(Dimensions.Padding.ExtraSmall.value))
-        DraggableText(
-            text = stringResource(R.string.l14_black),
             style = MaterialTheme.typography.headlineSmall,
-            isEnabled = isEnabled
-        ) { offset, _ ->
-            onUpdatePosition(offset)
-        }
-        Spacer(modifier = Modifier.width(Dimensions.Padding.ExtraSmall.value))
-        Text(
-            text = stringResource(R.string.l14_sheep),
-            style = MaterialTheme.typography.headlineSmall
+            maxLines = 1
         )
+        Spacer(modifier = Modifier.width(Dimensions.Padding.ExtraSmall.value))
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            DraggableText(
+                text = stringResource(R.string.l14_black),
+                style = MaterialTheme.typography.headlineSmall,
+                isEnabled = isEnabled
+            ) { offset, _ ->
+                onUpdatePosition(offset)
+            }
+            Spacer(modifier = Modifier.width(Dimensions.Padding.Small.value))
+            Text(
+                text = stringResource(R.string.l14_sheep),
+                style = MaterialTheme.typography.headlineSmall
+            )
+        }
     }
 }
 
@@ -105,8 +114,7 @@ fun SheepContent(positionOfText: Offset, onLevelAction: (LevelScreenState) -> Un
                 },
             matchedDrawableRes = R.drawable.l14_black_sheep,
             notMatchedDrawableRes = R.drawable.l14_white_sheep,
-            outerOffset = positionOfText
-
+            outerOffset = positionOfText,
         ) {
             onLevelAction(
                 LevelScreenState.UserCorrectChoice(
@@ -126,7 +134,8 @@ fun SheepContent(positionOfText: Offset, onLevelAction: (LevelScreenState) -> Un
                 },
             matchedDrawableRes = R.drawable.l14_black_sheep,
             notMatchedDrawableRes = R.drawable.l14_white_sheep,
-            outerOffset = positionOfText
+            outerOffset = positionOfText,
+            appearOrder = 1
         ) {
             onLevelAction(
                 LevelScreenState.UserCorrectChoice(
@@ -146,8 +155,8 @@ fun SheepContent(positionOfText: Offset, onLevelAction: (LevelScreenState) -> Un
                 },
             matchedDrawableRes = R.drawable.l14_black_sheep,
             notMatchedDrawableRes = R.drawable.l14_white_sheep,
-            outerOffset = positionOfText
-
+            outerOffset = positionOfText,
+            appearOrder = 2
         ) {
             onLevelAction(
                 LevelScreenState.UserCorrectChoice(

@@ -115,15 +115,19 @@ fun StoreScreen(viewModel: StoreScreenViewModel) {
     }
 
     LazyColumn(
-        modifier = Modifier.semantics { contentDescription = "StoreLazyColumn" }
+        modifier = Modifier
+            .semantics { contentDescription = "StoreLazyColumn" }
             .fillMaxWidth(),
         contentPadding = PaddingValues(horizontal = Dimensions.Padding.Small.value),
         verticalArrangement = Arrangement.spacedBy(Dimensions.Padding.Small.value)
     ) {
-        TopOfferContent(storeDetails = storeDetails, onBuy = { info ->
-            val state = StoreScreenViewModel.UiState.OnBuy(info)
-            viewModel.updateUiState(state)
-        })
+        TopOfferContent(
+            storeDetails = storeDetails,
+            onBuy = { info ->
+                val state = StoreScreenViewModel.UiState.OnBuy(info)
+                viewModel.updateUiState(state)
+            }
+        )
 
         CurrencyContent(
             currencyItems = currencyItems,

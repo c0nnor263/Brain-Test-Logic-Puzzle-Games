@@ -34,15 +34,15 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.gamovation.core.ui.R
 import com.gamovation.core.ui.theme.WordefullTheme
-import kotlin.math.roundToInt
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.joinAll
 import kotlinx.coroutines.launch
+import kotlin.math.roundToInt
 
 @Composable
 fun DrawAnimation(
     modifier: Modifier = Modifier,
-    delayOrder: Int? = 0,
+    appearOrder: Int? = 0,
     content: @Composable () -> Unit
 ) {
     var offset by remember { mutableStateOf(Offset.Zero) }
@@ -73,15 +73,15 @@ fun DrawAnimation(
     val alphaAnimation by animateFloatAsState(
         targetValue = if (isStarted) 1F else 0F,
         label = "Alpha chalk animation",
-        animationSpec = if (delayOrder == null) snap() else tween(Durations.Medium.time)
+        animationSpec = if (appearOrder == null) snap() else tween(Durations.Medium.time)
     )
 
     LaunchedEffect(Unit) {
         launch {
-            if (delayOrder != null) {
+            if (appearOrder != null) {
                 val randomDelayTimeBeforeStart =
                     (Durations.Short.time..Durations.Medium.time).random().toLong()
-                delay(delayOrder * randomDelayTimeBeforeStart)
+                delay(appearOrder * randomDelayTimeBeforeStart)
             } else {
                 isStarted = true
                 isFinished = true

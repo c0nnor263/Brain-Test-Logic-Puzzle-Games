@@ -1,7 +1,7 @@
 package com.gamovation.feature.level.level10
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -11,7 +11,7 @@ import com.gamovation.core.ui.level.answers.NumbersBlock
 @Composable
 fun Level10Content(modifier: Modifier = Modifier, onLevelAction: (LevelScreenState) -> Unit) {
     Column(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         NumbersBlock {

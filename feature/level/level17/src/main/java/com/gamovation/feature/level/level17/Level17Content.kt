@@ -1,12 +1,8 @@
 package com.gamovation.feature.level.level17
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,60 +23,45 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.ConstraintLayoutScope
 import androidx.constraintlayout.compose.Dimension
 import com.gamovation.core.domain.level.LevelScreenState
-import com.gamovation.core.ui.Dimensions
 import com.gamovation.core.ui.animation.DrawAnimation
-import com.gamovation.core.ui.animation.Durations
+import com.gamovation.core.ui.animation.tweenMedium
 import com.gamovation.core.ui.level.interactions.CollisionImage
 import com.gamovation.core.ui.level.interactions.DraggableImage
 import com.gamovation.core.ui.theme.WordefullTheme
 
 @Composable
 fun Level17Content(
-    modifier: Modifier = Modifier,
-    onLevelAction: (LevelScreenState) -> Unit
+    modifier: Modifier = Modifier, onLevelAction: (LevelScreenState) -> Unit
 ) {
     var isBalloonPoppedOut by remember { mutableStateOf(false) }
-    var ringsOffset by remember { mutableStateOf(Offset.Zero) }
 
-    ConstraintLayout(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(Dimensions.Padding.Medium.value)
-    ) {
-        val (
-            boy,
-            girl,
-            status,
-            rings,
-            balloon,
-            present
-        ) = createRefs()
 
+    ConstraintLayout(modifier = modifier.fillMaxSize()) {
+        val (boy, girl, status, rings, balloon, present) = createRefs()
+
+        val topGuideline = createGuidelineFromTop(0.2F)
         createHorizontalChain(boy, status, girl)
-        DrawAnimation(
-            modifier = Modifier.constrainAs(boy) {
-                width = Dimension.fillToConstraints
-                height = Dimension.ratio("1:1")
-                top.linkTo(parent.top)
-                start.linkTo(parent.start)
-
-                centerVerticallyTo(status)
-            }
-        ) {
+        DrawAnimation(modifier = Modifier.constrainAs(boy) {
+            width = Dimension.fillToConstraints
+            height = Dimension.fillToConstraints
+            centerVerticallyTo(status)
+            centerHorizontallyTo(status)
+        }) {
             Image(
                 painter = painterResource(id = R.drawable.l17_boy),
                 contentDescription = null,
-                contentScale = ContentScale.FillWidth
+                contentScale = ContentScale.FillBounds
             )
         }
 
         DrawAnimation(
             modifier = Modifier.constrainAs(status) {
-                height = Dimension.ratio("1:1")
                 width = Dimension.fillToConstraints
+                height = Dimension.fillToConstraints
                 top.linkTo(parent.top)
-            },
-            delayOrder = 1
+                bottom.linkTo(topGuideline)
+                centerHorizontallyTo(parent)
+            }, appearOrder = 1
         ) {
             Text(
                 text = if (isBalloonPoppedOut) {
@@ -89,22 +70,17 @@ fun Level17Content(
                     stringResource(
                         R.string.l17_snooze_emoji
                     )
-                },
-                style = MaterialTheme.typography.headlineLarge,
-                textAlign = TextAlign.Center
+                }, style = MaterialTheme.typography.headlineLarge, textAlign = TextAlign.Center
 
             )
         }
         DrawAnimation(
             modifier = Modifier.constrainAs(girl) {
                 width = Dimension.fillToConstraints
-                height = Dimension.ratio("1:1")
-                top.linkTo(parent.top)
-                end.linkTo(parent.end)
-
+                height = Dimension.fillToConstraints
                 centerVerticallyTo(status)
-            },
-            delayOrder = 2
+                centerHorizontallyTo(status)
+            }, appearOrder = 2
         ) {
             Image(
                 painter = painterResource(id = R.drawable.l17_girl),
@@ -114,20 +90,13 @@ fun Level17Content(
         }
 
         createHorizontalChain(
-            rings,
-            balloon,
-            present
+            rings, balloon, present
         )
 
-        OptionsContent(
-            isBalloonPoppedOut = isBalloonPoppedOut,
-            ringsOffset = ringsOffset,
+        OptionsContent(isBalloonPoppedOut = isBalloonPoppedOut,
             rings = rings,
             balloon = balloon,
             present = present,
-            onUpdateRingsOffset = { offset ->
-                ringsOffset = offset
-            },
             onMatch = {
                 isBalloonPoppedOut = true
                 onLevelAction(
@@ -135,67 +104,72 @@ fun Level17Content(
                         com.gamovation.core.domain.R.string.event_level_17_finished
                     )
                 )
-            }
-        )
+            })
     }
 }
 
 @Composable
 internal fun ConstraintLayoutScope.OptionsContent(
     isBalloonPoppedOut: Boolean,
-    ringsOffset: Offset,
     rings: ConstrainedLayoutReference,
     balloon: ConstrainedLayoutReference,
     present: ConstrainedLayoutReference,
-    onUpdateRingsOffset: (Offset) -> Unit,
     onMatch: () -> Unit
 ) {
+    var ringsOffset by remember { mutableStateOf(Offset.Zero) }
     val balloonScaleAnimation by animateFloatAsState(
-        targetValue = if (isBalloonPoppedOut) 0F else 1F,
-        label = ""
+        targetValue = if (isBalloonPoppedOut) 0F else 1F, animationSpec = tweenMedium(), label = ""
     )
 
-    val horizontalGuideline = createGuidelineFromTop(0.5F)
+    val middleHorizontalGuideline = createGuidelineFromTop(0.35F)
+    val bottomHorizontalGuideline = createGuidelineFromTop(0.5F)
 
-    DraggableImage(
-        isEnabled = !isBalloonPoppedOut,
-        drawableRes = R.drawable.l17_rings,
-        modifier = Modifier.constrainAs(rings) {
-            width = Dimension.fillToConstraints
-            height = Dimension.ratio("1:1")
-            top.linkTo(horizontalGuideline)
+    DrawAnimation(modifier = Modifier.constrainAs(rings) {
+        width = Dimension.fillToConstraints
+        height = Dimension.fillToConstraints
+        start.linkTo(parent.start)
+        end.linkTo(balloon.start)
+        centerVerticallyTo(balloon)
+    }) {
+        DraggableImage(
+            isEnabled = !isBalloonPoppedOut,
+            drawableRes = R.drawable.l17_rings,
+
+            ) { offset, _ ->
+            ringsOffset = offset
         }
-    ) { offset, _ ->
-        onUpdateRingsOffset(offset)
     }
 
-    AnimatedVisibility(
-        !isBalloonPoppedOut,
-        modifier = Modifier.constrainAs(balloon) {
+    CollisionImage(modifier = Modifier
+        .constrainAs(balloon) {
             width = Dimension.fillToConstraints
-            height = Dimension.ratio("1:1")
-            top.linkTo(horizontalGuideline)
-        },
-        exit = scaleOut(tween(Durations.Medium.time))
-    ) {
-        CollisionImage(
-            modifier = Modifier.scale(balloonScaleAnimation),
-            defaultDrawableRes = R.drawable.l17_balloon,
-            outerOffset = ringsOffset,
-            delayOrder = 0,
-            onMatch = onMatch
-        )
-    }
+            height = Dimension.fillToConstraints
+            top.linkTo(middleHorizontalGuideline)
+            start.linkTo(rings.end)
+            end.linkTo(present.start)
+            bottom.linkTo(bottomHorizontalGuideline)
+        }
+        .scale(balloonScaleAnimation),
+        defaultDrawableRes = R.drawable.l17_balloon,
+        outerOffset = ringsOffset,
+        appearOrder = 1,
+        onMatch = onMatch)
 
-    DraggableImage(
-        isEnabled = isBalloonPoppedOut.not(),
-        drawableRes = R.drawable.l17_present,
+    DrawAnimation(
         modifier = Modifier.constrainAs(present) {
             width = Dimension.fillToConstraints
-            height = Dimension.ratio("1:1")
-            top.linkTo(horizontalGuideline)
-        }
-    )
+            height = Dimension.fillToConstraints
+            end.linkTo(parent.end)
+            start.linkTo(balloon.end)
+            centerVerticallyTo(balloon)
+        },
+        appearOrder = 2
+    ) {
+        DraggableImage(
+            isEnabled = !isBalloonPoppedOut,
+            drawableRes = R.drawable.l17_present,
+        )
+    }
 }
 
 @Preview

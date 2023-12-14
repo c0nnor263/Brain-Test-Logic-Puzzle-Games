@@ -1,6 +1,6 @@
 package com.gamovation.feature.level.level4
 
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -9,7 +9,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.gamovation.core.domain.level.LevelScreenState
@@ -23,7 +22,7 @@ fun Level4Content(
     var bulbAnimationStarted by remember {
         mutableStateOf(false)
     }
-    ConstraintLayout(modifier = modifier.fillMaxWidth()) {
+    ConstraintLayout(modifier = modifier.fillMaxSize()) {
         val (bulb1, bulb2, bulb3, bulb4, bulb5) = createRefs()
 
         createHorizontalChain(
@@ -37,54 +36,137 @@ fun Level4Content(
             bulb5
         )
 
-        listOf(
-            bulb1,
-            bulb2,
-            bulb3,
-            bulb4,
-            bulb5
-        ).forEachIndexed { index, reference ->
-            Level4Bulb(
-                modifier = Modifier
-                    .constrainAs(reference) {
-                        width = Dimension.preferredValue(128.dp)
-                        when (index) {
-                            in 0..2 -> {
-                                top.linkTo(parent.top)
-                            }
+        val topGuideline = createGuidelineFromTop(0.5f)
 
-                            in 3..4 -> {
-                                top.linkTo(
-                                    bulb2.bottom,
-                                    margin = Dimensions.Padding.Small.value
-                                )
-                            }
-                        }
-                    }
-                    .padding(Dimensions.Padding.ExtraSmall.value),
-                index = index,
-                onClick = {
-                    if (bulbAnimationStarted) return@Level4Bulb null
-
-                    val isCorrectBulb = index == 3
-                    val newState = if (isCorrectBulb) {
-                        LevelScreenState.UserCorrectChoice(
-                            com.gamovation.core.domain.R.string.event_level_4_finished
-                        )
-                    } else {
-                        LevelScreenState.UserWrongChoice(
-                            com.gamovation.core.domain.R.string.event_level_4_wrong
-                        )
-                    }
-                    onLevelAction(newState)
-                    bulbAnimationStarted = true
-                    isCorrectBulb
-                },
-                onAnimationEnd = {
-                    bulbAnimationStarted = false
+        Level4Bulb(
+            modifier = Modifier
+                .constrainAs(bulb1) {
+                    width = Dimension.fillToConstraints
+                    height = Dimension.fillToConstraints
+                    top.linkTo(parent.top)
+                    start.linkTo(parent.start)
+                    bottom.linkTo(topGuideline)
                 }
-            )
-        }
+                .padding(Dimensions.Padding.ExtraSmall.value),
+            index = 0,
+            onClick = {
+                if (bulbAnimationStarted) return@Level4Bulb null
+                bulbAnimationStarted = true
+                val newState =
+                    LevelScreenState.UserWrongChoice(
+                        com.gamovation.core.domain.R.string.event_level_4_wrong
+                    )
+                onLevelAction(newState)
+                false
+            },
+            onAnimationEnd = {
+                bulbAnimationStarted = false
+            }
+        )
+
+        Level4Bulb(
+            modifier = Modifier
+                .constrainAs(bulb2) {
+                    width = Dimension.fillToConstraints
+                    height = Dimension.fillToConstraints
+                    top.linkTo(parent.top)
+                    bottom.linkTo(topGuideline)
+                }
+                .padding(Dimensions.Padding.ExtraSmall.value),
+            index = 1,
+            onClick = {
+                if (bulbAnimationStarted) return@Level4Bulb null
+                bulbAnimationStarted = true
+                val newState =
+                    LevelScreenState.UserWrongChoice(
+                        com.gamovation.core.domain.R.string.event_level_4_wrong
+                    )
+                onLevelAction(newState)
+                false
+            },
+            onAnimationEnd = {
+                bulbAnimationStarted = false
+            }
+        )
+
+        Level4Bulb(
+            modifier = Modifier
+                .constrainAs(bulb3) {
+                    width = Dimension.fillToConstraints
+                    height = Dimension.fillToConstraints
+                    top.linkTo(parent.top)
+                    start.linkTo(parent.start)
+                    bottom.linkTo(topGuideline)
+                }
+                .padding(Dimensions.Padding.ExtraSmall.value),
+            index = 2,
+            onClick = {
+                if (bulbAnimationStarted) return@Level4Bulb null
+                bulbAnimationStarted = true
+                val newState =
+                    LevelScreenState.UserWrongChoice(
+                        com.gamovation.core.domain.R.string.event_level_4_wrong
+                    )
+                onLevelAction(newState)
+                false
+            },
+            onAnimationEnd = {
+                bulbAnimationStarted = false
+            }
+        )
+
+        Level4Bulb(
+            modifier = Modifier
+                .constrainAs(bulb4) {
+                    width = Dimension.fillToConstraints
+                    height = Dimension.fillToConstraints
+                    top.linkTo(topGuideline)
+                    start.linkTo(parent.start)
+                    bottom.linkTo(parent.bottom)
+                }
+                .padding(Dimensions.Padding.ExtraSmall.value),
+            index = 3,
+            onClick = {
+                if (bulbAnimationStarted) return@Level4Bulb null
+                bulbAnimationStarted = true
+
+                val newState =
+                    LevelScreenState.UserCorrectChoice(
+                        com.gamovation.core.domain.R.string.event_level_4_finished
+                    )
+                onLevelAction(newState)
+                true
+            },
+            onAnimationEnd = {
+                bulbAnimationStarted = false
+            }
+        )
+
+        Level4Bulb(
+            modifier = Modifier
+                .constrainAs(bulb5) {
+                    width = Dimension.fillToConstraints
+                    height = Dimension.fillToConstraints
+                    top.linkTo(topGuideline)
+                    end.linkTo(parent.end)
+                    bottom.linkTo(parent.bottom)
+                }
+                .padding(Dimensions.Padding.ExtraSmall.value),
+            index = 4,
+            onClick = {
+                if (bulbAnimationStarted) return@Level4Bulb null
+                bulbAnimationStarted = true
+                val newState =
+                    LevelScreenState.UserWrongChoice(
+                        com.gamovation.core.domain.R.string.event_level_4_wrong
+                    )
+                onLevelAction(newState)
+                false
+            },
+            onAnimationEnd = {
+                bulbAnimationStarted = false
+            }
+        )
     }
 }
 

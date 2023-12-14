@@ -2,7 +2,7 @@ package com.gamovation.feature.level.level7
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -20,7 +20,7 @@ import com.gamovation.core.ui.level.interactions.DraggableImage
 fun Level7Content(modifier: Modifier = Modifier, onLevelAction: (LevelScreenState) -> Unit) {
     var isNumberVisible by remember { mutableStateOf(false) }
     Column(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Box(modifier = Modifier.weight(0.2F), contentAlignment = Alignment.Center) {

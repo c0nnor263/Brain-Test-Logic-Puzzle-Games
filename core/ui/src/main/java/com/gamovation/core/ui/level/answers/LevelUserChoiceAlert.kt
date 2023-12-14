@@ -19,6 +19,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -49,10 +50,11 @@ import java.util.concurrent.TimeUnit
 @Composable
 fun BoxScope.LevelUserChoiceAlert(
     currentState: LevelScreenState,
-    checkState: LevelScreenState
 ) {
-    val isCorrectChoice = currentState is LevelScreenState.UserCorrectChoice
-    val isVisible = currentState == checkState
+    val isCorrectChoice = currentState is LevelScreenState.UserCorrectChoice ||
+            currentState is LevelScreenState.LevelCompleted
+    val isVisible = currentState is LevelScreenState.UserCorrectChoice ||
+            currentState is LevelScreenState.UserWrongChoice
 
     val backgroundBrushAlpha by animateFloatAsState(
         targetValue = if (isVisible) {
@@ -176,11 +178,13 @@ fun KonfettiGreeting(modifier: Modifier = Modifier, isCorrectChoice: Boolean) {
 @Composable
 internal fun ImageResult(isVisible: Boolean, isCorrectChoice: Boolean) {
     // Too remember the correct choice image and prevent showing the wrong choice image
-    val drawableRes = remember {
-        if (isCorrectChoice) {
-            R.drawable.success
-        } else {
-            R.drawable.failure
+    val drawableRes by remember(isCorrectChoice) {
+        derivedStateOf {
+            if (isCorrectChoice) {
+                R.drawable.success
+            } else {
+                R.drawable.failure
+            }
         }
     }
 
@@ -218,7 +222,7 @@ internal fun ImageResult(isVisible: Boolean, isCorrectChoice: Boolean) {
             enter = fadeIn(tweenMedium(delayMillis = Durations.Medium.time)),
             exit = fadeOut(tweenMedium())
         ) {
-            DrawAnimation(delayOrder = 1) {
+            DrawAnimation(appearOrder = 1) {
                 Image(
                     modifier = Modifier.fillMaxSize(),
                     painter = painterResource(
@@ -239,7 +243,6 @@ fun LevelUserChoiceAlertPreview() {
         BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
             LevelUserChoiceAlert(
                 currentState = LevelScreenState.UserWrongChoice(0),
-                checkState = LevelScreenState.UserWrongChoice(0)
             )
         }
     }

@@ -18,7 +18,7 @@ import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 fun rememberInterstitialAdViewState(
     activity: ComponentActivity,
     adUnitID: String,
-    userVipType: UserVipType = UserVipType.BASE
+    userVipType: UserVipType
 ): InterstitialAdViewState =
     remember {
         InterstitialAdViewState(userVipType, adUnitID).also { state ->
@@ -34,12 +34,12 @@ class InterstitialAdViewState(
     var interstitialAd by mutableStateOf(interstitialAd)
         private set
 
-    fun loadAd(context: ComponentActivity) {
+    fun loadAd(activity: ComponentActivity) {
         if (userVipType != UserVipType.BASE) return
 
         val adRequest = AdRequest.Builder().build()
         InterstitialAd.load(
-            context,
+            activity,
             adUnitID,
             adRequest,
             object : InterstitialAdLoadCallback() {
@@ -56,12 +56,12 @@ class InterstitialAdViewState(
         )
     }
 
-    fun showAd(activity: ComponentActivity, onDismissed: () -> Unit = {}) {
+    fun showAd(activity: ComponentActivity) {
+        if (userVipType != UserVipType.BASE) return
         interstitialAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
             override fun onAdDismissedFullScreenContent() {
                 super.onAdDismissedFullScreenContent()
                 interstitialAd = null
-                onDismissed()
                 loadAd(activity)
             }
 
@@ -69,14 +69,11 @@ class InterstitialAdViewState(
                 super.onAdFailedToShowFullScreenContent(error)
                 interstitialAd = null
                 loadAd(activity)
-                onDismissed()
             }
         }
 
         if (isAdChosenToShow()) {
-            interstitialAd?.show(activity) ?: onDismissed()
-        } else {
-            onDismissed()
+            interstitialAd?.show(activity)
         }
     }
 

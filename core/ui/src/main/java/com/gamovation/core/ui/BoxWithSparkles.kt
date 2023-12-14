@@ -83,12 +83,14 @@ fun StarParticle(index: Int = 0) {
         visibleState = starParticleVisibleState,
         enter = scaleIn(tweenMedium()),
         exit = scaleOut(tweenMedium()),
-        modifier = Modifier.absoluteOffset {
-            IntOffset(
-                starParticleOffset.x.toInt(),
-                starParticleOffset.y.toInt()
-            )
-        }.scale(scaleAnimation)
+        modifier = Modifier
+            .absoluteOffset {
+                IntOffset(
+                    starParticleOffset.x.toInt(),
+                    starParticleOffset.y.toInt()
+                )
+            }
+            .scale(scaleAnimation)
     ) {
         Image(
             imageVector = ImageVector.vectorResource(id = R.drawable.sparkle_star),

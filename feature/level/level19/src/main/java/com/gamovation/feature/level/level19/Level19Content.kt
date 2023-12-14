@@ -6,7 +6,7 @@ import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.repeatable
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -21,6 +21,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.core.content.ContextCompat
 import com.gamovation.core.domain.level.LevelScreenState
+import com.gamovation.core.ui.animation.DrawAnimation
 import com.gamovation.core.ui.level.interactions.CollisionImage
 import com.gamovation.core.ui.level.interactions.DraggableImage
 import com.gamovation.core.ui.theme.WordefullTheme
@@ -32,16 +33,16 @@ fun Level19Content(
     onLevelAction: (LevelScreenState) -> Unit
 ) {
     val context = LocalContext.current
-    var bottleIsOpepened by remember {
+    var bottleIsOpened by remember {
         mutableStateOf(false)
     }
 
-    var positionOfOpener by remember {
+    var openerPosition by remember {
         mutableStateOf(Offset.Zero)
     }
 
     val scaleAnimation by animateFloatAsState(
-        targetValue = if (bottleIsOpepened) 1.3f else 1f,
+        targetValue = if (bottleIsOpened) 1.3f else 1f,
         animationSpec = repeatable(
             iterations = 10,
             animation = tween(100, easing = LinearEasing),
@@ -49,7 +50,7 @@ fun Level19Content(
         ),
         label = ""
     ) {
-        if (bottleIsOpepened) {
+        if (bottleIsOpened) {
             onLevelAction(
                 LevelScreenState.UserCorrectChoice(
                     com.gamovation.core.domain.R.string.event_level_19_finished
@@ -59,7 +60,7 @@ fun Level19Content(
     }
 
     val rotateAnimation by animateFloatAsState(
-        targetValue = if (bottleIsOpepened) -15F else 15f,
+        targetValue = if (bottleIsOpened) -15F else 15f,
         animationSpec = repeatable(
             iterations = 10,
             animation = tween(100, easing = LinearEasing),
@@ -75,12 +76,12 @@ fun Level19Content(
             SensorManager::class.java
         ) ?: return@LaunchedEffect
         ShakeDetector {
-            bottleIsOpepened = true
+            bottleIsOpened = true
         }.start(sensorManager, SensorManager.SENSOR_DELAY_GAME)
     }
 
     ConstraintLayout(
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier.fillMaxSize()
     ) {
         val (opener, bottle) = createRefs()
 
@@ -98,9 +99,9 @@ fun Level19Content(
                     width = Dimension.fillToConstraints
                     centerVerticallyTo(parent)
                 },
-            outerOffset = positionOfOpener,
+            outerOffset = openerPosition,
             defaultDrawableRes = R.drawable.l19_bottle,
-            delayOrder = 1
+            appearOrder = 0
         ) {
             onLevelAction(
                 LevelScreenState.UserWrongChoice(
@@ -109,14 +110,18 @@ fun Level19Content(
             )
         }
 
-        DraggableImage(
+        DrawAnimation(
             modifier = Modifier.constrainAs(opener) {
                 width = Dimension.fillToConstraints
                 centerVerticallyTo(parent)
             },
-            drawableRes = R.drawable.l19_opener
-        ) { offset, _ ->
-            positionOfOpener = offset
+            appearOrder = 1
+        ) {
+            DraggableImage(
+                drawableRes = R.drawable.l19_opener
+            ) { offset, _ ->
+                openerPosition = offset
+            }
         }
     }
 }

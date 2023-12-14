@@ -155,9 +155,15 @@ class LevelScreenViewModel @Inject constructor(
                 val details = LevelUiDetails.mapToUiDetails(levelData)
                 levelRepositoryImpl.upsert(levelData)
                 _levelUiDetails.emit(details)
+
+                submitEvent(com.gamovation.core.domain.R.string.event_advice_action_use)
             }
 
-            LevelActionState.SKIP -> updateLevelScreenState(LevelScreenState.LevelCompleted)
+            LevelActionState.SKIP -> {
+                updateLevelScreenState(LevelScreenState.LevelCompleted)
+                submitEvent(com.gamovation.core.domain.R.string.event_skip_action_use)
+            }
+
             else -> {}
         }
         userInfoPreferencesRepository.spendCurrency(cost)
@@ -173,7 +179,7 @@ class LevelScreenViewModel @Inject constructor(
             reviewDataManager.requestReviewInfo(activity, showDialog)
         }
 
-    private fun submitEvent(@StringRes event: Int, value: Int = 1) {
+    fun submitEvent(@StringRes event: Int, value: Int = 1) {
         playGamesEventRepository.submitEvent(event, value)
     }
 

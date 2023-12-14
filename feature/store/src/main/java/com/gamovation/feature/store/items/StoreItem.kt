@@ -50,7 +50,9 @@ fun StoreItem(
             Text(
                 text = stringResource(id = stringRes),
                 style = MaterialTheme.typography.titleSmall,
-                modifier = Modifier.weight(1F, false).padding(Dimensions.Padding.ExtraSmall.value)
+                modifier = Modifier
+                    .weight(1F, false)
+                    .padding(Dimensions.Padding.ExtraSmall.value)
             )
         }
 

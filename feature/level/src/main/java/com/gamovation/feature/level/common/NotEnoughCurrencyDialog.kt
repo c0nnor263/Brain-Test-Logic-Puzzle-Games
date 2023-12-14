@@ -82,7 +82,7 @@ internal fun NotEnoughCurrencyDialog(
             Spacer(modifier = Modifier.height(Dimensions.Padding.Medium.value))
 
             ScalableButton(
-                delayOrder = 1,
+                appearOrder = 1,
                 onClick = {
                     onActionResult(ActionResult(ActionResult.Type.BUY_MORE))
                 },

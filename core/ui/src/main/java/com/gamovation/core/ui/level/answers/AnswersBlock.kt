@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.gamovation.core.ui.Dimensions
+import androidx.compose.ui.unit.dp
 
 @Composable
 fun AnswersBlock(
@@ -18,12 +18,14 @@ fun AnswersBlock(
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(Dimensions.Padding.Small.value)
+        verticalArrangement = Arrangement.spacedBy(0.dp)
     ) {
         repeat(2) { indexRow ->
             Row(
-                Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly
+                Modifier
+                    .fillMaxWidth()
+                    .weight(0.5F),
+                horizontalArrangement = Arrangement.spacedBy(0.dp)
             ) {
                 repeat(2) { indexButton ->
                     val buttonIndex = indexRow * 2 + indexButton
@@ -31,7 +33,7 @@ fun AnswersBlock(
                     OptionButton(
                         modifier = Modifier.weight(0.5F),
                         text = answerText,
-                        delayOrder = buttonIndex,
+                        appearOrder = buttonIndex,
                         onClick = { onAnswer(answerText) }
                     )
                 }

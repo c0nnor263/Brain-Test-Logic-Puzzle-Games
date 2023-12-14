@@ -1,21 +1,22 @@
 package com.gamovation.feature.level.uistate
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.MutableTransitionState
 import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
-import androidx.compose.animation.scaleOut
+import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -29,6 +30,7 @@ import com.gamovation.core.ui.R
 import com.gamovation.core.ui.advertising.WatchAdDialog
 import com.gamovation.core.ui.advertising.WatchStoreButton
 import com.gamovation.core.ui.animation.Durations
+import com.gamovation.core.ui.animation.tweenMedium
 import com.gamovation.core.ui.common.ScalableButton
 import com.gamovation.core.ui.state.RewardedInterstitialAdViewState
 import com.gamovation.core.ui.state.rememberDialogState
@@ -44,7 +46,7 @@ internal fun LevelCompleted(
     val showWatchAdDialogState = rememberDialogState()
 
     LevelCompletedContent(
-        modifier = modifier,
+        modifier = modifier.fillMaxSize(),
         id = id,
         isAdLoaded = rewardedInterstitialAd.isAdAvailable,
         onLevelUIAction = onLevelUIAction,
@@ -81,11 +83,15 @@ fun LevelCompletedContent(
     onShowAd: () -> Unit,
     onLevelUIAction: (LevelScreenState) -> Unit
 ) {
+    val enterTransition = remember {
+        MutableTransitionState(false).apply {
+            targetState = true
+        }
+    }
     AnimatedVisibility(
-        true,
+        enterTransition,
         modifier = modifier.padding(Dimensions.Padding.Small.value),
-        enter = fadeIn(tween(Durations.Medium.time)) + scaleIn(tween(Durations.Medium.time)),
-        exit = scaleOut(tween(Durations.Medium.time)) + fadeOut(tween(Durations.Medium.time))
+        enter = fadeIn(tweenMedium()) + scaleIn(tweenMedium())
     ) {
         Column(
             modifier = Modifier.fillMaxWidth(),
@@ -128,13 +134,36 @@ fun LevelCompletedContent(
                     maxLines = 2
                 )
                 Spacer(modifier = Modifier.height(Dimensions.Padding.Medium.value))
-                WatchStoreButton(
-                    rewardStringRes = R.string.ad_reward,
-                    isLoaded = isAdLoaded,
-                    watchStringRes = R.string.watch_ad_for_reward,
-                    onClick = onShowAd
+                RewardContent(
+                    isAdLoaded = isAdLoaded,
+                    onShowAd = onShowAd
                 )
             }
         }
+    }
+}
+
+@Composable
+fun RewardContent(
+    isAdLoaded: Boolean,
+    onShowAd: () -> Unit
+) {
+    val enterTransition = remember {
+        MutableTransitionState(false).apply {
+            targetState = true
+        }
+    }
+    AnimatedVisibility(
+        enterTransition,
+        enter = fadeIn(tweenMedium(delayMillis = Durations.Second.time)) + slideInVertically(
+            tweenMedium(delayMillis = Durations.Second.time)
+        ) { it },
+    ) {
+        WatchStoreButton(
+            rewardStringRes = R.string.ad_reward,
+            isLoaded = isAdLoaded,
+            watchStringRes = R.string.watch_ad_for_reward,
+            onClick = onShowAd
+        )
     }
 }

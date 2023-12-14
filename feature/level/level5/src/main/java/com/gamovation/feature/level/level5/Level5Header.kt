@@ -19,13 +19,13 @@ import com.gamovation.core.ui.R
 import com.gamovation.core.ui.animation.DrawAnimation
 
 @Composable
-internal fun Level5Title(modifier: Modifier = Modifier) {
+internal fun Level5Header(modifier: Modifier = Modifier) {
     Row(
         modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        DrawAnimation(delayOrder = 4) {
+        DrawAnimation(appearOrder = 1) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
                     text = stringResource(com.gamovation.feature.level.level5.R.string.l5_opponent),
@@ -39,7 +39,7 @@ internal fun Level5Title(modifier: Modifier = Modifier) {
                 )
             }
         }
-        DrawAnimation(delayOrder = 5) {
+        DrawAnimation(appearOrder = 2) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
                     text = stringResource(

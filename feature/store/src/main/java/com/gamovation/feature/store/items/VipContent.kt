@@ -33,7 +33,7 @@ fun VipContent(info: StoreItemInfo?, onBuy: (StoreItemInfo) -> Unit) {
         horizontalArrangement = Arrangement.Center
     ) {
         ChalkBoardCard(
-            modifier = Modifier.weight(1F),
+            modifier = Modifier.weight(0.5F),
             color = Color.White.copy(alpha = 0.7F)
         ) {
             Column(
@@ -46,7 +46,7 @@ fun VipContent(info: StoreItemInfo?, onBuy: (StoreItemInfo) -> Unit) {
                     text = stringResource(
                         R.string.remove_ads_and_get_cheaper_costs_for_all_actions
                     ),
-                    maxLines = 3,
+                    maxLines = 8,
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.bodySmall
                 )
@@ -55,7 +55,7 @@ fun VipContent(info: StoreItemInfo?, onBuy: (StoreItemInfo) -> Unit) {
         Spacer(modifier = Modifier.width(Dimensions.Padding.Small.value))
 
         Column(
-            modifier = Modifier.weight(1F),
+            modifier = Modifier.weight(0.5F),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             BoxWithSparkles {

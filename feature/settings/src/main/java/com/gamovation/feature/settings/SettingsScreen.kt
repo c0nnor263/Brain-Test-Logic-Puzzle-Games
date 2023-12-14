@@ -52,9 +52,9 @@ import com.gamovation.core.ui.common.ScalableButton
 import com.gamovation.core.ui.state.DialogState
 import com.gamovation.core.ui.state.rememberDialogState
 import com.gamovation.core.ui.theme.boardBackgroundColor
-import java.util.Locale
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.util.Locale
 
 @Composable
 fun SettingsScreen(

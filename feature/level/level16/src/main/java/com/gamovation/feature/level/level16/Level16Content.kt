@@ -2,7 +2,7 @@ package com.gamovation.feature.level.level16
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -15,6 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.gamovation.core.domain.level.LevelScreenState
+import com.gamovation.core.ui.animation.DrawAnimation
 import com.gamovation.core.ui.clickableNoRipple
 import com.gamovation.core.ui.level.interactions.CollisionImage
 import com.gamovation.core.ui.level.interactions.DraggableImage
@@ -28,7 +29,7 @@ fun Level16Content(
     var positionOfBowl by remember { mutableStateOf(Offset.Zero) }
     var isBowlShown by remember { mutableStateOf(false) }
 
-    ConstraintLayout(modifier = modifier.fillMaxWidth()) {
+    ConstraintLayout(modifier = modifier.fillMaxSize()) {
         val (cat, bowl, food, plate) = createRefs()
 
         createHorizontalChain(
@@ -37,28 +38,34 @@ fun Level16Content(
             food
         )
 
-        Image(
-            painter = painterResource(id = R.drawable.l16_cat),
-            modifier = Modifier.constrainAs(cat) {
+        DrawAnimation(
+            Modifier.constrainAs(cat) {
                 width = Dimension.fillToConstraints
                 height = Dimension.ratio("1:1")
                 centerVerticallyTo(parent)
-            },
-            contentDescription = null
-        )
+            }
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.l16_cat),
+                contentDescription = null
+            )
+        }
 
-        Image(
-            painter = painterResource(id = R.drawable.l16_food),
-            modifier = Modifier
-                .constrainAs(food) {
-                    width = Dimension.fillToConstraints
-                    centerVerticallyTo(parent)
-                }
-                .clickableNoRipple {
-                    isBowlShown = true
-                },
-            contentDescription = null
-        )
+        DrawAnimation(modifier = Modifier
+            .constrainAs(food) {
+                width = Dimension.fillToConstraints
+                centerVerticallyTo(parent)
+            }
+            .clickableNoRipple {
+                isBowlShown = true
+            },
+            appearOrder = 1
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.l16_food),
+                contentDescription = null
+            )
+        }
         CollisionImage(
             defaultDrawableRes = R.drawable.l16_plate,
             modifier = Modifier.constrainAs(plate) {
@@ -66,7 +73,8 @@ fun Level16Content(
                 height = Dimension.ratio("4:3")
                 centerAround(cat.bottom)
             },
-            outerOffset = positionOfBowl
+            outerOffset = positionOfBowl,
+            appearOrder = 2
         ) {
             onLevelAction(
                 LevelScreenState.UserCorrectChoice(
@@ -86,10 +94,12 @@ fun Level16Content(
             label = ""
         ) {
             if (it) {
-                DraggableImage(
-                    drawableRes = R.drawable.l16_bowl
-                ) { bowlOffset, _ ->
-                    positionOfBowl = bowlOffset
+                DrawAnimation {
+                    DraggableImage(
+                        drawableRes = R.drawable.l16_bowl
+                    ) { bowlOffset, _ ->
+                        positionOfBowl = bowlOffset
+                    }
                 }
             }
         }

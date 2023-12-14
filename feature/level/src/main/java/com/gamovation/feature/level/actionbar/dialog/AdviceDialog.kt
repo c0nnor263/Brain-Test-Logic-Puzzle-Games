@@ -45,7 +45,7 @@ internal fun AdviceDialog(
             Spacer(modifier = Modifier.height(Dimensions.Padding.Medium.value))
 
             ScalableButton(
-                delayOrder = 1,
+                appearOrder = 1,
                 stringRes = R.string.thanks,
                 textStyle = MaterialTheme.typography.displaySmall,
                 onClick = onDismiss

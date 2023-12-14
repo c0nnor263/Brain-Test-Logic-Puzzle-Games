@@ -9,6 +9,11 @@ import com.google.android.gms.ads.RequestConfiguration.TAG_FOR_CHILD_DIRECTED_TR
 class MobileAdsInitializer : Initializer<MobileAdsInitializer> {
     private val configuration = RequestConfiguration.Builder()
         .setTagForChildDirectedTreatment(TAG_FOR_CHILD_DIRECTED_TREATMENT_TRUE)
+        .setTestDeviceIds(
+            listOf(
+                "00AB7E7B06A7A77D563FC13F931C4BE1"
+            )
+        )
         .build()
 
     override fun create(context: Context): MobileAdsInitializer {
