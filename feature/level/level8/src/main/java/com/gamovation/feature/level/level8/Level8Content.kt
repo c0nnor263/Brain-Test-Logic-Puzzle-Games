@@ -4,7 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -22,7 +22,7 @@ import com.gamovation.core.ui.level.interactions.DraggableImage
 fun Level8Content(modifier: Modifier = Modifier, onLevelAction: (LevelScreenState) -> Unit) {
     var isNumberVisible by remember { mutableStateOf(false) }
     Column(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Row(
@@ -49,9 +49,17 @@ fun Level8Content(modifier: Modifier = Modifier, onLevelAction: (LevelScreenStat
 
         NumbersBlock(modifier = Modifier.weight(1F), numberMaxLength = 2) {
             if (it == "40") {
-                onLevelAction(LevelScreenState.USER_CORRECT_CHOICE)
+                onLevelAction(
+                    LevelScreenState.UserCorrectChoice(
+                        com.gamovation.core.domain.R.string.event_level_8_finished
+                    )
+                )
             } else {
-                onLevelAction(LevelScreenState.USER_WRONG_CHOICE)
+                onLevelAction(
+                    LevelScreenState.UserWrongChoice(
+                        com.gamovation.core.domain.R.string.event_level_8_wrong
+                    )
+                )
             }
         }
     }

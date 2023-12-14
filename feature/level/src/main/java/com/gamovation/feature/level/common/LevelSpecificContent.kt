@@ -5,6 +5,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -15,6 +18,7 @@ import com.gamovation.core.domain.level.LevelScreenState
 import com.gamovation.core.ui.DEFAULT_LEVEL_SCREEN_RESTART_DURATION
 import com.gamovation.core.ui.state.LocalLevelAction
 import com.gamovation.core.ui.state.LocalLevelScreen
+import com.gamovation.core.ui.state.LocalVipType
 import com.gamovation.core.ui.state.rememberInterstitialAdViewState
 import com.gamovation.core.ui.state.rememberRewardedInterstitialAdViewState
 import com.gamovation.feature.level.domain.model.LevelUiDetails
@@ -31,13 +35,15 @@ internal fun LevelSpecificContent(
     onLevelAction: (LevelActionState) -> Unit,
     onLevelScreenAction: (LevelScreenState) -> Unit
 ) {
+    val userVipType = LocalVipType.current
     val activity = LocalContext.current as ComponentActivity
 
     val screenState = LocalLevelScreen.current
     val actionState = LocalLevelAction.current
     val interstitialAdView = rememberInterstitialAdViewState(
         activity = activity,
-        stringResource(id = R.string.admob_interstitial_id_level_completed)
+        stringResource(id = R.string.admob_interstitial_id_level_completed),
+        userVipType
     )
     val rewardedInterstitialAd = rememberRewardedInterstitialAdViewState(
         activity = activity,
@@ -52,7 +58,7 @@ internal fun LevelSpecificContent(
     }
 
     LaunchedEffect(screenState) {
-        if (screenState == LevelScreenState.LEVEL_COMPLETED) {
+        if (screenState == LevelScreenState.LevelCompleted) {
             interstitialAdView.showAd(activity = activity)
         }
     }
@@ -65,13 +71,18 @@ internal fun LevelSpecificContent(
             LevelRestart(modifier = Modifier.fillMaxSize(), true)
         } else {
             when (screenState) {
-                LevelScreenState.COMPLETED_THE_GAME -> {
+                is LevelScreenState.CompletedTheGame -> {
                     CompetedTheGame()
                 }
 
-                LevelScreenState.LEVEL_COMPLETED -> {
+                LevelScreenState.LevelCompleted -> {
+                    val levelId by remember {
+                        derivedStateOf {
+                            details.id
+                        }
+                    }
                     LevelCompleted(
-                        id = details.id - 1,
+                        id = levelId,
                         rewardedInterstitialAd = rewardedInterstitialAd,
                         onLevelUIAction = onLevelScreenAction
                     )
@@ -81,7 +92,7 @@ internal fun LevelSpecificContent(
                     details = details,
                     onReviewRequest = onReviewRequest,
                     onLevelScreenAction = { newState ->
-                        if (screenState != LevelScreenState.IS_LEVEL_PLAYING) return@LevelBody
+                        if (screenState != LevelScreenState.IsLevelPlaying) return@LevelBody
                         onLevelScreenAction(newState)
                     }
 

@@ -38,7 +38,7 @@ fun BuyButton(
             Image(
                 painter = painterResource(id = R.drawable.orange_button),
                 contentDescription = null,
-                contentScale = ContentScale.FillHeight,
+                contentScale = ContentScale.Fit,
                 colorFilter = if (isLoaded) {
                     null
                 } else {

@@ -26,7 +26,7 @@ internal fun ActionBarDialogAdviceOption(onClick: () -> Unit) {
                 textAlign = TextAlign.Center
             )
         }
-        DrawAnimation(delayOrder = 1) {
+        DrawAnimation(appearOrder = 1) {
             Text(
                 text = stringResource(R.string.advise_well_you_can_get_a_hint),
                 style = MaterialTheme.typography.titleLarge.copy(color = Color.Yellow),
@@ -36,7 +36,7 @@ internal fun ActionBarDialogAdviceOption(onClick: () -> Unit) {
         Spacer(modifier = Modifier.height(Dimensions.Padding.Large.value))
 
         ScalableButton(
-            delayOrder = 2,
+            appearOrder = 2,
             onClick = onClick,
             stringRes = R.string.advise_get_hint,
             textStyle = MaterialTheme.typography.displaySmall

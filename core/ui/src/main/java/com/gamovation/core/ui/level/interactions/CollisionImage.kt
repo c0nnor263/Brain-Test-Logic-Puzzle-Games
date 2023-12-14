@@ -24,12 +24,12 @@ fun CollisionImage(
     @DrawableRes matchedDrawableRes: Int? = null,
     @DrawableRes notMatchedDrawableRes: Int? = null,
     outerOffset: Offset,
-    delayOrder: Int? = 0,
+    appearOrder: Int? = 0,
     onMatch: () -> Unit
 ) {
     var rectOfImage by remember { mutableStateOf<Rect?>(null) }
     var isMatched by rememberSaveable { mutableStateOf(false) }
-    LaunchedEffect(key1 = outerOffset) {
+    LaunchedEffect(outerOffset) {
         if (rectOfImage?.contains(outerOffset) == true) {
             isMatched = true
             onMatch()
@@ -44,12 +44,14 @@ fun CollisionImage(
         }
     } ?: return
 
-    DrawAnimation(modifier = modifier, delayOrder = delayOrder) {
+    DrawAnimation(
+        modifier = modifier.onGloballyPositioned { coordinates ->
+            rectOfImage = coordinates.boundsInWindow()
+        },
+        appearOrder = appearOrder
+    ) {
         Image(
             painter = painterResource(id = drawableRes),
-            modifier = Modifier.onGloballyPositioned { coordinates ->
-                rectOfImage = coordinates.boundsInWindow()
-            },
             contentDescription = null
         )
     }

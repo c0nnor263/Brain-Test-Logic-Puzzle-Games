@@ -86,4 +86,7 @@ dependencies {
 
     implementation("com.google.android.play:review:${Versions.playReview}")
     implementation("com.google.android.play:review-ktx:${Versions.playReview}")
+
+    // Play Services Games
+    implementation("com.google.android.gms:play-services-games-v2:19.0.0")
 }

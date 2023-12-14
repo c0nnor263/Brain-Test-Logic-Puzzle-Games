@@ -57,11 +57,11 @@ fun ActionBar(
 
     AnimatedVisibility(
         modifier = modifier,
-        visible = levelUIState == LevelScreenState.IS_LEVEL_PLAYING,
+        visible = levelUIState == LevelScreenState.IsLevelPlaying,
         enter = fadeIn(tween(Durations.Short.time)) +
-            slideInVertically(tween(Durations.Short.time)) { it },
+                slideInVertically(tween(Durations.Short.time)) { it },
         exit = slideOutVertically(tween(Durations.Short.time)) { it } +
-            fadeOut(tween(Durations.Short.time))
+                fadeOut(tween(Durations.Short.time))
     ) {
         Row(
             modifier = modifier.fillMaxWidth(),
@@ -121,21 +121,23 @@ internal fun ActionOption(
 
     Box(contentAlignment = Alignment.Center) {
         ScalableButton(
-            modifier = Modifier.padding(Dimensions.Padding.ExtraSmall.value).then(
-                when (action) {
-                    LevelActionState.RESTART -> Modifier.rotate(rotateAnimation)
-                    LevelActionState.ADVICE -> {
-                        Modifier.scale(scaleAnimation)
-                    }
+            modifier = Modifier
+                .padding(Dimensions.Padding.ExtraSmall.value)
+                .then(
+                    when (action) {
+                        LevelActionState.RESTART -> Modifier.rotate(rotateAnimation)
+                        LevelActionState.ADVICE -> {
+                            Modifier.scale(scaleAnimation)
+                        }
 
-                    LevelActionState.SKIP -> Modifier.graphicsLayer {
-                        translationX = translateAnimation
-                    }
+                        LevelActionState.SKIP -> Modifier.graphicsLayer {
+                            translationX = translateAnimation
+                        }
 
-                    else -> Modifier
-                }
-            ),
-            delayOrder = index,
+                        else -> Modifier
+                    }
+                ),
+            appearOrder = index,
             onClick = { onUpdateLevelActionState(action) }
         ) {
             Icon(

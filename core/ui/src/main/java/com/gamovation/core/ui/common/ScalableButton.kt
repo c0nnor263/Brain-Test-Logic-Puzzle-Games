@@ -25,7 +25,7 @@ import com.gamovation.core.ui.clickableNoRipple
 @Composable
 fun ScalableButton(
     modifier: Modifier = Modifier,
-    delayOrder: Int = 0,
+    appearOrder: Int = 0,
     isDrawingAnimationEnabled: Boolean = true,
     enabled: Boolean = true,
     textStyle: TextStyle = MaterialTheme.typography.displayMedium,
@@ -35,7 +35,7 @@ fun ScalableButton(
     content: (@Composable () -> Unit)? = null
 ) {
     if (isDrawingAnimationEnabled) {
-        DrawAnimation(modifier = modifier, delayOrder = delayOrder) {
+        DrawAnimation(modifier = modifier, appearOrder = appearOrder) {
             ScalableButtonContent(
                 modifier = modifier,
                 stringRes = stringRes,
@@ -83,7 +83,9 @@ internal fun ScalableButtonContent(
         label = "Scale Button Animation"
     )
     Row(
-        modifier = modifier.padding(Dimensions.Padding.Small.value).scale(scaleButtonAnimation)
+        modifier = modifier
+            .padding(Dimensions.Padding.Small.value)
+            .scale(scaleButtonAnimation)
             .clickableNoRipple(
                 onClick = {
                     onClick()

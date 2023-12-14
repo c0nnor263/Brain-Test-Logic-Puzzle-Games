@@ -1,7 +1,7 @@
 package com.gamovation.feature.level.level3
 
 import androidx.compose.animation.core.updateTransition
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -15,6 +15,7 @@ import com.gamovation.core.domain.level.LevelScreenState
 import com.gamovation.core.ui.Dimensions
 import com.gamovation.core.ui.InAppReviewDialog
 import com.gamovation.core.ui.level.interactions.DraggableImage
+import com.gamovation.core.ui.level.interactions.DraggableOrientation
 import com.gamovation.core.ui.state.LocalReviewDataHandlerState
 import com.gamovation.core.ui.state.rememberDialogState
 
@@ -36,20 +37,8 @@ fun Level3Content(
     var isMelting by rememberSaveable { mutableStateOf(false) }
     val meltingTransition = updateTransition(targetState = isMelting, label = "")
 
-    ConstraintLayout(
-        modifier = modifier
-            .fillMaxWidth()
-
-    ) {
-        val (
-            iceCream1,
-            iceCream2,
-            iceCream3,
-            iceCream4,
-            iceCream5,
-            iceCream6,
-            sun
-        ) = createRefs()
+    ConstraintLayout(modifier = modifier.fillMaxSize()) {
+        val (iceCream1, iceCream2, iceCream3, iceCream4, iceCream5, iceCream6, sun) = createRefs()
 
         createHorizontalChain(
             iceCream1,
@@ -63,50 +52,122 @@ fun Level3Content(
             iceCream6
         )
 
-        listOf(
-            iceCream1,
-            iceCream2,
-            iceCream3,
-            iceCream4,
-            iceCream5,
-            iceCream6
-        ).forEachIndexed { index, reference ->
-            Level3IceCream(
-                modifier = Modifier.constrainAs(reference) {
-                    width = Dimension.fillToConstraints
-                    when (index) {
-                        in 0..2 -> {
-                            top.linkTo(sun.top, margin = Dimensions.Padding.ExtraLarge2X.value)
-                        }
+        val topGuideline = createGuidelineFromTop(0.5F)
 
-                        in 3..5 -> {
-                            top.linkTo(
-                                iceCream2.bottom,
-                                margin = Dimensions.Padding.Medium.value
-                            )
-                        }
-                    }
-                },
-                index = index,
-                transition = meltingTransition,
-                isNotIceCream = index == 4
-            ) {
-                val newState =
-                    if (meltingTransition.currentState && index == 4) {
-                        LevelScreenState.USER_CORRECT_CHOICE
-                    } else {
-                        LevelScreenState.USER_WRONG_CHOICE
-                    }
+        Level3IceCream(
+            modifier = Modifier.constrainAs(iceCream1) {
+                width = Dimension.fillToConstraints
+                height = Dimension.fillToConstraints
+                top.linkTo(parent.top)
+                start.linkTo(parent.start)
+                bottom.linkTo(topGuideline)
+            },
+            index = 0,
+            transition = meltingTransition,
+            isNotIceCream = false
+        ) {
+            val newState = LevelScreenState.UserWrongChoice(
+                com.gamovation.core.domain.R.string.event_level_3_wrong
+            )
+            onLevelAction(newState)
+        }
+
+        Level3IceCream(
+            modifier = Modifier.constrainAs(iceCream2) {
+                width = Dimension.fillToConstraints
+                height = Dimension.fillToConstraints
+                top.linkTo(parent.top)
+                bottom.linkTo(topGuideline)
+            },
+            index = 1,
+            transition = meltingTransition,
+            isNotIceCream = false
+        ) {
+            val newState = LevelScreenState.UserWrongChoice(
+                com.gamovation.core.domain.R.string.event_level_3_wrong
+            )
+            onLevelAction(newState)
+        }
+
+        Level3IceCream(
+            modifier = Modifier.constrainAs(iceCream3) {
+                width = Dimension.fillToConstraints
+                height = Dimension.fillToConstraints
+                top.linkTo(parent.top)
+                end.linkTo(parent.end)
+                bottom.linkTo(topGuideline)
+            },
+            index = 2,
+            transition = meltingTransition,
+            isNotIceCream = false
+        ) {
+            val newState = LevelScreenState.UserWrongChoice(
+                com.gamovation.core.domain.R.string.event_level_3_wrong
+            )
+            onLevelAction(newState)
+        }
+
+        Level3IceCream(
+            modifier = Modifier.constrainAs(iceCream4) {
+                width = Dimension.fillToConstraints
+                height = Dimension.fillToConstraints
+                top.linkTo(topGuideline)
+                start.linkTo(parent.start)
+                bottom.linkTo(parent.bottom)
+            },
+            index = 3,
+            transition = meltingTransition,
+            isNotIceCream = false
+        ) {
+            val newState = LevelScreenState.UserWrongChoice(
+                com.gamovation.core.domain.R.string.event_level_3_wrong
+            )
+            onLevelAction(newState)
+        }
+
+        Level3IceCream(
+            modifier = Modifier.constrainAs(iceCream5) {
+                width = Dimension.fillToConstraints
+                height = Dimension.fillToConstraints
+                top.linkTo(topGuideline)
+                bottom.linkTo(parent.bottom)
+            },
+            index = 4,
+            transition = meltingTransition,
+            isNotIceCream = true
+        ) {
+            if (meltingTransition.currentState) {
+                val newState = LevelScreenState.UserCorrectChoice(
+                    com.gamovation.core.domain.R.string.event_level_3_finished
+                )
                 onLevelAction(newState)
             }
         }
 
+        Level3IceCream(
+            modifier = Modifier.constrainAs(iceCream6) {
+                width = Dimension.fillToConstraints
+                height = Dimension.fillToConstraints
+                top.linkTo(topGuideline)
+                end.linkTo(parent.end)
+                bottom.linkTo(parent.bottom)
+            },
+            index = 5,
+            transition = meltingTransition,
+            isNotIceCream = false
+        ) {
+            val newState = LevelScreenState.UserWrongChoice(
+                com.gamovation.core.domain.R.string.event_level_3_wrong
+            )
+            onLevelAction(newState)
+        }
+
         DraggableImage(
-            modifier = Modifier
-                .constrainAs(sun) {
-                    top.linkTo(parent.top, margin = -Dimensions.Padding.Large.value)
-                    start.linkTo(parent.start, margin = -Dimensions.Padding.ExtraLarge2X.value)
-                },
+            modifier = Modifier.constrainAs(sun) {
+                top.linkTo(parent.top, margin = -Dimensions.Padding.Large.value)
+                start.linkTo(parent.start, margin = -Dimensions.Padding.ExtraLarge2X.value)
+            },
+            orientation = DraggableOrientation.Horizontal,
             isEnabled = !meltingTransition.currentState,
             drawableRes = com.gamovation.core.ui.R.drawable.sun
         ) { sunOffset, screenSize ->
@@ -116,14 +177,10 @@ fun Level3Content(
         }
     }
 
-    InAppReviewDialog(
-        dialogState = showReviewDialogState,
-        onStartReview = {
-            showReviewDialogState.dismiss()
-            onReviewRequest()
-        },
-        onDismiss = {
-            showReviewDialogState.dismiss()
-        }
-    )
+    InAppReviewDialog(dialogState = showReviewDialogState, onStartReview = {
+        showReviewDialogState.dismiss()
+        onReviewRequest()
+    }, onDismiss = {
+        showReviewDialogState.dismiss()
+    })
 }

@@ -2,14 +2,13 @@ package com.gamovation.feature.level.level1
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
 import com.gamovation.core.ui.animation.DrawAnimation
 import kotlin.random.Random
 
@@ -24,11 +23,12 @@ internal fun Level1Image(modifier: Modifier = Modifier, index: Int = 0) {
             }
         )
     }
-    DrawAnimation(modifier = modifier, delayOrder = index) {
+    DrawAnimation(modifier = modifier, appearOrder = index) {
         Image(
-            modifier = Modifier.size(128.dp),
+            modifier = Modifier,
             painter = painterResource(id = randomDuckImage),
-            contentDescription = null
+            contentDescription = null,
+            contentScale = ContentScale.Fit
         )
     }
 }

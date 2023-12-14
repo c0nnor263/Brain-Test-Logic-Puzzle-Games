@@ -126,4 +126,6 @@ dependencies {
 
     // Play Services Games
     implementation("com.google.android.gms:play-services-games-v2:19.0.0")
+
+    implementation("com.google.ads.mediation:facebook:6.16.0.0")
 }

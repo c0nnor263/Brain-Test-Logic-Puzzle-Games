@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
@@ -29,7 +29,7 @@ fun Level15Content(
 ) {
     BoxWithConstraints(modifier = modifier, contentAlignment = Alignment.TopCenter) {
         Column(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             DrawAnimation {
@@ -53,9 +53,17 @@ fun Level15Content(
             Spacer(modifier = Modifier.height(Dimensions.Padding.Medium.value))
             CounterBlock {
                 if (it == 24) {
-                    onLevelAction(LevelScreenState.USER_CORRECT_CHOICE)
+                    onLevelAction(
+                        LevelScreenState.UserCorrectChoice(
+                            com.gamovation.core.domain.R.string.event_level_15_finished
+                        )
+                    )
                 } else {
-                    onLevelAction(LevelScreenState.USER_WRONG_CHOICE)
+                    onLevelAction(
+                        LevelScreenState.UserWrongChoice(
+                            com.gamovation.core.domain.R.string.event_level_15_wrong
+                        )
+                    )
                 }
             }
         }

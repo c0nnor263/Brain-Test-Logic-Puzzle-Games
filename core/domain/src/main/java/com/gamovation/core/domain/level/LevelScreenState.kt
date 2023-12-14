@@ -1,12 +1,14 @@
 package com.gamovation.core.domain.level
 
-enum class LevelScreenState {
-    USER_CORRECT_CHOICE,
-    USER_WRONG_CHOICE,
-    USER_WATCH_AD,
+import androidx.annotation.StringRes
 
-    IS_LEVEL_PLAYING,
-    LEVEL_COMPLETED,
-    PROCEED_TO_NEXT_LEVEL,
-    COMPLETED_THE_GAME
+sealed class LevelScreenState {
+    data class UserCorrectChoice(@StringRes val eventId: Int) : LevelScreenState()
+    data class UserWrongChoice(@StringRes val eventId: Int) : LevelScreenState()
+    data class UserWatchAd(@StringRes val eventId: Int) : LevelScreenState()
+
+    data object IsLevelPlaying : LevelScreenState()
+    data object LevelCompleted : LevelScreenState()
+    data object ProceedToNextLevel : LevelScreenState()
+    data class CompletedTheGame(@StringRes val eventId: Int) : LevelScreenState()
 }

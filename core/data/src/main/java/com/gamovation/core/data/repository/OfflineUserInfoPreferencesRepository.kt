@@ -3,8 +3,8 @@ package com.gamovation.core.data.repository
 import com.gamovation.core.database.preferences.UserInfoPreferencesDataStore
 import com.gamovation.core.domain.billing.UserVipType
 import com.gamovation.core.domain.repository.UserInfoPreferencesRepository
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
 class OfflineUserInfoPreferencesRepository @Inject constructor(
     private val userInfoPreferencesDataStore: UserInfoPreferencesDataStore

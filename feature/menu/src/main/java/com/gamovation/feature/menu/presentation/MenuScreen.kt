@@ -3,12 +3,9 @@ package com.gamovation.feature.menu.presentation
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.LocalOverscrollConfiguration
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
@@ -27,6 +24,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.gamovation.core.database.data.LevelManager
 import com.gamovation.core.database.model.LevelData
@@ -35,7 +34,8 @@ import com.gamovation.core.ui.common.ScalableButton
 import com.gamovation.feature.menu.R
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
-import kotlinx.collections.immutable.toImmutableList
+import kotlinx.collections.immutable.toPersistentList
+import kotlin.math.min
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -46,31 +46,45 @@ fun MenuScreen(
     var pageIndex by remember {
         mutableIntStateOf(0)
     }
-    val allLevels by viewModel.getAllLevels().collectAsStateWithLifecycle(emptyList())
+    val allLevels by viewModel.getAllLevels().collectAsStateWithLifecycle(persistentListOf())
 
-    val levelList by remember {
+    val levelList by remember(allLevels) {
         derivedStateOf {
-            allLevels.takeIf { it.isNotEmpty() }?.subList(
-                pageIndex,
-                (pageIndex + 5).coerceAtMost(
-                    LevelManager.MAX_LEVEL_ID
-                )
-            )?.toImmutableList() ?: persistentListOf()
+            val startIndex = pageIndex * 5
+            val endIndex = min(startIndex + 5, allLevels.size)
+            allLevels.subList(startIndex, endIndex).toPersistentList()
         }
     }
 
     CompositionLocalProvider(
         LocalOverscrollConfiguration provides null
     ) {
-        Column(
+        ConstraintLayout(
             modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            LevelNumberList(levelList, onNavigateToLevel = onNavigateToLevel)
-            Spacer(modifier = Modifier.padding(Dimensions.Padding.Medium.value))
+            val (numberList, navigationBlock) = createRefs()
+
+            LevelNumberList(
+                modifier = Modifier.constrainAs(numberList) {
+                    width = Dimension.fillToConstraints
+                    height = Dimension.wrapContent
+                    top.linkTo(parent.top)
+                    centerHorizontallyTo(parent)
+                    bottom.linkTo(navigationBlock.top)
+                },
+                list = levelList,
+                onNavigateToLevel = onNavigateToLevel
+            )
             NavigationArrows(
-                modifier = Modifier.padding(Dimensions.Padding.Small.value),
-                currentIndex = pageIndex,
+                modifier = Modifier.constrainAs(navigationBlock) {
+                    width = Dimension.fillToConstraints
+                    height = Dimension.wrapContent
+                    top.linkTo(numberList.bottom)
+                    centerHorizontallyTo(parent)
+                    bottom.linkTo(parent.bottom)
+                },
+                page = pageIndex,
+                itemsCount = allLevels.size,
                 onIndexUpdate = {
                     pageIndex = it.coerceAtMost(LevelManager.MAX_LEVEL_ID)
                 }
@@ -80,13 +94,19 @@ fun MenuScreen(
 }
 
 @Composable
-fun LevelNumberList(list: ImmutableList<LevelData>, onNavigateToLevel: (Int) -> Unit) {
+fun LevelNumberList(
+    modifier: Modifier = Modifier,
+    list: ImmutableList<LevelData>,
+    onNavigateToLevel: (Int) -> Unit
+) {
     LazyColumn(
-        modifier = Modifier.fillMaxWidth().semantics {
-            contentDescription = "MenuLazyColumn"
-        },
+        modifier = modifier
+            .fillMaxWidth()
+            .semantics {
+                contentDescription = "MenuLazyColumn"
+            },
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(Dimensions.Padding.Small.value),
+        verticalArrangement = Arrangement.Top,
         contentPadding = PaddingValues(Dimensions.Padding.Small.value)
     ) {
         items(items = list, key = { it.id }) {
@@ -100,7 +120,7 @@ fun LevelNumberList(list: ImmutableList<LevelData>, onNavigateToLevel: (Int) -> 
             ) {
                 Text(
                     text = stringResource(R.string.level, it.id),
-                    color = if (it.isLocked) Color.Gray else Color.White,
+                    color = Color.White,
                     style = MaterialTheme.typography.displaySmall,
                     textDecoration = if (it.isCompleted) {
                         TextDecoration.LineThrough

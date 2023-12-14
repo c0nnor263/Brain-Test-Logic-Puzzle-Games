@@ -33,8 +33,17 @@ class StoreScreenViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             val currentType = userInfoPreferencesRepository.getUserVipType().first()
             when (storeItemInfo.type) {
-                BillingProductType.REMOVE_ADS, BillingProductType.VIP -> {
-                    if (currentType != UserVipType.BASE) {
+                BillingProductType.REMOVE_ADS -> {
+                    if (currentType == UserVipType.ADS_FREE) {
+                        onError()
+                    } else {
+                        billingDataSource.purchaseProduct(storeItemInfo, onRequestActivity)
+                    }
+                }
+
+                BillingProductType.VIP -> {
+                    if (currentType == UserVipType.PREMIUM
+                    ) {
                         onError()
                     } else {
                         billingDataSource.purchaseProduct(storeItemInfo, onRequestActivity)

@@ -23,7 +23,7 @@ internal fun ActionBarDialogSkipOption(onClick: () -> Unit) {
             textAlign = TextAlign.Center
         )
     }
-    DrawAnimation(delayOrder = 1) {
+    DrawAnimation(appearOrder = 1) {
         Text(
             text = stringResource(R.string.skip_this_level_will_let_you_do_this),
             style = MaterialTheme.typography.headlineLarge.copy(color = Color.Yellow),
@@ -33,7 +33,7 @@ internal fun ActionBarDialogSkipOption(onClick: () -> Unit) {
     Spacer(modifier = Modifier.height(Dimensions.Padding.Large.value))
 
     ScalableButton(
-        delayOrder = 2,
+        appearOrder = 2,
         onClick = onClick,
         stringRes = R.string.skip,
         textStyle = MaterialTheme.typography.displaySmall

@@ -58,7 +58,9 @@ fun Modifier.defaultButtonIdleAnimation(): Modifier {
         label = "Default Scale Button"
     )
 
-    return this.rotate(rotationAnimation).scale(scaleAnimation)
+    return this
+        .rotate(rotationAnimation)
+        .scale(scaleAnimation)
 }
 
 var lastClickNavigateTime = 0L
