@@ -52,7 +52,7 @@ fun HomeScreen(
                 modifier = Modifier.semantics {
                     contentDescription = LevelScreenFastNavigateContentDescription
                 },
-                delayOrder = 1,
+                appearOrder = 1,
                 stringRes = R.string.let_s_go,
                 onClick = {
                     val data = levelData.value

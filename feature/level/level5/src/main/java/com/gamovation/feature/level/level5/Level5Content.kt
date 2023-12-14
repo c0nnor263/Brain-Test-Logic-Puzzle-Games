@@ -3,23 +3,19 @@ package com.gamovation.feature.level.level5
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ChainStyle
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import com.gamovation.core.domain.level.LevelScreenState
 import com.gamovation.core.ui.Dimensions
 import com.gamovation.core.ui.R
@@ -37,150 +33,230 @@ fun Level5Content(
     val isSecondMarkPressed by secondMarkInteractionSource.collectIsPressedAsState()
 
     LaunchedEffect(isFirstMarkPressed, isSecondMarkPressed) {
-        val event = if (isFirstMarkPressed && isSecondMarkPressed
-        ) {
-            LevelScreenState.USER_CORRECT_CHOICE
+        val event = if (isFirstMarkPressed && isSecondMarkPressed) {
+            LevelScreenState.UserCorrectChoice(
+                com.gamovation.core.domain.R.string.event_level_5_finished
+            )
         } else if (isFirstMarkPressed || isSecondMarkPressed) {
-            LevelScreenState.USER_WRONG_CHOICE
+            LevelScreenState.UserWrongChoice(
+                com.gamovation.core.domain.R.string.event_level_5_wrong
+            )
         } else {
             return@LaunchedEffect
         }
+
         onLevelAction(event)
     }
 
-    Column(
-        modifier = modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Level5Title()
+    ConstraintLayout(modifier = modifier.fillMaxSize()) {
+        val (
+            header, backgroundImage,
 
-        Spacer(modifier = Modifier.height(8.dp))
-        ConstraintLayout(
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            val (
-                backgroundImage, firstMark, secondMark, thirdMark, fourthMark,
-                fifthNark, sixthMark
-            ) = createRefs()
+            firstMark,
+            secondMark,
+            thirdMark,
 
-            DrawAnimation(
-                modifier = Modifier.constrainAs(backgroundImage) {
-                    top.linkTo(parent.top)
-                    start.linkTo(firstMark.start)
-                    end.linkTo(thirdMark.end)
-                    bottom.linkTo(parent.bottom)
-                },
-                delayOrder = 6
-            ) {
-                Image(
-                    painter = painterResource(
-                        id = com.gamovation.feature.level.level5.R.drawable.l5_tic_tac_toe_board
-                    ),
-                    contentDescription = null,
-                    contentScale = ContentScale.FillWidth
-                )
+            fourthMark,
+            fifthNark,
+            sixthMark,
+
+            seventhMark,
+            eighthMark,
+            ninthMark
+        ) = createRefs()
+
+        val topHeaderGuideline = createGuidelineFromTop(0.1F)
+
+        val firstCellGuideline = createGuidelineFromTop(0.4F)
+        val secondCellGuideline = createGuidelineFromTop(0.7F)
+
+        Level5Header(
+            modifier = Modifier.constrainAs(header) {
+                width = Dimension.fillToConstraints
+                height = Dimension.fillToConstraints
+                top.linkTo(parent.top)
+                centerHorizontallyTo(parent)
+                bottom.linkTo(topHeaderGuideline)
             }
+        )
 
-            // First Row
-
-            createHorizontalChain(
-                firstMark,
-                secondMark,
-                thirdMark,
-                chainStyle = ChainStyle.SpreadInside
-            )
-
-            Level5TicTacToeCell(
+        DrawAnimation(
+            modifier = Modifier.constrainAs(backgroundImage) {
+                width = Dimension.fillToConstraints
+                height = Dimension.fillToConstraints
+                top.linkTo(topHeaderGuideline)
+                centerHorizontallyTo(parent)
+                bottom.linkTo(parent.bottom)
+            },
+            appearOrder = 3
+        ) {
+            Image(
                 modifier = Modifier
-                    .constrainAs(
-                        firstMark
-                    ) {
-                        top.linkTo(parent.top)
-                    }
-                    .padding(Dimensions.Padding.Small.value)
-                    .fillMaxWidth(0.3F),
-                drawableRes = R.drawable.l5_o_mark
-            )
-
-            Level5TicTacToeCell(
-                modifier = Modifier
-                    .constrainAs(
-                        secondMark
-                    ) {
-                        top.linkTo(firstMark.top)
-                        bottom.linkTo(firstMark.bottom)
-                    }
-                    .padding(Dimensions.Padding.Small.value)
-                    .fillMaxWidth(0.3F),
-                drawableRes = R.drawable.l5_o_mark,
-                delayOrder = 1
-            )
-            Level5TicTacToeCell(
-                modifier = Modifier
-                    .constrainAs(
-                        thirdMark
-                    ) {
-                        top.linkTo(secondMark.top)
-                        bottom.linkTo(secondMark.bottom)
-                    }
-                    .padding(Dimensions.Padding.Small.value)
-                    .fillMaxWidth(0.3F),
-                interactionSource = firstMarkInteractionSource,
-                alpha = if (isFirstMarkPressed) 1f else 0f,
-                drawableRes = R.drawable.l5_x_mark,
-                delayOrder = null
-            )
-
-            // Second Row
-
-            Level5TicTacToeCell(
-                modifier = Modifier
-                    .constrainAs(
-                        fourthMark
-                    ) {
-                        top.linkTo(thirdMark.bottom)
-                        start.linkTo(thirdMark.start)
-                        end.linkTo(thirdMark.end)
-                        bottom.linkTo(sixthMark.top)
-                    }
-                    .padding(Dimensions.Padding.Small.value)
-                    .fillMaxWidth(0.3F),
-                drawableRes = R.drawable.l5_x_mark,
-                delayOrder = 2
-            )
-
-            // Third Row
-
-            createHorizontalChain(fifthNark, sixthMark, chainStyle = ChainStyle.SpreadInside)
-
-            Level5TicTacToeCell(
-                modifier = Modifier
-                    .constrainAs(
-                        fifthNark
-                    ) {
-                        bottom.linkTo(parent.bottom)
-                    }
-                    .padding(Dimensions.Padding.Small.value)
-                    .fillMaxWidth(0.3F),
-                drawableRes = R.drawable.l5_o_mark,
-                delayOrder = 3
-            )
-
-            Level5TicTacToeCell(
-                modifier = Modifier
-                    .constrainAs(
-                        sixthMark
-                    ) {
-                        bottom.linkTo(parent.bottom)
-                    }
-                    .padding(Dimensions.Padding.Small.value)
-                    .fillMaxWidth(0.3F),
-                drawableRes = R.drawable.l5_x_mark,
-                interactionSource = secondMarkInteractionSource,
-                alpha = if (isSecondMarkPressed) 1f else 0f,
-                delayOrder = null
+                    .fillMaxSize()
+                    .padding(Dimensions.Padding.Small.value),
+                painter = painterResource(
+                    id = com.gamovation.feature.level.level5.R.drawable.l5_tic_tac_toe_board
+                ),
+                contentDescription = null,
+                contentScale = ContentScale.FillBounds
             )
         }
+
+
+        val firstRowHorizontalChain = createHorizontalChain(
+            firstMark,
+            secondMark,
+            thirdMark,
+            chainStyle = ChainStyle.SpreadInside
+        )
+
+        constrain(firstRowHorizontalChain) {
+            start.linkTo(parent.start, margin = Dimensions.Padding.Small.value)
+            end.linkTo(parent.end, margin = Dimensions.Padding.Small.value)
+        }
+
+        val secondRowHorizontalChain = createHorizontalChain(
+            fourthMark,
+            fifthNark,
+            sixthMark,
+            chainStyle = ChainStyle.SpreadInside
+        )
+
+        constrain(secondRowHorizontalChain) {
+            start.linkTo(parent.start, margin = Dimensions.Padding.Small.value)
+            end.linkTo(parent.end, margin = Dimensions.Padding.Small.value)
+        }
+
+        val thirdRowHorizontalChain = createHorizontalChain(
+            seventhMark,
+            eighthMark,
+            ninthMark,
+            chainStyle = ChainStyle.SpreadInside
+        )
+
+        constrain(thirdRowHorizontalChain) {
+            start.linkTo(parent.start, margin = Dimensions.Padding.Small.value)
+            end.linkTo(parent.end, margin = Dimensions.Padding.Small.value)
+        }
+
+
+        // First Row
+        Level5TicTacToeCell(
+            modifier = Modifier
+                .constrainAs(firstMark) {
+                    width = Dimension.fillToConstraints
+                    height = Dimension.fillToConstraints
+                    top.linkTo(topHeaderGuideline)
+                    bottom.linkTo(firstCellGuideline)
+                },
+            drawableRes = R.drawable.l5_o_mark,
+            appearOrder = 4
+        )
+
+        Level5TicTacToeCell(
+            modifier = Modifier
+                .constrainAs(secondMark) {
+                    width = Dimension.fillToConstraints
+                    height = Dimension.fillToConstraints
+                    top.linkTo(topHeaderGuideline)
+                    bottom.linkTo(firstCellGuideline)
+                },
+            drawableRes = R.drawable.l5_o_mark,
+            appearOrder = 5
+        )
+        Level5TicTacToeCell(
+            modifier = Modifier
+                .constrainAs(thirdMark) {
+                    width = Dimension.fillToConstraints
+                    height = Dimension.fillToConstraints
+                    top.linkTo(topHeaderGuideline)
+                    bottom.linkTo(firstCellGuideline)
+                },
+            interactionSource = firstMarkInteractionSource,
+            alpha = if (isFirstMarkPressed) 1f else 0f,
+            drawableRes = R.drawable.l5_x_mark,
+            appearOrder = null
+        )
+
+        // Second Row
+        Level5TicTacToeCell(
+            modifier = Modifier
+                .constrainAs(fourthMark) {
+                    width = Dimension.fillToConstraints
+                    height = Dimension.fillToConstraints
+                    top.linkTo(firstCellGuideline)
+                    bottom.linkTo(secondCellGuideline)
+                }
+                .padding(Dimensions.Padding.Small.value),
+            drawableRes = R.drawable.l5_x_mark,
+            alpha = 0F,
+            appearOrder = null
+        )
+        Level5TicTacToeCell(
+            modifier = Modifier
+                .constrainAs(fifthNark) {
+                    width = Dimension.fillToConstraints
+                    height = Dimension.fillToConstraints
+                    top.linkTo(firstCellGuideline)
+                    bottom.linkTo(secondCellGuideline)
+                }
+                .padding(Dimensions.Padding.Small.value),
+            drawableRes = R.drawable.l5_x_mark,
+            alpha = 0F,
+            appearOrder = null
+        )
+        Level5TicTacToeCell(
+            modifier = Modifier
+                .constrainAs(sixthMark) {
+                    width = Dimension.fillToConstraints
+                    height = Dimension.fillToConstraints
+                    top.linkTo(firstCellGuideline)
+                    bottom.linkTo(secondCellGuideline)
+                }
+                .padding(Dimensions.Padding.Small.value),
+            drawableRes = R.drawable.l5_x_mark,
+            appearOrder = 5
+        )
+
+        // Third Row
+        Level5TicTacToeCell(
+            modifier = Modifier
+                .constrainAs(seventhMark) {
+                    width = Dimension.fillToConstraints
+                    height = Dimension.fillToConstraints
+                    top.linkTo(secondCellGuideline)
+                    bottom.linkTo(parent.bottom)
+                },
+            drawableRes = R.drawable.l5_o_mark,
+            appearOrder = 6
+        )
+
+        Level5TicTacToeCell(
+            modifier = Modifier
+                .constrainAs(eighthMark) {
+                    width = Dimension.fillToConstraints
+                    height = Dimension.fillToConstraints
+                    top.linkTo(secondCellGuideline)
+                    bottom.linkTo(parent.bottom)
+                },
+            drawableRes = R.drawable.l5_o_mark,
+            alpha = 0F,
+            appearOrder = null
+        )
+
+        Level5TicTacToeCell(
+            modifier = Modifier
+                .constrainAs(ninthMark) {
+                    width = Dimension.fillToConstraints
+                    height = Dimension.fillToConstraints
+                    top.linkTo(secondCellGuideline)
+                    bottom.linkTo(parent.bottom)
+                },
+            drawableRes = R.drawable.l5_x_mark,
+            interactionSource = secondMarkInteractionSource,
+            alpha = if (isSecondMarkPressed) 1f else 0f,
+            appearOrder = null
+        )
     }
 }
 

@@ -8,6 +8,7 @@ import androidx.compose.ui.platform.LocalContext
 import com.gamovation.core.domain.enums.RewardedInterstitialAdResult
 import com.gamovation.core.ui.state.DialogState
 import com.gamovation.core.ui.state.RewardedInterstitialAdViewState
+import com.gamovation.core.ui.state.rememberDialogState
 
 @Composable
 fun WatchAdDialog(
@@ -17,13 +18,14 @@ fun WatchAdDialog(
     rewardedInterstitialAd: RewardedInterstitialAdViewState
 ) {
     val activity = LocalContext.current as ComponentActivity
+    val errorDialogState = rememberDialogState()
 
     LaunchedEffect(dialogState.isShowing) {
         if (dialogState.isShowing) {
             rewardedInterstitialAd.showAd(activity) { result ->
                 when (result) {
                     RewardedInterstitialAdResult.ERROR -> {
-                        dialogState.show()
+                        errorDialogState.show()
                     }
 
                     else -> onDismissed(result)
@@ -34,9 +36,9 @@ fun WatchAdDialog(
 
     WatchAdErrorDialog(
         modifier = modifier,
-        dialogState = dialogState,
+        dialogState = errorDialogState,
         onDismissed = {
-            dialogState.dismiss()
+            errorDialogState.dismiss()
             onDismissed(RewardedInterstitialAdResult.DISMISSED)
         }
     )

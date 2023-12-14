@@ -6,12 +6,12 @@ import com.gamovation.core.database.WordefullDatabase
 import com.gamovation.core.database.model.LevelData
 import com.gamovation.core.domain.R
 import com.gamovation.core.domain.di.ApplicationScope
-import javax.inject.Inject
-import javax.inject.Provider
-import javax.inject.Singleton
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
+import javax.inject.Provider
+import javax.inject.Singleton
 
 @Singleton
 class LevelManager @Inject constructor(

@@ -62,7 +62,7 @@ fun RequestNotificationPermissionDialog(
             }
             Spacer(modifier = Modifier.height(Dimensions.Padding.Small.value))
 
-            DrawAnimation(delayOrder = 1) {
+            DrawAnimation(appearOrder = 1) {
                 Text(
                     text = stringResource(
                         R.string.request_notification_permission_message,
@@ -83,7 +83,7 @@ fun RequestNotificationPermissionDialog(
                         .semantics {
                             contentDescription = RequestNotificationPermissionYesTag
                         },
-                    delayOrder = 2,
+                    appearOrder = 2,
                     stringRes = R.string.yes,
                     textStyle = MaterialTheme.typography.headlineMedium,
                     onClick = {
@@ -96,7 +96,7 @@ fun RequestNotificationPermissionDialog(
                 Spacer(Modifier.width(Dimensions.Padding.Small.value))
 
                 ScalableButton(
-                    delayOrder = 3,
+                    appearOrder = 3,
                     stringRes = R.string.no,
                     textStyle = MaterialTheme.typography.headlineMedium,
                     onClick = onDismiss

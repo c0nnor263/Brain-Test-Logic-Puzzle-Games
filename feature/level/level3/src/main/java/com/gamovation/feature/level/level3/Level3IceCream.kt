@@ -45,7 +45,7 @@ internal fun Level3IceCream(
                 onClick = onClick
             )
             .scale(scaleX = 1F, scaleY = iceCreamScaleAnimation),
-        delayOrder = 1 + index
+        appearOrder = 1 + index
     ) {
         Image(
             painter = painterResource(id = R.drawable.l3_ice_cream),

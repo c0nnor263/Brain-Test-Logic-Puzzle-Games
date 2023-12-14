@@ -56,10 +56,10 @@ fun CounterBlock(
             Spacer(modifier = Modifier.height(Dimensions.Padding.Small.value))
 
             OptionButton(
-                modifier = Modifier.padding(horizontal = Dimensions.Padding.ExtraLarge2X.value),
+                modifier = Modifier.padding(horizontal = Dimensions.Padding.Small.value),
                 text = stringResource(R.string.submit),
                 onClick = { onAnswer(count) },
-                delayOrder = 0,
+                appearOrder = 0,
                 style = MaterialTheme.typography.headlineLarge
             )
         }
@@ -99,9 +99,8 @@ internal fun CounterBlockRowInput(
             }
         }
 
-        DrawAnimation(modifier = Modifier.weight(1F), delayOrder = 1) {
+        DrawAnimation(modifier = Modifier.weight(1F), appearOrder = 1) {
             Box(
-
                 contentAlignment = Alignment.Center
             ) {
                 Text(
@@ -117,7 +116,7 @@ internal fun CounterBlockRowInput(
                 .weight(1F)
                 .wrapContentWidth(Alignment.Start),
             onClick = onMinus,
-            delayOrder = 2
+            appearOrder = 2
         ) {
             Box(
                 contentAlignment = Alignment.Center

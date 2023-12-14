@@ -18,7 +18,7 @@ interface LevelManagerDao {
     @Query("SELECT * FROM leveldata WHERE id = :id")
     fun getById(id: Int): Flow<LevelData>
 
-    @Query("SELECT * FROM leveldata")
+    @Query("SELECT * FROM leveldata WHERE isLocked = 0")
     fun getAll(): Flow<List<LevelData>>
 
     @Query("SELECT * FROM leveldata WHERE isCompleted = 0 ORDER BY id ASC LIMIT 1")

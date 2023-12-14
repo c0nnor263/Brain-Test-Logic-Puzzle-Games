@@ -20,13 +20,13 @@ import com.gamovation.core.ui.common.ScalableButton
 fun OptionButton(
     modifier: Modifier = Modifier,
     text: String,
-    delayOrder: Int,
+    appearOrder: Int,
     style: TextStyle = MaterialTheme.typography.titleLarge,
     onClick: () -> Unit
 ) {
     ScalableButton(
         modifier = modifier,
-        delayOrder = delayOrder,
+        appearOrder = appearOrder,
         onClick = onClick
     ) {
         Card(

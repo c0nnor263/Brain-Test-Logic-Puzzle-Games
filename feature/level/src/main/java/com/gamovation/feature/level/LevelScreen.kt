@@ -69,6 +69,7 @@ fun LevelScreen(
                 val activity = context as ComponentActivity
                 viewModel.processReviewRequest(activity) {
                     reviewDataHandler.isGranted = true
+                    viewModel.submitEvent(com.gamovation.core.domain.R.string.event_inapp_review)
                 }
                 viewModel.clearUiState()
             }
@@ -90,8 +91,8 @@ fun LevelScreen(
     LaunchedEffect(screenState) {
         scope.launch {
             val state = when (screenState) {
-                LevelScreenState.LEVEL_COMPLETED -> LevelScreenViewModel.UiState.OnForward
-                LevelScreenState.USER_WATCH_AD -> LevelScreenViewModel.UiState.OnWatchAd
+                LevelScreenState.LevelCompleted -> LevelScreenViewModel.UiState.OnForward
+                is LevelScreenState.UserWatchAd -> LevelScreenViewModel.UiState.OnWatchAd
                 else -> null
             }
             state?.let { viewModel.updateUiState(it) }
@@ -133,7 +134,7 @@ fun LevelScreen(
     }
 
     BackHandler {
-        if (screenState == LevelScreenState.IS_LEVEL_PLAYING) {
+        if (screenState == LevelScreenState.IsLevelPlaying) {
             viewModel.updateUiState(LevelScreenViewModel.UiState.OnBack)
         }
     }
@@ -154,13 +155,13 @@ fun LevelScreenContent(
         contentAlignment = Alignment.Center
     ) {
         ConstraintLayout(modifier = Modifier.fillMaxSize()) {
-            val (contents, actionBar) = createRefs()
+            val (levelSpecificContentRef, actionBarRef) = createRefs()
 
-            val bottomGuideLine = createGuidelineFromBottom(0.1f)
+            val bottomGuideLine = createGuidelineFromBottom(0.2f)
 
             details?.let {
                 LevelSpecificContent(
-                    modifier = Modifier.constrainAs(contents) {
+                    modifier = Modifier.constrainAs(levelSpecificContentRef) {
                         width = Dimension.matchParent
                         height = Dimension.fillToConstraints
                         top.linkTo(parent.top)
@@ -169,18 +170,17 @@ fun LevelScreenContent(
                         bottom.linkTo(bottomGuideLine)
                     },
                     details = it,
-                    onLevelAction = { action ->
-                        onUpdateLevelActionState(action)
-                    },
                     onLevelScreenAction = onUpdateLevelScreenState,
-                    onReviewRequest = onReviewRequest
+                    onReviewRequest = onReviewRequest,
+                    onLevelAction = onUpdateLevelActionState
                 )
             }
 
             ActionBar(
                 modifier = Modifier
-                    .constrainAs(actionBar) {
+                    .constrainAs(actionBarRef) {
                         width = Dimension.matchParent
+                        height = Dimension.fillToConstraints
                         top.linkTo(bottomGuideLine)
                         start.linkTo(parent.start)
                         end.linkTo(parent.end)
@@ -198,12 +198,7 @@ fun LevelScreenContent(
         }
 
         LevelUserChoiceAlert(
-            currentState = screenState,
-            checkState = LevelScreenState.USER_CORRECT_CHOICE
-        )
-        LevelUserChoiceAlert(
-            currentState = screenState,
-            checkState = LevelScreenState.USER_WRONG_CHOICE
+            currentState = screenState
         )
     }
 }

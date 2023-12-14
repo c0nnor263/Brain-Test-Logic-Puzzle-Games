@@ -58,9 +58,9 @@ fun HeaderBar(navController: NavHostController) {
             label = "",
             transitionSpec = {
                 (
-                    scaleIn(animationSpec = defaultSpringAnimation()) + fadeIn() togetherWith
-                        scaleOut(animationSpec = defaultSpringAnimation()) + fadeOut()
-                    )
+                        scaleIn(animationSpec = defaultSpringAnimation()) + fadeIn() togetherWith
+                                scaleOut(animationSpec = defaultSpringAnimation()) + fadeOut()
+                        )
                     .using(
                         SizeTransform(clip = false)
                     )

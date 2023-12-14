@@ -49,4 +49,99 @@
     <string name="l18_advise">Take a look</string>
     <string name="l19_advise">Cheer up that bottle</string>
     <string name="l20_advise">Obvious!</string>
+
+
+    <!--event Level 1 Finished-->
+    <string name="event_level_1_finished" translatable="false">CgkItMHgsbMDEAIQAQ</string>
+    <!--event Level 2 Finished-->
+    <string name="event_level_2_finished" translatable="false">CgkItMHgsbMDEAIQAg</string>
+    <!--event Level 3 Finished-->
+    <string name="event_level_3_finished" translatable="false">CgkItMHgsbMDEAIQAw</string>
+    <!--event Level 4 Finished-->
+    <string name="event_level_4_finished" translatable="false">CgkItMHgsbMDEAIQBA</string>
+    <!--event Level 5 Finished-->
+    <string name="event_level_5_finished" translatable="false">CgkItMHgsbMDEAIQBQ</string>
+    <!--event Level 6 Finished-->
+    <string name="event_level_6_finished" translatable="false">CgkItMHgsbMDEAIQBg</string>
+    <!--event Level 7 Finished-->
+    <string name="event_level_7_finished" translatable="false">CgkItMHgsbMDEAIQBw</string>
+    <!--event Level 8 Finished-->
+    <string name="event_level_8_finished" translatable="false">CgkItMHgsbMDEAIQCA</string>
+    <!--event Level 9 Finished-->
+    <string name="event_level_9_finished" translatable="false">CgkItMHgsbMDEAIQCQ</string>
+    <!--event Level 10 Finished-->
+    <string name="event_level_10_finished" translatable="false">CgkItMHgsbMDEAIQCg</string>
+    <!--event Level 11 Finished-->
+    <string name="event_level_11_finished" translatable="false">CgkItMHgsbMDEAIQDA</string>
+    <!--event Level 12 Finished-->
+    <string name="event_level_12_finished" translatable="false">CgkItMHgsbMDEAIQDQ</string>
+    <!--event Level 13 Finished-->
+    <string name="event_level_13_finished" translatable="false">CgkItMHgsbMDEAIQDg</string>
+    <!--event Level 14 Finished-->
+    <string name="event_level_14_finished" translatable="false">CgkItMHgsbMDEAIQDw</string>
+    <!--event Level 15 Finished-->
+    <string name="event_level_15_finished" translatable="false">CgkItMHgsbMDEAIQEA</string>
+    <!--event Level 16 Finished-->
+    <string name="event_level_16_finished" translatable="false">CgkItMHgsbMDEAIQEQ</string>
+    <!--event Level 17 Finished-->
+    <string name="event_level_17_finished" translatable="false">CgkItMHgsbMDEAIQEg</string>
+    <!--event Level 18 Finished-->
+    <string name="event_level_18_finished" translatable="false">CgkItMHgsbMDEAIQEw</string>
+    <!--event Level 19 Finished-->
+    <string name="event_level_19_finished" translatable="false">CgkItMHgsbMDEAIQFA</string>
+    <!--event Level 20 Finished-->
+    <string name="event_level_20_finished" translatable="false">CgkItMHgsbMDEAIQFQ</string>
+    <!--event Level 1 Wrong-->
+    <string name="event_level_1_wrong" translatable="false">CgkItMHgsbMDEAIQFg</string>
+    <!--event Level 2 Wrong-->
+    <string name="event_level_2_wrong" translatable="false">CgkItMHgsbMDEAIQFw</string>
+    <!--event Level 3 Wrong-->
+    <string name="event_level_3_wrong" translatable="false">CgkItMHgsbMDEAIQGA</string>
+    <!--event Level 4 Wrong-->
+    <string name="event_level_4_wrong" translatable="false">CgkItMHgsbMDEAIQGQ</string>
+    <!--event Level 5 Wrong-->
+    <string name="event_level_5_wrong" translatable="false">CgkItMHgsbMDEAIQGg</string>
+    <!--event Level 6 Wrong-->
+    <string name="event_level_6_wrong" translatable="false">CgkItMHgsbMDEAIQGw</string>
+    <!--event Level 7 Wrong-->
+    <string name="event_level_7_wrong" translatable="false">CgkItMHgsbMDEAIQHA</string>
+    <!--event Level 8 Wrong-->
+    <string name="event_level_8_wrong" translatable="false">CgkItMHgsbMDEAIQHQ</string>
+    <!--event Level 9 Wrong-->
+    <string name="event_level_9_wrong" translatable="false">CgkItMHgsbMDEAIQHg</string>
+    <!--event Level 10 Wrong-->
+    <string name="event_level_10_wrong" translatable="false">CgkItMHgsbMDEAIQHw</string>
+    <!--event Level 11 Wrong-->
+    <string name="event_level_11_wrong" translatable="false">CgkItMHgsbMDEAIQIA</string>
+    <!--event Level 12 Wrong-->
+    <string name="event_level_12_wrong" translatable="false">CgkItMHgsbMDEAIQIQ</string>
+    <!--event Level 13 Wrong-->
+    <string name="event_level_13_wrong" translatable="false">CgkItMHgsbMDEAIQIg</string>
+    <!--event Level 14 Wrong-->
+    <string name="event_level_14_wrong" translatable="false">CgkItMHgsbMDEAIQIw</string>
+    <!--event Level 15 Wrong-->
+    <string name="event_level_15_wrong" translatable="false">CgkItMHgsbMDEAIQJA</string>
+    <!--event Level 16 Wrong-->
+    <string name="event_level_16_wrong" translatable="false">CgkItMHgsbMDEAIQJQ</string>
+    <!--event Level 17 Wrong-->
+    <string name="event_level_17_wrong" translatable="false">CgkItMHgsbMDEAIQJg</string>
+    <!--event Level 18 Wrong-->
+    <string name="event_level_18_wrong" translatable="false">CgkItMHgsbMDEAIQJw</string>
+    <!--event Level 19 Wrong-->
+    <string name="event_level_19_wrong" translatable="false">CgkItMHgsbMDEAIQKA</string>
+    <!--event Level 20 Wrong-->
+    <string name="event_level_20_wrong" translatable="false">CgkItMHgsbMDEAIQKQ</string>
+
+    <!--event In-App Review-->
+    <string name="event_inapp_review" translatable="false">CgkItMHgsbMDEAIQKg</string>
+    <!--event Push Click-->
+    <string name="event_push_click" translatable="false">CgkItMHgsbMDEAIQKw</string>
+    <!--event Completed the game-->
+    <string name="event_completed_the_game" translatable="false">CgkItMHgsbMDEAIQLA</string>
+    <!--event Skip Action use-->
+    <string name="event_skip_action_use" translatable="false">CgkItMHgsbMDEAIQLQ</string>
+    <!--event Advice Action use-->
+    <string name="event_advice_action_use" translatable="false">CgkItMHgsbMDEAIQLg</string>
+    <!--event Level Competed Ad-->
+    <string name="event_level_competed_ad" translatable="false">CgkItMHgsbMDEAIQLw</string>
 </resources>

@@ -47,7 +47,7 @@ internal fun Level4Bulb(
         )
     }
 
-    DrawAnimation(modifier = modifier, delayOrder = index) {
+    DrawAnimation(modifier = modifier, appearOrder = index) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(
                 text = (if (bulbText == 4) 5 else index).toString(),
@@ -70,7 +70,7 @@ internal fun Level4Bulb(
                             scope.launch {
                                 repeat(
                                     DEFAULT_LEVEL_SCREEN_COUNTDOWN_DURATION.toInt() /
-                                        Durations.Short.time.times(2)
+                                            Durations.Short.time.times(2)
                                 ) {
                                     bulbDrawableRes = R.drawable.l4_lamp_off
                                     delay(Durations.Short.time.toLong())

@@ -3,6 +3,8 @@ package com.gamovation.core.ui.level.interactions
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.foundation.gestures.detectHorizontalDragGestures
+import androidx.compose.foundation.gestures.detectVerticalDragGestures
 import androidx.compose.foundation.layout.offset
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -27,54 +29,91 @@ import kotlin.math.roundToInt
 fun DraggableImage(
     modifier: Modifier = Modifier,
     isEnabled: Boolean = true,
+    orientation: DraggableOrientation = DraggableOrientation.Free,
     @DrawableRes drawableRes: Int,
     onDrag: (Offset, Offset) -> Unit = { _, _ -> }
 ) {
     val density = LocalDensity.current
     val configuration = LocalConfiguration.current
-    val screenWidth = with(density) { configuration.screenWidthDp.dp.roundToPx() }
+    val screenWidth = with(density) {
+        configuration.screenWidthDp.dp.roundToPx()
+    }
     val screenHeight = with(density) { configuration.screenHeightDp.dp.roundToPx() }
 
     var offsetX by remember { mutableFloatStateOf(0F) }
     var offsetY by remember { mutableFloatStateOf(0F) }
-    var currentPosition by remember { mutableStateOf(Offset.Zero) }
+    var originalPosition by remember { mutableStateOf(Offset.Zero) }
     var rectOfDraggable by remember { mutableStateOf<Rect?>(null) }
+
+    val screenWidthDraggable = remember(rectOfDraggable) {
+        screenWidth - (rectOfDraggable?.width ?: 0F)
+    }
+    val screenHeightDraggable = remember(rectOfDraggable) {
+        screenHeight - (rectOfDraggable?.height ?: 0F)
+    }
+    val screenSizeDraggable = remember(screenWidthDraggable, screenHeightDraggable) {
+        Offset(
+            screenWidthDraggable,
+            screenHeightDraggable
+        )
+    }
+
 
     Image(
         modifier = modifier
             .onGloballyPositioned { coordinates ->
                 rectOfDraggable = coordinates.boundsInWindow()
-                currentPosition = coordinates
+                originalPosition = coordinates
                     .localToWindow(Offset.Zero)
                     .run { Offset(x, y) }
             }
             .offset { IntOffset(offsetX.roundToInt(), offsetY.roundToInt()) }
             .pointerInput(isEnabled) {
-                detectDragGestures { change, dragAmount ->
-                    change.consume()
+                fun calculateOffset(dragAmount: Offset) {
                     if (isEnabled) {
-                        val width = rectOfDraggable?.width ?: return@detectDragGestures
-                        val height = rectOfDraggable?.height ?: return@detectDragGestures
-
                         offsetX = (offsetX + dragAmount.x)
                             .coerceIn(
-                                -currentPosition.x,
-                                screenWidth - currentPosition.x - width
+                                -originalPosition.x,
+                                screenWidthDraggable - originalPosition.x
                             )
                         offsetY = (offsetY + dragAmount.y)
                             .coerceIn(
-                                -currentPosition.y + height,
-                                screenHeight - currentPosition.y - height
+                                -originalPosition.y,
+                                screenHeightDraggable - originalPosition.y
                             )
 
-                        val draggableOffset = Offset(offsetX, offsetY) + currentPosition
-                        val screenSize = Offset(screenWidth.toFloat(), screenHeight.toFloat())
+                        val draggableOffset = Offset(offsetX, offsetY) + originalPosition
+
                         onDrag(
                             draggableOffset,
-                            screenSize
+                            screenSizeDraggable
                         )
                     }
                 }
+
+                when (orientation) {
+                    DraggableOrientation.Horizontal -> {
+                        detectHorizontalDragGestures { change, dragAmount ->
+                            change.consume()
+                            calculateOffset(Offset(dragAmount, 0F))
+                        }
+                    }
+
+                    DraggableOrientation.Vertical -> {
+                        detectVerticalDragGestures { change, dragAmount ->
+                            change.consume()
+                            calculateOffset(Offset(0F, dragAmount))
+                        }
+                    }
+
+                    DraggableOrientation.Free -> {
+                        detectDragGestures { change, dragAmount ->
+                            change.consume()
+                            calculateOffset(dragAmount)
+                        }
+                    }
+                }
+
             },
         painter = painterResource(id = drawableRes),
         contentDescription = null

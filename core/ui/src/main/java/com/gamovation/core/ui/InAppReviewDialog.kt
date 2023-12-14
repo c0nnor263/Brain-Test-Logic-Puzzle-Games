@@ -45,7 +45,7 @@ fun InAppReviewDialog(
             }
             Spacer(modifier = Modifier.height(Dimensions.Padding.Small.value))
 
-            DrawAnimation(delayOrder = 1) {
+            DrawAnimation(appearOrder = 1) {
                 Text(
                     text = stringResource(
                         R.string.could_you_share_your_feedback_so_we_can_work_on_improving_it
@@ -59,7 +59,7 @@ fun InAppReviewDialog(
                 horizontalArrangement = Arrangement.SpaceAround
             ) {
                 ScalableButton(
-                    delayOrder = 2,
+                    appearOrder = 2,
                     onClick = onStartReview,
                     stringRes = R.string.yes,
                     textStyle = MaterialTheme.typography.headlineMedium
@@ -67,7 +67,7 @@ fun InAppReviewDialog(
                 Spacer(Modifier.width(Dimensions.Padding.Small.value))
 
                 ScalableButton(
-                    delayOrder = 3,
+                    appearOrder = 3,
                     onClick = onDismiss,
                     stringRes = R.string.no,
                     textStyle = MaterialTheme.typography.headlineMedium

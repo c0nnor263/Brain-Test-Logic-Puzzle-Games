@@ -24,7 +24,7 @@ internal fun Level2Owl(
 
     DrawAnimation(
         modifier = modifier,
-        delayOrder = 1
+        appearOrder = 1
     ) {
         Crossfade(
             targetState = owlImageRes,

@@ -3,11 +3,9 @@ package com.gamovation.core.ui.level.answers
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
@@ -25,6 +23,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.ChainStyle
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import com.gamovation.core.ui.Dimensions
 import com.gamovation.core.ui.R
 import com.gamovation.core.ui.animation.DrawAnimation
@@ -43,44 +44,75 @@ fun NumbersBlock(
         mutableStateOf("")
     }
 
-    Box(modifier = modifier, contentAlignment = Alignment.Center) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(Dimensions.Padding.Small.value)
-        ) {
-            NumbersBlockInputRow(
-                currentAnswer = currentAnswer,
-                onAnswer = {
-                    if (currentAnswer.isNotBlank()) {
-                        onAnswer(currentAnswer)
-                    }
-                },
-                onRemove = {
-                    currentAnswer =
-                        if (currentAnswer.length > 1) currentAnswer.dropLast(1) else ""
-                }
-            )
-            Spacer(modifier = Modifier.height(Dimensions.Padding.Small.value))
+    ConstraintLayout(modifier = modifier.fillMaxSize()) {
+        val (inputRow, numberInputFirstRow, numberInputSecondRow) = createRefs()
 
-            AlphabetInputContent(
-                listOfAnswers = listOfAnswers,
-                onClickSymbol = { symbol ->
-                    currentAnswer += if (currentAnswer.length < numberMaxLength) symbol else ""
+        val topGuideline = createGuidelineFromTop(0.3F)
+        NumbersBlockInputRow(
+            modifier = Modifier.constrainAs(inputRow) {
+                width = Dimension.fillToConstraints
+                height = Dimension.wrapContent
+                centerHorizontallyTo(parent)
+                top.linkTo(parent.top)
+                bottom.linkTo(topGuideline)
+            },
+            currentAnswer = currentAnswer,
+            onAnswer = {
+                if (currentAnswer.isNotBlank()) {
+                    onAnswer(currentAnswer)
                 }
-            )
+            },
+            onRemove = {
+                currentAnswer =
+                    if (currentAnswer.length > 1) currentAnswer.dropLast(1) else ""
+            }
+        )
+
+        val alphabetVerticalChain = createVerticalChain(
+            numberInputFirstRow,
+            numberInputSecondRow,
+            chainStyle = ChainStyle.Packed
+        )
+        constrain(alphabetVerticalChain) {
+            top.linkTo(topGuideline)
+            bottom.linkTo(parent.bottom)
         }
+
+        NumberInputRowButtons(
+            modifier = Modifier.constrainAs(numberInputFirstRow) {
+                width = Dimension.fillToConstraints
+                centerHorizontallyTo(parent)
+            },
+            listOfAnswers = listOfAnswers,
+            itemAfterIndex = 0,
+            onClickSymbol = { symbol ->
+                currentAnswer += if (currentAnswer.length < numberMaxLength) symbol else ""
+            }
+        )
+        NumberInputRowButtons(
+            modifier = Modifier.constrainAs(numberInputSecondRow) {
+                width = Dimension.fillToConstraints
+                centerHorizontallyTo(parent)
+            },
+            listOfAnswers = listOfAnswers,
+            itemAfterIndex = 5,
+            onClickSymbol = { symbol ->
+                currentAnswer += if (currentAnswer.length < numberMaxLength) symbol else ""
+            }
+        )
     }
 }
 
 @Composable
 internal fun NumbersBlockInputRow(
+    modifier: Modifier = Modifier,
     currentAnswer: String,
     onAnswer: () -> Unit,
     onRemove: () -> Unit
 
 ) {
     Row(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -99,7 +131,7 @@ internal fun NumbersBlockInputRow(
 
         DrawAnimation(
             modifier = Modifier.weight(1F),
-            delayOrder = 1
+            appearOrder = 1
         ) {
             Box(
                 modifier = Modifier.widthIn(min = 96.dp),
@@ -124,7 +156,7 @@ internal fun NumbersBlockInputRow(
                 .weight(1F)
                 .wrapContentWidth(Alignment.Start),
             onClick = onAnswer,
-            delayOrder = 2
+            appearOrder = 2
         ) {
             Image(
                 modifier = Modifier.size(Dimensions.Padding.ExtraLarge.value),
@@ -136,28 +168,16 @@ internal fun NumbersBlockInputRow(
 }
 
 @Composable
-internal fun AlphabetInputContent(
-    listOfAnswers: ImmutableList<Int>,
-    onClickSymbol: (String) -> Unit
-) {
-    repeat(2) { index ->
-        AlphabetInputRowButtons(
-            listOfAnswers = listOfAnswers,
-            itemAfterIndex = index * 5,
-            onClickSymbol = onClickSymbol
-        )
-    }
-}
-
-@Composable
-fun AlphabetInputRowButtons(
+fun NumberInputRowButtons(
+    modifier: Modifier = Modifier,
     listOfAnswers: ImmutableList<Int>,
     itemAfterIndex: Int,
     onClickSymbol: (String) -> Unit
 ) {
     Row(
+        modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(
-            Dimensions.Padding.Small.value,
+            Dimensions.Padding.ExtraSmall.value,
             Alignment.CenterHorizontally
         ),
         verticalAlignment = Alignment.CenterVertically
