@@ -137,6 +137,7 @@ fun ConstraintLayoutScope.TShirtBlock(
                 top.linkTo(spot3.bottom)
                 start.linkTo(tShirt.start)
                 end.linkTo(tShirt.end, margin = Dimensions.Padding.ExtraLarge.value)
+                bottom.linkTo(tShirt.bottom)
             },
             contentDescription = null
         )
@@ -149,6 +150,7 @@ fun ConstraintLayoutScope.TShirtBlock(
                 top.linkTo(spot4.bottom, margin = -Dimensions.Padding.Medium.value)
                 start.linkTo(tShirt.start, margin = Dimensions.Padding.ExtraLarge.value)
                 end.linkTo(tShirt.end)
+                bottom.linkTo(tShirt.bottom)
             },
             contentDescription = null
         )

@@ -6,6 +6,7 @@ import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.gestures.detectVerticalDragGestures
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.requiredSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
@@ -61,6 +62,7 @@ fun DraggableImage(
 
     Image(
         modifier = modifier
+            .requiredSize(64.dp, 64.dp)
             .onGloballyPositioned { coordinates ->
                 rectOfDraggable = coordinates.boundsInWindow()
                 originalPosition = coordinates

@@ -53,7 +53,6 @@ fun BuyButton(
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
                     textAlign = TextAlign.Center,
-                    modifier = Modifier
                 )
             } else {
                 CircularProgressIndicator(

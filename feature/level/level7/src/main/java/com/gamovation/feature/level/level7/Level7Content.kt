@@ -2,7 +2,9 @@ package com.gamovation.feature.level.level7
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -13,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import com.gamovation.core.domain.level.LevelScreenState
+import com.gamovation.core.ui.Dimensions
 import com.gamovation.core.ui.level.answers.NumbersBlock
 import com.gamovation.core.ui.level.interactions.DraggableImage
 
@@ -36,7 +39,7 @@ fun Level7Content(modifier: Modifier = Modifier, onLevelAction: (LevelScreenStat
                 isNumberVisible = true
             }
         }
-
+        Spacer(modifier = Modifier.height(Dimensions.Padding.ExtraSmall.value))
         NumbersBlock(modifier = Modifier.weight(1F), numberMaxLength = 2) {
             if (it == "15") {
                 onLevelAction(

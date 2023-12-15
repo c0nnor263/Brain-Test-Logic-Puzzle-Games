@@ -39,7 +39,7 @@ fun StoreItem(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Row(modifier = Modifier.weight(1F), verticalAlignment = Alignment.CenterVertically) {
+        Row(modifier = Modifier.weight(2f), verticalAlignment = Alignment.CenterVertically) {
             Image(
                 painter = painterResource(id = drawableRes),
                 modifier = Modifier.size(64.dp),
@@ -57,7 +57,7 @@ fun StoreItem(
         }
 
         BuyButton(
-            modifier = Modifier.weight(1F, false),
+            modifier = Modifier.weight(1.5f, false),
             text = info.price(),
             isLoaded = info.isNotEmpty(),
             onClick = {

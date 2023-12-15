@@ -36,6 +36,7 @@ fun NavigationArrows(
     ) {
 
         ArrowButton(
+            modifier = Modifier.weight(1F),
             drawableRes = com.gamovation.core.ui.R.drawable.baseline_arrow_left_24,
             enabled = page != 0 && itemsCount > 5,
             onClick = {
@@ -45,6 +46,7 @@ fun NavigationArrows(
         )
 
         ArrowButton(
+            modifier = Modifier.weight(1F),
             drawableRes = com.gamovation.core.ui.R.drawable.baseline_arrow_right_24,
             enabled = page != MAX_LEVEL_ID / 5 && itemsCount > page.plus(1) * 5,
             onClick = {
@@ -56,8 +58,14 @@ fun NavigationArrows(
 }
 
 @Composable
-fun ArrowButton(@DrawableRes drawableRes: Int, enabled: Boolean, onClick: () -> Unit) {
+fun ArrowButton(
+    modifier: Modifier = Modifier,
+    @DrawableRes drawableRes: Int,
+    enabled: Boolean,
+    onClick: () -> Unit
+) {
     ScalableButton(
+        modifier = modifier,
         enabled = enabled,
         onClick = onClick
     ) {

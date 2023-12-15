@@ -164,8 +164,8 @@ fun Level3Content(
 
         DraggableImage(
             modifier = Modifier.constrainAs(sun) {
-                top.linkTo(parent.top, margin = -Dimensions.Padding.Large.value)
-                start.linkTo(parent.start, margin = -Dimensions.Padding.ExtraLarge2X.value)
+                top.linkTo(parent.top)
+                start.linkTo(parent.start, margin = -Dimensions.Padding.Large.value)
             },
             orientation = DraggableOrientation.Horizontal,
             isEnabled = !meltingTransition.currentState,

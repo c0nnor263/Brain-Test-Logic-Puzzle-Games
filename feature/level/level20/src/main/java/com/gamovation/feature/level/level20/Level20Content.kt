@@ -3,7 +3,6 @@ package com.gamovation.feature.level.level20
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -95,8 +94,7 @@ internal fun ConstraintLayoutScope.Level20Animal(
                 top.linkTo(parent.top, margin = Dimensions.Padding.Medium.value)
                 bottom.linkTo(bottomGuideline)
             }
-            .clickableNoRipple(onClick = onClick)
-            .padding(Dimensions.Padding.Small.value),
+            .clickableNoRipple(onClick = onClick),
         appearOrder = appearOrder
     ) {
         Image(

@@ -35,9 +35,7 @@ fun WatchStoreButton(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically
-        ) {
+        Row(modifier = Modifier.weight(2f), verticalAlignment = Alignment.CenterVertically) {
             Image(
                 painter = painterResource(id = R.drawable.present),
                 modifier = Modifier.size(64.dp),
@@ -54,6 +52,7 @@ fun WatchStoreButton(
         }
 
         BuyButton(
+            modifier = Modifier.weight(1.5f, false),
             isLoaded = isLoaded,
             text = stringResource(id = watchStringRes),
             onClick = {
