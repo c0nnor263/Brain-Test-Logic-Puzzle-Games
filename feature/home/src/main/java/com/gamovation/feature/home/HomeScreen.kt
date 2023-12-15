@@ -43,7 +43,7 @@ fun HomeScreen(
             modifier = Modifier.constrainAs(title) {
                 width = Dimension.fillToConstraints
                 height = Dimension.fillToConstraints
-                top.linkTo(parent.top, margin = Dimensions.Padding.Medium.value)
+                top.linkTo(parent.top, margin = Dimensions.Padding.Small.value)
                 centerHorizontallyTo(parent)
                 bottom.linkTo(button.top)
             }

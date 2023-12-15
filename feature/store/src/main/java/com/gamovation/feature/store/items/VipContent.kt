@@ -40,7 +40,10 @@ fun VipContent(info: StoreItemInfo?, onBuy: (StoreItemInfo) -> Unit) {
                 modifier = Modifier.padding(Dimensions.Padding.Small.value),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(text = stringResource(R.string.become_a_vip))
+                Text(
+                    text = stringResource(R.string.become_a_vip),
+                    textAlign = TextAlign.Center,
+                )
                 Spacer(modifier = Modifier.height(Dimensions.Padding.Small.value))
                 Text(
                     text = stringResource(

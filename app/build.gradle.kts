@@ -19,7 +19,7 @@ android {
         minSdk = Versions.Config.minSdk
         targetSdk = Versions.Config.targetSdk
         versionCode = 25
-        versionName = "2023.12.08.01-stable"
+        versionName = "2023.12.15.02-stable"
 
         resourceConfigurations.addAll(
             listOf(
@@ -125,7 +125,7 @@ dependencies {
     implementation("com.onesignal:OneSignal:${Versions.oneSignal}")
 
     // Play Services Games
-    implementation("com.google.android.gms:play-services-games-v2:19.0.0")
+    implementation("com.google.android.gms:play-services-games-v2:${Versions.playServicesGames}")
 
-    implementation("com.google.ads.mediation:facebook:6.16.0.0")
+    implementation("com.google.ads.mediation:facebook:${Versions.facebookAds}")
 }

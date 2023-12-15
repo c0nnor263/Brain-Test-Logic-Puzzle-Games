@@ -51,5 +51,5 @@ dependencies {
     coreData()
     composeCore()
 
-    implementation("nl.dionsegijn:konfetti-compose:2.0.3")
+    implementation("nl.dionsegijn:konfetti-compose:${Versions.konfetti}")
 }
