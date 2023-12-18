@@ -19,7 +19,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.gamovation.core.billing.model.StoreItemInfo
+import com.gamovation.core.billing.model.description
 import com.gamovation.core.billing.model.isNotEmpty
+import com.gamovation.core.billing.model.price
 import com.gamovation.core.ui.BoxWithSparkles
 import com.gamovation.core.ui.BuyButton
 import com.gamovation.core.ui.Dimensions
@@ -53,6 +55,13 @@ fun VipContent(info: StoreItemInfo?, onBuy: (StoreItemInfo) -> Unit) {
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.bodySmall
                 )
+                Spacer(modifier = Modifier.height(Dimensions.Padding.Small.value))
+                Text(
+                    text = info.description(),
+                    maxLines = 8,
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.bodySmall
+                )
             }
         }
         Spacer(modifier = Modifier.width(Dimensions.Padding.Small.value))
@@ -72,7 +81,7 @@ fun VipContent(info: StoreItemInfo?, onBuy: (StoreItemInfo) -> Unit) {
             }
             Spacer(modifier = Modifier.height(Dimensions.Padding.ExtraSmall.value))
             BuyButton(
-                text = stringResource(id = com.gamovation.core.ui.R.string.get_vip),
+                text = info.price(isSubscription = true),
                 isLoaded = info.isNotEmpty(),
                 onClick = {
                     info?.let(onBuy)

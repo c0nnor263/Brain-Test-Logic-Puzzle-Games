@@ -12,6 +12,16 @@ fun StoreItemInfo?.isNotEmpty(): Boolean {
     return this?.details != null
 }
 
-fun StoreItemInfo?.price(): String {
-    return this?.details?.oneTimePurchaseOfferDetails?.formattedPrice ?: ""
+fun StoreItemInfo?.price(isSubscription: Boolean = false): String {
+    return if (!isSubscription) {
+        this?.details?.oneTimePurchaseOfferDetails?.formattedPrice ?: ""
+    } else {
+        val subscriptionOfferDetails = this?.details?.subscriptionOfferDetails?.getOrNull(0)
+        val pricingPhaseList = subscriptionOfferDetails?.pricingPhases?.pricingPhaseList
+        pricingPhaseList?.getOrNull(0)?.formattedPrice ?: ""
+    }
+}
+
+fun StoreItemInfo?.description(): String {
+    return this?.details?.description ?: ""
 }

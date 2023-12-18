@@ -18,8 +18,8 @@ android {
         applicationId = namespace
         minSdk = Versions.Config.minSdk
         targetSdk = Versions.Config.targetSdk
-        versionCode = 25
-        versionName = "2023.12.15.02-stable"
+        versionCode = 26
+        versionName = "2023.12.18.02-stable"
 
         resourceConfigurations.addAll(
             listOf(
