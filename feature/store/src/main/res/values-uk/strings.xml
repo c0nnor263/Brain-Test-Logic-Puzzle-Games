@@ -9,6 +9,9 @@
     <!-- VIP -->
     <string name="become_a_vip">СТАНЬТЕ VIP!</string>
     <string name="remove_ads_and_get_cheaper_costs_for_all_actions">Видаліть рекламу і отримайте знижені витрати на всі дії!</string>
+    <string name="vip_description">Подвійна Знижка на Всі Дії + Без Реклами</string>
+    <string name="vip_per_week">%1$s на тиждень</string>
+    <string name="cancel_anytime">Автоматичне поновлення\nСкасуйте в будь-який час!</string>
 
 
 </resources>

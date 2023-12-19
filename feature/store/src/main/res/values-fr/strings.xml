@@ -6,5 +6,8 @@
     <string name="smartest">Le plus intelligent</string>
     <string name="become_a_vip">DEVENEZ UN VIP !</string>
     <string name="remove_ads_and_get_cheaper_costs_for_all_actions">Supprimez les publicités et obtenez des coûts moins élevés pour toutes les actions !</string>
+    <string name="vip_description">Double Réduction sur Toutes les Actions + Sans Publicité</string>
+    <string name="vip_per_week">%1$s par semaine</string>
+    <string name="cancel_anytime">Renouvellement automatique\nAnnulez à tout moment !</string>
 
 </resources>

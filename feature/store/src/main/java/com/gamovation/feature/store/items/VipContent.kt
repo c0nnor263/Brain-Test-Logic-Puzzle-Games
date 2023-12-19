@@ -18,8 +18,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.gamovation.core.billing.model.StoreItemInfo
-import com.gamovation.core.billing.model.description
 import com.gamovation.core.billing.model.isNotEmpty
 import com.gamovation.core.billing.model.price
 import com.gamovation.core.ui.BoxWithSparkles
@@ -57,7 +57,7 @@ fun VipContent(info: StoreItemInfo?, onBuy: (StoreItemInfo) -> Unit) {
                 )
                 Spacer(modifier = Modifier.height(Dimensions.Padding.Small.value))
                 Text(
-                    text = info.description(),
+                    text = stringResource(id = R.string.vip_description),
                     maxLines = 8,
                     textAlign = TextAlign.Center,
                     style = MaterialTheme.typography.bodySmall
@@ -81,11 +81,21 @@ fun VipContent(info: StoreItemInfo?, onBuy: (StoreItemInfo) -> Unit) {
             }
             Spacer(modifier = Modifier.height(Dimensions.Padding.ExtraSmall.value))
             BuyButton(
-                text = info.price(isSubscription = true),
+                text = stringResource(
+                    id = R.string.vip_per_week,
+                    info.price(isSubscription = true)
+                ),
                 isLoaded = info.isNotEmpty(),
                 onClick = {
                     info?.let(onBuy)
                 }
+            )
+            Text(
+                text = stringResource(id = R.string.cancel_anytime),
+                maxLines = 6,
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.bodySmall.copy(fontSize = 10.sp),
+                color = MaterialTheme.colorScheme.tertiary.copy(0.6F)
             )
         }
     }

@@ -21,7 +21,3 @@ fun StoreItemInfo?.price(isSubscription: Boolean = false): String {
         pricingPhaseList?.getOrNull(0)?.formattedPrice ?: ""
     }
 }
-
-fun StoreItemInfo?.description(): String {
-    return this?.details?.description ?: ""
-}

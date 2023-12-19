@@ -9,5 +9,8 @@
     <!-- VIP -->
     <string name="become_a_vip">WERDEN SIE EIN VIP!</string>
     <string name="remove_ads_and_get_cheaper_costs_for_all_actions">Entfernen Sie Werbung und erhalten Sie günstigere Kosten für alle Aktionen!</string>
+    <string name="vip_description">Doppelter Rabatt auf Alle Aktionen + Werbefrei</string>
+    <string name="vip_per_week">%1$s pro Woche</string>
+    <string name="cancel_anytime">Automatische Verlängerung\nJederzeit kündbar!</string>
 
 </resources>
