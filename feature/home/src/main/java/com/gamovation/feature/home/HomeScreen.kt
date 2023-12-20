@@ -105,7 +105,7 @@ fun GetVipBanner(modifier: Modifier = Modifier, onNavigateToStore: () -> Unit) {
         Spacer(modifier = Modifier.height(Dimensions.Padding.ExtraSmall.value))
         BuyButton(
             modifier = Modifier.requiredWidth(200.dp),
-            text = stringResource(com.gamovation.core.ui.R.string.go),
+            text = stringResource(R.string.check_store),
             isLoaded = true,
             isDrawingAnimationEnabled = true,
             onClick = onNavigateToStore

@@ -9,8 +9,8 @@
     <!-- VIP -->
     <string name="become_a_vip">WERDEN SIE EIN VIP!</string>
     <string name="remove_ads_and_get_cheaper_costs_for_all_actions">Entfernen Sie Werbung und erhalten Sie günstigere Kosten für alle Aktionen!</string>
-    <string name="vip_description">Doppelter Rabatt auf Alle Aktionen + Werbefrei</string>
+    <string name="vip_description">- Doppelter Rabatt auf alle Aktionen\n- Werbefrei</string>
     <string name="vip_per_week">%1$s pro Woche</string>
-    <string name="cancel_anytime">Automatische Verlängerung\nJederzeit kündbar!</string>
-
+    <string name="cancel_anytime">Wöchentliche Abrechnung\nJederzeit kündbar!</string>
+    <string name="vip_terms">Abonnieren Sie VIP, um eine werbefreie Erfahrung, doppelte Rabatte auf alle Aktionen und die Flexibilität jederzeit zu kündigen, zu genießen.</string>
 </resources>

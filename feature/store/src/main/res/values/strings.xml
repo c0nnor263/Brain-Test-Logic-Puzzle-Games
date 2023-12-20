@@ -13,8 +13,9 @@
     <!-- VIP -->
     <string name="become_a_vip">BECOME A VIP!</string>
     <string name="remove_ads_and_get_cheaper_costs_for_all_actions">Remove ads and get cheaper costs for all actions!</string>
-    <string name="vip_description">Double Discount on All Actions + Ad-Free</string>
+    <string name="vip_description">- Double Discount on all actions\n- Ad-Free</string>
     <string name="vip_per_week">%1$s per week</string>
-    <string name="cancel_anytime">Auto Renewing\nCancel anytime!</string>
+    <string name="cancel_anytime">Weekly billing\nCancel anytime!</string>
+    <string name="vip_terms">Subscribe to VIP to enjoy an ad-free experience, double discounts on all actions, and the flexibility to cancel anytime.</string>
 
 </resources>

@@ -2,5 +2,5 @@
 <resources>
     <string name="are_you_ready_to_show_your_intelligence">¿Estás listo para mostrar tu inteligencia?</string>
     <string name="let_s_go">¡VAMOS!</string>
-
+    <string name="check_store">Verificar tienda</string>
 </resources>
