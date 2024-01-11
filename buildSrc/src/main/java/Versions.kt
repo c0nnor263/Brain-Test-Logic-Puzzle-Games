@@ -4,7 +4,7 @@ object Versions {
     const val konfetti = "2.0.4"
     const val playReview = "2.0.1"
     const val volley = "1.2.1"
-    const val oneSignal = "5.0.5"
+    const val oneSignal = "4.8.7"
     const val benNamesVersions = "0.50.0"
     const val ads = "22.6.0"
     const val activity = "1.8.2"
