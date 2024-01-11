@@ -19,7 +19,7 @@ android {
         minSdk = Versions.Config.minSdk
         targetSdk = Versions.Config.targetSdk
         versionCode = 28
-        versionName = "2023.12.20.01-stable"
+        versionName = "2023.01.13.01-stable"
 
         resourceConfigurations.addAll(
             listOf(

@@ -55,7 +55,7 @@ class BillingDataSource @Inject constructor(
     private val initialBillingStartTime = System.currentTimeMillis()
     var fetchDelay: Long = TimeUnit.SECONDS.toMillis(1)
 
-    // Repository Pattern
+    // TODO Repository Pattern
     private val _productsDetailsFlow = MutableStateFlow(ProductDetailsInfo(null, null))
     val productsDetailsFlow: StateFlow<ProductDetailsInfo> = _productsDetailsFlow.asStateFlow()
 
@@ -308,6 +308,8 @@ class BillingDataSource @Inject constructor(
 
             BillingProductType.VIP -> {
                 userInfoPreferencesRepository.setUserVipType(UserVipType.PREMIUM)
+
+                // TODO: Check if user cancel subscription
             }
 
             else -> {}

@@ -40,8 +40,6 @@ import com.gamovation.core.ui.theme.WordefullTheme
 import com.gamovation.tilecl.presentation.navigation.AppContentViewModel
 import com.gamovation.tilecl.presentation.navigation.WordefullAppContent
 import com.onesignal.OneSignal
-import com.onesignal.notifications.INotificationClickEvent
-import com.onesignal.notifications.INotificationClickListener
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Locale
 import javax.inject.Inject
@@ -180,17 +178,13 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun setupOneSignalNotificationListener() {
-        OneSignal.Notifications.addClickListener(
-            object : INotificationClickListener {
-                override fun onClick(event: INotificationClickEvent) {
-                    appOpenAdManager.showAdIfAvailable(this@MainActivity)
-                    playGamesEventRepository.submitEvent(
-                        com.gamovation.core.domain.R.string.event_push_click,
-                        1
-                    )
-                }
-            }
-        )
+        OneSignal.setNotificationOpenedHandler {
+            appOpenAdManager.showAdIfAvailable(this@MainActivity)
+            playGamesEventRepository.submitEvent(
+                com.gamovation.core.domain.R.string.event_push_click,
+                1
+            )
+        }
     }
 
     private fun setupFullscreenMode() {
@@ -200,7 +194,8 @@ class MainActivity : ComponentActivity() {
             window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
         } else {
             window.insetsController?.apply {
-                systemBarsBehavior = WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+                systemBarsBehavior =
+                    WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
                 hide(WindowInsets.Type.systemBars())
             }
         }
